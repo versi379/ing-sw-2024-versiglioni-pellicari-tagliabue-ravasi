@@ -1,0 +1,82 @@
+@startuml model_entities
+
+package model.entities {
+
+  class Game {
+    player: List<Player>
+    numPlayers: int
+    resourceDeck: Stack<ResourceCard>
+    goldDeck: Stack<GoldCard>
+    revealedResourceCard: ResourceCard[2]
+    revealedGoldCard: GoldCard[2]
+    commonObjective: ObjectiveCard[2]
+    start()
+    join(Player)
+  }
+
+  class Player {
+    nickname: String
+    playerData: PlayerData
+  }
+
+  class PlayerData {
+    matrix: Node[82][82]
+    score: int
+    numResources: Map<Resources,int>
+    secretObjective: ObjectiveCard
+    hand: RGCard[3]
+    placeCard(PlayableCard,int,int)
+  }
+
+  class Node {
+    resource: Resources
+    visibility: boolean
+    color: Colors
+  }
+
+  class Corner {
+    resource: Resources
+    visibility: boolean
+  }
+
+  class ObjectiveCard {
+    score: int
+  }
+
+  abstract class PlayableCard {
+    color: Colors
+    fixedResources: List<Resources>
+    ne: Corner
+    nw: Corner
+    se: Corner
+    sw: Corner
+  }
+
+  abstract class RGCard extends PlayableCard {
+    score: int
+  }
+
+  class ResourceCard extends RGCard {
+
+  }
+
+  class GoldCard extends RGCard {
+    constraint: Map<Resources,int>
+    bonus: String
+  }
+
+  class StarterCard extends PlayableCard {
+
+  }
+
+  enum Resources {
+    // Game Resources (7)
+  }
+
+  enum Colors {
+    // Game Colors (5)
+  }
+
+}
+
+@enduml
