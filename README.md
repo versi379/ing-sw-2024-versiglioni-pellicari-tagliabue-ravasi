@@ -1,1 +1,0 @@
-# ing-sw-2024-pellicari-tagliabue-ravasi-versiglioni
