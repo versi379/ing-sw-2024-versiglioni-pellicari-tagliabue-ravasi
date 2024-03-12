@@ -134,7 +134,7 @@ package model.entities {
   }
 
   class StarterCard extends PlayableCard {
-    - fixedResources: List<Resources>
+    - fixedResources: List<Resource>
     - neBack: Corner
     - nwBack: Corner
     - seBack: Corner
