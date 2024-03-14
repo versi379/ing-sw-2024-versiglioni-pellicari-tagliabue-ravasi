@@ -1,29 +1,21 @@
 package it.polimi.sw.gianpaolocugola50.model;
+import java.util.List
 
-public abstract class PlayableCard {
+public class PlayableCard {
     private Color color;
-    private Corner sw;
-    private Corner nw;
-    private Corner ne;
-    private Corner se;
+    private int score;
+    private List<Resource> fixedResources;
+    private Corner swCorner;
+    private Corner nwCorner;
+    private Corner neCorner;
+    private Corner seCorner;
 
-    public Color getColor() {
-        return color;
-    }
-
-    public Corner getSw() {
-        return sw;
-    }
-
-    public Corner getNw() {
-        return nw;
-    }
-
-    public Corner getNe() {
-        return ne;
-    }
-
-    public Corner getSe() {
-        return se;
+    public getColor()
+    public getScore()
+    public getFixedResources()
+    public getSwCorner()
+    public getNwCorner()
+    public getNeCorner()
+    public getSeCorner()
     }
 }
