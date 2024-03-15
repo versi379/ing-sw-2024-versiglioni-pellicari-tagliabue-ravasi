@@ -67,8 +67,8 @@ package model.entities {
     + getSecretObjective()
     + getHand()
     - evaluateObjective(Objective): int
-    + placeCard(PlayableCard,int,int): void
-    - checkPlaceability(PlayableCard,int,int): boolean
+    + placeCard(PlayableCard, int, int): void
+    - checkPlaceability(PlayableCard, int, int): boolean
     + drawCard(DrawingPosition): PhysicalCard
   }
 
@@ -133,19 +133,8 @@ package model.entities {
     + checkCondition(Player): int
   }
 
-enum CaveOrientation {
+  enum CaveOrientation {
     UPRIGHTL, UPRIGHTJ, INVERTEDL, INVERTEDJ
-}
-
-  class CoveredCornersObjective implements Objective {
-
-    + checkCondition(Player): int
-  }
-
-  class BlankObjective implements Objective {
-
-    ' Always returns 1
-    + checkCondition(Player): int
   }
 
   ' Utile la differenzazione tra carte fisiche e giocabili(fronte/retro)
@@ -175,21 +164,37 @@ enum CaveOrientation {
     + getNwCorner()
     + getNeCorner()
     + getSeCorner()
+    + resourceCount(Resource): int
   }
 
-  ' La logica dietro i requisiti dei bonus è la stessa degli obiettivi
+  enum Color {
+    WHITE, GREEN, BLUE, RED, PURPLE
+  }
+
   class GoldCard extends PlayableCard{
     - constraint: Map<Resource,int>
     ' Il punteggio dato dalla carta sarà calcolato come
-    ' score * bonus.checkCondition(player)
-    - bonus: Objective
+    ' score * bonus.checkBonus(player, x, y)
+    - bonus: Bonus
 
     + getConstraint()
     + getBonus()
   }
 
-  enum Color {
-    WHITE, GREEN, BLUE, RED, PURPLE
+  interface Bonus {
+  ' Indica il numero di volte che il giocatore soddisferebbe
+  ' il bonus piazzando la carta alle coordinate (x, y)
+  + checkBonus(Player, int, int): int
+  }
+
+  class ResourcesBonus implements Bonus {
+  - targetResource: Resource
+
+  + checkBonus(Player, int, int): int
+  }
+
+  class CoveredCornersBonus implements Bonus {
+  + checkBonus(Player, int, int): int
   }
 
 }
