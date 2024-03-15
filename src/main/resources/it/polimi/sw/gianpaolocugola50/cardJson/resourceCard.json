@@ -1,0 +1,521 @@
+[
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"FUNGI",
+      "ne":"NONE",
+      "sw":"FUNGI",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"FUNGI",
+      "ne":"FUNGI",
+      "sw":"NOCORNER",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NOCORNER",
+      "sw":"FUNGI",
+      "se":"FUNGI"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"FUNGI",
+      "sw":"NONE",
+      "se":"FUNGI"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"QUILL",
+      "sw":"PLANT",
+      "se":"FUNGI"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"INK",
+      "ne":"FUNGI",
+      "sw":"NOCORNER",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"FUNGI",
+      "ne":"INSECT",
+      "sw":"SCROLL",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"FUNGI",
+      "sw":"NONE",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"FUNGI",
+      "ne":"NOCORNER",
+      "sw":"NONE",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"NONE",
+      "sw":"FUNGI",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"PLANT",
+      "ne":"NONE",
+      "sw":"PLANT",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"PLANT",
+      "ne":"PLANT",
+      "sw":"NOCORNER",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NOCORNER",
+      "sw":"PLANT",
+      "se":"PLANT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"PLANT",
+      "sw":"NONE",
+      "se":"PLANT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"INSECT",
+      "sw":"QUILL",
+      "se":"PLANT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"FUNGI",
+      "ne":"PLANT",
+      "sw":"NOCORNER",
+      "se":"INK"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"SCROLL",
+      "ne":"NOCORNER",
+      "sw":"PLANT",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NONE",
+      "sw":"PLANT",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NONE",
+      "sw":"NOCORNER",
+      "se":"PLANT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"PLANT",
+      "sw":"NONE",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"ANIMAL",
+      "ne":"ANIMAL",
+      "sw":"NONE",
+      "se":"NOCORNER"
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"NONE",
+      "sw":"ANIMAL",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"ANIMAL",
+      "ne":"NOCORNER",
+      "sw":"ANIMAL",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NONE",
+      "ne":"ANIMAL",
+      "sw":"NOCORNER",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"INSECT",
+      "sw":"INK",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"PLANT",
+      "ne":"ANIMAL",
+      "sw":"NOCORNER",
+      "se":"SCROLL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"QUILL",
+      "ne":"NOCORNER",
+      "sw":"ANIMAL",
+      "se":"FUNGI"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"NONE",
+      "sw":"ANIMAL",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NOCORNER",
+      "sw":"NONE",
+      "se":"ANIMAL"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"ANIMAL",
+      "sw":"NONE",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"INSECT",
+      "ne":"INSECT",
+      "sw":"NONE",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"NONE",
+      "sw":"INSECT",
+      "se":"INSECT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"INSECT",
+      "ne":"NOCORNER",
+      "sw":"INSECT",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NONE",
+      "ne":"INSECT",
+      "sw":"NOCORNER",
+      "se":"INSECT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"QUILL",
+      "sw":"ANIMAL",
+      "se":"INSECT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"SCROLL",
+      "ne":"INSECT",
+      "sw":"NOCORNER",
+      "se":"FUNGI"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 0,
+    "corner": {
+      "nw":"INSECT",
+      "ne":"PLANT",
+      "sw":"INK",
+      "se":"NOCORNER"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"INSECT",
+      "ne":"NOCORNER",
+      "sw":"NONE",
+      "se":"NONE"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NONE",
+      "ne":"NONE",
+      "sw":"NOCORNER",
+      "se":"INSECT"
+    }
+  },
+
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "point": 1,
+    "corner": {
+      "nw":"NOCORNER",
+      "ne":"INSECT",
+      "sw":"NONE",
+      "se":"NONE"
+    }
+  },
+]
