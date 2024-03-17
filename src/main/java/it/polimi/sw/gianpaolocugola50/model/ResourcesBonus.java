@@ -1,10 +1,10 @@
 package it.polimi.sw.gianpaolocugola50.model;
 
 public class ResourcesBonus implements Bonus{
-    private Resource targetResource;
+    private final Resource targetResource;
 
     @Override
-    public int checkBonus(Player player, int x, int y) {
-
+    public int checkBonus(PlayerData playerData, int coveredCorners) {
+        return playerData.numOfResource(targetResource);
     }
 }

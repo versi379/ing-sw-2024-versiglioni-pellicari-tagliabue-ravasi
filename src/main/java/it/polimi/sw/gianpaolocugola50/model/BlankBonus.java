@@ -1,8 +1,8 @@
 package it.polimi.sw.gianpaolocugola50.model;
 
-public class CoveredCornersBonus implements Bonus {
+public class BlankBonus implements Bonus{
     @Override
     public int checkBonus(PlayerData playerData, int coveredCorners) {
-        return coveredCorners;
+        return 1;
     }
 }

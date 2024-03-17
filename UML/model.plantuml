@@ -5,19 +5,19 @@ package model.entities {
   ' I tipi delle carte in queste prime classi sono stati cambiati
   ' in accordo con le modifiche effettuate
   class Game {
+    - code: String
     - players: List<Player>
     - numPlayers: int
     - resourceDeck: Stack<PhysicalCard>
     - goldDeck: Stack<PhysicalCard>
-    - revealedResourceCards: PhysicalCard[2]
-    - revealedGoldCards: PhysicalCard[2]
+    - revealedCards: PhysicalCard[4]
     - commonObjectives: ObjectiveCard[2]
 
     + start()
     + end()
     + join(Player)
-    + setPlayerArea(Player)
-    + getPlayerArea(Player)
+    + setPlayerData(Player)
+    + getPlayerData(Player)
     + setCommonGoals()
     + getCommonGoal1()
     + getCommonGoal2()
@@ -40,7 +40,7 @@ package model.entities {
   class Player {
     - nickname: String
     - status: PlayerStatus
-    - playerData: PlayerArea
+    - playerData: PlayerData
 
     + setNickname()
     + getNickname(): String
@@ -52,9 +52,9 @@ package model.entities {
     CONNECTED, DISCONNECTED, QUITTED
   }
 
-  class PlayerArea {
+  class PlayerData {
     - cornersArea: Corner[82][82]
-    - colorsArea: PlayableCard[82][82]
+    - cardsArea: PlayableCard[82][82]
     - score: int
     - numResources: Map<Resources,int>
     - secretObjective: ObjectiveCard
@@ -68,30 +68,33 @@ package model.entities {
     + getHand()
     - evaluateObjective(Objective): int
     + placeCard(PlayableCard, int, int): void
-    - checkPlaceability(PlayableCard, int, int): boolean
     + drawCard(DrawingPosition): PhysicalCard
   }
 
   ' Aggiunta la risorsa nulla
   enum Resource {
-    BLANK, PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK
+    PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK
   }
 
   class Corner {
     - resource: Resource
-    - visibility: boolean
+    - status: CornerStatus
 
     + getResource()
     + getVisibility()
   }
 
+  enum CornerStatus {
+      HIDDEN, EMPTY, FULL
+  }
+
   class ObjectiveCard {
     ' Il punteggio dato dalla carta sarà calcolato come
     ' pointsPerCompletion * objective.checkCondition(player)
-    + pointsPerCompletion: int
-    + objective: Objective
+    - pointsPerCompletion: int
+    - objective: Objective
 
-    + getObjective()
+    + checkObjective()
   }
 
   '
@@ -109,7 +112,7 @@ package model.entities {
   }
 
   class DifferentResourcesObjective implements Objective {
-    - targetSet: Set<Resource>
+    - targetResources: Set<Resource>
 
     + checkCondition(Player): int
   }
@@ -150,7 +153,7 @@ package model.entities {
   ' Niente setter perchè immutabili dopo l'inizializzazione
   class PlayableCard {
     - color: Color
-    - score: int
+    - points: int
     - fixedResources: List<Resource>
     - swCorner: Corner
     - nwCorner: Corner
@@ -158,13 +161,14 @@ package model.entities {
     - seCorner: Corner
 
     + getColor()
-    + getScore()
+    + getPoints()
     + getFixedResources()
     + getSwCorner()
     + getNwCorner()
     + getNeCorner()
     + getSeCorner()
     + resourceCount(Resource): int
+    + isPlaceable(Player, int, int)
   }
 
   enum Color {
@@ -174,11 +178,12 @@ package model.entities {
   class GoldCard extends PlayableCard{
     - constraint: Map<Resource,int>
     ' Il punteggio dato dalla carta sarà calcolato come
-    ' score * bonus.checkBonus(player, x, y)
+    ' points * bonus.checkBonus(player, x, y)
     - bonus: Bonus
 
     + getConstraint()
     + getBonus()
+    + isPlaceable(Player, int, int)
   }
 
   interface Bonus {
