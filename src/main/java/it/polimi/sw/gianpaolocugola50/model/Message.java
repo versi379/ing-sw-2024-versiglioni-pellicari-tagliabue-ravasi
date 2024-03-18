@@ -9,6 +9,8 @@ public class Message implements Serializable {
     private Player sender;
     private LocalTime time;
 
+    //private int x;
+
     public Message(String text, Player sender) {
         this.text = text;
         this.sender = sender;
