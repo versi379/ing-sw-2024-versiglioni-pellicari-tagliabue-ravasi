@@ -11,6 +11,11 @@ public class PlayerData {
 
     public PlayerData(PlayableCard starterCard) {
         cornersArea = new CornerPointer[82][82];
+        for(int i = 0; i < cornersArea.length; i++) {
+            for(int j = 0; j < cornersArea.length; j++) {
+                cornersArea[i][j] = new CornerPointer();
+            }
+        }
         cardsArea = new PlayableCard[82][82];
         score = 0;
         numOfResources = new EnumMap<>(Resource.class);
@@ -32,19 +37,17 @@ public class PlayerData {
         return result;
     }
     public boolean isPositionValid(int x, int y) {
-        if(x < 0 || x >= 80 || y < 0 || y >= 80) {
+        if(x < 0 || x >= cornersArea.length - 2 || y < 0 || y >= cornersArea.length - 2) {
             return false;
         }
-        boolean cornerRequirement = false;
         CornerPointer[] targetCorners = this.getTargetCorners(x, y);
         for(CornerPointer cornerPointer : targetCorners) {
-            if(cornerPointer.getCorner().isVisible()) {
-                cornerRequirement = true;
+            if(cornerPointer.isPresent() && cornerPointer.getCorner().isVisible()) {
+                return (x + y) % 2 == 0 &&
+                        cardsArea[x][y] == null;
             }
         }
-        return (x + y) % 2 == 0 &&
-                cardsArea[x][y] == null &&
-                cornerRequirement;
+        return false;
     }
 
     public void placeCard(PlayableCard card, int x, int y) {
@@ -52,7 +55,7 @@ public class PlayerData {
         CornerPointer[] targetCorners = this.getTargetCorners(x, y);
 
         for(CornerPointer cornerPointer : targetCorners) {
-            if (cornerPointer != null) {
+            if (cornerPointer.isPresent()) {
                 coveredCorners++;
                 if (cornerPointer.getCorner().isFull()) {
                     numOfResources.replace(cornerPointer.getCorner().getResource(),
