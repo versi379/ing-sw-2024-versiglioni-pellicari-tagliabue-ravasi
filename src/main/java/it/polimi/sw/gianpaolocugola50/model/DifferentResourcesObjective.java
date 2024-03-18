@@ -6,14 +6,9 @@ public class DifferentResourcesObjective implements Objective {
 
     @Override
     public int checkCondition(PlayerData playerData) {
-        // fa schifo ma è giusto per far capire il concetto
-        int result = 100;
-
-        for(Resource resource : targetResources) {
-            if(playerData.numOfResource(resource) < result) {
-                result = playerData.numOfResource(resource);
-            }
-        }
-        return result;
+        return targetResources.stream()
+                .map(playerData::numOfResource)
+                .min((a, b) -> a - b)
+                .orElse(0);
     }
 }
