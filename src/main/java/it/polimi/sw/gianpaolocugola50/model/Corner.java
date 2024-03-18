@@ -4,11 +4,10 @@ public class Corner {
     private boolean visibility;
     private Resource resource;
 
-    public Resource getResource() {
-        return resource;
-    }
-
     public boolean isVisible() {
         return visibility;
+    }
+    public Resource getResource() {
+        return resource;
     }
 }

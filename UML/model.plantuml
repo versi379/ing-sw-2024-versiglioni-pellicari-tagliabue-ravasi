@@ -2,14 +2,16 @@
 
 package model.entities {
 
+  ' I tipi delle carte in queste prime classi sono stati cambiati
+  ' in accordo con le modifiche effettuate
   class Game {
-    - player: List<Player>
+    - players: List<Player>
     - numPlayers: int
-    - resourceDeck: Stack<ResourceCard>
-    - goldDeck: Stack<GoldCard>
-    - revealedResourceCard: ResourceCard[2]
-    - revealedGoldCard: GoldCard[2]
-    - commonObjective: ObjectiveCard[2]
+    - resourceDeck: Stack<PhysicalCard>
+    - goldDeck: Stack<PhysicalCard>
+    - revealedResourceCards: PhysicalCard[2]
+    - revealedGoldCards: PhysicalCard[2]
+    - commonObjectives: ObjectiveCard[2]
 
     + start()
     + end()
@@ -28,6 +30,11 @@ package model.entities {
 
   enum DrawingPosition {
     RESOURCEDECK, RESOURCE1, RESOURCE2, GOLDDECK, GOLD1, GOLD2
+  }
+
+  ' Sincero non ho idea di come dovrebbe essere strutturata
+  class Chat {
+    ' ???
   }
 
   class Player {
@@ -51,7 +58,7 @@ package model.entities {
     - score: int
     - numResources: Map<Resources,int>
     - secretObjective: ObjectiveCard
-    - hand: RGCard[3]
+    - hand: PhysicalCard[3]
 
     + getCornerArea()
     + getColorsArea()
@@ -59,14 +66,15 @@ package model.entities {
     + getNumResorces()
     + getSecretObjective()
     + getHand()
-    - checkObjective(IdObjective): int
-    + placeCard(PlayableCard,int,int): void
-    - checkPlaceability(PlayableCard,int,int): boolean
-    + drawCard(DrawingPosition): RGCard
+    - evaluateObjective(Objective): int
+    + placeCard(PlayableCard, int, int): void
+    - checkPlaceability(PlayableCard, int, int): boolean
+    + drawCard(DrawingPosition): PhysicalCard
   }
 
+  ' Aggiunta la risorsa nulla
   enum Resource {
-    PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK
+    BLANK, PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK
   }
 
   class Corner {
@@ -78,74 +86,117 @@ package model.entities {
   }
 
   class ObjectiveCard {
-    + objective: IdObjective
+    ' Il punteggio dato dalla carta sarà calcolato come
+    ' pointsPerCompletion * objective.checkCondition(player)
+    + pointsPerCompletion: int
+    + objective: Objective
 
     + getObjective()
   }
 
-  enum IdObjective {
-      3PLANTS, 3ANIMALS, 3FUNGI, 3INSECTS,
-      DIAGONALGREEN, DIAGONALBLUE, DIAGONALRED, DIAGONALPURPLE,
-      LGREEN, LBLUE, LRED, LPURPLE,
-      2QUILLS, 2SCROLLS, 2INKS, 3TREASURES
+  '
+  interface Objective {
+    ' Indica il (massimo) numero di volte che un giocatore
+    ' soddisfa l'obiettivo
+    + checkCondition(Player): int
   }
 
-  abstract class PlayableCard {
+  class IdenticalResourcesObjective implements Objective {
+    - targetResource: Resource
+    - count: int
+
+    + checkCondition(Player): int
+  }
+
+  class DifferentResourcesObjective implements Objective {
+    - targetSet: Set<Resource>
+
+    + checkCondition(Player): int
+  }
+
+  class MonolithObjective implements Objective {
+    - targetColor: Color
+    - orientation: MonolithOrientation
+
+    + checkCondition(Player): int
+  }
+
+  enum MonolithOrientation {
+    LEFTDIAGONAL, RIGHTDIAGONAL
+  }
+
+  class CaveObjective implements Objective {
+    - targetColor1: Color
+    - targetColor2: Color
+    - orientation: CaveOrientation
+
+    + checkCondition(Player): int
+  }
+
+  enum CaveOrientation {
+    UPRIGHTL, UPRIGHTJ, INVERTEDL, INVERTEDJ
+  }
+
+  ' Utile la differenzazione tra carte fisiche e giocabili(fronte/retro)
+  class PhysicalCard {
+    - front: PlayableCard
+    - back: PlayableCard
+
+    + getFront()
+    + getBack()
+  }
+
+  ' Include anche carte Risorsa e Iniziali (non è più astratta)
+  ' Niente setter perchè immutabili dopo l'inizializzazione
+  class PlayableCard {
     - color: Color
-    - ne: Corner
-    - nw: Corner
-    - se: Corner
-    - sw: Corner
+    - score: int
+    - fixedResources: List<Resource>
+    - swCorner: Corner
+    - nwCorner: Corner
+    - neCorner: Corner
+    - seCorner: Corner
 
     + getColor()
-    + getNe()
-    + getNw()
-    + getSe()
-    + getSw()
+    + getScore()
+    + getFixedResources()
+    + getSwCorner()
+    + getNwCorner()
+    + getNeCorner()
+    + getSeCorner()
+    + resourceCount(Resource): int
   }
 
-   enum Color {
+  enum Color {
     WHITE, GREEN, BLUE, RED, PURPLE
   }
 
-  abstract class RGCard extends PlayableCard {
-    - score: int
-
-    + setScore()
-    + getScore()
-  }
-
-  class ResourceCard extends RGCard {
-
-  }
-
-  class GoldCard extends RGCard {
+  class GoldCard extends PlayableCard{
     - constraint: Map<Resource,int>
-    - bonus: BonusType
+    ' Il punteggio dato dalla carta sarà calcolato come
+    ' score * bonus.checkBonus(player, x, y)
+    - bonus: Bonus
 
-    + setConstraint()
     + getConstraint()
-    + setBonus()
     + getBonus()
   }
 
-  enum BonusType {
-    NOTHING, QUILLS, SCROLLS, INKS, COVEREDCORNERS
+  interface Bonus {
+  ' Indica il numero di volte che il giocatore soddisferebbe
+  ' il bonus piazzando la carta alle coordinate (x, y)
+  + checkBonus(Player, int, int): int
   }
 
-  class StarterCard extends PlayableCard {
-    - fixedResources: List<Resource>
-    - neBack: Corner
-    - nwBack: Corner
-    - seBack: Corner
-    - swBack: Corner
+  class ResourcesBonus implements Bonus {
+  - targetResource: Resource
 
-    + getFixedResources()
-    + getNeBack()
-    + getNwBack()
-    + getSeBack()
-    + getSwBack()
+  + checkBonus(Player, int, int): int
   }
+
+  class CoveredCornersBonus implements Bonus {
+  + checkBonus(Player, int, int): int
+  }
+
 }
 
 @enduml
