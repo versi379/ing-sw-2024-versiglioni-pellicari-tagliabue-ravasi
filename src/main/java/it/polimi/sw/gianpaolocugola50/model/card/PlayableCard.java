@@ -9,6 +9,14 @@ public class PlayableCard {
     private final int points;
     private final Bonus bonus;
     private final List<Resource> fixedResources;
+
+    //corner it contains the status of one corner of the card
+    //it can be hidden, empty and full
+    //and if is full it contains the resource
+    //the first corner oif the array is sw
+    //the second one is nw
+    //the third one is ne
+    //the last one is se
     private final Corner[] corners;
 
     public PlayableCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
@@ -17,6 +25,22 @@ public class PlayableCard {
         this.bonus = bonus;
         this.fixedResources = new ArrayList<>(fixedResources);
         this.corners = corners.clone();
+    }
+    //constructor for the card without the bonus;
+    public PlayableCard(Color color, int points, Corner[] corners) {
+        this.color = color;
+        this.points = points;
+        this.bonus = new BlankBonus();
+        this.fixedResources = new ArrayList<>();
+        this.corners = corners.clone();
+    }
+
+    public PlayableCard(Color color, int points) {
+        this.color = color;
+        this.points = points;
+        this.bonus = new BlankBonus();
+        this.fixedResources = new ArrayList<>();
+        this.corners = null;
     }
     public Color getColor() {
         return color;

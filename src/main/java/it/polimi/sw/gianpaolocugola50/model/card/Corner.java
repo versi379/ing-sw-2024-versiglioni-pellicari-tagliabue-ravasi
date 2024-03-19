@@ -2,9 +2,6 @@ package it.polimi.sw.gianpaolocugola50.model.card;
 
 public class Corner {
     private final CornerStatus status;
-
-
-
     private final Resource resource;
 
     public boolean isVisible() {

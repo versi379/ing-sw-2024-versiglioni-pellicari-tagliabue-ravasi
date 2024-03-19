@@ -5,11 +5,12 @@
     "color": "RED",
     "quantity": 1,
     "point": 0,
+
     "corner": {
       "nw":"FUNGI",
-      "ne":"NONE",
+      "ne":"EMPTY",
       "sw":"FUNGI",
-      "se":"NOCORNER"
+      "se":"HIDDEN"
     }
   },
 
@@ -21,8 +22,8 @@
     "corner": {
       "nw":"FUNGI",
       "ne":"FUNGI",
-      "sw":"NOCORNER",
-      "se":"NONE"
+      "sw":"HIDDEN",
+      "se":"EMPTY"
     }
   },
 
@@ -32,8 +33,8 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NONE",
-      "ne":"NOCORNER",
+      "nw":"EMPTY",
+      "ne":"HIDDEN",
       "sw":"FUNGI",
       "se":"FUNGI"
     }
@@ -45,9 +46,9 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"FUNGI",
-      "sw":"NONE",
+      "sw":"EMPTY",
       "se":"FUNGI"
     }
   },
@@ -58,7 +59,7 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"QUILL",
       "sw":"PLANT",
       "se":"FUNGI"
@@ -73,7 +74,7 @@
     "corner": {
       "nw":"INK",
       "ne":"FUNGI",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"ANIMAL"
     }
   },
@@ -87,7 +88,7 @@
       "nw":"FUNGI",
       "ne":"INSECT",
       "sw":"SCROLL",
-      "se":"NONE"
+      "se":"EMPTY"
     }
   },
 
@@ -97,10 +98,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
+      "nw":"EMPTY",
       "ne":"FUNGI",
-      "sw":"NONE",
-      "se":"NOCORNER"
+      "sw":"EMPTY",
+      "se":"HIDDEN"
     }
   },
 
@@ -111,9 +112,9 @@
     "point": 1,
     "corner": {
       "nw":"FUNGI",
-      "ne":"NOCORNER",
-      "sw":"NONE",
-      "se":"NONE"
+      "ne":"HIDDEN",
+      "sw":"EMPTY",
+      "se":"EMPTY"
     }
   },
 
@@ -123,10 +124,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NOCORNER",
-      "ne":"NONE",
+      "nw":"HIDDEN",
+      "ne":"EMPTY",
       "sw":"FUNGI",
-      "se":"NONE"
+      "se":"EMPTY"
     }
   },
 
@@ -137,9 +138,9 @@
     "point": 0,
     "corner": {
       "nw":"PLANT",
-      "ne":"NONE",
+      "ne":"EMPTY",
       "sw":"PLANT",
-      "se":"NOCORNER"
+      "se":"HIDDEN"
     }
   },
 
@@ -151,8 +152,8 @@
     "corner": {
       "nw":"PLANT",
       "ne":"PLANT",
-      "sw":"NOCORNER",
-      "se":"NONE"
+      "sw":"HIDDEN",
+      "se":"EMPTY"
     }
   },
 
@@ -162,8 +163,8 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NONE",
-      "ne":"NOCORNER",
+      "nw":"EMPTY",
+      "ne":"HIDDEN",
       "sw":"PLANT",
       "se":"PLANT"
     }
@@ -175,9 +176,9 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"PLANT",
-      "sw":"NONE",
+      "sw":"EMPTY",
       "se":"PLANT"
     }
   },
@@ -188,7 +189,7 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"INSECT",
       "sw":"QUILL",
       "se":"PLANT"
@@ -203,7 +204,7 @@
     "corner": {
       "nw":"FUNGI",
       "ne":"PLANT",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"INK"
     }
   },
@@ -215,7 +216,7 @@
     "point": 0,
     "corner": {
       "nw":"SCROLL",
-      "ne":"NOCORNER",
+      "ne":"HIDDEN",
       "sw":"PLANT",
       "se":"ANIMAL"
     }
@@ -227,10 +228,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
-      "ne":"NONE",
+      "nw":"EMPTY",
+      "ne":"EMPTY",
       "sw":"PLANT",
-      "se":"NOCORNER"
+      "se":"HIDDEN"
     }
   },
 
@@ -240,9 +241,9 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
-      "ne":"NONE",
-      "sw":"NOCORNER",
+      "nw":"EMPTY",
+      "ne":"EMPTY",
+      "sw":"HIDDEN",
       "se":"PLANT"
     }
   },
@@ -253,10 +254,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"PLANT",
-      "sw":"NONE",
-      "se":"NONE"
+      "sw":"EMPTY",
+      "se":"EMPTY"
     }
   },
 
@@ -268,8 +269,8 @@
     "corner": {
       "nw":"ANIMAL",
       "ne":"ANIMAL",
-      "sw":"NONE",
-      "se":"NOCORNER"
+      "sw":"EMPTY",
+      "se":"HIDDEN"
     }
   },
   {
@@ -278,8 +279,8 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
-      "ne":"NONE",
+      "nw":"HIDDEN",
+      "ne":"EMPTY",
       "sw":"ANIMAL",
       "se":"ANIMAL"
     }
@@ -292,9 +293,9 @@
     "point": 0,
     "corner": {
       "nw":"ANIMAL",
-      "ne":"NOCORNER",
+      "ne":"HIDDEN",
       "sw":"ANIMAL",
-      "se":"NONE"
+      "se":"EMPTY"
     }
   },
 
@@ -304,9 +305,9 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NONE",
+      "nw":"EMPTY",
       "ne":"ANIMAL",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"ANIMAL"
     }
   },
@@ -317,7 +318,7 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"INSECT",
       "sw":"INK",
       "se":"ANIMAL"
@@ -332,7 +333,7 @@
     "corner": {
       "nw":"PLANT",
       "ne":"ANIMAL",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"SCROLL"
     }
   },
@@ -344,7 +345,7 @@
     "point": 0,
     "corner": {
       "nw":"QUILL",
-      "ne":"NOCORNER",
+      "ne":"HIDDEN",
       "sw":"ANIMAL",
       "se":"FUNGI"
     }
@@ -356,10 +357,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NOCORNER",
-      "ne":"NONE",
+      "nw":"HIDDEN",
+      "ne":"EMPTY",
       "sw":"ANIMAL",
-      "se":"NONE"
+      "se":"EMPTY"
     }
   },
 
@@ -369,9 +370,9 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
-      "ne":"NOCORNER",
-      "sw":"NONE",
+      "nw":"EMPTY",
+      "ne":"HIDDEN",
+      "sw":"EMPTY",
       "se":"ANIMAL"
     }
   },
@@ -382,10 +383,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
+      "nw":"EMPTY",
       "ne":"ANIMAL",
-      "sw":"NONE",
-      "se":"NOCORNER"
+      "sw":"EMPTY",
+      "se":"HIDDEN"
     }
   },
 
@@ -397,8 +398,8 @@
     "corner": {
       "nw":"INSECT",
       "ne":"INSECT",
-      "sw":"NONE",
-      "se":"NOCORNER"
+      "sw":"EMPTY",
+      "se":"HIDDEN"
     }
   },
 
@@ -408,8 +409,8 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
-      "ne":"NONE",
+      "nw":"HIDDEN",
+      "ne":"EMPTY",
       "sw":"INSECT",
       "se":"INSECT"
     }
@@ -422,9 +423,9 @@
     "point": 0,
     "corner": {
       "nw":"INSECT",
-      "ne":"NOCORNER",
+      "ne":"HIDDEN",
       "sw":"INSECT",
-      "se":"NONE"
+      "se":"EMPTY"
     }
   },
 
@@ -434,9 +435,9 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NONE",
+      "nw":"EMPTY",
       "ne":"INSECT",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"INSECT"
     }
   },
@@ -447,7 +448,7 @@
     "quantity": 1,
     "point": 0,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"QUILL",
       "sw":"ANIMAL",
       "se":"INSECT"
@@ -462,7 +463,7 @@
     "corner": {
       "nw":"SCROLL",
       "ne":"INSECT",
-      "sw":"NOCORNER",
+      "sw":"HIDDEN",
       "se":"FUNGI"
     }
   },
@@ -476,7 +477,7 @@
       "nw":"INSECT",
       "ne":"PLANT",
       "sw":"INK",
-      "se":"NOCORNER"
+      "se":"HIDDEN"
     }
   },
 
@@ -487,9 +488,9 @@
     "point": 1,
     "corner": {
       "nw":"INSECT",
-      "ne":"NOCORNER",
-      "sw":"NONE",
-      "se":"NONE"
+      "ne":"HIDDEN",
+      "sw":"EMPTY",
+      "se":"EMPTY"
     }
   },
 
@@ -499,9 +500,9 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NONE",
-      "ne":"NONE",
-      "sw":"NOCORNER",
+      "nw":"EMPTY",
+      "ne":"EMPTY",
+      "sw":"HIDDEN",
       "se":"INSECT"
     }
   },
@@ -512,10 +513,10 @@
     "quantity": 1,
     "point": 1,
     "corner": {
-      "nw":"NOCORNER",
+      "nw":"HIDDEN",
       "ne":"INSECT",
-      "sw":"NONE",
-      "se":"NONE"
+      "sw":"EMPTY",
+      "se":"EMPTY"
     }
   },
 ]

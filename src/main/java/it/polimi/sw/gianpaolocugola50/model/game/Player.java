@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
+import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 
 public class Player {
@@ -31,8 +32,8 @@ public class Player {
         return playerArea;
     }
 
-    public void setPlayerData(PlayerData playerArea) {
-        this.playerArea = playerArea;
+    public void setPlayerData(PlayableCard starterCard) {
+        this.playerArea = new PlayerData(starterCard);
     }
 
     public PlayerStatus getStatus() {
