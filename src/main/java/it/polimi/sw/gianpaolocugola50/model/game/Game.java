@@ -107,7 +107,7 @@ public class Game {
                     type = jsonObject.get("type").getAsString();
                     color = Color.valueOf(jsonObject.get("color").getAsString());
                     point = jsonObject.get("point").getAsInt();
-                    card1=new PlayableCard(color,point);
+                    card1 = new PlayableCard(color, point);
                     resourceDeck.add(card1);
                     System.out.println(card1.getColor());
                     /*JsonObject corner = jsonObject.getAsJsonObject("corner");
@@ -127,14 +127,14 @@ public class Game {
                 type = jsonObject.get("type").getAsString();
                 color = Color.valueOf(jsonObject.get("color").getAsString());
                 point = jsonObject.get("point").getAsInt();
-                card1=new PlayableCard(color,point);
+                card1 = new PlayableCard(color, point);
                 resourceDeck.add(card1);
                 System.out.println(card1.getColor());
             } else {
-                System.out.println("Il JSON non è valido.");
+
             }
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
 
     }
