@@ -16,6 +16,6 @@ public class CaveObjective implements Objective {
 
     @Override
     public int checkCondition(PlayerData playerData) {
-        return 0;
+
     }
 }

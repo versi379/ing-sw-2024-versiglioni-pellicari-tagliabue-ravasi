@@ -43,7 +43,6 @@ public class a{
 
     // Metodo per stampare le informazioni di una carta
     private static void printCardInfo(JsonObject jsonObject) {
-        carta=
         System.out.println("Type: " + jsonObject.get("type").getAsString());
         System.out.println("Color: " + jsonObject.get("color").getAsString());
         System.out.println("Quantity: " + jsonObject.get("quantity").getAsInt());

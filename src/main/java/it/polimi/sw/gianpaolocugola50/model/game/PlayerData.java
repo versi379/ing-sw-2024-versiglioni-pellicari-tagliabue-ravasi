@@ -1,13 +1,12 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.card.Resource;
-import it.polimi.sw.gianpaolocugola50.model.card.Color;
-import it.polimi.sw.gianpaolocugola50.model.game.CornerPointer;
 
 import java.util.*;
 
 public class PlayerData {
-    private static final int MATRIX_LENGTH = 84;
+    // da rivedere la staticità dell'attributo (possibili espansioni che cambiano la dimensione dei mazzi)
+    public static final int MATRIX_LENGTH = 84;
     private final CornerPointer[][] cornersArea;
     private final PlayableCard[][] cardsArea;
     private int score;
