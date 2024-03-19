@@ -17,6 +17,8 @@ public class Message implements Serializable {
         this.time = java.time.LocalTime.now();
     }
 
-    public String toString() // to do
+    public String toString(){
+        return null;
+    } // to do
 
 }
