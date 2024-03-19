@@ -10,7 +10,7 @@ public class ResourcesBonus implements Bonus {
     }
 
     @Override
-    public int checkBonus(PlayerData playerData, int coveredCorners) {
+    public int checkBonus(PlayerData playerData, int x, int y) {
         return playerData.numOfResource(targetResource);
     }
 }

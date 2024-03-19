@@ -50,7 +50,7 @@ public class PlayableCard {
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y);
     }
-    public int scoreIncrement(PlayerData board, int coveredCorners) {
-        return points*bonus.checkBonus(board, coveredCorners);
+    public int scoreIncrement(PlayerData board, int x, int y) {
+        return points*bonus.checkBonus(board, x, y);
     }
 }
