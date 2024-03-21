@@ -15,33 +15,14 @@ public class CardsMatrix {
         return matrix.length;
     }
 
-    // alla posizione che avrebbe se fosse organizzata come cornersArea
-    public void insert(PlayableCard card, int x, int y) {
-        matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)] = card;
-    }
+    public CardsMatrix copy() {
+        CardsMatrix result = new CardsMatrix(length());
 
-    // alla posizione che avrebbe se fosse organizzata come cornersArea
-    public PlayableCard getAtCornersCoordinates(int x, int y) {
-        return matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)];
-    }
-
-    // alla posizione effettiva in matrix
-    public PlayableCard getAtNaturalCoordinates(int x, int y) {
-        return matrix[x][y];
-    }
-
-    // alla posizione effettiva in matrix trasposta
-    public PlayableCard getAtTransposeCoordinates(int x, int y) {
-        return matrix[y][x];
-    }
-
-    public PlayableCard[] getNearCards(int x, int y) {
-        PlayableCard[] result = new PlayableCard[4];
-
-        result[0] = matrix[cornersToCardsX(x, y) - 1][cornersToCardsY(x, y)];
-        result[1] = matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) + 1];
-        result[2] = matrix[cornersToCardsX(x, y) + 1][cornersToCardsY(x, y)];
-        result[3] = matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) - 1];
+        for (int i = 0; i < length(); i++) {
+            for (int j = 0; j < length(); j++) {
+                result.insert(matrix[i][j], i, j);
+            }
+        }
         return result;
     }
 
@@ -50,34 +31,58 @@ public class CardsMatrix {
     }
 
     private int cornersToCardsY(int x, int y) {
-        return (length() - 2 - x + y) / 2;
+        return ((length() - 2) - x + y) / 2;
     }
 
-    public void clockwiseRotate(int times) {
-        if(times > 0) {
-            PlayableCard temp;
-
-            horizontalMirror();
-            for (int i = 0; i < length(); i++) {
-                for (int j = 0; i + j <= length() - 1; j++) {
-                    temp = matrix[i][j];
-                    matrix[i][j] = matrix[length() - j - 1][length() - i - 1];
-                    matrix[length() - j - 1][length() - i - 1] = temp;
-                }
-            }
-            clockwiseRotate(times - 1);
-        }
+    // alla posizione effettiva in matrix
+    public void insert(PlayableCard card, int x, int y) {
+        matrix[x][y] = card;
     }
 
-    public void horizontalMirror() {
-        PlayableCard temp;
+    // alla posizione che avrebbe se fosse organizzata come cornersArea
+    public void insertAtCornersCoordinates(PlayableCard card, int x, int y) {
+        matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)] = card;
+    }
 
-        for (int i = 0; i < length() / 2; i++) {
-            for (int j = 0; j < length(); j++) {
-                temp = matrix[i][j];
-                matrix[i][j] = matrix[length() - i - 1][j];
-                matrix[length() - i - 1][j] = temp;
+    // alla posizione effettiva in matrix
+    public PlayableCard get(int x, int y) {
+        return matrix[x][y];
+    }
+
+    // alla posizione che avrebbe se fosse organizzata come cornersArea
+    public PlayableCard getAtCornersCoordinates(int x, int y) {
+        return matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)];
+    }
+
+    public PlayableCard[] getNearCards(int x, int y) {
+        PlayableCard[] result = new PlayableCard[4];
+
+        result[0] = (cornersToCardsX(x, y) > 0) ? matrix[cornersToCardsX(x, y) - 1][cornersToCardsY(x, y)] : null;
+        result[1] = (cornersToCardsY(x, y) < length() - 1) ? matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) + 1] : null;
+        result[2] = (cornersToCardsX(x, y) < length() - 1) ? matrix[cornersToCardsX(x, y) + 1][cornersToCardsY(x, y)] : null;
+        result[3] = (cornersToCardsY(x, y) > 0) ? matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) - 1] : null;
+        return result;
+    }
+
+    public CardsMatrix transpose() {
+        for (int i = 0; i < length(); i++) {
+            for (int j = i; j < length(); j++) {
+                PlayableCard tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
             }
         }
+        return this;
+    }
+
+    public CardsMatrix invert() {
+        for (int i = 0; i < length(); i++) {
+            for (int j = 0; j < i; j++) {
+                PlayableCard tmp = matrix[i][j];
+                matrix[i][j] = matrix[length() - 1 - i][length() - 1 - j];
+                matrix[length() - 1 - i][length() - 1 - j] = tmp;
+            }
+        }
+        return this;
     }
 }

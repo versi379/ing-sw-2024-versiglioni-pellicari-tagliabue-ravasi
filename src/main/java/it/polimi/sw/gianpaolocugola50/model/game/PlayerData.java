@@ -2,21 +2,23 @@ package it.polimi.sw.gianpaolocugola50.model.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.card.Resource;
+import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
+import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 
 import java.util.*;
 
 public class PlayerData {
     // da rivedere la staticità dell'attributo (possibili espansioni che cambiano la dimensione dei mazzi)
-    public static final int MATRIX_LENGTH = 84;
+    public final int MATRIX_LENGTH;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
     private int score;
     private final Map<Resource, Integer> numOfResources;
-    //da riprendere
-    //private final ObjectiveCard secretObjective;
-    //private final PhysicalCard[] hand;
+    private final ObjectiveCard secretObjective;
+    private final PhysicalCard[] hand;
 
-    public PlayerData(PlayableCard starterCard) {
+    public PlayerData(PlayableCard starterCard, int deckSize) {
+        MATRIX_LENGTH = 2 * deckSize + 2;
         cornersArea = new CornerPointer[MATRIX_LENGTH][MATRIX_LENGTH];
         for (int i = 0; i < MATRIX_LENGTH; i++) {
             for (int j = 0; j < MATRIX_LENGTH; j++) {
@@ -26,14 +28,16 @@ public class PlayerData {
         cardsArea = new CardsMatrix(MATRIX_LENGTH);
         score = 0;
         numOfResources = new EnumMap<>(Resource.class);
+        secretObjective = null; // da rivedere
+        hand = new PhysicalCard[3];
         for (Resource resource : Resource.values()) {
             numOfResources.put(resource, 0);
         }
-        this.placeCard(starterCard, (MATRIX_LENGTH / 2) - 1, (MATRIX_LENGTH / 2) - 1);
+        placeCard(starterCard, (MATRIX_LENGTH / 2) - 1, (MATRIX_LENGTH / 2) - 1);
     }
 
     public CardsMatrix getCardsArea() {
-        return cardsArea;
+        return cardsArea.copy();
     }
 
     public int numOfResource(Resource resource) {
@@ -44,9 +48,9 @@ public class PlayerData {
         CornerPointer[] result = new CornerPointer[4];
 
         result[0] = (cornersArea[x][y]);
-        result[1] = (cornersArea[x][y + 1]);
-        result[2] = (cornersArea[x + 1][y + 1]);
-        result[3] = (cornersArea[x + 1][y]);
+        result[1] = (y < MATRIX_LENGTH) ? cornersArea[x][y + 1] : new CornerPointer();
+        result[2] = (x < MATRIX_LENGTH && y < MATRIX_LENGTH) ? cornersArea[x + 1][y + 1] : new CornerPointer();
+        result[3] = (x < MATRIX_LENGTH) ? cornersArea[x + 1][y] : new CornerPointer();
         return result;
     }
 
@@ -69,18 +73,21 @@ public class PlayerData {
 
         for (CornerPointer cornerPointer : targetCorners) {
             if (cornerPointer.isPresent() && cornerPointer.getCorner().isFull()) {
-                numOfResources.replace(cornerPointer.getCorner().getResource(),
-                        numOfResources.get(cornerPointer.getCorner().getResource()) - 1);
+                unitaryDecrement(cornerPointer.getCorner().getResource());
             }
         }
         targetCorners[0].setCorner(card.getSwCorner());
         targetCorners[1].setCorner(card.getNwCorner());
         targetCorners[2].setCorner(card.getNeCorner());
         targetCorners[3].setCorner(card.getSeCorner());
-        cardsArea.insert(card, x, y);
+        cardsArea.insertAtCornersCoordinates(card, x, y);
         for (Resource resource : Resource.values()) {
             numOfResources.replace(resource, numOfResources.get(resource) + card.resourceCount(resource));
         }
         score += card.scoreIncrement(this, x, y);
+    }
+
+    private void unitaryDecrement(Resource resource) {
+        numOfResources.replace(resource, numOfResources.get(resource) - 1);
     }
 }

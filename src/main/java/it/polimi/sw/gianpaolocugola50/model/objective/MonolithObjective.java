@@ -5,6 +5,7 @@ import it.polimi.sw.gianpaolocugola50.model.game.CardsMatrix;
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 import it.polimi.sw.gianpaolocugola50.model.card.Color;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class MonolithObjective implements Objective {
@@ -18,14 +19,14 @@ public class MonolithObjective implements Objective {
 
     @Override
     public int checkCondition(PlayerData playerData) {
-        CardsMatrix cardsArea = playerData.getCardsArea();
+        CardsMatrix cardsArea = adjustOrientation(playerData.getCardsArea());
         int result = 0;
         int currentCount;
 
-        for (int i = 0; i < PlayerData.MATRIX_LENGTH; i++) {
+        for (int i = 0; i < cardsArea.length(); i++) {
             currentCount = 0;
-            for (int j = 0; j < PlayerData.MATRIX_LENGTH; j++) {
-                if (targetColor.equals(getFromCardsArea(cardsArea, i, j)
+            for (int j = 0; j < cardsArea.length(); j++) {
+                if (targetColor.equals(Optional.ofNullable(cardsArea.get(i, j))
                         .map(PlayableCard::getColor)
                         .orElse(null))) {
                     currentCount++;
@@ -39,17 +40,10 @@ public class MonolithObjective implements Objective {
         return result;
     }
 
-    private Optional<PlayableCard> getFromCardsArea(CardsMatrix cardsArea, int x, int y) {
-        switch (orientation) {
-            case MonolithOrientation.LEFTDIAGONAL -> {
-                return Optional.of(cardsArea.getAtTransposeCoordinates(x, y));
-            }
-            case MonolithOrientation.RIGHTDIAGONAL -> {
-                return Optional.of(cardsArea.getAtNaturalCoordinates(x, y));
-            }
-            default -> {
-                return Optional.empty();
-            }
+    private CardsMatrix adjustOrientation(CardsMatrix matrix) {
+        if (orientation == MonolithOrientation.LEFTDIAGONAL) {
+            return matrix.transpose();
         }
+        return matrix;
     }
 }
