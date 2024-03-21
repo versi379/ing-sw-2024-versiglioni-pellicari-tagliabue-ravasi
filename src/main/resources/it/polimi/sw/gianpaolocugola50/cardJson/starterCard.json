@@ -1,0 +1,182 @@
+[
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "EMPTY",
+        "ne": "PLANT",
+        "sw": "INSECT",
+        "se": "EMPTY"
+      },
+      "center": {
+        "FUNGI": 0,
+        "PLANT": 0,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 1,
+        "ANIMAL": 0
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "FUNGI",
+        "ne": "PLANT",
+        "sw": "INSECT",
+        "se": "ANIMAL"
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "ANIMAL",
+        "ne": "EMPTY",
+        "sw": "EMPTY",
+        "se": "FUNGI"
+      },
+      "center": {
+        "FUNGI": 1,
+        "PLANT": 0,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 0,
+        "ANIMAL": 0
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "PLANT",
+        "ne": "ANIMAL",
+        "sw": "FUNGI",
+        "se": "INSECT"
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "EMPTY",
+        "ne": "EMPTY",
+        "sw": "EMPTY",
+        "se": "EMPTY"
+      },
+      "center": {
+        "FUNGI": 1,
+        "PLANT": 1,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 0,
+        "ANIMAL": 0
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "INSECT",
+        "ne": "ANIMAL",
+        "sw": "FUNGI",
+        "se": "PLANT"
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "EMPTY",
+        "ne": "EMPTY",
+        "sw": "EMPTY",
+        "se": "EMPTY"
+      },
+      "center": {
+        "FUNGI": 0,
+        "PLANT": 0,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 1,
+        "ANIMAL": 1
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "PLANT",
+        "ne": "INSECT",
+        "sw": "ANIMAL",
+        "se": "FUNGI"
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "EMPTY",
+        "ne": "EMPTY",
+        "sw": "EMPTY",
+        "se": "EMPTY"
+      },
+      "center": {
+        "FUNGI": 0,
+        "PLANT": 1,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 1,
+        "ANIMAL": 1
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "INSECT",
+        "ne": "FUNGI",
+        "sw": "PLANT",
+        "se": "ANIMAL"
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "corner": {
+        "nw": "EMPTY",
+        "ne": "EMPTY",
+        "sw": "EMPTY",
+        "se": "EMPTY"
+      },
+      "center": {
+        "FUNGI": 1,
+        "PLANT": 1,
+        "INK": 0,
+        "SCROLL": 0,
+        "QUILL": 0,
+        "INSECT": 0,
+        "ANIMAL": 1
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": "FUNGI",
+        "ne": "ANIMAL",
+        "sw": "PLANT",
+        "se": "INSECT"
+      }
+    }
+  }
+]

@@ -1,0 +1,163 @@
+[
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "P01"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "P02"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "P03"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "P04"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "P05"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "P06"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "P07"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "P08"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "R01"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "R02"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "R03"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "R04"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "T01"
+    },
+    "back": null
+  },{
+  "type": "OBJECTIVE",
+  "color": "WHITE",
+  "quantity": 1,
+  "front": {
+    "point": 2,
+    "code": "T02"
+  },
+  "back": null
+},
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "T03"
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "T04"
+    },
+    "back": null
+  }
+
+
+]
