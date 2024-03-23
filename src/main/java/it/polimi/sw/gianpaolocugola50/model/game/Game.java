@@ -228,6 +228,10 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //after the parsing, i used the method to mix the cards of the decks
+        mixAllDecks(resourceDeck);
+        mixAllDecks(startDeck);
+        mixAllDecks(goldDeck);
     }
 
     private static Corner[] cornerFromJsonObj(JsonObject corner) {
