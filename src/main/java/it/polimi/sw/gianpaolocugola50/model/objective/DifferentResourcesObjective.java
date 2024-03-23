@@ -1,4 +1,5 @@
 package it.polimi.sw.gianpaolocugola50.model.objective;
+
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 import it.polimi.sw.gianpaolocugola50.model.card.Resource;
 
@@ -15,7 +16,7 @@ public class DifferentResourcesObjective implements Objective {
     public int checkCondition(PlayerData playerData) {
         return targetResources.stream()
                 .map(playerData::numOfResource)
-                .min((a, b) -> a - b)
+                .min(Integer::compareTo)
                 .orElse(0);
     }
 }

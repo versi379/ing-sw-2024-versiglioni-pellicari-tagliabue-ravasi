@@ -8,7 +8,7 @@ public class Player {
     private final String nickName;
 
     //the personal gameArea of the player
-     private PlayerData playerArea;
+    private PlayerData playerArea;
 
     //Status of the connection to the server of the player
     private PlayerStatus status;
@@ -32,8 +32,8 @@ public class Player {
         return playerArea;
     }
 
-    public void setPlayerData(PlayableCard starterCard) {
-        this.playerArea = new PlayerData(starterCard);
+    public void setPlayerData(PlayableCard starterCard, int deckSize) {
+        this.playerArea = new PlayerData(starterCard, deckSize);
     }
 
     public PlayerStatus getStatus() {

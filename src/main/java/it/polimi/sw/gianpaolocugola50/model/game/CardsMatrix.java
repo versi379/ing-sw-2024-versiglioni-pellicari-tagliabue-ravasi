@@ -77,7 +77,7 @@ public class CardsMatrix {
 
     public CardsMatrix invert() {
         for (int i = 0; i < length(); i++) {
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < length() - i; j++) {
                 PlayableCard tmp = matrix[i][j];
                 matrix[i][j] = matrix[length() - 1 - i][length() - 1 - j];
                 matrix[length() - 1 - i][length() - 1 - j] = tmp;

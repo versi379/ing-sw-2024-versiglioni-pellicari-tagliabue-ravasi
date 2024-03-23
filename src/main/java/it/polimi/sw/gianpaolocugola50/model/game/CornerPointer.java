@@ -10,13 +10,16 @@ public class CornerPointer {
         present = false;
         corner = null;
     }
+
     public boolean isPresent() {
         return present;
     }
+
     public void setCorner(Corner corner) {
         present = true;
         this.corner = corner;
     }
+
     public Corner getCorner() {
         return corner;
     }

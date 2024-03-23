@@ -38,6 +38,9 @@ public class Game {
     //the winner of the game
     private Player winnerPlayer;
 
+    //initial size of resourceDeck and goldDeck
+    private int deckSize;
+
     //deck of resourceCard
     private Stack<PlayableCard> resourceDeck;
 
@@ -74,7 +77,7 @@ public class Game {
 
     public void setAllPlayerData() {
         for (Player player : players) {
-            player.setPlayerData(getStarterCard());
+            player.setPlayerData(getStarterCard(), deckSize);
         }
     }
 

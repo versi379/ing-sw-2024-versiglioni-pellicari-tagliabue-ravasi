@@ -1,7 +1,9 @@
 package it.polimi.sw.gianpaolocugola50.model.card;
+
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 
 import java.util.*;
+
 import static java.util.stream.Stream.concat;
 
 public class PlayableCard {
@@ -26,6 +28,7 @@ public class PlayableCard {
         this.fixedResources = new ArrayList<>(fixedResources);
         this.corners = corners.clone();
     }
+
     //constructor for the card without the bonus;
     public PlayableCard(Color color, int points, Corner[] corners) {
         this.color = color;
@@ -42,39 +45,50 @@ public class PlayableCard {
         this.fixedResources = new ArrayList<>();
         this.corners = null;
     }
+
     public Color getColor() {
         return color;
     }
+
     public int getPoints() {
         return points;
     }
+
     public Bonus getBonus() {
         return bonus;
     }
+
     public List<Resource> getFixedResources() {
         return new ArrayList<>(fixedResources);
     }
+
     public Corner getSwCorner() {
         return corners[0];
     }
+
     public Corner getNwCorner() {
         return corners[1];
     }
+
     public Corner getNeCorner() {
         return corners[2];
     }
+
     public Corner getSeCorner() {
         return corners[3];
     }
+
     public int resourceCount(Resource targetResource) {
         return (int) concat(Arrays.stream(corners).map(Corner::getResource), fixedResources.stream())
                 .filter(x -> x.equals(targetResource))
                 .count();
     }
+
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y);
     }
+
     public int scoreIncrement(PlayerData board, int x, int y) {
-        return points*bonus.checkBonus(board, x, y);
+        return points * bonus.checkBonus(board, x, y);
     }
 }

@@ -8,7 +8,6 @@ import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import java.util.*;
 
 public class PlayerData {
-    // da rivedere la staticità dell'attributo (possibili espansioni che cambiano la dimensione dei mazzi)
     public final int MATRIX_LENGTH;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
@@ -28,11 +27,11 @@ public class PlayerData {
         cardsArea = new CardsMatrix(MATRIX_LENGTH);
         score = 0;
         numOfResources = new EnumMap<>(Resource.class);
-        secretObjective = null; // da rivedere
-        hand = new PhysicalCard[3];
         for (Resource resource : Resource.values()) {
             numOfResources.put(resource, 0);
         }
+        secretObjective = null; // da rivedere
+        hand = new PhysicalCard[3];
         placeCard(starterCard, (MATRIX_LENGTH / 2) - 1, (MATRIX_LENGTH / 2) - 1);
     }
 
@@ -48,9 +47,9 @@ public class PlayerData {
         CornerPointer[] result = new CornerPointer[4];
 
         result[0] = (cornersArea[x][y]);
-        result[1] = (y < MATRIX_LENGTH) ? cornersArea[x][y + 1] : new CornerPointer();
-        result[2] = (x < MATRIX_LENGTH && y < MATRIX_LENGTH) ? cornersArea[x + 1][y + 1] : new CornerPointer();
-        result[3] = (x < MATRIX_LENGTH) ? cornersArea[x + 1][y] : new CornerPointer();
+        result[1] = (y < MATRIX_LENGTH - 1) ? cornersArea[x][y + 1] : new CornerPointer();
+        result[2] = (x < MATRIX_LENGTH - 1 && y < MATRIX_LENGTH - 1) ? cornersArea[x + 1][y + 1] : new CornerPointer();
+        result[3] = (x < MATRIX_LENGTH - 1) ? cornersArea[x + 1][y] : new CornerPointer();
         return result;
     }
 

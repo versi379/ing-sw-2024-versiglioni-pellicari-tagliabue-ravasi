@@ -8,9 +8,11 @@ public class PhysicalCard {
         this.front = front;
         this.back = back;
     }
+
     public PlayableCard getFront() {
         return front;
     }
+
     public PlayableCard getBack() {
         return back;
     }

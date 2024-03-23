@@ -12,6 +12,6 @@ public class ObjectiveCard {
     }
 
     public int checkObjective(PlayerData playerData) {
-        return pointsPerCompletion*objective.checkCondition(playerData);
+        return pointsPerCompletion * objective.checkCondition(playerData);
     }
 }
