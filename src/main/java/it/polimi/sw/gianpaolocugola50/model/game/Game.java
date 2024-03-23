@@ -202,7 +202,7 @@ public class Game {
 
                 }
                 if (CardType.STARTER.equals(type)) {
-                    //this is for the resource card
+                    //this is the creation of a starter card
                     cardFront = new PlayableCard(color, point, cornerTmp, fixedResources);
                     cardBack = new PlayableCard(color, 0, cornerTmp2);
                     startDeck.add(
@@ -215,11 +215,18 @@ public class Game {
                     );
                 }
                 if (CardType.GOLD.equals(type)) {
+                    //the restriction are the bonus interface
                     JsonArray restrictionArray = front.getAsJsonArray("restriction");
                     String code = front.get("code").getAsString();
+
+                    //the requirement are the constraint
                     JsonArray requirementArray = front.getAsJsonArray("requirement");
-                    cardFront = new GoldCard(color, point, null, fixedResources, cornerTmp, null);
+                    List<Resource> requirement = new ArrayList<>();
+                    fixedValueFromJsonArray(requirementArray);
+
+                    cardFront = new GoldCard(color, point, null, fixedResources, cornerTmp, requirement);
                     cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
+
                     goldDeck.add(
                             new PhysicalCard(
                                     type,
