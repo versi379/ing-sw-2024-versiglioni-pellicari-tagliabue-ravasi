@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -126,8 +127,17 @@ public class Game {
         }
     }
 
-    private void meshAllDecks() {
-
+    /**
+     * Method used to mix the cards of the decks
+     *
+     */
+    private void mixAllDecks(Stack<PhysicalCard> deck) {
+        List<PhysicalCard> listDeck = new ArrayList<>(deck);
+        Collections.shuffle(listDeck);
+        deck.clear();
+        for (PhysicalCard card : listDeck) {
+            deck.push(card);
+        }
     }
 
     //read the file json and set the decks with the cards
