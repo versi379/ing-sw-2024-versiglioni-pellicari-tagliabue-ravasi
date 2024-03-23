@@ -16,7 +16,7 @@ public class PlayerData {
     private final ObjectiveCard secretObjective;
     private final PhysicalCard[] hand;
 
-    public PlayerData(PlayableCard starterCard, int deckSize) {
+    public PlayerData(PhysicalCard starterCard, int deckSize) {
         MATRIX_LENGTH = 2 * deckSize + 2;
         cornersArea = new CornerPointer[MATRIX_LENGTH][MATRIX_LENGTH];
         for (int i = 0; i < MATRIX_LENGTH; i++) {
@@ -32,7 +32,7 @@ public class PlayerData {
         }
         secretObjective = null; // da rivedere
         hand = new PhysicalCard[3];
-        placeCard(starterCard, (MATRIX_LENGTH / 2) - 1, (MATRIX_LENGTH / 2) - 1);
+        placeCard(starterCard.getFront(), (MATRIX_LENGTH / 2) - 1, (MATRIX_LENGTH / 2) - 1);
     }
 
     public CardsMatrix getCardsArea() {

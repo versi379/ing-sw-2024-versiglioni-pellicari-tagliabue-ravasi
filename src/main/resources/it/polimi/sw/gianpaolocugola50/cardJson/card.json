@@ -1,0 +1,160 @@
+[
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "FULL",
+          "INSECT"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "FULL",
+          "INSECT"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": [
+        "QUILL"
+      ],
+      "code": "G00",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "INSECT",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "QUILL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  }
+
+]

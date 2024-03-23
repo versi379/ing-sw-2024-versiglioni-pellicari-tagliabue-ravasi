@@ -25,7 +25,7 @@ public class PlayableCard {
         this.color = color;
         this.points = points;
         this.bonus = bonus;
-        this.fixedResources = new ArrayList<>(fixedResources);
+        this.fixedResources = fixedResources;
         this.corners = corners.clone();
     }
 
@@ -38,13 +38,15 @@ public class PlayableCard {
         this.corners = corners.clone();
     }
 
-    public PlayableCard(Color color, int points) {
+    //constructor for the card without the bonus and the resource in the center(usually the back of a card or the starter card;
+    public PlayableCard(Color color, int points, Corner[] corners, List<Resource> fixedResources) {
         this.color = color;
         this.points = points;
         this.bonus = new BlankBonus();
-        this.fixedResources = new ArrayList<>();
-        this.corners = null;
+        this.fixedResources = fixedResources;
+        this.corners = corners.clone();
     }
+
 
     public Color getColor() {
         return color;

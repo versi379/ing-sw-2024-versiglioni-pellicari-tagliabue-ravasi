@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
+import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 
@@ -32,7 +33,7 @@ public class Player {
         return playerArea;
     }
 
-    public void setPlayerData(PlayableCard starterCard, int deckSize) {
+    public void setPlayerData(PhysicalCard starterCard, int deckSize) {
         this.playerArea = new PlayerData(starterCard, deckSize);
     }
 

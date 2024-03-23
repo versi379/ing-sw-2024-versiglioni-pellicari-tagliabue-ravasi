@@ -1,9 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
-import it.polimi.sw.gianpaolocugola50.model.card.Color;
-import it.polimi.sw.gianpaolocugola50.model.card.Corner;
-import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
-import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
+import it.polimi.sw.gianpaolocugola50.model.card.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 
 import java.util.ArrayList;
@@ -29,8 +26,6 @@ public class Game {
 
     //list of player of one game, max 4 player
     private List<Player> players;
-    //list of player of one game, max 4 player
-
 
     //the player that is on turn
     private Player nowPlayer;
@@ -42,37 +37,31 @@ public class Game {
     private int deckSize;
 
     //deck of resourceCard
-    private Stack<PlayableCard> resourceDeck;
+    private Stack<PhysicalCard> resourceDeck;
 
-    //deck of goldCard
+    //deck of goldCard1
     private Stack<PhysicalCard> goldDeck;
 
     //deck of StarterCard
-    private Stack<PhysicalCard> StartDeck;
+    private Stack<PhysicalCard> startDeck;
 
     //resource and gold card on the desk
     private PhysicalCard[] revealedCards;
-
-    //gold card on the desk
+    //these are the objective that all the player of the game have in common
     private ObjectiveCard[] commonObjectives;
+    //these are the card for the objective
+    private Stack<ObjectiveCard> deckObjective;
 
 
     public Game(int idGame, int numPlayers, Player creator) {
         this.idGame = idGame;
-        this.numPlayers = 0;
+        this.numPlayers = numPlayers;
         this.players = new ArrayList<>();
         players.add(creator);
     }
 
-    public void join(Player player) {
+    public void addPlayer(Player player) {
         players.add(player);
-        if (players.size() == numPlayers) {
-            start();
-        }
-    }
-
-    public void start() {
-
     }
 
     public void setAllPlayerData() {
@@ -81,82 +70,175 @@ public class Game {
         }
     }
 
-    private PlayableCard getStarterCard() {
+    //this is used to get the starter card for one player, the card will be given randomly;
+    private PhysicalCard getStarterCard() {
+        return startDeck.pop();
+    }
+
+    /**
+     * Method used to draw more than one card from the decks
+     */
+    public PhysicalCard[] drawCards(DeckType deckType, int quantity) {
+        PhysicalCard[] drawCard = new PhysicalCard[quantity];
+        if (DeckType.GOLD.equals(deckType)) {
+                for (int i = 0; i < quantity; i++) {
+               drawCard[i]=goldDeck.pop();
+            }
+        }
+        if (DeckType.RESOURCE.equals(deckType)) {
+            for (int i = 0; i < quantity; i++) {
+                drawCard[i]=resourceDeck.pop();
+            }
+        }
+        return drawCard;
+    }
+
+    /**
+     * Method used to draw just one card from the decks
+     */
+    public PhysicalCard drawCard(DeckType deckType){
+        if (DeckType.GOLD.equals(deckType)) {
+           return goldDeck.pop();
+        }
+        if (DeckType.RESOURCE.equals(deckType)) {
+           return resourceDeck.pop();
+        }
         return null;
     }
-
-    public void setResourceDeck() {
-        this.resourceDeck = new Stack<>();
-        String type;
-        Color color;
-        int quantity;
-        int point;
-        String ne;
-        String nw;
-        String se;
-        String sw;
-        PlayableCard card1;
-        Corner[] corners;
-
-        JsonElement jsonElement = getResourceFromJson();
-        try {
-            // Verifica se il JSON è un array o un singolo oggetto
-            if (jsonElement.isJsonArray()) {
-                // Se il JSON è un array, leggi ciascun oggetto
-                JsonArray jsonArray = jsonElement.getAsJsonArray();
-                for (JsonElement element : jsonArray) {
-                    JsonObject jsonObject = element.getAsJsonObject();
-                    // create card
-                    type = jsonObject.get("type").getAsString();
-                    color = Color.valueOf(jsonObject.get("color").getAsString());
-                    point = jsonObject.get("point").getAsInt();
-                    card1 = new PlayableCard(color, point);
-                    resourceDeck.add(card1);
-                    System.out.println(card1.getColor());
-                    /*JsonObject corner = jsonObject.getAsJsonObject("corner");
-
-                    nw=corner.get("nw").getAsString();
-                    ne=corner.get("ne").getAsString();
-                    sw=corner.get("sw").getAsString();
-                    se=corner.get("se").getAsString();
-                    */
-
-                }
-            } else if (jsonElement.isJsonObject()) {
-                // Se il JSON è un singolo oggetto, leggilo direttamente
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                // Stampare le informazioni dell'oggetto
-                // create card
-                type = jsonObject.get("type").getAsString();
-                color = Color.valueOf(jsonObject.get("color").getAsString());
-                point = jsonObject.get("point").getAsInt();
-                card1 = new PlayableCard(color, point);
-                resourceDeck.add(card1);
-                System.out.println(card1.getColor());
-            } else {
-
-            }
-        } catch (Exception e) {
-
+    /**
+     * Method used to draw a card from the cards on the desk
+     *
+     */
+    public PhysicalCard drawCard(DeckType deckType,int position){
+        if (DeckType.REVEALED.equals(deckType)) {
+            return revealedCards[position];
         }
+        return null;
+    }
+    public ObjectiveCard[] getSecreteObjective(){
+        return new ObjectiveCard[]{deckObjective.pop(), deckObjective.pop()};
+    }
+    private void setCommonObjectives(int quantity){
+        for(int i=0;i<quantity;i++){
+            if(!deckObjective.isEmpty()){
+                commonObjectives[i]=deckObjective.pop();
+            }
+        }
+    }
+
+    private void meshAllDecks() {
 
     }
 
-    private JsonElement getResourceFromJson() {
-        try {
-            // Crea un oggetto Gson
-            Gson gson = new Gson();
+    //read the file json and set the decks with the cards
+    private void setDeck() {
+        CardType type;
+        int quantity;
+        Color color;
+        int point;
+        Corner[] cornerTmp;
+        Corner[] cornerTmp2;
+        List<Resource> fixedResources = new ArrayList<>();
+        PlayableCard cardFront;
+        PlayableCard cardBack;
+        Gson gson = new Gson();
 
-            // Leggi il file JSON come oggetto JsonElement
-            Reader reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/resourceCard.json");
-            JsonElement jsonElement = gson.fromJson(reader, JsonElement.class);
-            return jsonElement;
+        try (FileReader reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/card.json")) {
+
+            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
 
 
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                JsonObject front = jsonObject.getAsJsonObject("front");
+                JsonObject back = jsonObject.getAsJsonObject("back");
+                JsonObject corner = front.getAsJsonObject("corner");
+                JsonObject backCorner = back.getAsJsonObject("corner");
+
+
+                type = CardType.valueOf(jsonObject.get("type").getAsString());
+                quantity = jsonObject.get("quantity").getAsInt();
+                point = front.get("point").getAsInt();
+                color = Color.valueOf(jsonObject.get("color").getAsString());
+                cornerTmp = cornerFromJsonObj(corner).clone();
+                cornerTmp2 = cornerFromJsonObj(backCorner).clone();
+
+                if (CardType.RESOURCE.equals(type) || CardType.GOLD.equals(type)) {
+                    JsonArray centerBack = back.getAsJsonArray("center");
+                    fixedResources = fixedValueFromJsonArray(centerBack);
+
+                } else if (CardType.STARTER.equals(type)) {
+                    JsonArray center = front.getAsJsonArray("center");
+                    fixedResources = fixedValueFromJsonArray(center);
+                }
+
+                if (CardType.RESOURCE.equals(type)) {
+                    //this is for the resource card
+                    cardFront = new PlayableCard(color, point, cornerTmp);
+                    cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
+                    resourceDeck.add(
+                            new PhysicalCard(
+                                    type,
+                                    cardFront,
+                                    cardBack,
+                                    quantity
+                            )
+                    );
+
+                }
+                if (CardType.STARTER.equals(type)) {
+                    //this is for the resource card
+                    cardFront = new PlayableCard(color, point, cornerTmp, fixedResources);
+                    cardBack = new PlayableCard(color, 0, cornerTmp2);
+                    startDeck.add(
+                            new PhysicalCard(
+                                    type,
+                                    cardFront,
+                                    cardBack,
+                                    quantity
+                            )
+                    );
+                }
+                if (CardType.GOLD.equals(type)) {
+                    JsonArray restrictionArray = front.getAsJsonArray("restriction");
+                    String code = front.get("code").getAsString();
+                    JsonArray requirementArray = front.getAsJsonArray("requirement");
+                    cardFront = new GoldCard(color, point, null, fixedResources, cornerTmp, null);
+                    cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
+                    goldDeck.add(
+                            new PhysicalCard(
+                                    type,
+                                    cardFront,
+                                    cardBack,
+                                    quantity
+                            )
+                    );
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
+    private static Corner[] cornerFromJsonObj(JsonObject corner) {
+        Corner[] cornerTmp = new Corner[4];
+        cornerTmp[0] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("sw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("sw").get(1).getAsString()));
+        cornerTmp[1] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("nw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("nw").get(1).getAsString()));
+        cornerTmp[2] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("ne").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("ne").get(1).getAsString()));
+        cornerTmp[3] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("se").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("se").get(1).getAsString()));
+        return cornerTmp;
+    }
+
+    private static List<Resource> fixedValueFromJsonArray(JsonArray centerBack) {
+        List<Resource> fixedResources = null;
+        for (int i = 0; i < centerBack.size(); i++)
+            if (fixedResources != null) {
+                fixedResources.add(Resource.valueOf(centerBack.get(i).getAsString()));
+            }
+        return fixedResources;
+    }
 }
+
+
+
+

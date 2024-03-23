@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
+import it.polimi.sw.gianpaolocugola50.model.game.Player;
 
 /**
  * This class is for the player chat so that the players can send each other messages while playing
@@ -20,7 +21,7 @@ public class Chat {
     /**
      * This method stores every message sent in an ArrayList
      */
-    public void addMessage(Message message, VirtualView... virtualViews){
+    public void addMessage(Message message/*,VirtualView... virtualViews*/){
         this.messages.add(message);
         // update view through a Model-View event
     }

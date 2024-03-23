@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import com.google.gson.annotations.Expose;
+import it.polimi.sw.gianpaolocugola50.model.game.Player;
 
 /**
  * This class defines messages that players can send to each other
