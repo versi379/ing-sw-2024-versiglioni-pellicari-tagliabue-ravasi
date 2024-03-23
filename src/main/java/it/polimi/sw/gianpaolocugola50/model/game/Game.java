@@ -137,11 +137,13 @@ public class Game {
      * Method used to mix the cards of the decks
      */
     private void mixAllDecks(Stack<PhysicalCard> deck) {
-        List<PhysicalCard> listDeck = new ArrayList<>(deck);
-        Collections.shuffle(listDeck);
-        deck.clear();
-        for (PhysicalCard card : listDeck) {
-            deck.push(card);
+        for (int i = 0; i < 4; i++) {
+            List<PhysicalCard> listDeck = new ArrayList<>(deck);
+            Collections.shuffle(listDeck);
+            deck.clear();
+            for (PhysicalCard card : listDeck) {
+                deck.push(card);
+            }
         }
     }
 
@@ -219,13 +221,13 @@ public class Game {
 
                     String code = front.get("code").getAsString();
                     Bonus bonus = null;
-                    if(code.equals("G00")){
-                        bonus= new BlankBonus();
+                    if (code.equals("G00")) {
+                        bonus = new BlankBonus();
                     } else if (code.equals("G01")) {
-                        Resource resourceRequired =Resource.valueOf(front.get("restriction").getAsString());
-                        bonus= new ResourcesBonus(resourceRequired);
+                        Resource resourceRequired = Resource.valueOf(front.get("restriction").getAsString());
+                        bonus = new ResourcesBonus(resourceRequired);
                     } else if (code.equals("G02")) {
-                        bonus= new CoveredCornersBonus();
+                        bonus = new CoveredCornersBonus();
                     }
 
                     //the requirement are the constraint

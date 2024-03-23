@@ -886,6 +886,888 @@
     }
   },
   {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "FULL",
+          "PLANT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "PLANT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "FULL",
+          "QUILL"
+        ],
+        "se": [
+          "FULL",
+          "PLANT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "INK"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "FULL",
+          "INK"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "PLANT"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "SCROLL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "QUILL"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
     "type": "GOLD",
     "color": "RED",
     "quantity": 1,
