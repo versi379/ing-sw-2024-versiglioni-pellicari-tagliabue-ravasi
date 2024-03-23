@@ -59,6 +59,10 @@ public class Game {
         this.numPlayers = numPlayers;
         this.players = new ArrayList<>();
         players.add(creator);
+        this.resourceDeck = new Stack<>();
+        this.goldDeck = new Stack<>();
+        this.startDeck = new Stack<>();
+        setDeck();
     }
 
     public void addPlayer(Player player) {
@@ -82,13 +86,13 @@ public class Game {
     public PhysicalCard[] drawCards(DeckType deckType, int quantity) {
         PhysicalCard[] drawCard = new PhysicalCard[quantity];
         if (DeckType.GOLD.equals(deckType)) {
-                for (int i = 0; i < quantity; i++) {
-               drawCard[i]=goldDeck.pop();
+            for (int i = 0; i < quantity; i++) {
+                drawCard[i] = goldDeck.pop();
             }
         }
         if (DeckType.RESOURCE.equals(deckType)) {
             for (int i = 0; i < quantity; i++) {
-                drawCard[i]=resourceDeck.pop();
+                drawCard[i] = resourceDeck.pop();
             }
         }
         return drawCard;
@@ -97,39 +101,40 @@ public class Game {
     /**
      * Method used to draw just one card from the decks
      */
-    public PhysicalCard drawCard(DeckType deckType){
+    public PhysicalCard drawCard(DeckType deckType) {
         if (DeckType.GOLD.equals(deckType)) {
-           return goldDeck.pop();
+            return goldDeck.pop();
         }
         if (DeckType.RESOURCE.equals(deckType)) {
-           return resourceDeck.pop();
+            return resourceDeck.pop();
         }
         return null;
     }
+
     /**
      * Method used to draw a card from the cards on the desk
-     *
      */
-    public PhysicalCard drawCard(DeckType deckType,int position){
+    public PhysicalCard drawCard(DeckType deckType, int position) {
         if (DeckType.REVEALED.equals(deckType)) {
             return revealedCards[position];
         }
         return null;
     }
-    public ObjectiveCard[] getSecreteObjective(){
+
+    public ObjectiveCard[] getSecreteObjective() {
         return new ObjectiveCard[]{deckObjective.pop(), deckObjective.pop()};
     }
-    private void setCommonObjectives(int quantity){
-        for(int i=0;i<quantity;i++){
-            if(!deckObjective.isEmpty()){
-                commonObjectives[i]=deckObjective.pop();
+
+    private void setCommonObjectives(int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            if (!deckObjective.isEmpty()) {
+                commonObjectives[i] = deckObjective.pop();
             }
         }
     }
 
     /**
      * Method used to mix the cards of the decks
-     *
      */
     private void mixAllDecks(Stack<PhysicalCard> deck) {
         List<PhysicalCard> listDeck = new ArrayList<>(deck);
@@ -228,7 +233,7 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //after the parsing, i used the method to mix the cards of the decks
+        //after the parsing, used the method to mix the cards of the decks
         mixAllDecks(resourceDeck);
         mixAllDecks(startDeck);
         mixAllDecks(goldDeck);

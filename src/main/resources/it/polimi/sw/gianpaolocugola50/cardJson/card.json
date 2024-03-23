@@ -49,11 +49,256 @@
     }
   },
   {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "PLANT"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI,PLANT"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "se": [
+          "FULL",
+          "PLANT"
+        ]
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "INSECT,ANIMAL"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "PLANT"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "INSECT","PLANT","ANIMAL"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "FULL",
+          "FUNGI"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    }
+  },
+  {
+    "type": "STARTER",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI","PLANT","ANIMAL"
+      ]
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    }
+  },
+  {
     "type": "RESOURCE",
     "color": "RED",
     "quantity": 1,
     "front": {
-      "point": 1,
+      "point": 0,
       "corner": {
         "nw": [
           "FULL",
@@ -94,6 +339,545 @@
       },
       "center": [
         "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "FULL",
+          "FUNGI"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "FUNGI"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "QUILL"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "INK"
+        ],
+        "ne": [
+          "FULL",
+          "FUNGI"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "FULL",
+          "ANIMAL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "FULL",
+          "FUNGI"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "ne": [
+          "HIDDEN",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "FUNGI"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "PLANT"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "FULL",
+          "PLANT"
+        ],
+        "se": [
+          "HIDDEN",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "PLANT"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "HIDDEN",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          "X"
+        ],
+        "ne": [
+          "EMPTY",
+          "X"
+        ],
+        "sw": [
+          "EMPTY",
+          "X"
+        ],
+        "se": [
+          "EMPTY",
+          "X"
+        ]
+      },
+      "center": [
+        "PLANT"
       ]
     }
   },
@@ -156,5 +940,4 @@
       ]
     }
   }
-
 ]
