@@ -216,15 +216,24 @@ public class Game {
                 }
                 if (CardType.GOLD.equals(type)) {
                     //the restriction are the bonus interface
-                    JsonArray restrictionArray = front.getAsJsonArray("restriction");
+
                     String code = front.get("code").getAsString();
+                    Bonus bonus = null;
+                    if(code.equals("G00")){
+                        bonus= new BlankBonus();
+                    } else if (code.equals("G01")) {
+                        Resource resourceRequired =Resource.valueOf(front.get("restriction").getAsString());
+                        bonus= new ResourcesBonus(resourceRequired);
+                    } else if (code.equals("G02")) {
+                        bonus= new CoveredCornersBonus();
+                    }
 
                     //the requirement are the constraint
                     JsonArray requirementArray = front.getAsJsonArray("requirement");
                     List<Resource> requirement = new ArrayList<>();
                     fixedValueFromJsonArray(requirementArray);
 
-                    cardFront = new GoldCard(color, point, null, fixedResources, cornerTmp, requirement);
+                    cardFront = new GoldCard(color, point, bonus, fixedResources, cornerTmp, requirement);
                     cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
 
                     goldDeck.add(
