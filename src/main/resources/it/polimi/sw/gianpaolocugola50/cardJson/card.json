@@ -1768,6 +1768,496 @@
     }
   },
   {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "INSECT"
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "INSECT"
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "QUILL"
+        ],
+        "sw": [
+          "FULL",
+          "ANIMAL"
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "FULL",
+          "FUNGI"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 0,
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "FULL",
+          "PLANT"
+        ],
+        "sw": [
+          "FULL",
+          "INK"
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "FULL",
+          "INSECT"
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "FULL",
+          "INSECT"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "RESOURCE",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "INSECT"
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
     "type": "GOLD",
     "color": "RED",
     "quantity": 1,
@@ -1778,7 +2268,6 @@
       "requirement": [
         "FUNGI",
         "FUNGI",
-        "INSECT",
         "ANIMAL"
       ],
       "corner": {
@@ -1821,6 +2310,2210 @@
       },
       "center": [
         "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "INK",
+      "code": "G01",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "INK"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "SCROLL",
+      "code": "G01",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": "null",
+      "code": "G00",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "INK"
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "QUILL"
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "SCROLL"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "RED",
+    "quantity": 1,
+    "front": {
+      "point": 5,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "FUNGI",
+        "FUNGI",
+        "FUNGI",
+        "FUNGI",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "FUNGI"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "QUILL",
+      "code": "G01",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "QUILL"
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "SCROLL",
+      "code": "G01",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "SCROLL"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "INK",
+      "code": "G01",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "INK"
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "QUILL"
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "INK"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "GREEN",
+    "quantity": 1,
+    "front": {
+      "point": 5,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "PLANT",
+        "PLANT",
+        "PLANT",
+        "PLANT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "PLANT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "INK",
+      "code": "G01",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "INK"
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "SCROLL",
+      "code": "G01",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "FULL",
+          "SCROLL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "QUILL",
+      "code": "G01",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "QUILL"
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "INK"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "FULL",
+          "QUILL"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "BLUE",
+    "quantity": 1,
+    "front": {
+      "point": 5,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "ANIMAL"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "QUILL",
+      "code": "G01",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "QUILL"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "SCROLL",
+      "code": "G01",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "SCROLL"
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 1,
+      "restriction": "INK",
+      "code": "G01",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "FULL",
+          "INK"
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT",
+        "ANIMAL"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT",
+        "PLANT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "restriction": null,
+      "code": "G02",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT",
+        "FUNGI"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "FULL",
+          "INK"
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "FULL",
+          "SCROLL"
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "HIDDEN",
+          null
+        ],
+        "ne": [
+          "HIDDEN",
+          null
+        ],
+        "sw": [
+          "FULL",
+          "QUILL"
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
+      ]
+    }
+  },
+  {
+    "type": "GOLD",
+    "color": "PURPLE",
+    "quantity": 1,
+    "front": {
+      "point": 5,
+      "restriction": null,
+      "code": "G00",
+      "requirement": [
+        "INSECT",
+        "INSECT",
+        "INSECT",
+        "INSECT",
+        "INSECT"
+      ],
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "HIDDEN",
+          null
+        ],
+        "se": [
+          "HIDDEN",
+          null
+        ]
+      }
+    },
+    "back": {
+      "corner": {
+        "nw": [
+          "EMPTY",
+          null
+        ],
+        "ne": [
+          "EMPTY",
+          null
+        ],
+        "sw": [
+          "EMPTY",
+          null
+        ],
+        "se": [
+          "EMPTY",
+          null
+        ]
+      },
+      "center": [
+        "INSECT"
       ]
     }
   }

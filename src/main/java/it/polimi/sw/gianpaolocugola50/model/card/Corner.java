@@ -6,9 +6,7 @@ public class Corner {
 
     public Corner(CornerStatus status, Resource resource) {
         this.status = status;
-        // da rivedere, non è necessario mettere l'if dato che
-        // verrebbe comunque ritornato null in getResource
-        this.resource = (status == CornerStatus.FULL) ? resource : null;
+        this.resource=resource;
     }
 
 
