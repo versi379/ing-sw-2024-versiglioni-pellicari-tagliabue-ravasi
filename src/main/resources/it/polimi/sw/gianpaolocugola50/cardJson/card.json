@@ -122,7 +122,8 @@
         ]
       },
       "center": [
-        "FUNGI,PLANT"
+        "FUNGI",
+        "PLANT"
       ]
     },
     "back": {
@@ -171,7 +172,8 @@
         ]
       },
       "center": [
-        "INSECT,ANIMAL"
+        "INSECT",
+        "ANIMAL"
       ]
     },
     "back": {
@@ -4710,7 +4712,11 @@
       "code": "OB03",
       "differentResourcesObjective": {
         "numOfResource": 3,
-        "typeOfDifferentResource":["QUILL","INK","SCROLL"]
+        "typeOfDifferentResource": [
+          "QUILL",
+          "INK",
+          "SCROLL"
+        ]
       }
     },
     "back": null

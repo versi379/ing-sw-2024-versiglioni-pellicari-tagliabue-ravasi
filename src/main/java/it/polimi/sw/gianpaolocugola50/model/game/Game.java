@@ -276,8 +276,7 @@ public class Game {
                     } else if ("OB03".equals(front.get("code").getAsString())) {
                         JsonObject differentResourcesObjective = front.getAsJsonObject("differentResourcesObjective");
                         JsonArray typeOfDifferentResource = differentResourcesObjective.getAsJsonArray("typeOfDifferentResource");
-
-                        objective = new DifferentResourcesObjective((Set<Resource>) fixedValueFromJsonArray(typeOfDifferentResource));
+                        objective = new DifferentResourcesObjective( FromListToSet(fixedValueFromJsonArray(typeOfDifferentResource)));
                     }
 
 
@@ -315,12 +314,16 @@ public class Game {
     }
 
     private List<Resource> fixedValueFromJsonArray(JsonArray centerBack) {
-        List<Resource> fixedResources = null;
+        List<Resource> fixedResources = new ArrayList<>();
         for (int i = 0; i < centerBack.size(); i++)
-            if (fixedResources != null) {
-                fixedResources.add(Resource.valueOf(centerBack.get(i).getAsString()));
-            }
+            fixedResources.add(Resource.valueOf(centerBack.get(i).getAsString()));
+
         return fixedResources;
+    }
+
+    private Set<Resource> FromListToSet(List<Resource>list) {
+        Set<Resource> convert =  new HashSet<>(list);;
+        return convert;
     }
 }
 
