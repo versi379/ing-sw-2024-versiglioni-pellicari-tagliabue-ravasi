@@ -4516,5 +4516,245 @@
         "INSECT"
       ]
     }
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB00",
+      "monolithObjective": {
+        "numOfCard": 3,
+        "color": "RED",
+        "orientation": "RIGHTDIAGONAL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB00",
+      "monolithObjective": {
+        "numOfCard": 3,
+        "color": "GREEN",
+        "orientation": "LEFTDIAGONAL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB00",
+      "monolithObjective": {
+        "numOfCard": 3,
+        "color": "BLUE",
+        "orientation": "RIGHTDIAGONAL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB00",
+      "monolithObjective": {
+        "numOfCard": 3,
+        "color": "PURPLE",
+        "orientation": "LEFTDIAGONAL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "OB01",
+      "caveObjective": {
+        "numOfCard": 2,
+        "color": "RED",
+        "numOfCard2": 1,
+        "color2": "GREEN",
+        "orientation": "UPRIGHTL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "OB01",
+      "caveObjective": {
+        "numOfCard": 2,
+        "color": "GREEN",
+        "numOfCard2": 1,
+        "color2": "PURPLE",
+        "orientation": "UPRIGHTJ"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "OB01",
+      "caveObjective": {
+        "numOfCard": 2,
+        "color": "BLUE",
+        "numOfCard2": 1,
+        "color2": "RED",
+        "orientation": "INVERTEDL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "OB01",
+      "caveObjective": {
+        "numOfCard": 2,
+        "color": "PURPLE",
+        "numOfCard2": 1,
+        "color2": "BLUE",
+        "orientation": "INVERTEDJ"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 3,
+        "typeOfResource": "FUNGI"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 3,
+        "typeOfResource": "PLANT"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 3,
+        "typeOfResource": "ANIMAL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 3,
+        "typeOfResource": "INSECT"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 3,
+      "code": "OB03",
+      "differentResourcesObjective": {
+        "numOfResource": 3,
+        "typeOfDifferentResource":["QUILL","INK","SCROLL"]
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 2,
+        "typeOfResource": "SCROLL"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 2,
+        "typeOfResource": "INK"
+      }
+    },
+    "back": null
+  },
+  {
+    "type": "OBJECTIVE",
+    "color": "WHITE",
+    "quantity": 1,
+    "front": {
+      "point": 2,
+      "code": "OB02",
+      "identicalResourcesObjective": {
+        "numOfResource": 2,
+        "typeOfResource": "QUILL"
+      }
+    },
+    "back": null
   }
 ]

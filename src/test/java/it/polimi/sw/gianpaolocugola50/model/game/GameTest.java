@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
+import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ class GameTest {
     @Test
     void Test1() {
         Game a = new Game(12, 3, null);
+
         for (int i = 0; i < 40; i++) {
             PhysicalCard card = a.drawCard(DeckType.RESOURCE);
             System.out.println(card.getCardType());
@@ -69,7 +71,10 @@ class GameTest {
             }
             System.out.println("______________________________________________________");
         });
-
+        for (int i=0;i<16;i++){
+            ObjectiveCard op= a.getSecreteObjective2();
+            System.out.println(op.getPointsPerCompletion());
+        }
     }
 
 
