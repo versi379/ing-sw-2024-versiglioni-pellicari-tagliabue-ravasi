@@ -9,16 +9,15 @@ public class GoldCard extends PlayableCard {
 
     public GoldCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
         super(color, points, bonus, fixedResources, corners);
+
+        this.constraint = new EnumMap<>(Resource.class);
+        for (Resource resource : Resource.values()) {
+            this.constraint.put(resource, 0);
+        }
         if (constraint != null) {
-            this.constraint = new EnumMap<>(Resource.class);
-            for (Resource resource : Resource.values()) {
-                this.constraint.put(resource, 0);
-            }
             for (Resource resource : constraint) {
                 this.constraint.replace(resource, (this.constraint.get(resource)) + 1);
             }
-        } else {
-            this.constraint = new EnumMap<>(Resource.class);
         }
     }
 

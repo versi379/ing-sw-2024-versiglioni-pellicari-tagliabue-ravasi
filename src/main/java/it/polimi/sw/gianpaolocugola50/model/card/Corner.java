@@ -6,7 +6,9 @@ public class Corner {
 
     public Corner(CornerStatus status, Resource resource) {
         this.status = status;
-        this.resource = resource;
+        // da rivedere, non è necessario mettere l'if dato che
+        // verrebbe comunque ritornato null in getResource
+        this.resource = (status == CornerStatus.FULL) ? resource : null;
     }
 
     public boolean isVisible() {
@@ -19,6 +21,6 @@ public class Corner {
     }
 
     public Resource getResource() {
-        return resource;
+        return (status == CornerStatus.FULL) ? resource : null;
     }
 }

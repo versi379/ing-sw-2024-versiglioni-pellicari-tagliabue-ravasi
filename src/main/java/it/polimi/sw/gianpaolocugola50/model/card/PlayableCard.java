@@ -82,7 +82,7 @@ public class PlayableCard {
 
     public int resourceCount(Resource targetResource) {
         return (int) concat(Arrays.stream(corners).map(Corner::getResource), fixedResources.stream())
-                .filter(x -> x.equals(targetResource))
+                .filter(targetResource::equals)
                 .count();
     }
 
