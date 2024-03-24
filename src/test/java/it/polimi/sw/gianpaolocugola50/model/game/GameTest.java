@@ -20,22 +20,22 @@ class GameTest {
             if (card.getFront().getSwCorner().getResource() != null) {
                 System.out.println(card.getFront().getSwCorner().getResource().toString());
             } else {
-                System.out.println("VUOTO");
+                System.out.println("null");
             }
             if (card.getFront().getSeCorner().getResource() != null) {
                 System.out.println(card.getFront().getSeCorner().getResource().toString());
             } else {
-                System.out.println("VUOTO");
+                System.out.println("null");
             }
             if (card.getFront().getNwCorner().getResource() != null) {
                 System.out.println(card.getFront().getNwCorner().getResource().toString());
             } else {
-                System.out.println("VUOTO");
+                System.out.println("null");
             }
             if (card.getFront().getNeCorner().getResource() != null) {
                 System.out.println(card.getFront().getNeCorner().getResource().toString());
             } else {
-                System.out.println("VUOTO");
+                System.out.println("null");
             }
 
 
