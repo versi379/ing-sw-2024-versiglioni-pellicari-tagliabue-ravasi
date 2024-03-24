@@ -63,19 +63,54 @@ public class Game {
         setDeck();
     }
 
+    public int getNumbersOfCardInGoldDeck() {
+        return goldDeck.size();
+    }
+
+    public int getNumbersOfCardInResourceDeck() {
+        return resourceDeck.size();
+    }
+
+    /**
+     * this method is used to add the players to this game
+     */
     public void addPlayer(Player player) {
         players.add(player);
     }
 
-    public void setAllPlayerData() {
+    /**
+     * this method is used to set the starting point for the players
+     * they will be given the starter card, the 2 card for the objective, the common objective
+     */
+
+    private void setAllPlayerData() {
         for (Player player : players) {
-            player.setPlayerData(getStarterCard(), deckSize);
+            player.setPlayerData(
+                    getStarterCard(),
+                    deckSize,
+                    commonObjectives,
+                    getSecreteObjective()
+            );
         }
     }
 
-    //this is used to get the starter card for one player, the card will be given randomly;
+    /**
+     * this is used to get the starter card for one player, the card will be given randomly
+     * because the deck are mixed from the start;
+     */
     private PhysicalCard getStarterCard() {
         return startDeck.pop();
+    }
+
+    /**
+     * Method used to get the board of another player
+     */
+    public PlayerData getOtherPlayerBoard(String id) {
+        for (int i = 0; i < players.size(); i++)
+            if (players.get(i).getNickName().equals(id)) {
+                return players.get(i).getPlayerData();
+            }
+        return null;
     }
 
     /**
@@ -119,10 +154,11 @@ public class Game {
         return null;
     }
 
-    public ObjectiveCard[] getSecreteObjective() {
+    private ObjectiveCard[] getSecreteObjective() {
         return new ObjectiveCard[]{deckObjective.pop(), deckObjective.pop()};
     }
 
+    //it is just for test// to delete!!
     public ObjectiveCard getSecreteObjective2() {
         return deckObjective.pop();
     }
@@ -149,6 +185,9 @@ public class Game {
         }
     }
 
+    /**
+     * Method used to mix the objective cards
+     */
     private void mixObjective(Stack<ObjectiveCard> deck) {
         for (int i = 0; i < 4; i++) {
             List<ObjectiveCard> listDeck = new ArrayList<>(deck);
@@ -160,8 +199,12 @@ public class Game {
         }
     }
 
-    //read the file json and set the decks with the cards
+    /**
+     * Method used to read the file json with all the cards
+     * then while reading it will add automatically all the cards to the decks
+     */
     private void setDeck() {
+
         CardType type;
         int quantity;
         Color color;
@@ -266,19 +309,27 @@ public class Game {
                     Objective objective = null;
                     if ("OB00".equals(front.get("code").getAsString())) {
                         JsonObject monolithObjective = front.getAsJsonObject("monolithObjective");
-                        objective = new MonolithObjective(Color.valueOf(monolithObjective.get("color").getAsString()), MonolithOrientation.valueOf(monolithObjective.get("orientation").getAsString()));
+                        objective = new MonolithObjective(
+                                Color.valueOf(monolithObjective.get("color").getAsString()),
+                                MonolithOrientation.valueOf(monolithObjective.get("orientation").getAsString())
+                        );
                     } else if ("OB01".equals(front.get("code").getAsString())) {
                         JsonObject caveObjective = front.getAsJsonObject("caveObjective");
-                        objective = new CaveObjective(Color.valueOf(caveObjective.get("color").getAsString()), Color.valueOf(caveObjective.get("color2").getAsString()), CaveOrientation.valueOf(caveObjective.get("orientation").getAsString()));
+                        objective = new CaveObjective(
+                                Color.valueOf(caveObjective.get("color").getAsString()), Color.valueOf(caveObjective.get("color2").getAsString()),
+                                CaveOrientation.valueOf(caveObjective.get("orientation").getAsString())
+                        );
                     } else if ("OB02".equals(front.get("code").getAsString())) {
                         JsonObject identicalResourcesObjective = front.getAsJsonObject("identicalResourcesObjective");
-                        objective = new IdenticalResourcesObjective(Resource.valueOf(identicalResourcesObjective.get("typeOfResource").getAsString()), identicalResourcesObjective.get("numOfResource").getAsInt());
+                        objective = new IdenticalResourcesObjective(
+                                Resource.valueOf(identicalResourcesObjective.get("typeOfResource").getAsString()),
+                                identicalResourcesObjective.get("numOfResource").getAsInt()
+                        );
                     } else if ("OB03".equals(front.get("code").getAsString())) {
                         JsonObject differentResourcesObjective = front.getAsJsonObject("differentResourcesObjective");
                         JsonArray typeOfDifferentResource = differentResourcesObjective.getAsJsonArray("typeOfDifferentResource");
-                        objective = new DifferentResourcesObjective( FromListToSet(fixedValueFromJsonArray(typeOfDifferentResource)));
+                        objective = new DifferentResourcesObjective(FromListToSet(fixedValueFromJsonArray(typeOfDifferentResource)));
                     }
-
 
                     deckObjective.add(
                             new ObjectiveCard(point, objective)
@@ -321,8 +372,9 @@ public class Game {
         return fixedResources;
     }
 
-    private Set<Resource> FromListToSet(List<Resource>list) {
-        Set<Resource> convert =  new HashSet<>(list);;
+    private Set<Resource> FromListToSet(List<Resource> list) {
+        Set<Resource> convert = new HashSet<>(list);
+        ;
         return convert;
     }
 }

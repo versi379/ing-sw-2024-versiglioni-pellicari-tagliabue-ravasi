@@ -33,7 +33,7 @@ public class Player {
         return playerArea;
     }
 
-    public void setPlayerData(PhysicalCard starterCard, int deckSize) {
+    public void setPlayerData(PhysicalCard starterCard, int deckSize,ObjectiveCard[] commonObjective,ObjectiveCard[] toChoseObjective) {
         this.playerArea = new PlayerData(starterCard, deckSize);
     }
 
