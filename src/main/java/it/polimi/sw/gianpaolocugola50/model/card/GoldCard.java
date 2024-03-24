@@ -5,6 +5,10 @@ import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 import java.util.*;
 
 public class GoldCard extends PlayableCard {
+    /**
+     * Represents the constraint regarding the amount of resources
+     * needed in the player's area in order to place the card
+     */
     private final Map<Resource, Integer> constraint;
 
     public GoldCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
@@ -27,6 +31,11 @@ public class GoldCard extends PlayableCard {
                 this.checkConstraint(board);
     }
 
+    /**
+     * Checks if the player has enough resources to place this card
+     * @param playerData
+     * @return
+     */
     public boolean checkConstraint(PlayerData playerData) {
         return constraint.keySet().stream()
                 .noneMatch(x -> constraint.get(x) > playerData.numOfResource(x));

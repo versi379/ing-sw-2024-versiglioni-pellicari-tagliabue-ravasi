@@ -8,17 +8,29 @@ import static java.util.stream.Stream.concat;
 
 public class PlayableCard {
     private final Color color;
+
+    /**
+     * Represents the number at the top of the card
+     * (not necessarily the score obtained by the player when placing it)
+     */
     private final int points;
+
+    /**
+     * Represents the condition regarding the player's score
+     * increment obtained when placing the card,
+     * computed as points * bonus.checkBonus(...)
+     */
     private final Bonus bonus;
+
+    /**
+     * Represents the list of resources present in the center of the card
+     */
     private final List<Resource> fixedResources;
 
-    //corner it contains the status of one corner of the card
-    //it can be hidden, empty and full
-    //and if is full it contains the resource
-    //the first corner oif the array is sw
-    //the second one is nw
-    //the third one is ne
-    //the last one is se
+    /**
+     * Represents the corners of the card (always initialized as an array of length 4)
+     * In order, it contains the SW, NW, NE and SE corners
+     */
     private final Corner[] corners;
 
     public PlayableCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {

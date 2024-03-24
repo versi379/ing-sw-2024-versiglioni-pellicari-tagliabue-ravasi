@@ -7,9 +7,25 @@ import it.polimi.sw.gianpaolocugola50.model.card.Color;
 
 import java.util.Optional;
 
+/**
+ * Utilized for objective cards which have a cave picture on the front,
+ * whose condition consists of the number of cards of certain colors
+ * arranged in a specific L-like pattern
+ */
 public class CaveObjective implements Objective {
+    /**
+     * Represents the color of the two vertical cards
+     */
     private final Color targetColor1;
+
+    /**
+     * Represents the color of the remaining card
+     */
     private final Color targetColor2;
+
+    /**
+     * Represents the orientation of the pattern required
+     */
     private final CaveOrientation orientation;
 
     public CaveObjective(Color targetColor1, Color targetColor2, CaveOrientation orientation) {

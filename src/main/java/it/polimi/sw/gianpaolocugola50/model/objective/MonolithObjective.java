@@ -8,6 +8,11 @@ import it.polimi.sw.gianpaolocugola50.model.card.Color;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Utilized for objective cards which have a monolith picture on the front,
+ * whose condition consists of the number of cards of a certain color
+ * arranged in a specific diagonal pattern
+ */
 public class MonolithObjective implements Objective {
     private final Color targetColor;
     private final MonolithOrientation orientation;

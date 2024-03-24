@@ -1,14 +1,20 @@
 package it.polimi.sw.gianpaolocugola50.model.card;
 
 public class Corner {
+    /**
+     * Status of the corner (HIDDEN, EMPTY or FULL)
+     */
     private final CornerStatus status;
+
+    /**
+     * Resource contained in the corner (null if status is not FULL)
+     */
     private final Resource resource;
 
     public Corner(CornerStatus status, Resource resource) {
         this.status = status;
-        this.resource=resource;
+        this.resource = resource;
     }
-
 
     public boolean isVisible() {
         return status.equals(CornerStatus.EMPTY) ||
@@ -20,7 +26,6 @@ public class Corner {
     }
 
     public Resource getResource() {
-        //return (status == CornerStatus.FULL) ? resource : null;
         return resource;
     }
 }
