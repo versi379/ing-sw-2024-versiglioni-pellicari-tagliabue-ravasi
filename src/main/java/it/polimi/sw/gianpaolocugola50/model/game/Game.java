@@ -61,6 +61,8 @@ public class Game {
         this.startDeck = new Stack<>();
         this.deckObjective = new Stack<>();
         setDeck();
+        setCommonObjectives(2);
+        setTableAtTheStart();
     }
 
     public int getNumbersOfCardInGoldDeck() {
@@ -76,6 +78,16 @@ public class Game {
      */
     public void addPlayer(Player player) {
         players.add(player);
+    }
+
+    /**
+     * this method is used to add the players to this game
+     */
+    public void setTableAtTheStart() {
+        revealedCards[0] = goldDeck.pop();
+        revealedCards[1] = goldDeck.pop();
+        revealedCards[2] = resourceDeck.pop();
+        revealedCards[3] = resourceDeck.pop();
     }
 
     /**
@@ -136,9 +148,13 @@ public class Game {
      */
     public PhysicalCard drawCard(DeckType deckType) {
         if (DeckType.GOLD.equals(deckType)) {
+            if (goldDeck.empty())
+                return null;
             return goldDeck.pop();
         }
         if (DeckType.RESOURCE.equals(deckType)) {
+            if (resourceDeck.empty())
+                return null;
             return resourceDeck.pop();
         }
         return null;
@@ -146,10 +162,35 @@ public class Game {
 
     /**
      * Method used to draw a card from the cards on the desk
+     * it will automatically replace the card on the table
      */
     public PhysicalCard drawCard(DeckType deckType, int position) {
         if (DeckType.REVEALED.equals(deckType)) {
-            return revealedCards[position];
+
+            PhysicalCard tmp = revealedCards[position];
+            //to replace the card with the same type
+            if (revealedCards[position].getCardType().equals(CardType.GOLD)) {
+                if (goldDeck.empty()) {
+                    if (resourceDeck.empty()) {
+                        revealedCards[position] = null;
+                    } else {
+                        revealedCards[position] = resourceDeck.pop();
+                    }
+                } else {
+                    revealedCards[position] = goldDeck.pop();
+                }
+            } else if (revealedCards[position].getCardType().equals(CardType.RESOURCE)) {
+                if (resourceDeck.empty()) {
+                    if (goldDeck.empty()) {
+                        revealedCards[position] = null;
+                    } else {
+                        revealedCards[position] = goldDeck.pop();
+                    }
+                } else {
+                    revealedCards[position] = resourceDeck.pop();
+                }
+            }
+            return tmp;
         }
         return null;
     }
@@ -350,10 +391,10 @@ public class Game {
 
     private Corner[] cornerFromJsonObj(JsonObject corner) {
         Corner[] cornerTmp = new Corner[4];
-        cornerTmp[0] = checkCornerStatus(corner, "sw"); //new Corner(CornerStatus.valueOf(corner.getAsJsonArray("sw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("sw").get(1).getAsString()));
-        cornerTmp[1] = checkCornerStatus(corner, "nw");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("nw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("nw").get(1).getAsString()));
-        cornerTmp[2] = checkCornerStatus(corner, "ne");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("ne").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("ne").get(1).getAsString()));
-        cornerTmp[3] = checkCornerStatus(corner, "se");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("se").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("se").get(1).getAsString()));
+        cornerTmp[0] = checkCornerStatus(corner, "sw");
+        cornerTmp[1] = checkCornerStatus(corner, "nw");
+        cornerTmp[2] = checkCornerStatus(corner, "ne");
+        cornerTmp[3] = checkCornerStatus(corner, "se");
         return cornerTmp;
     }
 
