@@ -11,6 +11,7 @@ public class Corner {
         this.resource = (status == CornerStatus.FULL) ? resource : null;
     }
 
+
     public boolean isVisible() {
         return status.equals(CornerStatus.EMPTY) ||
                 status.equals(CornerStatus.FULL);
@@ -21,6 +22,7 @@ public class Corner {
     }
 
     public Resource getResource() {
-        return (status == CornerStatus.FULL) ? resource : null;
+        //return (status == CornerStatus.FULL) ? resource : null;
+        return resource;
     }
 }

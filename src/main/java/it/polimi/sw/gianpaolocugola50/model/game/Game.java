@@ -257,16 +257,21 @@ public class Game {
         mixAllDecks(goldDeck);
     }
 
-    private static Corner[] cornerFromJsonObj(JsonObject corner) {
+    private Corner[] cornerFromJsonObj(JsonObject corner) {
         Corner[] cornerTmp = new Corner[4];
-        cornerTmp[0] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("sw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("sw").get(1).getAsString()));
-        cornerTmp[1] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("nw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("nw").get(1).getAsString()));
-        cornerTmp[2] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("ne").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("ne").get(1).getAsString()));
-        cornerTmp[3] = new Corner(CornerStatus.valueOf(corner.getAsJsonArray("se").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("se").get(1).getAsString()));
+        cornerTmp[0] = checkCornerStatus(corner,"sw"); //new Corner(CornerStatus.valueOf(corner.getAsJsonArray("sw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("sw").get(1).getAsString()));
+        cornerTmp[1] = checkCornerStatus(corner,"nw");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("nw").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("nw").get(1).getAsString()));
+        cornerTmp[2] = checkCornerStatus(corner,"ne");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("ne").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("ne").get(1).getAsString()));
+        cornerTmp[3] = checkCornerStatus(corner,"se");//new Corner(CornerStatus.valueOf(corner.getAsJsonArray("se").get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray("se").get(1).getAsString()));
         return cornerTmp;
     }
-
-    private static List<Resource> fixedValueFromJsonArray(JsonArray centerBack) {
+    private Corner checkCornerStatus(JsonObject corner, String field) {
+        if (corner.getAsJsonArray(field).get(1).isJsonNull()) {
+            return new Corner(CornerStatus.valueOf(corner.getAsJsonArray(field).get(0).getAsString()),null);
+        }
+        return new Corner(CornerStatus.valueOf(corner.getAsJsonArray(field).get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray(field).get(1).getAsString()));
+    }
+    private List<Resource> fixedValueFromJsonArray(JsonArray centerBack) {
         List<Resource> fixedResources = null;
         for (int i = 0; i < centerBack.size(); i++)
             if (fixedResources != null) {
