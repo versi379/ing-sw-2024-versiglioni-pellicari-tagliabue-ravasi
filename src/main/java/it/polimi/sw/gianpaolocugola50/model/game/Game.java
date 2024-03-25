@@ -1,18 +1,21 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
+
 import it.polimi.sw.gianpaolocugola50.model.card.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.*;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.*;
 
 import com.google.gson.Gson;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+
 import com.google.gson.JsonObject;
 
 import java.io.FileReader;
-import java.io.Reader;
+
 
 
 public class Game {
@@ -42,13 +45,13 @@ public class Game {
 
     //deck of StarterCard
     private Stack<PhysicalCard> startDeck;
+    //these are the card for the objective
+    private Stack<ObjectiveCard> deckObjective;
 
     //resource and gold card on the desk
     private PhysicalCard[] revealedCards;
     //these are the objective that all the player of the game have in common
     private ObjectiveCard[] commonObjectives;
-    //these are the card for the objective
-    private Stack<ObjectiveCard> deckObjective;
 
 
     public Game(int idGame, int numPlayers, Player creator) {
@@ -56,11 +59,13 @@ public class Game {
         this.numPlayers = numPlayers;
         this.players = new ArrayList<>();
         players.add(creator);
+        this.commonObjectives = new ObjectiveCard[2];
+        this.revealedCards = new PhysicalCard[4];
         this.resourceDeck = new Stack<>();
         this.goldDeck = new Stack<>();
         this.startDeck = new Stack<>();
         this.deckObjective = new Stack<>();
-        setDeck();
+        setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
     }
@@ -239,6 +244,14 @@ public class Game {
             }
         }
     }
+
+    /**
+     * Method used to read the file json with all the cards
+     */
+    private void setDeckV2() {
+
+    }
+
 
     /**
      * Method used to read the file json with all the cards

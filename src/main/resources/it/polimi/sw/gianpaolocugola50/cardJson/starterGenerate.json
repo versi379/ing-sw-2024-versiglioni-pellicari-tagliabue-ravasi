@@ -1,0 +1,312 @@
+[
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "FUNGI",
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "INSECT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "INSECT",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [
+        "FUNGI",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {},
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    }
+  }
+]
