@@ -8,7 +8,7 @@ import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import java.util.*;
 
 public class PlayerData {
-    public final int MATRIX_LENGTH;
+    private final int MATRIX_LENGTH;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
     private int score;

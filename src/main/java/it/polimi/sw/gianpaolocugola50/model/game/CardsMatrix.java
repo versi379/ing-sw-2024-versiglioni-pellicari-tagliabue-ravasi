@@ -97,18 +97,20 @@ public class CardsMatrix {
     }
 
     /**
-     * Returns all adjacent cards to the one present at the position (x, y)
+     * Returns all adjacent cards to the one present at the position (a, b)
      * @param x
      * @param y
      * @return
      */
     public PlayableCard[] getNearCards(int x, int y) {
         PlayableCard[] result = new PlayableCard[4];
+        int a = cornersToCardsX(x, y);
+        int b = cornersToCardsY(x, y);
 
-        result[0] = (cornersToCardsX(x, y) > 0) ? matrix[cornersToCardsX(x, y) - 1][cornersToCardsY(x, y)] : null;
-        result[1] = (cornersToCardsY(x, y) < length() - 1) ? matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) + 1] : null;
-        result[2] = (cornersToCardsX(x, y) < length() - 1) ? matrix[cornersToCardsX(x, y) + 1][cornersToCardsY(x, y)] : null;
-        result[3] = (cornersToCardsY(x, y) > 0) ? matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y) - 1] : null;
+        result[0] = (a > 0) ? matrix[a - 1][b] : null;
+        result[1] = (b < length() - 1) ? matrix[a][b + 1] : null;
+        result[2] = (a < length() - 1) ? matrix[a + 1][b] : null;
+        result[3] = (b > 0) ? matrix[a][b - 1] : null;
         return result;
     }
 
