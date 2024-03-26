@@ -16,7 +16,7 @@ class GameTest {
     void Test1() {
         Game a = new Game(12, 3, null);
 
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 38; i++) {
             PhysicalCard card = a.drawCard(DeckType.RESOURCE);
             System.out.println(card.getCardType());
             System.out.println(card.getFront().getPoints());
@@ -45,7 +45,7 @@ class GameTest {
 
             System.out.println("______________________________________________________");
         }
-        IntStream.range(0, 40).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
+        IntStream.range(0,38).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
             System.out.println(card.getCardType());
             System.out.println(card.getFront().getPoints());
             System.out.println(card.getFront().getColor());
@@ -71,7 +71,7 @@ class GameTest {
             }
             System.out.println("______________________________________________________");
         });
-        for (int i=0;i<16;i++){
+        for (int i=0;i<14;i++){
             ObjectiveCard op= a.getSecreteObjective2();
             System.out.println(op.getPointsPerCompletion());
         }

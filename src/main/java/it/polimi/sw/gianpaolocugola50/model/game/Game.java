@@ -65,7 +65,7 @@ public class Game {
         this.goldDeck = new Stack<>();
         this.startDeck = new Stack<>();
         this.deckObjective = new Stack<>();
-        setDeckV2();
+        setDeck();
         setCommonObjectives(2);
         setTableAtTheStart();
     }
@@ -104,8 +104,8 @@ public class Game {
         for (Player player : players) {
             player.setPlayerData(
                     getStarterCard(),
-                    deckSize,
-                    commonObjectives,
+                    this.deckSize,
+                    this.commonObjectives,
                     getSecreteObjective()
             );
         }

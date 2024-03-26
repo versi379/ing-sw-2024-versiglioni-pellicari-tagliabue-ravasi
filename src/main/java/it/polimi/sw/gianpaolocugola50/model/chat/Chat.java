@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola50.model.chat;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import it.polimi.sw.gianpaolocugola50.model.game.Player;
 
