@@ -1,6 +1,5 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.gianpaolocugola50.model.adapter.*;
@@ -12,11 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.FileReader;
 
+import java.io.FileReader;
 
 public class Game {
     //idGame it identify the game
@@ -67,7 +67,7 @@ public class Game {
         this.goldDeck = new Stack<>();
         this.startDeck = new Stack<>();
         this.objectiveDeck = new Stack<>();
-        this.chat=new Chat();
+        this.chat = new Chat();
         setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
@@ -86,7 +86,7 @@ public class Game {
      * if the players are full it will not be addded!
      */
     public void addPlayer(Player player) {
-        if(this.players.size()<this.numPlayers){
+        if (this.players.size() < this.numPlayers) {
             this.players.add(player);
         }
     }
@@ -127,6 +127,7 @@ public class Game {
 
     /**
      * Method used to get the board of another player
+     * u need to use the nickName of the user;
      */
     public PlayerData getOtherPlayerBoard(String id) {
         for (int i = 0; i < players.size(); i++)
@@ -138,6 +139,7 @@ public class Game {
 
     /**
      * Method used to draw more than one card from the decks
+     * it need a check before the use, if the quantity is more than the deck size it will be an error;
      */
     public PhysicalCard[] drawCards(DeckType deckType, int quantity) {
         PhysicalCard[] drawCard = new PhysicalCard[quantity];
@@ -156,6 +158,10 @@ public class Game {
 
     /**
      * Method used to draw just one card from the decks
+     *
+     * @return the top card on the deck
+     * if the deck type is not right it will return null
+     * also if the deck is empty it will return null
      */
     public PhysicalCard drawCard(DeckType deckType) {
         if (DeckType.GOLD.equals(deckType)) {
@@ -174,6 +180,9 @@ public class Game {
     /**
      * Method used to draw a card from the cards on the desk
      * it will automatically replace the card on the table
+     *
+     * @return it will return the card on the position, if there is no card it will
+     * return null
      */
     public PhysicalCard drawCard(DeckType deckType, int position) {
         if (DeckType.REVEALED.equals(deckType)) {
@@ -300,7 +309,7 @@ public class Game {
     }
 
     private void saveDeckOnFile(String name) {
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/"+name+".json")) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/" + name + ".json")) {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
             gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
@@ -320,8 +329,9 @@ public class Game {
         }
 
     }
+
     private void saveObjectiveDeckOnFile(String name) {
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/"+name+".json")) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/" + name + ".json")) {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
             gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
@@ -337,7 +347,6 @@ public class Game {
         }
 
     }
-
 
     /**
      * Method used to read the file json with all the cards
@@ -481,12 +490,11 @@ public class Game {
             e.printStackTrace();
         }
         //after the parsing, used the method to mix the cards of the decks
-       // mixAllDecks(resourceDeck);
+        // mixAllDecks(resourceDeck);
         //mixAllDecks(startDeck);
         //mixAllDecks(goldDeck);
         //mixObjective(objectiveDeck);
     }
-
 
     private Corner[] cornerFromJsonObj(JsonObject corner) {
         Corner[] cornerTmp = new Corner[4];
@@ -518,7 +526,6 @@ public class Game {
 
     private Set<Resource> FromListToSet(List<Resource> list) {
         Set<Resource> convert = new HashSet<>(list);
-        ;
         return convert;
     }
 }
