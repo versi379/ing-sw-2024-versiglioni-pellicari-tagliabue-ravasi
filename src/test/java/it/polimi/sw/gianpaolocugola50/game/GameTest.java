@@ -1,14 +1,12 @@
-package it.polimi.sw.gianpaolocugola50.model.game;
+package it.polimi.sw.gianpaolocugola50.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
+import it.polimi.sw.gianpaolocugola50.model.game.DeckType;
+import it.polimi.sw.gianpaolocugola50.model.game.Game;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 

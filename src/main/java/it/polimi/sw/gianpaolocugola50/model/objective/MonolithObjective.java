@@ -1,11 +1,10 @@
 package it.polimi.sw.gianpaolocugola50.model.objective;
 
-import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
+import it.polimi.sw.gianpaolocugola50.model.card.Color;
 import it.polimi.sw.gianpaolocugola50.model.game.CardsMatrix;
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
-import it.polimi.sw.gianpaolocugola50.model.card.Color;
+import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
