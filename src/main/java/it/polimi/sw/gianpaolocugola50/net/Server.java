@@ -1,9 +1,7 @@
 package it.polimi.sw.gianpaolocugola50.net;
 
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientImplementation;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientInterface;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiServerImplementation;
-import it.polimi.sw.gianpaolocugola50.net.rmi.*;
+import it.polimi.sw.gianpaolocugola50.net.rMi.RmiServerImplementation;
+import it.polimi.sw.gianpaolocugola50.net.rMi.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
@@ -16,8 +14,8 @@ public class Server {
         try {
             RmiServerInterface serverInterface= new RmiServerImplementation();
             Registry registry = LocateRegistry.createRegistry(1099);
-
             registry.bind("default", (Remote) serverInterface);
+
         } catch (AlreadyBoundException e) {
             throw new RuntimeException(e);
         }

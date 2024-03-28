@@ -1,9 +1,7 @@
-package it.polimi.sw.gianpaolocugola50.net.rmi;
+package it.polimi.sw.gianpaolocugola50.net.rMi;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RmiServerImplementation extends UnicastRemoteObject implements RmiServerInterface {
     public RmiServerImplementation() throws RemoteException {

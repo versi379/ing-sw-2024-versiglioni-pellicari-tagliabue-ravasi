@@ -1,9 +1,7 @@
 package it.polimi.sw.gianpaolocugola50.net;
 
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientImplementation;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientInterface;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiServerImplementation;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiServerInterface;
+import it.polimi.sw.gianpaolocugola50.net.rMi.RmiClientImplementation;
+import it.polimi.sw.gianpaolocugola50.net.rMi.RmiServerInterface;
 import it.polimi.sw.gianpaolocugola50.net.socket.SocketServerImplementation;
 import it.polimi.sw.gianpaolocugola50.net.socket.SocketServerInterface;
 
