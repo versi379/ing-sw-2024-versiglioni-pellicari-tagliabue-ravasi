@@ -71,6 +71,10 @@ public class PlayableCard {
         return bonus;
     }
 
+    public Corner[] getCorners() {
+        return corners;
+    }
+
     public List<Resource> getFixedResources() {
         return new ArrayList<>(fixedResources);
     }

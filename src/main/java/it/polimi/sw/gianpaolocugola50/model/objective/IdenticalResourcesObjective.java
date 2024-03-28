@@ -12,6 +12,14 @@ public class IdenticalResourcesObjective implements Objective {
         this.count = count;
     }
 
+    public Resource getTargetResource() {
+        return targetResource;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     @Override
     public int checkCondition(PlayerData playerData) {
         return playerData.numOfResource(targetResource) / count;

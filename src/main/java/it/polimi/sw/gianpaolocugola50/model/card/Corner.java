@@ -28,4 +28,8 @@ public class Corner {
     public Resource getResource() {
         return isFull() ? resource : null;
     }
+
+    public CornerStatus getStatus() {
+        return status;
+    }
 }

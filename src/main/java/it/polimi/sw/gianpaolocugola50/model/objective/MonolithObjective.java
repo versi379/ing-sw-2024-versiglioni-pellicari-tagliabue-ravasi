@@ -22,6 +22,14 @@ public class MonolithObjective implements Objective {
         this.orientation = orientation;
     }
 
+    public Color getTargetColor() {
+        return targetColor;
+    }
+
+    public MonolithOrientation getOrientation() {
+        return orientation;
+    }
+
     @Override
     public int checkCondition(PlayerData playerData) {
         CardsMatrix cardsArea = adjustOrientation(playerData.getCardsArea());

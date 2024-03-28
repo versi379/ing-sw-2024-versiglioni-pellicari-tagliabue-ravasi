@@ -34,6 +34,18 @@ public class CaveObjective implements Objective {
         this.orientation = orientation;
     }
 
+    public Color getTargetColor1() {
+        return targetColor1;
+    }
+
+    public Color getTargetColor2() {
+        return targetColor2;
+    }
+
+    public CaveOrientation getOrientation() {
+        return orientation;
+    }
+
     @Override
     public int checkCondition(PlayerData playerData) {
         CardsMatrix cardsArea = adjustOrientation(playerData.getCardsArea());

@@ -11,6 +11,10 @@ public class ObjectiveCard {
         this.objective = objective;
     }
 
+    public Objective getObjective() {
+        return objective;
+    }
+
     public int getPointsPerCompletion() {
         return pointsPerCompletion;
     }

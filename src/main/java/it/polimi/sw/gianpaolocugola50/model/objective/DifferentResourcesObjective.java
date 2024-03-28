@@ -12,6 +12,10 @@ public class DifferentResourcesObjective implements Objective {
         this.targetResources = targetResources;
     }
 
+    public Set<Resource> getTargetResources() {
+        return targetResources;
+    }
+
     @Override
     public int checkCondition(PlayerData playerData) {
         return targetResources.stream()

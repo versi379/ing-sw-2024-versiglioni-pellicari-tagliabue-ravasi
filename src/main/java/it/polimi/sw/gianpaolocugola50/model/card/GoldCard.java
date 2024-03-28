@@ -2,6 +2,7 @@ package it.polimi.sw.gianpaolocugola50.model.card;
 
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 
+import java.security.Key;
 import java.util.*;
 
 public class GoldCard extends PlayableCard {
@@ -25,6 +26,18 @@ public class GoldCard extends PlayableCard {
         }
     }
 
+    public List<Resource> getConstraintList() {
+        List<Resource> listConstraint = new ArrayList<>();
+        for (Map.Entry<Resource, Integer> entry : constraint.entrySet()) {
+            Resource resource = entry.getKey();
+            int value = entry.getValue();
+            for (int i = 0; i < value; i++) {
+                listConstraint.add(resource);
+            }
+        }
+        return listConstraint;
+    }
+
     @Override
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y) &&
@@ -33,6 +46,7 @@ public class GoldCard extends PlayableCard {
 
     /**
      * Checks if the player has enough resources to place this card
+     *
      * @param playerData
      * @return
      */

@@ -17,6 +17,10 @@ public class ResourcesBonus implements Bonus {
         this.targetResource = targetResource;
     }
 
+    public Resource getTargetResource() {
+        return targetResource;
+    }
+
     @Override
     public int checkBonus(PlayableCard card, PlayerData playerData, int x, int y) {
         return playerData.numOfResource(targetResource)
