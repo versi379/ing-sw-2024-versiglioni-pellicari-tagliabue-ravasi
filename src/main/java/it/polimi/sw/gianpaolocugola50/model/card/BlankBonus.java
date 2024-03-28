@@ -10,7 +10,7 @@ public class BlankBonus implements Bonus {
     }
 
     @Override
-    public int checkBonus(PlayerData playerData, int x, int y) {
+    public int checkBonus(PlayableCard card, PlayerData playerData, int x, int y) {
         return 1;
     }
 }

@@ -21,6 +21,6 @@ public class CornerPointer {
     }
 
     public Corner getCorner() {
-        return corner;
+        return isPresent() ? corner : null;
     }
 }

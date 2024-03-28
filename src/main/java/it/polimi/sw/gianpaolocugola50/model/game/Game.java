@@ -3,6 +3,7 @@ package it.polimi.sw.gianpaolocugola50.model.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.*;
+import it.polimi.sw.gianpaolocugola50.model.chat.Chat;
 
 
 import java.io.BufferedReader;
@@ -51,7 +52,8 @@ public class Game {
     //resource and gold card on the desk
     private PhysicalCard[] revealedCards;
     //these are the objective that all the player of the game have in common
-    private ObjectiveCard[] commonObjectives;
+    private List<ObjectiveCard> commonObjectives;
+    private Chat chat;
 
 
     public Game(int idGame, int numPlayers, Player creator) {
@@ -59,7 +61,7 @@ public class Game {
         this.numPlayers = numPlayers;
         this.players = new ArrayList<>();
         players.add(creator);
-        this.commonObjectives = new ObjectiveCard[2];
+        this.commonObjectives = new ArrayList<>();
         this.revealedCards = new PhysicalCard[4];
         this.resourceDeck = new Stack<>();
         this.goldDeck = new Stack<>();
@@ -212,7 +214,7 @@ public class Game {
     private void setCommonObjectives(int quantity) {
         for (int i = 0; i < quantity; i++) {
             if (!deckObjective.isEmpty()) {
-                commonObjectives[i] = deckObjective.pop();
+                commonObjectives.add(deckObjective.pop());
             }
         }
     }

@@ -26,6 +26,6 @@ public class Corner {
     }
 
     public Resource getResource() {
-        return resource;
+        return isFull() ? resource : null;
     }
 }

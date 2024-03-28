@@ -1,8 +1,9 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
-import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
+
+import java.util.List;
 
 public class Player {
     //name of the player and is also used like an id, no double name during all the game
@@ -14,15 +15,11 @@ public class Player {
     //Status of the connection to the server of the player
     private PlayerStatus status;
 
-    //personalGoal
-    private ObjectiveCard secreteObjctive;
-
 
     public Player(String nickName) {
         this.nickName = nickName;
         this.playerArea = null;
         this.status = PlayerStatus.DISCONNECTED;
-        this.secreteObjctive = null;
     }
 
     public String getNickName() {
@@ -33,7 +30,7 @@ public class Player {
         return playerArea;
     }
 
-    public void setPlayerData(PhysicalCard starterCard, int deckSize,ObjectiveCard[] commonObjective,ObjectiveCard[] toChoseObjective) {
+    public void setPlayerData(PhysicalCard starterCard, int deckSize, List<ObjectiveCard> commonObjectives, ObjectiveCard[] toChoseObjective) {
         this.playerArea = new PlayerData(starterCard, deckSize);
     }
 
@@ -43,13 +40,5 @@ public class Player {
 
     public void setStatus(PlayerStatus status) {
         this.status = status;
-    }
-
-    public void setSecreteObjctive(ObjectiveCard secreteObjctive) {
-        this.secreteObjctive = secreteObjctive;
-    }
-
-    public ObjectiveCard getSecreteObjctive() {
-        return secreteObjctive;
     }
 }

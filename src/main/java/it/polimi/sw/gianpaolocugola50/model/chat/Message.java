@@ -27,7 +27,7 @@ public class Message {
         this.sender = sender;
         this.content = content;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
-        this.time = time.format(formatter);;
+        this.time = time.format(formatter);
         this.receiver = null;
     }
 
@@ -39,7 +39,7 @@ public class Message {
         this.sender = sender;
         this.content = content;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
-        this.time = time.format(formatter);;
+        this.time = time.format(formatter);
         this.receiver = receiver;
     }
     

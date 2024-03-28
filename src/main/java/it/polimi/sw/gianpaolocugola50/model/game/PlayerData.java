@@ -11,7 +11,8 @@ public class PlayerData {
     private final int MATRIX_LENGTH;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
-    private int score;
+    private int totalScore;
+    private int objectivesScore;
     private final Map<Resource, Integer> numOfResources;
     private final ObjectiveCard secretObjective;
     private final PhysicalCard[] hand;
@@ -25,7 +26,8 @@ public class PlayerData {
             }
         }
         cardsArea = new CardsMatrix(MATRIX_LENGTH);
-        score = 0;
+        totalScore = 0;
+        objectivesScore = 0;
         numOfResources = new EnumMap<>(Resource.class);
         for (Resource resource : Resource.values()) {
             numOfResources.put(resource, 0);
@@ -37,6 +39,14 @@ public class PlayerData {
 
     public CardsMatrix getCardsArea() {
         return cardsArea.copy();
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public int getObjectivesScore() {
+        return objectivesScore;
     }
 
     public int numOfResource(Resource resource) {
@@ -68,13 +78,15 @@ public class PlayerData {
     }
 
     public void placeCard(PlayableCard card, int x, int y) {
-        CornerPointer[] targetCorners = this.getTargetCorners(x, y);
+        totalScore += card.scoreIncrement(this, x, y);
 
+        CornerPointer[] targetCorners = this.getTargetCorners(x, y);
         for (CornerPointer cornerPointer : targetCorners) {
             if (cornerPointer.isPresent() && cornerPointer.getCorner().isFull()) {
                 unitaryDecrement(cornerPointer.getCorner().getResource());
             }
         }
+
         targetCorners[0].setCorner(card.getSwCorner());
         targetCorners[1].setCorner(card.getNwCorner());
         targetCorners[2].setCorner(card.getNeCorner());
@@ -83,10 +95,13 @@ public class PlayerData {
         for (Resource resource : Resource.values()) {
             numOfResources.replace(resource, numOfResources.get(resource) + card.resourceCount(resource));
         }
-        score += card.scoreIncrement(this, x, y);
     }
 
     private void unitaryDecrement(Resource resource) {
         numOfResources.replace(resource, numOfResources.get(resource) - 1);
+    }
+
+    public int objectiveIncrement(ObjectiveCard objectiveCard) {
+        return objectiveCard.checkObjective(this);
     }
 }

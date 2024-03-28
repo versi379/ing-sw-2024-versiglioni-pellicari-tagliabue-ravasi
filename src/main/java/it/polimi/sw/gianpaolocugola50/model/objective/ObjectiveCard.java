@@ -4,9 +4,6 @@ import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 
 public class ObjectiveCard {
     private final int pointsPerCompletion;
-
-
-
     private final Objective objective;
 
     public ObjectiveCard(int pointsPerCompletion, Objective objective) {

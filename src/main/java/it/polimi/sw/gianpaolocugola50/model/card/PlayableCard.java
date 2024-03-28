@@ -59,7 +59,6 @@ public class PlayableCard {
         this.corners = corners.clone();
     }
 
-
     public Color getColor() {
         return color;
     }
@@ -93,9 +92,7 @@ public class PlayableCard {
     }
 
     public int resourceCount(Resource targetResource) {
-        return (int) concat(Arrays.stream(corners)
-                .filter(Corner::isFull)
-                .map(Corner::getResource), fixedResources.stream())
+        return (int) concat(Arrays.stream(corners).map(Corner::getResource), fixedResources.stream())
                 .filter(targetResource::equals)
                 .count();
     }
@@ -105,6 +102,6 @@ public class PlayableCard {
     }
 
     public int scoreIncrement(PlayerData board, int x, int y) {
-        return points * bonus.checkBonus(board, x, y);
+        return points * bonus.checkBonus(this, board, x, y);
     }
 }
