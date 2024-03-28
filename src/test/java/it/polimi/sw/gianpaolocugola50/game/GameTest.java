@@ -4,6 +4,7 @@ import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
 import it.polimi.sw.gianpaolocugola50.model.game.DeckType;
 import it.polimi.sw.gianpaolocugola50.model.game.Game;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
@@ -14,7 +15,7 @@ class GameTest {
     void Test1() {
         Game a = new Game(12, 3, null);
 
-        for (int i = 0; i < 38; i++) {
+        for (int i = 0; i < a.getNumbersOfCardInResourceDeck(); i++) {
             System.out.println(i);
             PhysicalCard card = a.drawCard(DeckType.RESOURCE);
             System.out.println(card.getCardType());
@@ -44,7 +45,7 @@ class GameTest {
 
             System.out.println("______________________________________________________");
         }
-        IntStream.range(0, 38).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
+        IntStream.range(0,a.getNumbersOfCardInGoldDeck()).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
             System.out.println(card.getCardType());
             System.out.println(card.getFront().getPoints());
             System.out.println(card.getFront().getColor());
@@ -81,4 +82,10 @@ class GameTest {
         Game a = new Game(12, 3, null);
     }
 
+    @Test
+    public void test3(){
+        Game a = new Game(12, 3, null);
+        PhysicalCard physicalCard = a.drawCard(DeckType.REVEALED);
+        
+    }
 }

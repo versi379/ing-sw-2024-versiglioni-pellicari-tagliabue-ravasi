@@ -26,6 +26,7 @@ public class Game {
     private final int numPlayers;
 
     //list of player of one game, max 4 player
+    //the first player on the list is the black one
     private List<Player> players;
 
     //the player that is on turn
@@ -66,6 +67,7 @@ public class Game {
         this.goldDeck = new Stack<>();
         this.startDeck = new Stack<>();
         this.objectiveDeck = new Stack<>();
+        this.chat=new Chat();
         setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
@@ -81,9 +83,12 @@ public class Game {
 
     /**
      * this method is used to add the players to this game
+     * if the players are full it will not be addded!
      */
     public void addPlayer(Player player) {
-        players.add(player);
+        if(this.players.size()<this.numPlayers){
+            this.players.add(player);
+        }
     }
 
     /**
