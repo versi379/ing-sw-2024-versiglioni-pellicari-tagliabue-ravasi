@@ -3,7 +3,7 @@ package it.polimi.sw.gianpaolocugola50.net;
 import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientImplementation;
 import it.polimi.sw.gianpaolocugola50.net.rmi.RmiClientInterface;
 import it.polimi.sw.gianpaolocugola50.net.rmi.RmiServerImplementation;
-import it.polimi.sw.gianpaolocugola50.net.rmi.RmiServerInterface;
+import it.polimi.sw.gianpaolocugola50.net.rmi.*;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
