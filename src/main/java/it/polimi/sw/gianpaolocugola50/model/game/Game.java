@@ -1,19 +1,19 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 
+import it.polimi.sw.gianpaolocugola50.card.*;
 import it.polimi.sw.gianpaolocugola50.model.card.*;
-import it.polimi.sw.gianpaolocugola50.model.objective.*;
 import it.polimi.sw.gianpaolocugola50.model.chat.Chat;
+import it.polimi.sw.gianpaolocugola50.model.objective.*;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import com.google.gson.JsonObject;
+import it.polimi.sw.gianpaolocugola50.objective.*;
 
 import java.io.FileReader;
 

@@ -2,8 +2,6 @@ package it.polimi.sw.gianpaolocugola50.model.game;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 
-import java.util.Collections;
-
 /**
  * Represents a square matrix of PlayableCards
  */
