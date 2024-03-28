@@ -27,9 +27,12 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
         }
 
         out.name("corners").beginArray();
-        for (Corner corner : card.getCorners()) {
-            new CornerAdapter().write(out, corner);
-        }
+
+        new CornerAdapter().write(out, card.getNwCorner());
+        new CornerAdapter().write(out, card.getNeCorner());
+        new CornerAdapter().write(out, card.getSwCorner());
+        new CornerAdapter().write(out, card.getSeCorner());
+
 
         out.endArray();
         out.endObject();
@@ -63,9 +66,10 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
                     break;
                 case "corners":
                     in.beginArray();
-                    for (int i = 0; i < 4; i++) {
-                        corners[i] = new CornerAdapter().read(in);
-                    }
+                    corners[1] = new CornerAdapter().read(in);
+                    corners[2] = new CornerAdapter().read(in);
+                    corners[0] = new CornerAdapter().read(in);
+                    corners[3] = new CornerAdapter().read(in);
                     in.endArray();
                     break;
                 default:

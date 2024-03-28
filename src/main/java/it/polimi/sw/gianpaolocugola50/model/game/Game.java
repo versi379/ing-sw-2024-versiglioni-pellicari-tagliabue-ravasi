@@ -1,22 +1,21 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 
-import it.polimi.sw.gianpaolocugola50.card.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import it.polimi.sw.gianpaolocugola50.model.adapter.*;
 import it.polimi.sw.gianpaolocugola50.model.card.*;
 import it.polimi.sw.gianpaolocugola50.model.chat.Chat;
 import it.polimi.sw.gianpaolocugola50.model.objective.*;
 
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.*;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-
 import com.google.gson.JsonObject;
-import it.polimi.sw.gianpaolocugola50.objective.*;
-
 import java.io.FileReader;
-
 
 
 public class Game {
@@ -47,7 +46,7 @@ public class Game {
     //deck of StarterCard
     private Stack<PhysicalCard> startDeck;
     //these are the card for the objective
-    private Stack<ObjectiveCard> deckObjective;
+    private Stack<ObjectiveCard> objectiveDeck;
 
     //resource and gold card on the desk
     private PhysicalCard[] revealedCards;
@@ -66,8 +65,8 @@ public class Game {
         this.resourceDeck = new Stack<>();
         this.goldDeck = new Stack<>();
         this.startDeck = new Stack<>();
-        this.deckObjective = new Stack<>();
-        setDeck();
+        this.objectiveDeck = new Stack<>();
+        setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
     }
@@ -203,18 +202,18 @@ public class Game {
     }
 
     private ObjectiveCard[] getSecreteObjective() {
-        return new ObjectiveCard[]{deckObjective.pop(), deckObjective.pop()};
+        return new ObjectiveCard[]{objectiveDeck.pop(), objectiveDeck.pop()};
     }
 
     //it is just for test// to delete!!
     public ObjectiveCard getSecreteObjective2() {
-        return deckObjective.pop();
+        return objectiveDeck.pop();
     }
 
     private void setCommonObjectives(int quantity) {
         for (int i = 0; i < quantity; i++) {
-            if (!deckObjective.isEmpty()) {
-                commonObjectives.add(deckObjective.pop());
+            if (!objectiveDeck.isEmpty()) {
+                commonObjectives.add(objectiveDeck.pop());
             }
         }
     }
@@ -251,6 +250,86 @@ public class Game {
      * Method used to read the file json with all the cards
      */
     private void setDeckV2() {
+        try {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
+            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
+            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
+            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
+            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
+            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
+            Gson gson = gsonBuilder.create();
+            //set resource deck,Gold,And Starter
+            FileReader reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/physicalCardGenerated.json");
+            Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
+            }.getType();
+
+            List<PhysicalCard> physicalCards = gson.fromJson(reader, physicalCardListType);
+            // now put the cards in the deck
+            for (PhysicalCard card : physicalCards) {
+                if (CardType.GOLD.equals(card.getCardType())) {
+                    goldDeck.add(card);
+                } else if (CardType.RESOURCE.equals(card.getCardType())) {
+                    resourceDeck.add(card);
+                } else if (CardType.STARTER.equals(card.getCardType())) {
+                    startDeck.add(card);
+                }
+            }
+            //objective deck
+            reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/objectiveCardGenerated.json");
+            Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
+            }.getType();
+            List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
+            objectiveDeck.addAll(objectiveCards);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mixAllDecks(resourceDeck);
+        mixAllDecks(startDeck);
+        mixAllDecks(goldDeck);
+        mixObjective(objectiveDeck);
+
+    }
+
+    private void saveDeckOnFile(String name) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/"+name+".json")) {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
+            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
+            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
+            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
+            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
+            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
+            Gson gson = gsonBuilder.setPrettyPrinting().create();
+            // Convertire la lista di oggetti in formato JSON utilizzando l'oggetto Gson
+            gson.toJson(startDeck, fileWriter);
+            gson.toJson(resourceDeck, fileWriter);
+            gson.toJson(goldDeck, fileWriter);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void saveObjectiveDeckOnFile(String name) {
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/"+name+".json")) {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
+            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
+            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
+            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
+            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
+            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
+            Gson gson = gsonBuilder.setPrettyPrinting().create();
+            gson.toJson(objectiveDeck, fileWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -387,7 +466,7 @@ public class Game {
                         objective = new DifferentResourcesObjective(FromListToSet(fixedValueFromJsonArray(typeOfDifferentResource)));
                     }
 
-                    deckObjective.add(
+                    objectiveDeck.add(
                             new ObjectiveCard(point, objective)
                     );
 
@@ -397,18 +476,22 @@ public class Game {
             e.printStackTrace();
         }
         //after the parsing, used the method to mix the cards of the decks
-        mixAllDecks(resourceDeck);
-        mixAllDecks(startDeck);
-        mixAllDecks(goldDeck);
-        mixObjective(deckObjective);
+       // mixAllDecks(resourceDeck);
+        //mixAllDecks(startDeck);
+        //mixAllDecks(goldDeck);
+        //mixObjective(objectiveDeck);
     }
 
 
     private Corner[] cornerFromJsonObj(JsonObject corner) {
         Corner[] cornerTmp = new Corner[4];
-        cornerTmp[0] = checkCornerStatus(corner, "sw");
+       /* cornerTmp[0] = checkCornerStatus(corner, "sw");
         cornerTmp[1] = checkCornerStatus(corner, "nw");
         cornerTmp[2] = checkCornerStatus(corner, "ne");
+        cornerTmp[3] = checkCornerStatus(corner, "se");*/
+        cornerTmp[0] = checkCornerStatus(corner, "nw");
+        cornerTmp[1] = checkCornerStatus(corner, "ne");
+        cornerTmp[2] = checkCornerStatus(corner, "sw");
         cornerTmp[3] = checkCornerStatus(corner, "se");
         return cornerTmp;
     }

@@ -76,6 +76,9 @@ public class PlayableCard {
     }
 
     public List<Resource> getFixedResources() {
+        if(fixedResources==null){
+            return null;
+        }
         return new ArrayList<>(fixedResources);
     }
 

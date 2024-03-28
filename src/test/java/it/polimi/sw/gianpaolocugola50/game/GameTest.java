@@ -15,20 +15,11 @@ class GameTest {
         Game a = new Game(12, 3, null);
 
         for (int i = 0; i < 38; i++) {
+            System.out.println(i);
             PhysicalCard card = a.drawCard(DeckType.RESOURCE);
             System.out.println(card.getCardType());
             System.out.println(card.getFront().getPoints());
             System.out.println(card.getFront().getColor());
-            if (card.getFront().getSwCorner().getResource() != null) {
-                System.out.println(card.getFront().getSwCorner().getResource().toString());
-            } else {
-                System.out.println("null");
-            }
-            if (card.getFront().getSeCorner().getResource() != null) {
-                System.out.println(card.getFront().getSeCorner().getResource().toString());
-            } else {
-                System.out.println("null");
-            }
             if (card.getFront().getNwCorner().getResource() != null) {
                 System.out.println(card.getFront().getNwCorner().getResource().toString());
             } else {
@@ -36,6 +27,16 @@ class GameTest {
             }
             if (card.getFront().getNeCorner().getResource() != null) {
                 System.out.println(card.getFront().getNeCorner().getResource().toString());
+            } else {
+                System.out.println("null");
+            }
+            if (card.getFront().getSwCorner().getResource() != null) {
+                System.out.println(card.getFront().getSwCorner().getResource().toString());
+            } else {
+                System.out.println("null");
+            }
+            if (card.getFront().getSeCorner().getResource() != null) {
+                System.out.println(card.getFront().getSeCorner().getResource().toString());
             } else {
                 System.out.println("null");
             }
@@ -43,20 +44,10 @@ class GameTest {
 
             System.out.println("______________________________________________________");
         }
-        IntStream.range(0,38).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
+        IntStream.range(0, 38).mapToObj(i -> a.drawCard(DeckType.GOLD)).forEach(card -> {
             System.out.println(card.getCardType());
             System.out.println(card.getFront().getPoints());
             System.out.println(card.getFront().getColor());
-            if (card.getFront().getSwCorner().getResource() != null) {
-                System.out.println(card.getFront().getSwCorner().getResource().toString());
-            } else {
-                System.out.println("null");
-            }
-            if (card.getFront().getSeCorner().getResource() != null) {
-                System.out.println(card.getFront().getSeCorner().getResource().toString());
-            } else {
-                System.out.println("null");
-            }
             if (card.getFront().getNwCorner().getResource() != null) {
                 System.out.println(card.getFront().getNwCorner().getResource().toString());
             } else {
@@ -64,16 +55,30 @@ class GameTest {
             }
             if (card.getFront().getNeCorner().getResource() != null) {
                 System.out.println(card.getFront().getNeCorner().getResource().toString());
+            } else {
+                System.out.println("null");
+            }
+            if (card.getFront().getSwCorner().getResource() != null) {
+                System.out.println(card.getFront().getSwCorner().getResource().toString());
+            } else {
+                System.out.println("null");
+            }
+            if (card.getFront().getSeCorner().getResource() != null) {
+                System.out.println(card.getFront().getSeCorner().getResource().toString());
             } else {
                 System.out.println("null");
             }
             System.out.println("______________________________________________________");
         });
-        for (int i=0;i<14;i++){
-            ObjectiveCard op= a.getSecreteObjective2();
+        for (int i = 0; i < 14; i++) {
+            ObjectiveCard op = a.getSecreteObjective2();
             System.out.println(op.getPointsPerCompletion());
         }
     }
 
+    @Test
+    public void test2() {
+        Game a = new Game(12, 3, null);
+    }
 
 }
