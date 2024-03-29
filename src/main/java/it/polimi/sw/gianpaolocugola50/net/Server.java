@@ -13,9 +13,9 @@ public class Server {
     public static void main(String[] args) throws RemoteException {
 
         try {
-            RmiServerInterface serverInterface= new RmiServerImplementation();
+            RmiConnectionImpl rmiConnection=new RmiConnectionImpl();
             Registry registry = LocateRegistry.createRegistry(1099);
-            registry.bind("default", (Remote) serverInterface);
+            registry.bind("default", rmiConnection);
 
         } catch (AlreadyBoundException e) {
             throw new RuntimeException(e);

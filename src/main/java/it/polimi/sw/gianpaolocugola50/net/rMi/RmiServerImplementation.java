@@ -1,5 +1,7 @@
 package it.polimi.sw.gianpaolocugola50.net.rMi;
 
+import it.polimi.sw.gianpaolocugola50.net.ClientInterface;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutorService;
@@ -7,9 +9,11 @@ import java.util.concurrent.Executors;
 
 public class RmiServerImplementation extends UnicastRemoteObject implements RmiServerInterface {
     private ExecutorService executorService;
-    public RmiServerImplementation() throws RemoteException {
+    private ClientInterface clientInterface;
+    public RmiServerImplementation(ClientInterface clientInterface) throws RemoteException {
         super();
         this.executorService = Executors.newSingleThreadExecutor();
+        this.clientInterface = clientInterface;
     }
 
     @Override
