@@ -12,7 +12,7 @@ class GameTest {
 
     @Test
     void Test1() {
-        Game a = new Game(12, 3, null);
+        Game a = new Game("a", 3, null);
 
         for (int i = 0; i < a.resourceDeckSize(); i++) {
             System.out.println(i);
@@ -78,12 +78,12 @@ class GameTest {
 
     @Test
     public void test2() {
-        Game a = new Game(12, 3, null);
+        Game a = new Game("a", 3, null);
     }
 
     @Test
     public void test3(){
-        Game a = new Game(12, 3, null);
+        Game a = new Game("a", 3, null);
         PhysicalCard physicalCard = a.drawCard(DrawingPosition.RESOURCE1);
         
     }

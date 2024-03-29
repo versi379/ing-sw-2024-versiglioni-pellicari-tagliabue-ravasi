@@ -15,7 +15,7 @@ public class PlayerData {
     private int objectivesScore;
     private final Map<Resource, Integer> numOfResources;
     private ObjectiveCard secretObjective;
-    private final PhysicalCard[] hand;
+    private final List<PhysicalCard> hand;
 
     public PlayerData(int deckSize) {
         MATRIX_LENGTH = 2 * deckSize + 2;
@@ -33,7 +33,7 @@ public class PlayerData {
             numOfResources.put(resource, 0);
         }
         secretObjective = null; // da rivedere
-        hand = new PhysicalCard[3];
+        hand = new ArrayList<>();
     }
 
     public void initialize(PlayableCard starterCard, ObjectiveCard secretObjective) {
@@ -103,6 +103,14 @@ public class PlayerData {
 
     private void unitaryDecrement(Resource resource) {
         numOfResources.replace(resource, numOfResources.get(resource) - 1);
+    }
+
+    public void addCard(PhysicalCard card) {
+        hand.add(card);
+    }
+
+    public List<PhysicalCard> getHand() {
+        return hand;
     }
 
     public int objectiveIncrement(ObjectiveCard objectiveCard) {

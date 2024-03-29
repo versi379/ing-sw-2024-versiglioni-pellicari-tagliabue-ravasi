@@ -27,6 +27,10 @@ public class Player {
         currentGame = game;
     }
 
+    public Game getCurrentGame() {
+        return currentGame;
+    }
+
     public PlayerData getPlayerData() {
         return currentGame.getPlayerData(this);
     }

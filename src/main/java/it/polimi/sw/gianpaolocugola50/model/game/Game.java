@@ -20,7 +20,7 @@ import java.io.FileReader;
 
 public class Game {
     //idGame it identify the game
-    private final int idGame;
+    private final String id;
 
     //number of player
     private final int numPlayers;
@@ -49,8 +49,8 @@ public class Game {
     private Chat chat;
 
 
-    public Game(int idGame, int numPlayers, Player creator) {
-        this.idGame = idGame;
+    public Game(String id, int numPlayers, Player creator) {
+        this.id = id;
         this.numPlayers = numPlayers;
         this.playerList = new ArrayList<>();
         this.playerDatas = new HashMap<>();
@@ -70,6 +70,14 @@ public class Game {
     public void addPlayer(Player player) {
         playerList.add(player);
         playerDatas.put(player, new PlayerData(resourceDeckSize()));
+        player.setCurrentGame(this);
+    }
+
+    public void removePlayer(Player player) {
+        if (playerList.contains(player)) {
+            playerList.remove(player);
+            playerDatas.remove(player);
+        }
     }
 
     public PlayerData getPlayerData(Player player) {
@@ -498,7 +506,3 @@ public class Game {
         return convert;
     }
 }
-
-
-
-
