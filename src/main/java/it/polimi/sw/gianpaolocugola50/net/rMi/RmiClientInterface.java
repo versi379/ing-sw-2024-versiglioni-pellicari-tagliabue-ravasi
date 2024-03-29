@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 
 public interface RmiClientInterface extends Remote {
 
-    void inviaMessaggioAlServer(String message) throws RemoteException;
-
+    void sendMessage(String message) throws RemoteException;
+    void achievedSecretGoal() throws RemoteException;
+    void achievedTwenty()throws RemoteException;
+    void achievedCommonGoal()throws RemoteException;
 }

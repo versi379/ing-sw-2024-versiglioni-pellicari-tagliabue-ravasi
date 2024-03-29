@@ -9,11 +9,25 @@ public class RmiClientImplementation extends UnicastRemoteObject implements RmiC
         super();
     }
 
+
     @Override
-    public void inviaMessaggioAlServer(String message) throws RemoteException {
+    public void sendMessage(String message) throws RemoteException {
         System.out.println("Messaggio dal client al server: " + message);
     }
 
+    @Override
+    public void achievedSecretGoal() throws RemoteException {
 
+    }
+
+    @Override
+    public void achievedTwenty() throws RemoteException {
+
+    }
+
+    @Override
+    public void achievedCommonGoal() throws RemoteException {
+
+    }
 }
 

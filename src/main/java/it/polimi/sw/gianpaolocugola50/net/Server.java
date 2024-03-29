@@ -11,6 +11,7 @@ import java.rmi.registry.Registry;
 
 public class Server {
     public static void main(String[] args) throws RemoteException {
+
         try {
             RmiServerInterface serverInterface= new RmiServerImplementation();
             Registry registry = LocateRegistry.createRegistry(1099);
