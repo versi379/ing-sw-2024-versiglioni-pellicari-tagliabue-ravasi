@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
+import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.card.Resource;
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
@@ -115,5 +116,27 @@ public class PlayerData {
 
     public int objectiveIncrement(ObjectiveCard objectiveCard) {
         return objectiveCard.checkObjective(this);
+    }
+
+    // test
+    public void printCornersArea() {
+        System.out.println("_____________________________________________________________________________________________");
+        for (int j = 47; j > 35; j--) {
+            for (int i = 35; i < 47; i++) {
+                Corner x = cornersArea[i][j].getCorner();
+                if (x != null) {
+                    if(x.isFull()) {
+                        System.out.print(x.getResource().toString() + "\t");
+                    } else if (x.isVisible()) {
+                        System.out.print("EMPTY\t");
+                    } else {
+                        System.out.print("HIDDEN\t");
+                    }
+                } else {
+                    System.out.print("null \t");
+                }
+            }
+            System.out.print("\n");
+        }
     }
 }

@@ -69,8 +69,10 @@ public class Game {
 
     public void addPlayer(Player player) {
         playerList.add(player);
-        playerDatas.put(player, new PlayerData(resourceDeckSize()));
+        playerDatas.put(player, new PlayerData(40));
         player.setCurrentGame(this);
+        // da rivedere
+        playerDatas.get(player).initialize(getStarterCard().getFront(), getSecreteObjective2());
     }
 
     public void removePlayer(Player player) {

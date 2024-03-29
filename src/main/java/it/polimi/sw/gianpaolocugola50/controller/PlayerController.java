@@ -39,13 +39,17 @@ public class PlayerController implements ViewObserver {
         }
     }
 
-    public void placeCard(PhysicalCard physicalCard, boolean face, int x, int y) {
-        PlayableCard card = face ? physicalCard.getFront() : physicalCard.getBack();
-
-        if (player.getCurrentGame() != null && card.isPlaceable(player.getPlayerData(), x, y)) {
-            player.getPlayerData().placeCard(card, x, y);
+    public void placeCard(int index, boolean face, int x, int y) {
+        if (player.getCurrentGame() != null && index >= 0 && index < 3) {
+            PhysicalCard physicalCard = player.getPlayerData().getHand().get(index);
+            PlayableCard card = face ? physicalCard.getFront() : physicalCard.getBack();
+            if (card.isPlaceable(player.getPlayerData(), x, y)) {
+                player.getPlayerData().placeCard(card, x, y);
+            } //else {
+            // roba per notificare player che la carta non è piazzabile
+            //}
         } //else {
-        // roba per notificare player che la carta non è piazzabile
+        // operazione non valida
         //}
     }
 
