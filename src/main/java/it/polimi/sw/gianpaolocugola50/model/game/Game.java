@@ -27,30 +27,23 @@ public class Game {
 
     //list of player of one game, max 4 player
     //the first player on the list is the black one
-    private List<Player> players;
-
-    //the player that is on turn
-    private Player nowPlayer;
-
-    //the winner of the game
-    private Player winnerPlayer;
-
-    //initial size of resourceDeck and goldDeck
-    private int deckSize;
+    private final List<Player> playerList;
+    private final Map<Player, PlayerData> playerDatas;
 
     //deck of resourceCard
-    private Stack<PhysicalCard> resourceDeck;
+    private final Stack<PhysicalCard> resourceDeck;
 
-    //deck of goldCard1
-    private Stack<PhysicalCard> goldDeck;
+    //deck of goldCard
+    private final Stack<PhysicalCard> goldDeck;
+
+    private final PhysicalCard[] drawableCards;
 
     //deck of StarterCard
-    private Stack<PhysicalCard> startDeck;
-    //these are the card for the objective
-    private Stack<ObjectiveCard> objectiveDeck;
+    private final Stack<PhysicalCard> startDeck;
 
-    //resource and gold card on the desk
-    private PhysicalCard[] revealedCards;
+    //these are the card for the objective
+    private final Stack<ObjectiveCard> objectiveDeck;
+
     //these are the objective that all the player of the game have in common
     private List<ObjectiveCard> commonObjectives;
     private Chat chat;
@@ -59,62 +52,52 @@ public class Game {
     public Game(int idGame, int numPlayers, Player creator) {
         this.idGame = idGame;
         this.numPlayers = numPlayers;
-        this.players = new ArrayList<>();
-        players.add(creator);
-        this.commonObjectives = new ArrayList<>();
-        this.revealedCards = new PhysicalCard[4];
+        this.playerList = new ArrayList<>();
+        this.playerDatas = new HashMap<>();
         this.resourceDeck = new Stack<>();
         this.goldDeck = new Stack<>();
+        this.drawableCards = new PhysicalCard[4];
         this.startDeck = new Stack<>();
         this.objectiveDeck = new Stack<>();
+        this.commonObjectives = new ArrayList<>();
         this.chat = new Chat();
         setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
+        addPlayer(creator);
     }
 
-    public int getNumbersOfCardInGoldDeck() {
-        return goldDeck.size();
+    public void addPlayer(Player player) {
+        playerList.add(player);
+        playerDatas.put(player, new PlayerData(resourceDeckSize()));
     }
 
-    public int getNumbersOfCardInResourceDeck() {
+    public PlayerData getPlayerData(Player player) {
+        return playerDatas.get(player);
+    }
+
+    public PlayerData getPlayerData(String nickName) {
+        for (Player player : playerList) {
+            if (player.equals(new Player(nickName))) {
+                return getPlayerData(player);
+            }
+        }
+        return null;
+    }
+
+    public int resourceDeckSize() {
         return resourceDeck.size();
     }
 
-    /**
-     * this method is used to add the players to this game
-     * if the players are full it will not be addded!
-     */
-    public void addPlayer(Player player) {
-        if (this.players.size() < this.numPlayers) {
-            this.players.add(player);
-        }
+    public int goldDeckSize() {
+        return goldDeck.size();
     }
 
-    /**
-     * this method is used to add the players to this game
-     */
     public void setTableAtTheStart() {
-        revealedCards[0] = goldDeck.pop();
-        revealedCards[1] = goldDeck.pop();
-        revealedCards[2] = resourceDeck.pop();
-        revealedCards[3] = resourceDeck.pop();
-    }
-
-    /**
-     * this method is used to set the starting point for the players
-     * they will be given the starter card, the 2 card for the objective, the common objective
-     */
-
-    private void setAllPlayerData() {
-        for (Player player : players) {
-            player.setPlayerData(
-                    getStarterCard(),
-                    this.deckSize,
-                    this.commonObjectives,
-                    getSecreteObjective()
-            );
-        }
+        drawableCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
+        drawableCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
+        drawableCards[2] = drawCard(DrawingPosition.GOLDDECK);
+        drawableCards[3] = drawCard(DrawingPosition.GOLDDECK);
     }
 
     /**
@@ -126,92 +109,78 @@ public class Game {
     }
 
     /**
-     * Method used to get the board of another player
-     * u need to use the nickName of the user;
-     */
-    public PlayerData getOtherPlayerBoard(String id) {
-        for (int i = 0; i < players.size(); i++)
-            if (players.get(i).getNickName().equals(id)) {
-                return players.get(i).getPlayerData();
-            }
-        return null;
-    }
-
-    /**
-     * Method used to draw more than one card from the decks
-     * it need a check before the use, if the quantity is more than the deck size it will be an error;
-     */
-    public PhysicalCard[] drawCards(DeckType deckType, int quantity) {
-        PhysicalCard[] drawCard = new PhysicalCard[quantity];
-        if (DeckType.GOLD.equals(deckType)) {
-            for (int i = 0; i < quantity; i++) {
-                drawCard[i] = goldDeck.pop();
-            }
-        }
-        if (DeckType.RESOURCE.equals(deckType)) {
-            for (int i = 0; i < quantity; i++) {
-                drawCard[i] = resourceDeck.pop();
-            }
-        }
-        return drawCard;
-    }
-
-    /**
      * Method used to draw just one card from the decks
      *
      * @return the top card on the deck
      * if the deck type is not right it will return null
      * also if the deck is empty it will return null
      */
-    public PhysicalCard drawCard(DeckType deckType) {
-        if (DeckType.GOLD.equals(deckType)) {
-            if (goldDeck.empty())
-                return null;
-            return goldDeck.pop();
-        }
-        if (DeckType.RESOURCE.equals(deckType)) {
-            if (resourceDeck.empty())
-                return null;
-            return resourceDeck.pop();
-        }
-        return null;
-    }
-
-    /**
-     * Method used to draw a card from the cards on the desk
-     * it will automatically replace the card on the table
-     *
-     * @return it will return the card on the position, if there is no card it will
-     * return null
-     */
-    public PhysicalCard drawCard(DeckType deckType, int position) {
-        if (DeckType.REVEALED.equals(deckType)) {
-
-            PhysicalCard tmp = revealedCards[position];
-            //to replace the card with the same type
-            if (revealedCards[position].getCardType().equals(CardType.GOLD)) {
-                if (goldDeck.empty()) {
-                    if (resourceDeck.empty()) {
-                        revealedCards[position] = null;
-                    } else {
-                        revealedCards[position] = resourceDeck.pop();
-                    }
-                } else {
-                    revealedCards[position] = goldDeck.pop();
-                }
-            } else if (revealedCards[position].getCardType().equals(CardType.RESOURCE)) {
-                if (resourceDeck.empty()) {
-                    if (goldDeck.empty()) {
-                        revealedCards[position] = null;
-                    } else {
-                        revealedCards[position] = goldDeck.pop();
-                    }
-                } else {
-                    revealedCards[position] = resourceDeck.pop();
+    public PhysicalCard drawCard(DrawingPosition position) {
+        switch (position) {
+            case DrawingPosition.RESOURCEDECK -> {
+                if (!resourceDeck.isEmpty()) {
+                    return resourceDeck.pop();
                 }
             }
-            return tmp;
+            case DrawingPosition.RESOURCE1 -> {
+                PhysicalCard tmp = drawableCards[0];
+                if (tmp != null) {
+                    if (!resourceDeck.isEmpty()) {
+                        drawableCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
+                    } else if (!goldDeck.isEmpty()) {
+                        drawableCards[0] = drawCard(DrawingPosition.GOLDDECK);
+                    } else {
+                        drawableCards[0] = null;
+                    }
+                    return tmp;
+                }
+            }
+            case DrawingPosition.RESOURCE2 -> {
+                PhysicalCard tmp = drawableCards[1];
+                if (tmp != null) {
+                    if (!resourceDeck.isEmpty()) {
+                        drawableCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
+                    } else if (!goldDeck.isEmpty()) {
+                        drawableCards[1] = drawCard(DrawingPosition.GOLDDECK);
+                    } else {
+                        drawableCards[1] = null;
+                    }
+                    return tmp;
+                }
+            }
+            case DrawingPosition.GOLDDECK -> {
+                if (!goldDeck.isEmpty()) {
+                    return goldDeck.pop();
+                }
+            }
+            case DrawingPosition.GOLD1 -> {
+                PhysicalCard tmp = drawableCards[2];
+                if (tmp != null) {
+                    if (!goldDeck.isEmpty()) {
+                        drawableCards[2] = drawCard(DrawingPosition.GOLDDECK);
+                    } else if (!resourceDeck.isEmpty()) {
+                        drawableCards[2] = drawCard(DrawingPosition.RESOURCEDECK);
+                    } else {
+                        drawableCards[2] = null;
+                    }
+                    return tmp;
+                }
+            }
+            case DrawingPosition.GOLD2 -> {
+                PhysicalCard tmp = drawableCards[3];
+                if (tmp != null) {
+                    if (!goldDeck.isEmpty()) {
+                        drawableCards[3] = drawCard(DrawingPosition.GOLDDECK);
+                    } else if (!resourceDeck.isEmpty()) {
+                        drawableCards[3] = drawCard(DrawingPosition.RESOURCEDECK);
+                    } else {
+                        drawableCards[3] = null;
+                    }
+                    return tmp;
+                }
+            }
         }
+        // invalid draw
         return null;
     }
 

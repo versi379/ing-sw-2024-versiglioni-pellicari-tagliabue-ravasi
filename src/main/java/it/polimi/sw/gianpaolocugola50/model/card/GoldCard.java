@@ -2,7 +2,6 @@ package it.polimi.sw.gianpaolocugola50.model.card;
 
 import it.polimi.sw.gianpaolocugola50.model.game.PlayerData;
 
-import java.security.Key;
 import java.util.*;
 
 public class GoldCard extends PlayableCard {

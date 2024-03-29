@@ -1,10 +1,11 @@
 package it.polimi.sw.gianpaolocugola50.controller;
 
-import java.util.Observable;
-import java.util.Observer;
+import it.polimi.sw.gianpaolocugola50.model.game.Game;
+import it.polimi.sw.gianpaolocugola50.model.game.Player;
 
-public class Controller implements Observer {
-    @Override
-    public void update(Observable o, Object arg) {
+public class Controller implements ViewObserver {
+    private Player player;
+
+    public void join(Game game) {
     }
 }
