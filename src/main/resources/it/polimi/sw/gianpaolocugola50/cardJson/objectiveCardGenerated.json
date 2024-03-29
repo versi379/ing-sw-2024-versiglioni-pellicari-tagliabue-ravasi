@@ -1,0 +1,137 @@
+[
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "MonolithObjective",
+      "targetColor": "RED",
+      "orientation": "RIGHTDIAGONAL"
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "MonolithObjective",
+      "targetColor": "GREEN",
+      "orientation": "LEFTDIAGONAL"
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "MonolithObjective",
+      "targetColor": "BLUE",
+      "orientation": "RIGHTDIAGONAL"
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "MonolithObjective",
+      "targetColor": "PURPLE",
+      "orientation": "LEFTDIAGONAL"
+    }
+  },
+  {
+    "pointsPerCompletion": 3,
+    "objective": {
+      "type": "CaveObjective",
+      "targetColor1": "RED",
+      "targetColor2": "GREEN",
+      "orientation": "UPRIGHTL"
+    }
+  },
+  {
+    "pointsPerCompletion": 3,
+    "objective": {
+      "type": "CaveObjective",
+      "targetColor1": "GREEN",
+      "targetColor2": "PURPLE",
+      "orientation": "UPRIGHTJ"
+    }
+  },
+  {
+    "pointsPerCompletion": 3,
+    "objective": {
+      "type": "CaveObjective",
+      "targetColor1": "BLUE",
+      "targetColor2": "RED",
+      "orientation": "INVERTEDL"
+    }
+  },
+  {
+    "pointsPerCompletion": 3,
+    "objective": {
+      "type": "CaveObjective",
+      "targetColor1": "PURPLE",
+      "targetColor2": "BLUE",
+      "orientation": "INVERTEDJ"
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "FUNGI",
+      "count": 3
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "PLANT",
+      "count": 3
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "ANIMAL",
+      "count": 3
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "INSECT",
+      "count": 3
+    }
+  },
+  {
+    "pointsPerCompletion": 3,
+    "objective": {
+      "type": "DifferentResourcesObjective",
+      "targetResources": [
+        "QUILL",
+        "SCROLL",
+        "INK"
+      ]
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "SCROLL",
+      "count": 2
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "INK",
+      "count": 2
+    }
+  },
+  {
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "IdenticalResourcesObjective",
+      "resource": "QUILL",
+      "count": 2
+    }
+  }
+]

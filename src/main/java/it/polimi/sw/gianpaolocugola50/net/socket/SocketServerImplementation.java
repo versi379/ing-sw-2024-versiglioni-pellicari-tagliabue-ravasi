@@ -1,7 +1,5 @@
 package it.polimi.sw.gianpaolocugola50.net.socket;
 
-import it.polimi.sw.gianpaolocugola50.net.ServerInterface;
-
 import java.net.Socket;
 
 public class SocketServerImplementation implements ServerInterface,Runnable {

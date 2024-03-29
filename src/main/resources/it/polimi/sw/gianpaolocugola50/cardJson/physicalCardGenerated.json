@@ -1,0 +1,4411 @@
+[
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI",
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "STARTER",
+    "quantity": 1,
+    "front": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI",
+        "PLANT",
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "WHITE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "FULL",
+          "resource": "ANIMAL"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "FUNGI"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "FULL",
+          "resource": "PLANT"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "RESOURCE",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [],
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INSECT"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "QUILL"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "INK"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "SCROLL"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "RED",
+      "points": 5,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "RED",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "FUNGI"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "QUILL"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "SCROLL"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "INK"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "GREEN",
+      "points": 5,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "GREEN",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "PLANT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "INK"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "SCROLL"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "QUILL"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "BLUE",
+      "points": 5,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "BLUE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "ANIMAL"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "QUILL"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "SCROLL"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 1,
+      "bonus": {
+        "type": "ResourcesBonus",
+        "targetResource": "INK"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "INK"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 2,
+      "bonus": {
+        "type": "CoveredCornersBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "FULL",
+          "resource": "INK"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "FULL",
+          "resource": "SCROLL"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 3,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "FULL",
+          "resource": "QUILL"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  },
+  {
+    "cardType": "GOLD",
+    "quantity": 1,
+    "front": {
+      "color": "PURPLE",
+      "points": 5,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "HIDDEN"
+        },
+        {
+          "status": "HIDDEN"
+        }
+      ]
+    },
+    "back": {
+      "color": "PURPLE",
+      "points": 0,
+      "bonus": {
+        "type": "BlankBonus"
+      },
+      "fixedResources": [
+        "INSECT"
+      ],
+      "corners": [
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        },
+        {
+          "status": "EMPTY"
+        }
+      ]
+    }
+  }
+]

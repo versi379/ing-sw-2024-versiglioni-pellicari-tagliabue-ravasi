@@ -1,6 +1,7 @@
 package it.polimi.sw.gianpaolocugola50.net;
 
 import it.polimi.sw.gianpaolocugola50.net.rMi.*;
+import it.polimi.sw.gianpaolocugola50.net.socket.ServerInterface;
 import it.polimi.sw.gianpaolocugola50.net.socket.SocketServerImplementation;
 
 
@@ -25,7 +26,7 @@ public class ConnectionFromClientToServer {
         Registry registry = LocateRegistry.getRegistry(host,port);
         RmiConnection rmiConnection= (RmiConnection) registry.lookup("default");
         RmiClientInterface rmiClient = new RmiClientImplementation();
-        RmiServerInterface server = rmiConnection.registerClient(rmiClient);
-        return server;
+        RmiServerInterface rmiServerInterface = rmiConnection.registerClient(rmiClient);
+        return rmiServerInterface;
     }
 }

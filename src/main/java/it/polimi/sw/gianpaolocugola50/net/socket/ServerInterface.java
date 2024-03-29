@@ -1,4 +1,4 @@
-package it.polimi.sw.gianpaolocugola50.net;
+package it.polimi.sw.gianpaolocugola50.net.socket;
 
 import java.rmi.RemoteException;
 

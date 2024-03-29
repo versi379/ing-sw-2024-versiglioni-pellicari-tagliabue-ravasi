@@ -12,7 +12,6 @@ public class RmiClientImplementation extends UnicastRemoteObject implements RmiC
 
     @Override
     public void sendMessage(String message) throws RemoteException {
-        System.out.println("Messaggio dal client al server: " + message);
     }
 
     @Override

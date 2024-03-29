@@ -1,7 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.view.TUI;
 
 import it.polimi.sw.gianpaolocugola50.net.ConnectionFromClientToServer;
-import it.polimi.sw.gianpaolocugola50.net.ServerInterface;
 import it.polimi.sw.gianpaolocugola50.net.rMi.RmiServerInterface;
 
 import java.rmi.NotBoundException;

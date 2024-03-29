@@ -1,7 +1,5 @@
 package it.polimi.sw.gianpaolocugola50.net.rMi;
 
-import it.polimi.sw.gianpaolocugola50.net.ClientInterface;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.ExecutorService;
