@@ -10,6 +10,7 @@ public class Tui {
     public void start() {
         try {
             RmiServerInterface serverInterface = ConnectionFromClientToServer.createRmiConnection(1099, "localhost");
+            System.out.println(serverInterface.test("Ciao dal Client"));
         } catch (RemoteException e) {
 
         } catch (NotBoundException e) {

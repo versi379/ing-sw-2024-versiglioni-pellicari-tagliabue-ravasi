@@ -28,8 +28,7 @@ public class ConnectionFromClientToServer {
         RmiServerInterface server = (RmiServerInterface) registry.lookup("default");
         RmiClientImplementation client = new RmiClientImplementation();
         registry.rebind("Client", client);
-        //server.inviaMessaggioAlClient("Ciao dal server!");
-        client.inviaMessaggioAlServer("Ciao dal client!");
+
         return server;
     }
 }
