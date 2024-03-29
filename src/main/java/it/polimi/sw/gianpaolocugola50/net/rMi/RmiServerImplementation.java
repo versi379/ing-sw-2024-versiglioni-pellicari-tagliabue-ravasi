@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 
 public class RmiServerImplementation extends UnicastRemoteObject implements RmiServerInterface {
     private ExecutorService executorService;
-    private ClientInterface clientInterface;
-    public RmiServerImplementation(ClientInterface clientInterface) throws RemoteException {
+    private RmiClientInterface clientInterface;
+    public RmiServerImplementation(RmiClientInterface clientInterface) throws RemoteException {
         super();
         this.executorService = Executors.newSingleThreadExecutor();
         this.clientInterface = clientInterface;

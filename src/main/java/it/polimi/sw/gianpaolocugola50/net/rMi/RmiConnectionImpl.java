@@ -10,8 +10,8 @@ public class RmiConnectionImpl extends UnicastRemoteObject implements RmiConnect
 
     @Override
     public RmiServerInterface registerClient(RmiClientInterface rmiClientInterface) throws RemoteException {
-        RmiContainClientInterface rmiContainClientInterface= new RmiContainClientInterface(rmiClientInterface);
-        RmiServerImplementation server =new RmiServerImplementation(rmiContainClientInterface);
+
+        RmiServerImplementation server =new RmiServerImplementation(rmiClientInterface);
         return server;
     }
 }

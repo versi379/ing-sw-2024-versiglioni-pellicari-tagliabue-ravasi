@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 public class Tui {
     public void start() {
         try {
-            ServerInterface serverInterface = ConnectionFromClientToServer.createRmiConnection(1099, "localhost");
+            RmiServerInterface serverInterface = ConnectionFromClientToServer.createRmiConnection(1099, "localhost");
             System.out.println(serverInterface.test("Ciao dal Client"));
         } catch (RemoteException e) {
 

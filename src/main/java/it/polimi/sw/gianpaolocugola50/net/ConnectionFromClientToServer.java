@@ -21,11 +21,11 @@ public class ConnectionFromClientToServer {
     }
 
 
-    static public ServerInterface createRmiConnection(int port, String host) throws RemoteException, NotBoundException {
+    static public RmiServerInterface createRmiConnection(int port, String host) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(host,port);
         RmiConnection rmiConnection= (RmiConnection) registry.lookup("default");
         RmiClientInterface rmiClient = new RmiClientImplementation();
-        ServerInterface server = new RmiContainServerInterface(rmiConnection.registerClient(rmiClient));
+        RmiServerInterface server = rmiConnection.registerClient(rmiClient);
         return server;
     }
 }
