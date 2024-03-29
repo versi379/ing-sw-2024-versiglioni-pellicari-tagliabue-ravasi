@@ -81,6 +81,16 @@ public class Game {
         return resourceDeck.size();
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Player getPlayer(String name){
+        for (Player player : this.players)
+            if (player.getNickName().equals(name))
+                return player;
+        return null;
+    }
     /**
      * this method is used to add the players to this game
      * if the players are full it will not be addded!

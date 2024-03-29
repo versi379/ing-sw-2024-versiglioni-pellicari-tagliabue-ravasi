@@ -4,12 +4,11 @@ import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
 import it.polimi.sw.gianpaolocugola50.model.game.DeckType;
 import it.polimi.sw.gianpaolocugola50.model.game.Game;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.stream.IntStream;
 
-class GameTest {
+class GameTest2 {
 
     @Test
     void Test1() {
