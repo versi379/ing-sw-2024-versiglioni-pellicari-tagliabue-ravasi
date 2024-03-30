@@ -25,9 +25,17 @@ public class Game {
     //number of player
     private final int numPlayers;
 
+    //status of the game
+    private GameStatus status;
+
     //list of player of one game, max 4 player
     //the first player on the list is the black one
     private final List<Player> playerList;
+
+    //index of the currently playing player
+    private int currentIndex;
+
+    //map of player's data
     private final Map<Player, PlayerData> playerDatas;
 
     //deck of resourceCard
@@ -52,40 +60,59 @@ public class Game {
     public Game(String id, int numPlayers, Player creator) {
         this.id = id;
         this.numPlayers = numPlayers;
-        this.playerList = new ArrayList<>();
-        this.playerDatas = new HashMap<>();
-        this.resourceDeck = new Stack<>();
-        this.goldDeck = new Stack<>();
-        this.drawableCards = new PhysicalCard[4];
-        this.startDeck = new Stack<>();
-        this.objectiveDeck = new Stack<>();
-        this.commonObjectives = new ArrayList<>();
-        this.chat = new Chat();
+        status = GameStatus.WAITING;
+        playerList = new ArrayList<>();
+        currentIndex = 0;
+        playerDatas = new HashMap<>();
+        resourceDeck = new Stack<>();
+        goldDeck = new Stack<>();
+        drawableCards = new PhysicalCard[4];
+        startDeck = new Stack<>();
+        objectiveDeck = new Stack<>();
+        commonObjectives = new ArrayList<>();
+        chat = new Chat();
         setDeckV2();
         setCommonObjectives(2);
         setTableAtTheStart();
         addPlayer(creator);
     }
 
+    public GameStatus getStatus() {
+        return status;
+    }
+
     public void addPlayer(Player player) {
         playerList.add(player);
         playerDatas.put(player, new PlayerData(40));
-        player.setCurrentGame(this);
         // da rivedere
         playerDatas.get(player).initialize(getStarterCard().getFront(), getSecreteObjective2());
+        //
+        player.setCurrentGame(this);
+
+        if (playerList.size() >= numPlayers) {
+            status = GameStatus.PLAYING;
+        }
     }
 
     public void removePlayer(Player player) {
         if (playerList.contains(player)) {
             playerList.remove(player);
             playerDatas.remove(player);
+            if (currentIndex >= playerList.size()) {
+                currentIndex = 0;
+            }
         }
+    }
+
+    public Player getCurrentPlayer() {
+        return playerList.get(currentIndex);
     }
 
     public PlayerData getPlayerData(Player player) {
         return playerDatas.get(player);
     }
 
+    //non so a cosa possa servire ma c'era prima un metodo equivalente
     public PlayerData getPlayerData(String nickName) {
         for (Player player : playerList) {
             if (player.equals(new Player(nickName))) {
@@ -116,6 +143,13 @@ public class Game {
      */
     private PhysicalCard getStarterCard() {
         return startDeck.pop();
+    }
+
+    public void playerDraw(Player player, DrawingPosition position) {
+        if (playerList.contains(player)) {
+            getPlayerData(player).addCard(drawCard(position));
+            currentIndex = (currentIndex + 1) % playerList.size();
+        }
     }
 
     /**

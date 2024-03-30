@@ -1,13 +1,17 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class GamesManager {
     private static GamesManager instance = null;
+    private final Set<Player> playersList;
     private final Map<String, Game> gamesList;
 
     private GamesManager() {
+        playersList = new HashSet<>();
         gamesList = new HashMap<>();
     }
 
@@ -18,8 +22,24 @@ public class GamesManager {
         return instance;
     }
 
+    public void addPlayer(Player player) {
+        playersList.add(player);
+    }
+
+    public void removePlayer(Player player) {
+        playersList.remove(player);
+    }
+
+    public boolean containsPlayer(Player player) {
+        return playersList.contains(player);
+    }
+
     public void setGame(String id, int numPlayers, Player creator) {
         gamesList.put(id, new Game(id, numPlayers, creator));
+    }
+
+    public void deleteGame(String id) {
+        gamesList.remove(id);
     }
 
     public boolean containsGame(String id) {

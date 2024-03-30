@@ -110,6 +110,10 @@ public class PlayerData {
         hand.add(card);
     }
 
+    public void removeCard(int index) {
+        hand.remove(index);
+    }
+
     public List<PhysicalCard> getHand() {
         return hand;
     }
@@ -118,7 +122,7 @@ public class PlayerData {
         return objectiveCard.checkObjective(this);
     }
 
-    // test
+    //test
     public void printCornersArea() {
         System.out.println("_____________________________________________________________________________________________");
         for (int j = 47; j > 35; j--) {
@@ -133,7 +137,7 @@ public class PlayerData {
                         System.out.print("HIDDEN\t");
                     }
                 } else {
-                    System.out.print("null \t");
+                    System.out.print("null\t");
                 }
             }
             System.out.print("\n");

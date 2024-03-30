@@ -1,10 +1,9 @@
 package it.polimi.sw.gianpaolocugola50.game;
 
-import it.polimi.sw.gianpaolocugola50.controller.PlayerController;
+import it.polimi.sw.gianpaolocugola50.controller.ClientController;
+import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
-import it.polimi.sw.gianpaolocugola50.model.game.DrawingPosition;
-import it.polimi.sw.gianpaolocugola50.model.game.Game;
-import it.polimi.sw.gianpaolocugola50.model.game.Player;
+import it.polimi.sw.gianpaolocugola50.model.game.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
@@ -17,30 +16,23 @@ class GameTest {
         System.out.println(card.getCardType());
         System.out.println(card.getFront().getPoints());
         System.out.println(card.getFront().getColor());
-        if (card.getFront().getSwCorner().getResource() != null) {
-            System.out.println(card.getFront().getSwCorner().getResource().toString());
-        } else {
-            System.out.println("null");
-        }
-        if (card.getFront().getNwCorner().getResource() != null) {
-            System.out.println(card.getFront().getNwCorner().getResource().toString());
-        } else {
-            System.out.println("null");
-        }
-        if (card.getFront().getNeCorner().getResource() != null) {
-            System.out.println(card.getFront().getNeCorner().getResource().toString());
-        } else {
-            System.out.println("null");
-        }
-        if (card.getFront().getSeCorner().getResource() != null) {
-            System.out.println(card.getFront().getSeCorner().getResource().toString());
-        } else {
-            System.out.println("null");
+        for (Corner x : card.getFront().getCorners()) {
+            if (x != null) {
+                if(x.isFull()) {
+                    System.out.println(x.getResource().toString());
+                } else if (x.isVisible()) {
+                    System.out.println("EMPTY");
+                } else {
+                    System.out.println("HIDDEN");
+                }
+            } else {
+                System.out.println("null");
+            }
         }
     }
 
     @Test
-    void Test1() {
+    public void Test1() {
         Game a = new Game("a", 3, new Player("Pietro"));
 
         for (int i = 0; i < a.resourceDeckSize(); i++) {
@@ -56,26 +48,38 @@ class GameTest {
     }
 
     @Test
-    public void test2() {
-        Player player = new Player("Francesco");
-        PlayerController controller = new PlayerController(player);
+    public void Test2() {
+        ClientController controller = new ClientController(null);
+        controller.setPlayer("Francesco");
 
-        controller.createGame("a", 3);
+        controller.createGame("a", 1);
+        Game game = GamesManager.getInstance().getGame("a");
+        PlayerData board = game.getPlayerData("Francesco");
+
         controller.drawCard(DrawingPosition.RESOURCE1);
         controller.drawCard(DrawingPosition.RESOURCEDECK);
         controller.drawCard(DrawingPosition.GOLDDECK);
-        for (PhysicalCard card : player.getPlayerData().getHand()) {
+
+        for (PhysicalCard card : board.getHand()) {
             printPhysicalCard(card);
         }
-        player.getPlayerData().printCornersArea();
+        board.printCornersArea();
+        board.getCardsArea().printCardsArea();
+
+        System.out.println("\nPIAZZA CARTA 1");
         controller.placeCard(1, true, 41, 41);
-        player.getPlayerData().printCornersArea();
-    }
+        board.printCornersArea();
+        board.getCardsArea().printCardsArea();
 
-    @Test
-    public void test3() {
-        Game a = new Game("a", 3, null);
-        PhysicalCard physicalCard = a.drawCard(DrawingPosition.RESOURCE1);
+        System.out.println("\nPESCA CARTA");
+        controller.drawCard(DrawingPosition.RESOURCE1);
+        for (PhysicalCard card : board.getHand()) {
+            printPhysicalCard(card);
+        }
 
+        System.out.println("\nPIAZZA CARTA 2");
+        controller.placeCard(2, true, 42, 40);
+        board.printCornersArea();
+        board.getCardsArea().printCardsArea();
     }
 }
