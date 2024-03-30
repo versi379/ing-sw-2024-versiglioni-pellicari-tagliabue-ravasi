@@ -48,7 +48,7 @@ class GameTest {
     }
 
     @Test
-    public void Test2() {
+    public void TestPiazzamentoCarte() {
         ClientController controller = new ClientController(null);
         controller.setPlayer("Francesco");
 
@@ -59,7 +59,6 @@ class GameTest {
         controller.drawCard(DrawingPosition.RESOURCE1);
         controller.drawCard(DrawingPosition.RESOURCEDECK);
         controller.drawCard(DrawingPosition.GOLDDECK);
-
         for (PhysicalCard card : board.getHand()) {
             printPhysicalCard(card);
         }
@@ -81,5 +80,39 @@ class GameTest {
         controller.placeCard(2, true, 42, 40);
         board.printCornersArea();
         board.getCardsArea().printCardsArea();
+    }
+
+    @Test
+    public void TestMultigiocatore() {
+        ClientController controller1 = new ClientController(null);
+        controller1.setPlayer("Francesco");
+
+        controller1.createGame("a", 2);
+        Game game = GamesManager.getInstance().getGame("a");
+        PlayerData board1 = game.getPlayerData("Francesco");
+
+        ClientController controller2 = new ClientController(null);
+        controller2.setPlayer("Pietro");
+        controller2.joinGame("a");
+        PlayerData board2 = game.getPlayerData("Pietro");
+
+        controller1.drawCard(DrawingPosition.RESOURCE1);
+        controller2.drawCard(DrawingPosition.RESOURCE1);
+        controller1.drawCard(DrawingPosition.RESOURCEDECK);
+        controller2.drawCard(DrawingPosition.RESOURCEDECK);
+        controller1.drawCard(DrawingPosition.GOLDDECK);
+        controller2.drawCard(DrawingPosition.GOLDDECK);
+
+        for (PhysicalCard card : board1.getHand()) {
+            printPhysicalCard(card);
+        }
+        board1.printCornersArea();
+        board1.getCardsArea().printCardsArea();
+
+        for (PhysicalCard card : board2.getHand()) {
+            printPhysicalCard(card);
+        }
+        board2.printCornersArea();
+        board2.getCardsArea().printCardsArea();
     }
 }
