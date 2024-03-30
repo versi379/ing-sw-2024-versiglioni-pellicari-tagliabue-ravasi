@@ -56,9 +56,6 @@ class GameTest {
         Game game = GamesManager.getInstance().getGame("a");
         PlayerData board = game.getPlayerData("Francesco");
 
-        controller.drawCard(DrawingPosition.RESOURCE1);
-        controller.drawCard(DrawingPosition.RESOURCEDECK);
-        controller.drawCard(DrawingPosition.GOLDDECK);
         for (PhysicalCard card : board.getHand()) {
             printPhysicalCard(card);
         }
@@ -95,13 +92,6 @@ class GameTest {
         controller2.setPlayer("Pietro");
         controller2.joinGame("a");
         PlayerData board2 = game.getPlayerData("Pietro");
-
-        controller1.drawCard(DrawingPosition.RESOURCE1);
-        controller2.drawCard(DrawingPosition.RESOURCE1);
-        controller1.drawCard(DrawingPosition.RESOURCEDECK);
-        controller2.drawCard(DrawingPosition.RESOURCEDECK);
-        controller1.drawCard(DrawingPosition.GOLDDECK);
-        controller2.drawCard(DrawingPosition.GOLDDECK);
 
         for (PhysicalCard card : board1.getHand()) {
             printPhysicalCard(card);

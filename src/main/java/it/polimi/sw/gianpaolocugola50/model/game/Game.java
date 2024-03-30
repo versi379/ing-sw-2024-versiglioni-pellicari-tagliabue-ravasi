@@ -71,9 +71,6 @@ public class Game {
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
         chat = new Chat();
-        setDeckV2();
-        setCommonObjectives(2);
-        setTableAtTheStart();
         addPlayer(creator);
     }
 
@@ -84,12 +81,10 @@ public class Game {
     public void addPlayer(Player player) {
         playerList.add(player);
         playerDatas.put(player, new PlayerData(40));
-        // da rivedere
-        playerDatas.get(player).initialize(getStarterCard().getFront(), getSecreteObjective2());
-        //
         player.setCurrentGame(this);
 
         if (playerList.size() >= numPlayers) {
+            start();
             status = GameStatus.PLAYING;
         }
     }
@@ -122,27 +117,20 @@ public class Game {
         return null;
     }
 
-    public int resourceDeckSize() {
-        return resourceDeck.size();
-    }
-
-    public int goldDeckSize() {
-        return goldDeck.size();
-    }
-
-    public void setTableAtTheStart() {
+    public void start() {
+        setDeckV2();
         drawableCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
         drawableCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
         drawableCards[2] = drawCard(DrawingPosition.GOLDDECK);
         drawableCards[3] = drawCard(DrawingPosition.GOLDDECK);
-    }
+        setCommonObjectives(2);
 
-    /**
-     * this is used to get the starter card for one player, the card will be given randomly
-     * because the deck are mixed from the start;
-     */
-    private PhysicalCard getStarterCard() {
-        return startDeck.pop();
+        for (Player player : playerList) {
+            getPlayerData(player).initialize(getStarterCard().getFront(), getSecreteObjective2());
+            getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
+            getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
+            getPlayerData(player).addCard(drawCard(DrawingPosition.GOLDDECK));
+        }
     }
 
     public void playerDraw(Player player, DrawingPosition position) {
@@ -226,6 +214,22 @@ public class Game {
         }
         // invalid draw
         return null;
+    }
+
+    public int resourceDeckSize() {
+        return resourceDeck.size();
+    }
+
+    public int goldDeckSize() {
+        return goldDeck.size();
+    }
+
+    /**
+     * this is used to get the starter card for one player, the card will be given randomly
+     * because the deck are mixed from the start;
+     */
+    private PhysicalCard getStarterCard() {
+        return startDeck.pop();
     }
 
     private ObjectiveCard[] getSecreteObjective() {
