@@ -15,8 +15,8 @@ public class Player {
 
     public Player(String nickName) {
         this.nickName = nickName;
-        this.currentGame = null;
-        this.status = PlayerStatus.DISCONNECTED;
+        currentGame = null;
+        status = PlayerStatus.DISCONNECTED;
     }
 
     public String getNickName() {
@@ -32,7 +32,7 @@ public class Player {
     }
 
     public PlayerData getPlayerData() {
-        return currentGame.getPlayerData(this);
+        return getCurrentGame().getPlayerData(this);
     }
 
     public void setStatus(PlayerStatus status) {
@@ -51,11 +51,16 @@ public class Player {
         if (!(obj instanceof Player player)) {
             return false;
         }
-        return nickName.equals(player.nickName);
+        return getNickName().equals(player.getNickName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nickName);
+        return Objects.hash(getNickName());
+    }
+
+    @Override
+    public String toString() {
+        return getNickName();
     }
 }

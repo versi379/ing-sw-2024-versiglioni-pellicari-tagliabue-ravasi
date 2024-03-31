@@ -2,10 +2,7 @@ package it.polimi.sw.gianpaolocugola50.controller;
 
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
-import it.polimi.sw.gianpaolocugola50.model.game.DrawingPosition;
-import it.polimi.sw.gianpaolocugola50.model.game.GameStatus;
-import it.polimi.sw.gianpaolocugola50.model.game.GamesManager;
-import it.polimi.sw.gianpaolocugola50.model.game.Player;
+import it.polimi.sw.gianpaolocugola50.model.game.*;
 import it.polimi.sw.gianpaolocugola50.view.View;
 
 import java.util.List;
@@ -25,9 +22,9 @@ public class ClientController implements ViewObserver {
             resetPlayer();
             player = new Player(nickName);
             gamesManager.addPlayer(player);
-        } //else {
-        // roba per notificare player che esiste già un giocatore con quel nickName
-        //}
+        } else {
+            System.err.println("Giocatore già esistente");
+        }
     }
 
     public void resetPlayer() {
@@ -42,65 +39,119 @@ public class ClientController implements ViewObserver {
     public void createGame(String id, int numPlayers) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (!gamesManager.containsGame(id)) {
-            gamesManager.setGame(id, numPlayers, player);
-        } //else {
-        // roba per notificare player che esiste già un gioco con quell'id
-        //}
+            if (numPlayers >= 1 && numPlayers < 5) {
+                gamesManager.setGame(id, numPlayers, player);
+            } else {
+                System.err.println("Numero giocatori non valido");
+            }
+        } else {
+            System.err.println("Partita già esistente");
+        }
     }
 
     public void joinGame(String id) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (gamesManager.containsGame(id)) {
-            gamesManager.getGame(id).addPlayer(player);
-        } //else {
-        // roba per notificare player che non esiste un gioco con quell'id
-        //}
+            Game game = gamesManager.getGame(id);
+            if (game.getStatus().equals(GameStatus.WAITING)) {
+                game.addPlayer(player);
+                if (game.getPlayerList().size() >= game.getNumPlayers()) {
+                    game.setup();
+                }
+            } else {
+                System.err.println("Partita già iniziata");
+            }
+        } else {
+            System.err.println("Partita non esistente");
+        }
     }
 
     public void abandonCurrentGame() {
-        if (player.getCurrentGame() != null) {
-            player.getCurrentGame().removePlayer(player);
+        Game game = player.getCurrentGame();
+        if (game != null) {
+            game.removePlayer(player);
+            if (game.getPlayerList().isEmpty()) {
+                GamesManager.getInstance().deleteGame(game.getId());
+            }
             player.setCurrentGame(null);
         }
     }
 
+    public void chooseStarterFace(boolean face) {
+        if (isStarting()) {
+            player.getPlayerData().setStarterCard(face ? player.getPlayerData().getStarterCard().getFront()
+                    : player.getPlayerData().getStarterCard().getBack());
+            checkSetupStatus();
+        } else {
+            System.err.println("Operazione non disponibile");
+        }
+    }
+
+    public void chooseObjective(int index) {
+        if (isStarting()) {
+            if (index >= 0 && index < player.getPlayerData().getSecretObjectivesList().size()) {
+                player.getPlayerData().setSecretObjective(player.getPlayerData().getSecretObjectivesList().get(index));
+                checkSetupStatus();
+            } else {
+                System.err.println("Indice non valido");
+            }
+        } else {
+            System.err.println("Operazione non disponibile");
+        }
+    }
+
+    private void checkSetupStatus() {
+        if (player.getCurrentGame().getPlayerList().stream()
+                .map(Player::getPlayerData)
+                .allMatch(PlayerData::isReady)) {
+            player.getCurrentGame().start();
+        }
+    }
+
     public void placeCard(int index, boolean face, int x, int y) {
-        if (isPlaying()) {
+        if (isPlaying() && isPlayerTurn()) {
             List<PhysicalCard> playerHand = player.getPlayerData().getHand();
             if (index >= 0 && index < playerHand.size()) {
                 PlayableCard card = face ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
-                if (isPlayerTurn() && card.isPlaceable(player.getPlayerData(), x, y)) {
+                if (card.isPlaceable(player.getPlayerData(), x, y)) {
                     player.getPlayerData().placeCard(card, x, y);
                     player.getPlayerData().removeCard(index);
-                } //else {
-                // roba per notificare player che la carta non è piazzabile
-                //}
-            } //else {
-            // indice non valido
-            //}
-        } //else {
-        // operazione non valida
-        //}
+                } else {
+                    System.err.println("Carta non piazzabile");
+                }
+            } else {
+                System.err.println("Indice non valido");
+            }
+        } else {
+            System.err.println("Operazione non disponibile");
+        }
     }
 
     public void drawCard(DrawingPosition position) {
-        if (isPlaying()) {
-            if (isPlayerTurn()) {
-                player.getCurrentGame().playerDraw(player, position);
-            } //else {
-            // non posso pescare adesso
-            //}
-        } //else {
-        // operazione non valida
-        //}
+        if (isPlaying() && isPlayerTurn()) {
+            PhysicalCard card = player.getCurrentGame().drawCard(position);
+            if (card != null) {
+                player.getPlayerData().addCard(card);
+                player.getCurrentGame().nextPlayer();
+            } else {
+                System.err.println("Posizione non disponibile");
+            }
+        } else {
+            System.err.println("Operazione non disponibile");
+        }
+    }
+
+    private boolean isStarting() {
+        return player.getCurrentGame() != null && player.getCurrentGame().getStatus().equals(GameStatus.SETUP);
     }
 
     private boolean isPlaying() {
-        return player.getCurrentGame() != null;
+        return player.getCurrentGame() != null &&
+                (player.getCurrentGame().getStatus().equals(GameStatus.PLAYING) ||
+                        player.getCurrentGame().getStatus().equals(GameStatus.ENDING));
     }
 
     private boolean isPlayerTurn() {
-        return player.getCurrentGame().getStatus().equals(GameStatus.PLAYING)
-                && player.getCurrentGame().getCurrentPlayer() == player;
+        return player.getCurrentGame().getCurrentPlayer().equals(player);
     }
 }

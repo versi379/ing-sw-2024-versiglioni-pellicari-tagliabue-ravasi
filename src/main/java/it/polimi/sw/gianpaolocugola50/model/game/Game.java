@@ -36,7 +36,7 @@ public class Game {
     private int currentIndex;
 
     //map of player's data
-    private final Map<Player, PlayerData> playerDatas;
+    private final Map<Player, PlayerData> playerAreas;
 
     //deck of resourceCard
     private final Stack<PhysicalCard> resourceDeck;
@@ -44,10 +44,10 @@ public class Game {
     //deck of goldCard
     private final Stack<PhysicalCard> goldDeck;
 
-    private final PhysicalCard[] drawableCards;
+    private final PhysicalCard[] revealedCards;
 
     //deck of StarterCard
-    private final Stack<PhysicalCard> startDeck;
+    private final Stack<PhysicalCard> starterDeck;
 
     //these are the card for the objective
     private final Stack<ObjectiveCard> objectiveDeck;
@@ -63,15 +63,19 @@ public class Game {
         status = GameStatus.WAITING;
         playerList = new ArrayList<>();
         currentIndex = 0;
-        playerDatas = new HashMap<>();
+        playerAreas = new HashMap<>();
         resourceDeck = new Stack<>();
         goldDeck = new Stack<>();
-        drawableCards = new PhysicalCard[4];
-        startDeck = new Stack<>();
+        revealedCards = new PhysicalCard[4];
+        starterDeck = new Stack<>();
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
         chat = new Chat();
         addPlayer(creator);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public GameStatus getStatus() {
@@ -80,23 +84,26 @@ public class Game {
 
     public void addPlayer(Player player) {
         playerList.add(player);
-        playerDatas.put(player, new PlayerData(40));
+        playerAreas.put(player, new PlayerData());
         player.setCurrentGame(this);
-
-        if (playerList.size() >= numPlayers) {
-            start();
-            status = GameStatus.PLAYING;
-        }
     }
 
     public void removePlayer(Player player) {
         if (playerList.contains(player)) {
             playerList.remove(player);
-            playerDatas.remove(player);
+            playerAreas.remove(player);
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
             }
         }
+    }
+
+    public List<Player> getPlayerList() {
+        return new ArrayList<>(playerList);
+    }
+
+    public int getNumPlayers() {
+        return numPlayers;
     }
 
     public Player getCurrentPlayer() {
@@ -104,7 +111,7 @@ public class Game {
     }
 
     public PlayerData getPlayerData(Player player) {
-        return playerDatas.get(player);
+        return playerAreas.get(player);
     }
 
     //non so a cosa possa servire ma c'era prima un metodo equivalente
@@ -117,27 +124,69 @@ public class Game {
         return null;
     }
 
-    public void start() {
+    public void setup() {
+        status = GameStatus.SETUP;
         setDeckV2();
-        drawableCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
-        drawableCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
-        drawableCards[2] = drawCard(DrawingPosition.GOLDDECK);
-        drawableCards[3] = drawCard(DrawingPosition.GOLDDECK);
         setCommonObjectives(2);
+        revealedCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
+        revealedCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
+        revealedCards[2] = drawCard(DrawingPosition.GOLDDECK);
+        revealedCards[3] = drawCard(DrawingPosition.GOLDDECK);
 
         for (Player player : playerList) {
-            getPlayerData(player).initialize(getStarterCard().getFront(), getSecreteObjective2());
+            getPlayerData(player).setStartingChoices(getStarterCard(), getSecreteObjectivesList(2));
             getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
             getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
             getPlayerData(player).addCard(drawCard(DrawingPosition.GOLDDECK));
         }
     }
 
-    public void playerDraw(Player player, DrawingPosition position) {
-        if (playerList.contains(player)) {
-            getPlayerData(player).addCard(drawCard(position));
-            currentIndex = (currentIndex + 1) % playerList.size();
+    public void start() {
+        status = GameStatus.PLAYING;
+    }
+
+    public void end() {
+        status = GameStatus.FINISHED;
+        for (Player player : playerList) {
+            playerAreas.get(player).setFinalScore(commonObjectives);
         }
+
+        List<Player> winnerList = new ArrayList<>(playerList);
+        int maxScore = winnerList.stream()
+                .map(this::getPlayerData)
+                .map(PlayerData::getTotalScore)
+                .max(Integer::compareTo)
+                .orElse(0);
+        winnerList.removeIf(player -> getPlayerData(player).getTotalScore() < maxScore);
+        if (winnerList.size() == 1) {
+            System.err.println("Vincitore: " + winnerList.getFirst());
+            System.err.println("Punteggio: " + maxScore);
+        } else {
+            int maxObjectivesScore = winnerList.stream()
+                    .map(this::getPlayerData)
+                    .map(PlayerData::getObjectivesScore)
+                    .max(Integer::compareTo)
+                    .orElse(0);
+            winnerList.removeIf(player -> getPlayerData(player).getObjectivesScore() < maxObjectivesScore);
+            if (winnerList.size() == 1) {
+                System.err.println("Vincitore: " + winnerList.getFirst());
+                System.err.println("Punteggio: " + maxScore);
+                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
+            } else {
+                System.err.println("Pareggio");
+                System.err.println("Punteggio: " + maxScore);
+                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
+                System.err.println("Vincitori:");
+                for (Player player : winnerList) {
+                    System.err.print(player + " ");
+                }
+                System.err.println();
+            }
+        }
+    }
+
+    public void nextPlayer() {
+        currentIndex = (currentIndex + 1) % playerList.size();
     }
 
     /**
@@ -155,27 +204,27 @@ public class Game {
                 }
             }
             case DrawingPosition.RESOURCE1 -> {
-                PhysicalCard tmp = drawableCards[0];
+                PhysicalCard tmp = revealedCards[0];
                 if (tmp != null) {
                     if (!resourceDeck.isEmpty()) {
-                        drawableCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
+                        revealedCards[0] = drawCard(DrawingPosition.RESOURCEDECK);
                     } else if (!goldDeck.isEmpty()) {
-                        drawableCards[0] = drawCard(DrawingPosition.GOLDDECK);
+                        revealedCards[0] = drawCard(DrawingPosition.GOLDDECK);
                     } else {
-                        drawableCards[0] = null;
+                        revealedCards[0] = null;
                     }
                     return tmp;
                 }
             }
             case DrawingPosition.RESOURCE2 -> {
-                PhysicalCard tmp = drawableCards[1];
+                PhysicalCard tmp = revealedCards[1];
                 if (tmp != null) {
                     if (!resourceDeck.isEmpty()) {
-                        drawableCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
+                        revealedCards[1] = drawCard(DrawingPosition.RESOURCEDECK);
                     } else if (!goldDeck.isEmpty()) {
-                        drawableCards[1] = drawCard(DrawingPosition.GOLDDECK);
+                        revealedCards[1] = drawCard(DrawingPosition.GOLDDECK);
                     } else {
-                        drawableCards[1] = null;
+                        revealedCards[1] = null;
                     }
                     return tmp;
                 }
@@ -186,27 +235,27 @@ public class Game {
                 }
             }
             case DrawingPosition.GOLD1 -> {
-                PhysicalCard tmp = drawableCards[2];
+                PhysicalCard tmp = revealedCards[2];
                 if (tmp != null) {
                     if (!goldDeck.isEmpty()) {
-                        drawableCards[2] = drawCard(DrawingPosition.GOLDDECK);
+                        revealedCards[2] = drawCard(DrawingPosition.GOLDDECK);
                     } else if (!resourceDeck.isEmpty()) {
-                        drawableCards[2] = drawCard(DrawingPosition.RESOURCEDECK);
+                        revealedCards[2] = drawCard(DrawingPosition.RESOURCEDECK);
                     } else {
-                        drawableCards[2] = null;
+                        revealedCards[2] = null;
                     }
                     return tmp;
                 }
             }
             case DrawingPosition.GOLD2 -> {
-                PhysicalCard tmp = drawableCards[3];
+                PhysicalCard tmp = revealedCards[3];
                 if (tmp != null) {
                     if (!goldDeck.isEmpty()) {
-                        drawableCards[3] = drawCard(DrawingPosition.GOLDDECK);
+                        revealedCards[3] = drawCard(DrawingPosition.GOLDDECK);
                     } else if (!resourceDeck.isEmpty()) {
-                        drawableCards[3] = drawCard(DrawingPosition.RESOURCEDECK);
+                        revealedCards[3] = drawCard(DrawingPosition.RESOURCEDECK);
                     } else {
-                        drawableCards[3] = null;
+                        revealedCards[3] = null;
                     }
                     return tmp;
                 }
@@ -224,16 +273,18 @@ public class Game {
         return goldDeck.size();
     }
 
-    /**
-     * this is used to get the starter card for one player, the card will be given randomly
-     * because the deck are mixed from the start;
-     */
-    private PhysicalCard getStarterCard() {
-        return startDeck.pop();
+    public PhysicalCard getStarterCard() {
+        return starterDeck.pop();
     }
 
-    private ObjectiveCard[] getSecreteObjective() {
-        return new ObjectiveCard[]{objectiveDeck.pop(), objectiveDeck.pop()};
+    public List<ObjectiveCard> getSecreteObjectivesList(int quantity) {
+        List<ObjectiveCard> secretObjectives = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            if (!objectiveDeck.isEmpty()) {
+                secretObjectives.add(objectiveDeck.pop());
+            }
+        }
+        return secretObjectives;
     }
 
     //it is just for test// to delete!!
@@ -304,7 +355,7 @@ public class Game {
                 } else if (CardType.RESOURCE.equals(card.getCardType())) {
                     resourceDeck.add(card);
                 } else if (CardType.STARTER.equals(card.getCardType())) {
-                    startDeck.add(card);
+                    starterDeck.add(card);
                 }
             }
             //objective deck
@@ -319,7 +370,7 @@ public class Game {
         }
 
         mixAllDecks(resourceDeck);
-        mixAllDecks(startDeck);
+        mixAllDecks(starterDeck);
         mixAllDecks(goldDeck);
         mixObjective(objectiveDeck);
 
@@ -337,7 +388,7 @@ public class Game {
             gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
             Gson gson = gsonBuilder.setPrettyPrinting().create();
             // Convertire la lista di oggetti in formato JSON utilizzando l'oggetto Gson
-            gson.toJson(startDeck, fileWriter);
+            gson.toJson(starterDeck, fileWriter);
             gson.toJson(resourceDeck, fileWriter);
             gson.toJson(goldDeck, fileWriter);
 
@@ -430,7 +481,7 @@ public class Game {
                         //this is the creation of a starter card
                         cardFront = new PlayableCard(color, point, cornerTmp, fixedResources);
                         cardBack = new PlayableCard(color, 0, cornerTmp2);
-                        startDeck.add(
+                        starterDeck.add(
                                 new PhysicalCard(
                                         type,
                                         cardFront,
