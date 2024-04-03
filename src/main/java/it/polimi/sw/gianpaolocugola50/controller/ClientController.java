@@ -67,7 +67,6 @@ public class ClientController implements ViewObserver {
         if (isInGame()) {
             Game game = player.getCurrentGame();
             game.removePlayer(player);
-            player.setCurrentGame(null);
         } else {
             System.err.println("Operazione non disponibile");
         }
@@ -139,8 +138,7 @@ public class ClientController implements ViewObserver {
     }
 
     private boolean isPlaying() {
-        return player.getCurrentGame().getStatus().equals(GameStatus.PLAYING) ||
-                player.getCurrentGame().getStatus().equals(GameStatus.ENDING);
+        return player.getCurrentGame().getStatus().equals(GameStatus.PLAYING);
     }
 
     private boolean isPlayerTurn() {

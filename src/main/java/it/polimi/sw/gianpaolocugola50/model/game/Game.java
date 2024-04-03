@@ -86,6 +86,7 @@ public class Game {
         playerList.add(player);
         playerAreas.put(player, new PlayerData());
         player.setCurrentGame(this);
+
         if (playerList.size() >= numPlayers) {
             setup();
         }
@@ -95,6 +96,8 @@ public class Game {
         if (playerList.contains(player)) {
             playerList.remove(player);
             playerAreas.remove(player);
+            player.setCurrentGame(null);
+
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
             }
@@ -149,7 +152,7 @@ public class Game {
     }
 
     public void end() {
-        status = GameStatus.FINISHED;
+        status = GameStatus.ENDED;
         playerList.stream()
                 .map(this::getPlayerData)
                 .forEach(x -> x.setFinalScore(commonObjectives));
@@ -175,12 +178,13 @@ public class Game {
                 System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
             } else {
                 System.err.println("Pareggio");
+                System.err.print("Vincitori:");
+                for (Player player : winnerList) {
+                    System.err.print(" " + player);
+                }
+                System.err.println();
                 System.err.println("Punteggio: " + maxScore);
                 System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
-                System.err.println("Vincitori:");
-                for (Player player : winnerList) {
-                    System.err.print(player + " ");
-                }
                 System.err.println();
             }
         }
@@ -609,12 +613,20 @@ public class Game {
 
     public void setStarterCard(Player player, PlayableCard starterCard) {
         getPlayerData(player).setStarterCard(starterCard);
-        checkSetupStatus();
+        if (isReady(player)) {
+            checkSetupStatus();
+        }
     }
 
     public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
         getPlayerData(player).setSecretObjective(secretObjective);
-        checkSetupStatus();
+        if (isReady(player)) {
+            checkSetupStatus();
+        }
+    }
+
+    public boolean isReady(Player player) {
+        return getPlayerData(player).isReady();
     }
 
     private void checkSetupStatus() {

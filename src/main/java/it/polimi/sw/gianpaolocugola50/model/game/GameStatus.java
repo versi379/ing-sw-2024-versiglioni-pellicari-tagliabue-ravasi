@@ -1,5 +1,5 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
 public enum GameStatus {
-    WAITING, SETUP, PLAYING, ENDING, FINISHED
+    WAITING, SETUP, PLAYING, ENDED
 }
