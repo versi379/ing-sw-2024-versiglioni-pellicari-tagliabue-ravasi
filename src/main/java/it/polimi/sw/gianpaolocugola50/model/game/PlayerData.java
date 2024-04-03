@@ -65,6 +65,7 @@ public class PlayerData {
 
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
+        checkPreparation();
     }
 
     private void checkPreparation() {

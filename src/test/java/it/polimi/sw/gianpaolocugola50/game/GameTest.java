@@ -1,12 +1,15 @@
 package it.polimi.sw.gianpaolocugola50.game;
 
 import it.polimi.sw.gianpaolocugola50.controller.ClientController;
+import it.polimi.sw.gianpaolocugola50.model.card.Color;
 import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
+import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.game.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 class GameTest {
@@ -33,7 +36,11 @@ class GameTest {
 
     @Test
     public void Test1() {
-        Game a = new Game("a", 3, new Player("Pietro"));
+        ClientController controller = new ClientController(null);
+        controller.setPlayer("Francesco");
+
+        controller.createGame("a", 1);
+        Game a = GamesManager.getInstance().getGame("a");
 
         for (int i = 0; i < a.resourceDeckSize(); i++) {
             System.out.println(i);
@@ -41,10 +48,9 @@ class GameTest {
             printPhysicalCard(card);
         }
         IntStream.range(0, a.goldDeckSize()).mapToObj(i -> a.drawCard(DrawingPosition.GOLDDECK)).forEach(this::printPhysicalCard);
-        for (int i = 0; i < 13; i++) {
-            ObjectiveCard op = a.getSecreteObjective2();
-            System.out.println(op.getPointsPerCompletion());
-        }
+        a.getSecreteObjectivesList(13).stream()
+                .map(ObjectiveCard::getPointsPerCompletion)
+                .forEach(System.out::println);
     }
 
     @Test
@@ -61,6 +67,12 @@ class GameTest {
         }
         board.printCornersArea();
         board.getCardsArea().printCardsArea();
+
+        controller.chooseStarterFace(true);
+        controller.chooseObjective(0);
+
+        System.out.println("\nLISTA GIOCATORI:");
+        game.getPlayerList().forEach(System.out::println);
 
         System.out.println("\nPIAZZA CARTA 1");
         controller.placeCard(1, true, 41, 41);
@@ -93,16 +105,40 @@ class GameTest {
         controller2.joinGame("a");
         PlayerData board2 = game.getPlayerData("Pietro");
 
+        System.out.println("\nLISTA GIOCATORI:");
+        game.getPlayerList().forEach(System.out::println);
+
+        System.out.println("\nCARTE FRANCESCO:");
         for (PhysicalCard card : board1.getHand()) {
             printPhysicalCard(card);
         }
-        board1.printCornersArea();
-        board1.getCardsArea().printCardsArea();
 
+        System.out.println("\nCARTE PIETRO:");
         for (PhysicalCard card : board2.getHand()) {
             printPhysicalCard(card);
         }
+
+        controller1.chooseStarterFace(true);
+        controller1.chooseObjective(0);
+
+        controller2.chooseStarterFace(true);
+        controller2.chooseObjective(0);
+
+        System.out.println("\nAREA FRANCESCO:");
+        board1.printCornersArea();
+        board1.getCardsArea().printCardsArea();
+
+        System.out.println("\nAREA PIETRO:");
         board2.printCornersArea();
         board2.getCardsArea().printCardsArea();
+
+        controller1.placeCard(0, true, 41, 41);
+
+        System.out.println("\nAREA FRANCESCO:");
+        board1.printCornersArea();
+        board1.getCardsArea().printCardsArea();
+
+        System.out.println("\nFINE GIOCO");
+        game.end();
     }
 }

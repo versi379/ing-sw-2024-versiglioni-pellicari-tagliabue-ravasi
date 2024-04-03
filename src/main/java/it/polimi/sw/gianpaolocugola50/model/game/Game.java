@@ -86,6 +86,9 @@ public class Game {
         playerList.add(player);
         playerAreas.put(player, new PlayerData());
         player.setCurrentGame(this);
+        if (playerList.size() >= numPlayers) {
+            setup();
+        }
     }
 
     public void removePlayer(Player player) {
@@ -95,15 +98,14 @@ public class Game {
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
             }
+            if (playerList.isEmpty()) {
+                GamesManager.getInstance().deleteGame(id);
+            }
         }
     }
 
     public List<Player> getPlayerList() {
         return new ArrayList<>(playerList);
-    }
-
-    public int getNumPlayers() {
-        return numPlayers;
     }
 
     public Player getCurrentPlayer() {
@@ -124,7 +126,7 @@ public class Game {
         return null;
     }
 
-    public void setup() {
+    private void setup() {
         status = GameStatus.SETUP;
         setDeckV2();
         setCommonObjectives(2);
@@ -134,40 +136,39 @@ public class Game {
         revealedCards[3] = drawCard(DrawingPosition.GOLDDECK);
 
         for (Player player : playerList) {
-            getPlayerData(player).setStartingChoices(getStarterCard(), getSecreteObjectivesList(2));
-            getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
-            getPlayerData(player).addCard(drawCard(DrawingPosition.RESOURCEDECK));
-            getPlayerData(player).addCard(drawCard(DrawingPosition.GOLDDECK));
+            setStartingChoices(player, getStarterCard(), getSecreteObjectivesList(2));
+            addCard(player, drawCard(DrawingPosition.RESOURCEDECK));
+            addCard(player, drawCard(DrawingPosition.RESOURCEDECK));
+            addCard(player, drawCard(DrawingPosition.GOLDDECK));
         }
     }
 
-    public void start() {
+    private void start() {
         status = GameStatus.PLAYING;
+        System.err.println("Game \"" + id + "\" has started");
     }
 
     public void end() {
         status = GameStatus.FINISHED;
-        for (Player player : playerList) {
-            playerAreas.get(player).setFinalScore(commonObjectives);
-        }
+        playerList.stream()
+                .map(this::getPlayerData)
+                .forEach(x -> x.setFinalScore(commonObjectives));
 
         List<Player> winnerList = new ArrayList<>(playerList);
         int maxScore = winnerList.stream()
-                .map(this::getPlayerData)
-                .map(PlayerData::getTotalScore)
+                .map(this::getTotalScore)
                 .max(Integer::compareTo)
                 .orElse(0);
-        winnerList.removeIf(player -> getPlayerData(player).getTotalScore() < maxScore);
+        winnerList.removeIf(player -> getTotalScore(player) < maxScore);
         if (winnerList.size() == 1) {
             System.err.println("Vincitore: " + winnerList.getFirst());
             System.err.println("Punteggio: " + maxScore);
         } else {
             int maxObjectivesScore = winnerList.stream()
-                    .map(this::getPlayerData)
-                    .map(PlayerData::getObjectivesScore)
+                    .map(this::getObjectivesScore)
                     .max(Integer::compareTo)
                     .orElse(0);
-            winnerList.removeIf(player -> getPlayerData(player).getObjectivesScore() < maxObjectivesScore);
+            winnerList.removeIf(player -> getObjectivesScore(player) < maxObjectivesScore);
             if (winnerList.size() == 1) {
                 System.err.println("Vincitore: " + winnerList.getFirst());
                 System.err.println("Punteggio: " + maxScore);
@@ -285,11 +286,6 @@ public class Game {
             }
         }
         return secretObjectives;
-    }
-
-    //it is just for test// to delete!!
-    public ObjectiveCard getSecreteObjective2() {
-        return objectiveDeck.pop();
     }
 
     private void setCommonObjectives(int quantity) {
@@ -595,5 +591,66 @@ public class Game {
     private Set<Resource> FromListToSet(List<Resource> list) {
         Set<Resource> convert = new HashSet<>(list);
         return convert;
+    }
+
+    //metodi playerData
+    //__________________________________________________________________________
+    public void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
+        getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
+    }
+
+    public PhysicalCard getStarterCard(Player player) {
+        return getPlayerData(player).getStarterCard();
+    }
+
+    public List<ObjectiveCard> getSecretObjectivesList(Player player) {
+        return getPlayerData(player).getSecretObjectivesList();
+    }
+
+    public void setStarterCard(Player player, PlayableCard starterCard) {
+        getPlayerData(player).setStarterCard(starterCard);
+        checkSetupStatus();
+    }
+
+    public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
+        getPlayerData(player).setSecretObjective(secretObjective);
+        checkSetupStatus();
+    }
+
+    private void checkSetupStatus() {
+        if (playerList.stream()
+                .map(this::getPlayerData)
+                .allMatch(PlayerData::isReady)) {
+            start();
+        }
+    }
+
+    public void placeCard(Player player, PlayableCard card, int x, int y) {
+        getPlayerData(player).placeCard(card, x, y);
+    }
+
+    public void addCard(Player player, PhysicalCard card) {
+        getPlayerData(player).addCard(card);
+    }
+
+    public void removeCard(Player player, int index) {
+        getPlayerData(player).removeCard(index);
+    }
+
+    public List<PhysicalCard> getHand(Player player) {
+        return getPlayerData(player).getHand();
+    }
+
+    public int getTotalScore(Player player) {
+        return getPlayerData(player).getTotalScore();
+    }
+
+    public int getObjectivesScore(Player player) {
+        return getPlayerData(player).getObjectivesScore();
+    }
+
+    //test
+    public ObjectiveCard getSecreteObjective2() {
+        return objectiveDeck.pop();
     }
 }

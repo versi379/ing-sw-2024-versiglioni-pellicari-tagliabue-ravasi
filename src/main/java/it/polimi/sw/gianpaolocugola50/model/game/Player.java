@@ -31,10 +31,6 @@ public class Player {
         return currentGame;
     }
 
-    public PlayerData getPlayerData() {
-        return getCurrentGame().getPlayerData(this);
-    }
-
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
