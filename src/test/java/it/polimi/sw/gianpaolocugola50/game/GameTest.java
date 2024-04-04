@@ -1,15 +1,12 @@
 package it.polimi.sw.gianpaolocugola50.game;
 
 import it.polimi.sw.gianpaolocugola50.controller.ClientController;
-import it.polimi.sw.gianpaolocugola50.model.card.Color;
 import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
-import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 import it.polimi.sw.gianpaolocugola50.model.game.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.stream.IntStream;
 
 class GameTest {
@@ -44,11 +41,11 @@ class GameTest {
 
         for (int i = 0; i < a.resourceDeckSize(); i++) {
             System.out.println(i);
-            PhysicalCard card = a.drawCard(DrawingPosition.RESOURCEDECK);
+            PhysicalCard card = a.pickCard(DrawingPosition.RESOURCEDECK);
             printPhysicalCard(card);
         }
-        IntStream.range(0, a.goldDeckSize()).mapToObj(i -> a.drawCard(DrawingPosition.GOLDDECK)).forEach(this::printPhysicalCard);
-        a.getSecreteObjectivesList(13).stream()
+        IntStream.range(0, a.goldDeckSize()).mapToObj(i -> a.pickCard(DrawingPosition.GOLDDECK)).forEach(this::printPhysicalCard);
+        a.getObjectives(20).stream()
                 .map(ObjectiveCard::getPointsPerCompletion)
                 .forEach(System.out::println);
     }

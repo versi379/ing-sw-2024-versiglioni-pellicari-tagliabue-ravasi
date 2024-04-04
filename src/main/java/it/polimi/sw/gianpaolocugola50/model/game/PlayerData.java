@@ -10,7 +10,6 @@ import java.util.*;
 
 public class PlayerData {
     private final int matrixLength;
-    private final int deckSize;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
     private int totalScore;
@@ -24,9 +23,8 @@ public class PlayerData {
     private PhysicalCard starterCard;
     private List<ObjectiveCard> secretObjectivesList;
 
-    public PlayerData() {
-        matrixLength = 82;
-        deckSize = (matrixLength / 2) - 1;
+    public PlayerData(int deckSize) {
+        matrixLength = (deckSize * 2) + 2;
         cornersArea = new CornerPointer[matrixLength][matrixLength];
         for (int i = 0; i < matrixLength; i++) {
             for (int j = 0; j < matrixLength; j++) {
@@ -58,18 +56,12 @@ public class PlayerData {
         return secretObjectivesList;
     }
 
-    public void setStarterCard(PlayableCard starterCard) {
-        placeCard(starterCard, deckSize, deckSize);
-        checkPreparation();
-    }
-
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
-        checkPreparation();
     }
 
-    private void checkPreparation() {
-        if (cardsArea.getAtCornersCoordinates(deckSize, deckSize) != null &&
+    public void checkPreparation() {
+        if (cardsArea.getAtCornersCoordinates((matrixLength / 2) - 1, (matrixLength / 2) - 1) != null &&
                 secretObjective != null) {
             ready = true;
         }

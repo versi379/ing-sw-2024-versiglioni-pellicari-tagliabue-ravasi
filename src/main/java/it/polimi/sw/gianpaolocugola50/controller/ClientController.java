@@ -64,8 +64,8 @@ public class ClientController implements ViewObserver {
     }
 
     public void abandonCurrentGame() {
-        if (isInGame()) {
-            Game game = player.getCurrentGame();
+        Game game = player.getCurrentGame();
+        if (isInGame(game)) {
             game.removePlayer(player);
         } else {
             System.err.println("Operazione non disponibile");
@@ -73,8 +73,8 @@ public class ClientController implements ViewObserver {
     }
 
     public void chooseStarterFace(boolean face) {
-        if (isInGame() && isStarting()) {
-            Game game = player.getCurrentGame();
+        Game game = player.getCurrentGame();
+        if (isInGame(game) && isStarting(game)) {
             game.setStarterCard(player, face ? game.getStarterCard(player).getFront() : game.getStarterCard(player).getBack());
         } else {
             System.err.println("Operazione non disponibile");
@@ -82,8 +82,8 @@ public class ClientController implements ViewObserver {
     }
 
     public void chooseObjective(int index) {
-        if (isInGame() && isStarting()) {
-            Game game = player.getCurrentGame();
+        Game game = player.getCurrentGame();
+        if (isInGame(game) && isStarting(game)) {
             if (index >= 0 && index < game.getSecretObjectivesList(player).size()) {
                 game.setSecretObjective(player, game.getSecretObjectivesList(player).get(index));
             } else {
@@ -95,8 +95,8 @@ public class ClientController implements ViewObserver {
     }
 
     public void placeCard(int index, boolean face, int x, int y) {
-        if (isInGame() && isPlaying() && isPlayerTurn()) {
-            Game game = player.getCurrentGame();
+        Game game = player.getCurrentGame();
+        if (isInGame(game) && isPlacingPhase(game)) {
             List<PhysicalCard> playerHand = game.getHand(player);
             if (index >= 0 && index < playerHand.size()) {
                 PlayableCard card = face ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
@@ -115,12 +115,11 @@ public class ClientController implements ViewObserver {
     }
 
     public void drawCard(DrawingPosition position) {
-        if (isInGame() && isPlaying() && isPlayerTurn()) {
-            Game game = player.getCurrentGame();
-            PhysicalCard card = game.drawCard(position);
+        Game game = player.getCurrentGame();
+        if (isInGame(game) && isDrawingPhase(game)) {
+            PhysicalCard card = game.pickCard(position);
             if (card != null) {
                 game.addCard(player, card);
-                game.nextPlayer();
             } else {
                 System.err.println("Posizione non disponibile");
             }
@@ -129,19 +128,27 @@ public class ClientController implements ViewObserver {
         }
     }
 
-    private boolean isInGame() {
-        return player.getCurrentGame() != null;
+    private boolean isInGame(Game game) {
+        return game != null;
     }
 
-    private boolean isStarting() {
-        return player.getCurrentGame().getStatus().equals(GameStatus.SETUP);
+    private boolean isStarting(Game game) {
+        return game.getStatus().equals(GameStatus.SETUP);
     }
 
-    private boolean isPlaying() {
-        return player.getCurrentGame().getStatus().equals(GameStatus.PLAYING);
+    private boolean isPlacingPhase(Game game) {
+        return game.getStatus().equals(GameStatus.PLAYING) &&
+                game.getCurrentPhase().equals(PlayingPhase.PLACING) &&
+                isPlayerTurn(game);
     }
 
-    private boolean isPlayerTurn() {
-        return player.getCurrentGame().getCurrentPlayer().equals(player);
+    private boolean isDrawingPhase(Game game) {
+        return game.getStatus().equals(GameStatus.PLAYING) &&
+                game.getCurrentPhase().equals(PlayingPhase.DRAWING) &&
+                isPlayerTurn(game);
+    }
+
+    private boolean isPlayerTurn(Game game) {
+        return game.getCurrentPlayer().equals(player);
     }
 }
