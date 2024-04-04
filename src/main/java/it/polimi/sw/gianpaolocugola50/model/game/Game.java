@@ -55,8 +55,8 @@ public class Game {
     private final Stack<ObjectiveCard> objectiveDeck;
 
     //these are the objective that all the player of the game have in common
-    private List<ObjectiveCard> commonObjectives;
-    private Chat chat;
+    private final List<ObjectiveCard> commonObjectives;
+    private final Chat chat;
 
 
     public Game(String id, int numPlayers, Player creator) {
