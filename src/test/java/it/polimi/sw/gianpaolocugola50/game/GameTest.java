@@ -32,11 +32,11 @@ class GameTest {
     }
 
     @Test
-    public void Test1() {
+    public void TestCardsVisualization() {
         ClientController controller = new ClientController(null);
         controller.setPlayer("Francesco");
 
-        controller.createGame("a", 1);
+        controller.createGame("a", 1, 20);
         Game a = GamesManager.getInstance().getGame("a");
 
         for (int i = 0; i < a.resourceDeckSize(); i++) {
@@ -51,11 +51,11 @@ class GameTest {
     }
 
     @Test
-    public void TestPiazzamentoCarte() {
+    public void TestCardsPlacement() {
         ClientController controller = new ClientController(null);
         controller.setPlayer("Francesco");
 
-        controller.createGame("a", 1);
+        controller.createGame("a", 1, 20);
         Game game = GamesManager.getInstance().getGame("a");
         PlayerData board = game.getPlayerData("Francesco");
 
@@ -89,11 +89,11 @@ class GameTest {
     }
 
     @Test
-    public void TestMultigiocatore() {
+    public void TestMultiplayer() {
         ClientController controller1 = new ClientController(null);
         controller1.setPlayer("Francesco");
 
-        controller1.createGame("a", 2);
+        controller1.createGame("a", 2, 20);
         Game game = GamesManager.getInstance().getGame("a");
         PlayerData board1 = game.getPlayerData("Francesco");
 
@@ -136,6 +136,9 @@ class GameTest {
         board1.getCardsArea().printCardsArea();
 
         System.out.println("\nFINE GIOCO");
-        game.end();
+        game.forceEnd();
+
+        controller1.abandonCurrentGame();
+        controller2.abandonCurrentGame();
     }
 }

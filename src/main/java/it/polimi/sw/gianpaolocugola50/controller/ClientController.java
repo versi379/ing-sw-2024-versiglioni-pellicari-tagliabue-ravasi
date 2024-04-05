@@ -36,11 +36,11 @@ public class ClientController implements ViewObserver {
         }
     }
 
-    public void createGame(String id, int numPlayers) {
+    public void createGame(String id, int numPlayers, int endScore) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (!gamesManager.containsGame(id)) {
             if (numPlayers >= 1 && numPlayers <= 4) {
-                gamesManager.setGame(id, numPlayers, player);
+                gamesManager.setGame(id, numPlayers, endScore, player);
             } else {
                 System.err.println("Numero giocatori non valido");
             }

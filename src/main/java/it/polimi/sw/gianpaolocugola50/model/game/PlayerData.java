@@ -10,18 +10,28 @@ import java.util.*;
 
 public class PlayerData {
     private final int matrixLength;
+
     private final CornerPointer[][] cornersArea;
+
     private final CardsMatrix cardsArea;
+
     private int totalScore;
+
     private int objectivesScore;
+
     private final Map<Resource, Integer> numOfResources;
+
     private ObjectiveCard secretObjective;
+
     private final List<PhysicalCard> hand;
 
     // utilizzati solo in fase di setup
     private boolean ready;
+
     private PhysicalCard starterCard;
+
     private List<ObjectiveCard> secretObjectivesList;
+
 
     public PlayerData(int deckSize) {
         matrixLength = (deckSize * 2) + 2;

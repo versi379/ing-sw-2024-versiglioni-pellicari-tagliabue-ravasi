@@ -34,8 +34,8 @@ public class GamesManager {
         return playersList.contains(player);
     }
 
-    public void setGame(String id, int numPlayers, Player creator) {
-        gamesList.put(id, new Game(id, numPlayers, creator));
+    public void setGame(String id, int numPlayers, int endScore, Player creator) {
+        gamesList.put(id, new Game(id, numPlayers, endScore, creator));
     }
 
     public void deleteGame(String id) {
