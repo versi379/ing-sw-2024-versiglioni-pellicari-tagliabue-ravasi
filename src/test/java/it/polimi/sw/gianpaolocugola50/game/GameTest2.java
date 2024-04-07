@@ -11,26 +11,6 @@ import java.util.stream.IntStream;
 
 class GameTest2 {
 
-    private void printPhysicalCard(PhysicalCard card) {
-        System.out.println("______________________________________________________");
-        System.out.println(card.getCardType());
-        System.out.println(card.getFront().getPoints());
-        System.out.println(card.getFront().getColor());
-        for (Corner x : card.getFront().getCorners()) {
-            if (x != null) {
-                if(x.isFull()) {
-                    System.out.println(x.getResource().toString());
-                } else if (x.isVisible()) {
-                    System.out.println("EMPTY");
-                } else {
-                    System.out.println("HIDDEN");
-                }
-            } else {
-                System.out.println("null");
-            }
-        }
-    }
-
     @Test
     public void TestCardsVisualization() {
         ClientController controller = new ClientController(null);
@@ -140,5 +120,26 @@ class GameTest2 {
 
         controller1.abandonCurrentGame();
         controller2.abandonCurrentGame();
+    }
+
+    // Test Methods ____________________________________________________________________________________________________
+    private void printPhysicalCard(PhysicalCard card) {
+        System.out.println("______________________________________________________");
+        System.out.println(card.getCardType());
+        System.out.println(card.getFront().getPoints());
+        System.out.println(card.getFront().getColor());
+        for (Corner x : card.getFront().getCorners()) {
+            if (x != null) {
+                if (x.isFull()) {
+                    System.out.println(x.getResource().toString());
+                } else if (x.isVisible()) {
+                    System.out.println("EMPTY");
+                } else {
+                    System.out.println("HIDDEN");
+                }
+            } else {
+                System.out.println("null");
+            }
+        }
     }
 }
