@@ -364,7 +364,7 @@ public class Game {
             }
             case DrawingPosition.GOLDDECK -> {
                 if (!goldDeck.isEmpty()) {
-                    card = resourceDeck.pop();
+                    card = goldDeck.pop();
                     if (resourceDeck.isEmpty() && goldDeck.isEmpty()) {
                         setLastTurn();
                     }

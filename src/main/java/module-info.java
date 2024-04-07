@@ -3,5 +3,5 @@ module it.polimi.sw.gianpaolocugola50 {
     requires javafx.fxml;
     requires com.google.gson;
     requires java.rmi;
-    exports it.polimi.sw.gianpaolocugola50.net.rMi;
+    exports it.polimi.sw.gianpaolocugola50.net.rmi;
 }

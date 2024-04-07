@@ -24,7 +24,11 @@ class GameTest2 {
             PhysicalCard card = a.pickCard(DrawingPosition.RESOURCEDECK);
             printPhysicalCard(card);
         }
-        IntStream.range(0, a.goldDeckSize()).mapToObj(i -> a.pickCard(DrawingPosition.GOLDDECK)).forEach(this::printPhysicalCard);
+        for (int i = 0; i < a.goldDeckSize(); i++) {
+            System.out.println(i);
+            PhysicalCard card = a.pickCard(DrawingPosition.GOLDDECK);
+            printPhysicalCard(card);
+        }
         a.getObjectives(20).stream()
                 .map(ObjectiveCard::getPointsPerCompletion)
                 .forEach(System.out::println);

@@ -1,6 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.net;
 
-import it.polimi.sw.gianpaolocugola50.net.rMi.*;
+import it.polimi.sw.gianpaolocugola50.net.rmi.*;
 import it.polimi.sw.gianpaolocugola50.net.socket.ServerInterface;
 import it.polimi.sw.gianpaolocugola50.net.socket.SocketServerImplementation;
 
