@@ -19,227 +19,199 @@ import com.google.gson.JsonObject;
 import java.io.FileReader;
 
 public class Game {
-    //idGame it identify the game
-    private final int idGame;
+    private final String id;
 
-    //number of player
+    //number of players
     private final int numPlayers;
 
-    //list of player of one game, max 4 player
+    private final int endScore;
+
+    private final int deckSize;
+
+    //status of the game
+    private GameStatus status;
+
+    private boolean lastTurn;
+
+    //list of player of one game, max numPlayers
     //the first player on the list is the black one
-    private List<Player> players;
+    private final List<Player> playerList;
 
-    //the player that is on turn
-    private Player nowPlayer;
+    //index of the currently playing player
+    private int currentIndex;
 
-    //the winner of the game
-    private Player winnerPlayer;
+    private PlayingPhase currentPhase;
 
-    //initial size of resourceDeck and goldDeck
-    private int deckSize;
+    //map of player's data
+    private final Map<Player, PlayerData> playerAreas;
 
     //deck of resourceCard
-    private Stack<PhysicalCard> resourceDeck;
+    private final Stack<PhysicalCard> resourceDeck;
 
-    //deck of goldCard1
-    private Stack<PhysicalCard> goldDeck;
+    //deck of goldCard
+    private final Stack<PhysicalCard> goldDeck;
+
+    private final PhysicalCard[] revealedCards;
 
     //deck of StarterCard
-    private Stack<PhysicalCard> startDeck;
-    //these are the card for the objective
-    private Stack<ObjectiveCard> objectiveDeck;
+    private final Stack<PhysicalCard> starterDeck;
 
-    //resource and gold card on the desk
-    private PhysicalCard[] revealedCards;
-    //these are the objective that all the player of the game have in common
-    private List<ObjectiveCard> commonObjectives;
-    private Chat chat;
+    private final Stack<ObjectiveCard> objectiveDeck;
+
+    //these are the objective that all players have in common
+    private final List<ObjectiveCard> commonObjectives;
+
+    private final Chat chat;
 
 
-    public Game(int idGame, int numPlayers, Player creator) {
-        this.idGame = idGame;
+    public Game(String id, int numPlayers, int endScore, Player creator) {
+        this.id = id;
         this.numPlayers = numPlayers;
-        this.players = new ArrayList<>();
-        players.add(creator);
-        this.commonObjectives = new ArrayList<>();
-        this.revealedCards = new PhysicalCard[4];
-        this.resourceDeck = new Stack<>();
-        this.goldDeck = new Stack<>();
-        this.startDeck = new Stack<>();
-        this.objectiveDeck = new Stack<>();
-        this.chat = new Chat();
-        setDeckV2();
-        setCommonObjectives(2);
-        setTableAtTheStart();
+        this.endScore = endScore;
+        deckSize = 40;
+
+        status = GameStatus.WAITING;
+        playerList = new ArrayList<>();
+        playerAreas = new HashMap<>();
+        resourceDeck = new Stack<>();
+        goldDeck = new Stack<>();
+        revealedCards = new PhysicalCard[4];
+        starterDeck = new Stack<>();
+        objectiveDeck = new Stack<>();
+        commonObjectives = new ArrayList<>();
+        chat = new Chat();
+        addPlayer(creator);
     }
 
-    public int getNumbersOfCardInGoldDeck() {
-        return goldDeck.size();
+    // GAME'S GENERAL INFOS ____________________________________________________________________________________________
+    public String getId() {
+        return id;
     }
 
-    public int getNumbersOfCardInResourceDeck() {
-        return resourceDeck.size();
+    public GameStatus getStatus() {
+        return status;
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public int getNumPlayers() {
+        return numPlayers;
     }
 
-    public Player getPlayer(String name){
-        for (Player player : this.players)
-            if (player.getNickName().equals(name))
-                return player;
-        return null;
-    }
-    /**
-     * this method is used to add the players to this game
-     * if the players are full it will not be addded!
-     */
+    // PLAYERS MANAGEMENT ______________________________________________________________________________________________
     public void addPlayer(Player player) {
-        if (this.players.size() < this.numPlayers) {
-            this.players.add(player);
+        playerList.add(player);
+        playerAreas.put(player, new PlayerData(deckSize));
+        player.setCurrentGame(this);
+
+        if (playerList.size() >= getNumPlayers()) {
+            setup();
         }
     }
 
-    /**
-     * this method is used to add the players to this game
-     */
-    public void setTableAtTheStart() {
-        revealedCards[0] = goldDeck.pop();
-        revealedCards[1] = goldDeck.pop();
-        revealedCards[2] = resourceDeck.pop();
-        revealedCards[3] = resourceDeck.pop();
-    }
+    public void removePlayer(Player player) {
+        if (playerList.contains(player)) {
+            playerList.remove(player);
+            playerAreas.remove(player);
+            player.setCurrentGame(null);
 
-    /**
-     * this method is used to set the starting point for the players
-     * they will be given the starter card, the 2 card for the objective, the common objective
-     */
-
-    private void setAllPlayerData() {
-        for (Player player : players) {
-            player.setPlayerData(
-                    getStarterCard(),
-                    this.deckSize,
-                    this.commonObjectives,
-                    getSecreteObjective()
-            );
-        }
-    }
-
-    /**
-     * this is used to get the starter card for one player, the card will be given randomly
-     * because the deck are mixed from the start;
-     */
-    private PhysicalCard getStarterCard() {
-        return startDeck.pop();
-    }
-
-    /**
-     * Method used to get the board of another player
-     * u need to use the nickName of the user;
-     */
-    public PlayerData getOtherPlayerBoard(String id) {
-        for (int i = 0; i < players.size(); i++)
-            if (players.get(i).getNickName().equals(id)) {
-                return players.get(i).getPlayerData();
+            if (currentIndex >= playerList.size()) {
+                currentIndex = 0;
             }
-        return null;
-    }
-
-    /**
-     * Method used to draw more than one card from the decks
-     * it need a check before the use, if the quantity is more than the deck size it will be an error;
-     */
-    public PhysicalCard[] drawCards(DeckType deckType, int quantity) {
-        PhysicalCard[] drawCard = new PhysicalCard[quantity];
-        if (DeckType.GOLD.equals(deckType)) {
-            for (int i = 0; i < quantity; i++) {
-                drawCard[i] = goldDeck.pop();
+            if (playerList.isEmpty()) {
+                GamesManager.getInstance().deleteGame(getId());
             }
         }
-        if (DeckType.RESOURCE.equals(deckType)) {
-            for (int i = 0; i < quantity; i++) {
-                drawCard[i] = resourceDeck.pop();
-            }
-        }
-        return drawCard;
     }
 
-    /**
-     * Method used to draw just one card from the decks
-     *
-     * @return the top card on the deck
-     * if the deck type is not right it will return null
-     * also if the deck is empty it will return null
-     */
-    public PhysicalCard drawCard(DeckType deckType) {
-        if (DeckType.GOLD.equals(deckType)) {
-            if (goldDeck.empty())
-                return null;
-            return goldDeck.pop();
-        }
-        if (DeckType.RESOURCE.equals(deckType)) {
-            if (resourceDeck.empty())
-                return null;
-            return resourceDeck.pop();
+    public List<Player> getPlayerList() {
+        return new ArrayList<>(playerList);
+    }
+
+    public Player getCurrentPlayer() {
+        return playerList.get(currentIndex);
+    }
+
+    public PlayingPhase getCurrentPhase() {
+        return currentPhase;
+    }
+
+    public PlayerData getPlayerData(Player player) {
+        return playerAreas.get(player);
+    }
+
+    public PlayerData getPlayerData(String nickName) {
+        for (Player player : playerList) {
+            if (player.equals(new Player(nickName))) {
+                return getPlayerData(player);
+            }
         }
         return null;
     }
 
-    /**
-     * Method used to draw a card from the cards on the desk
-     * it will automatically replace the card on the table
-     *
-     * @return it will return the card on the position, if there is no card it will
-     * return null
-     */
-    public PhysicalCard drawCard(DeckType deckType, int position) {
-        if (DeckType.REVEALED.equals(deckType)) {
+    // SETUP PHASE _____________________________________________________________________________________________________
+    private void setup() {
+        status = GameStatus.SETUP;
+        initDecks();
+        setCommonObjectives(2);
+        revealedCards[0] = pickCard(DrawingPosition.RESOURCEDECK);
+        revealedCards[1] = pickCard(DrawingPosition.RESOURCEDECK);
+        revealedCards[2] = pickCard(DrawingPosition.GOLDDECK);
+        revealedCards[3] = pickCard(DrawingPosition.GOLDDECK);
 
-            PhysicalCard tmp = revealedCards[position];
-            //to replace the card with the same type
-            if (revealedCards[position].getCardType().equals(CardType.GOLD)) {
-                if (goldDeck.empty()) {
-                    if (resourceDeck.empty()) {
-                        revealedCards[position] = null;
-                    } else {
-                        revealedCards[position] = resourceDeck.pop();
-                    }
-                } else {
-                    revealedCards[position] = goldDeck.pop();
-                }
-            } else if (revealedCards[position].getCardType().equals(CardType.RESOURCE)) {
-                if (resourceDeck.empty()) {
-                    if (goldDeck.empty()) {
-                        revealedCards[position] = null;
-                    } else {
-                        revealedCards[position] = goldDeck.pop();
-                    }
-                } else {
-                    revealedCards[position] = resourceDeck.pop();
+        for (Player player : playerList) {
+            addCard(player, pickCard(DrawingPosition.RESOURCEDECK));
+            addCard(player, pickCard(DrawingPosition.RESOURCEDECK));
+            addCard(player, pickCard(DrawingPosition.GOLDDECK));
+            setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
+        }
+    }
+
+    /**
+     * Method used to read the file json with all the cards
+     */
+    private void initDecks() {
+        try {
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
+            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
+            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
+            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
+            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
+            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
+            Gson gson = gsonBuilder.create();
+            //set resource deck,Gold,And Starter
+            FileReader reader = new FileReader
+                    ("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/physicalCardGenerated.json");
+            Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
+            }.getType();
+
+            List<PhysicalCard> physicalCards = gson.fromJson(reader, physicalCardListType);
+            // now put the cards in the deck
+            for (PhysicalCard card : physicalCards) {
+                if (CardType.GOLD.equals(card.getCardType())) {
+                    goldDeck.add(card);
+                } else if (CardType.RESOURCE.equals(card.getCardType())) {
+                    resourceDeck.add(card);
+                } else if (CardType.STARTER.equals(card.getCardType())) {
+                    starterDeck.add(card);
                 }
             }
-            return tmp;
+            //objective deck
+            reader = new FileReader
+                    ("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/objectiveCardGenerated.json");
+            Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
+            }.getType();
+            List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
+            objectiveDeck.addAll(objectiveCards);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;
-    }
 
-    private ObjectiveCard[] getSecreteObjective() {
-        return new ObjectiveCard[]{objectiveDeck.pop(), objectiveDeck.pop()};
-    }
-
-    //it is just for test// to delete!!
-    public ObjectiveCard getSecreteObjective2() {
-        return objectiveDeck.pop();
-    }
-
-    private void setCommonObjectives(int quantity) {
-        for (int i = 0; i < quantity; i++) {
-            if (!objectiveDeck.isEmpty()) {
-                commonObjectives.add(objectiveDeck.pop());
-            }
-        }
+        mixAllDecks(resourceDeck);
+        mixAllDecks(starterDeck);
+        mixAllDecks(goldDeck);
+        mixObjective(objectiveDeck);
     }
 
     /**
@@ -270,54 +242,236 @@ public class Game {
         }
     }
 
-    /**
-     * Method used to read the file json with all the cards
-     */
-    private void setDeckV2() {
-        try {
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
-            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
-            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
-            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
-            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
-            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
-            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
-            Gson gson = gsonBuilder.create();
-            //set resource deck,Gold,And Starter
-            FileReader reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/physicalCardGenerated.json");
-            Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
-            }.getType();
-
-            List<PhysicalCard> physicalCards = gson.fromJson(reader, physicalCardListType);
-            // now put the cards in the deck
-            for (PhysicalCard card : physicalCards) {
-                if (CardType.GOLD.equals(card.getCardType())) {
-                    goldDeck.add(card);
-                } else if (CardType.RESOURCE.equals(card.getCardType())) {
-                    resourceDeck.add(card);
-                } else if (CardType.STARTER.equals(card.getCardType())) {
-                    startDeck.add(card);
-                }
-            }
-            //objective deck
-            reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/objectiveCardGenerated.json");
-            Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
-            }.getType();
-            List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
-            objectiveDeck.addAll(objectiveCards);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        mixAllDecks(resourceDeck);
-        mixAllDecks(startDeck);
-        mixAllDecks(goldDeck);
-        mixObjective(objectiveDeck);
-
+    private void setCommonObjectives(int quantity) {
+        commonObjectives.addAll(pickObjectivesList(quantity));
     }
 
+    public void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
+        getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
+    }
+
+    private PhysicalCard pickStarterCard() {
+        return starterDeck.pop();
+    }
+
+    private List<ObjectiveCard> pickObjectivesList(int quantity) {
+        List<ObjectiveCard> objectives = new ArrayList<>();
+        for (int i = 0; i < quantity && !objectiveDeck.isEmpty(); i++) {
+            objectives.add(objectiveDeck.pop());
+        }
+        return objectives;
+    }
+
+    public PhysicalCard getStarterCard(Player player) {
+        return getPlayerData(player).getStarterCard();
+    }
+
+    public List<ObjectiveCard> getSecretObjectivesList(Player player) {
+        return getPlayerData(player).getSecretObjectivesList();
+    }
+
+    public void setStarterCard(Player player, PlayableCard starterCard) {
+        placeCard(player, starterCard, deckSize, deckSize);
+        checkPreparation(player);
+        if (isReady(player)) {
+            checkSetupStatus();
+        }
+    }
+
+    public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
+        getPlayerData(player).setSecretObjective(secretObjective);
+        checkPreparation(player);
+        if (isReady(player)) {
+            checkSetupStatus();
+        }
+    }
+
+    public boolean isReady(Player player) {
+        return getPlayerData(player).isReady();
+    }
+
+    private void checkPreparation(Player player) {
+        getPlayerData(player).checkPreparation();
+    }
+
+    private void checkSetupStatus() {
+        if (playerList.stream()
+                .allMatch(this::isReady)) {
+            start();
+        }
+    }
+
+    // PLAYING PHASE ___________________________________________________________________________________________________
+    private void start() {
+        status = GameStatus.PLAYING;
+        currentIndex = 0;
+        currentPhase = PlayingPhase.PLACING;
+        lastTurn = false;
+        System.err.println("Game \"" + id + "\" has started");
+    }
+
+    private void drawingPhase() {
+        currentPhase = PlayingPhase.DRAWING;
+    }
+
+    private void nextPlayer() {
+        if (lastTurn && currentIndex == playerList.size()) {
+            end();
+        } else {
+            currentIndex = (currentIndex + 1) % playerList.size();
+            currentPhase = PlayingPhase.PLACING;
+        }
+    }
+
+    private void setLastTurn() {
+        lastTurn = true;
+    }
+
+    public PhysicalCard pickCard(DrawingPosition position) {
+        PhysicalCard card = null;
+        switch (position) {
+            case DrawingPosition.RESOURCEDECK -> {
+                if (!resourceDeck.isEmpty()) {
+                    card = resourceDeck.pop();
+                    if (resourceDeck.isEmpty() && goldDeck.isEmpty()) {
+                        setLastTurn();
+                    }
+                }
+            }
+            case DrawingPosition.RESOURCE1 -> {
+                card = revealedCards[0];
+                if (card != null) {
+                    if (!resourceDeck.isEmpty()) {
+                        revealedCards[0] = pickCard(DrawingPosition.RESOURCEDECK);
+                    } else if (!goldDeck.isEmpty()) {
+                        revealedCards[0] = pickCard(DrawingPosition.GOLDDECK);
+                    } else {
+                        revealedCards[0] = null;
+                    }
+                }
+            }
+            case DrawingPosition.RESOURCE2 -> {
+                card = revealedCards[1];
+                if (card != null) {
+                    if (!resourceDeck.isEmpty()) {
+                        revealedCards[1] = pickCard(DrawingPosition.RESOURCEDECK);
+                    } else if (!goldDeck.isEmpty()) {
+                        revealedCards[1] = pickCard(DrawingPosition.GOLDDECK);
+                    } else {
+                        revealedCards[1] = null;
+                    }
+                }
+            }
+            case DrawingPosition.GOLDDECK -> {
+                if (!goldDeck.isEmpty()) {
+                    card = resourceDeck.pop();
+                    if (resourceDeck.isEmpty() && goldDeck.isEmpty()) {
+                        setLastTurn();
+                    }
+                }
+            }
+            case DrawingPosition.GOLD1 -> {
+                card = revealedCards[2];
+                if (card != null) {
+                    if (!goldDeck.isEmpty()) {
+                        revealedCards[2] = pickCard(DrawingPosition.GOLDDECK);
+                    } else if (!resourceDeck.isEmpty()) {
+                        revealedCards[2] = pickCard(DrawingPosition.RESOURCEDECK);
+                    } else {
+                        revealedCards[2] = null;
+                    }
+                }
+            }
+            case DrawingPosition.GOLD2 -> {
+                card = revealedCards[3];
+                if (card != null) {
+                    if (!goldDeck.isEmpty()) {
+                        revealedCards[3] = pickCard(DrawingPosition.GOLDDECK);
+                    } else if (!resourceDeck.isEmpty()) {
+                        revealedCards[3] = pickCard(DrawingPosition.RESOURCEDECK);
+                    } else {
+                        revealedCards[3] = null;
+                    }
+                }
+            }
+        }
+        return card;
+    }
+
+    public void placeCard(Player player, PlayableCard card, int x, int y) {
+        getPlayerData(player).placeCard(card, x, y);
+        if (getTotalScore(player) >= endScore) {
+            setLastTurn();
+        }
+        if (status.equals(GameStatus.PLAYING)) {
+            drawingPhase();
+        }
+    }
+
+    public void addCard(Player player, PhysicalCard card) {
+        getPlayerData(player).addCard(card);
+        if (status.equals(GameStatus.PLAYING)) {
+            nextPlayer();
+        }
+    }
+
+    public void removeCard(Player player, int index) {
+        getPlayerData(player).removeCard(index);
+    }
+
+    public List<PhysicalCard> getHand(Player player) {
+        return getPlayerData(player).getHand();
+    }
+
+    // END PHASE _______________________________________________________________________________________________________
+    private void end() {
+        status = GameStatus.ENDED;
+        playerList.stream()
+                .map(this::getPlayerData)
+                .forEach(x -> x.setFinalScore(commonObjectives));
+
+        List<Player> winnerList = new ArrayList<>(playerList);
+        int maxScore = winnerList.stream()
+                .map(this::getTotalScore)
+                .max(Integer::compareTo)
+                .orElse(0);
+        winnerList.removeIf(player -> getTotalScore(player) < maxScore);
+        if (winnerList.size() == 1) {
+            System.err.println("Vincitore: " + winnerList.getFirst());
+            System.err.println("Punteggio: " + maxScore);
+        } else {
+            int maxObjectivesScore = winnerList.stream()
+                    .map(this::getObjectivesScore)
+                    .max(Integer::compareTo)
+                    .orElse(0);
+            winnerList.removeIf(player -> getObjectivesScore(player) < maxObjectivesScore);
+            if (winnerList.size() == 1) {
+                System.err.println("Vincitore: " + winnerList.getFirst());
+                System.err.println("Punteggio: " + maxScore);
+                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
+            } else {
+                System.err.println("Pareggio");
+                System.err.print("Vincitori:");
+                for (Player player : winnerList) {
+                    System.err.print(" " + player);
+                }
+                System.err.println();
+                System.err.println("Punteggio: " + maxScore);
+                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
+                System.err.println();
+            }
+        }
+    }
+
+    public int getTotalScore(Player player) {
+        return getPlayerData(player).getTotalScore();
+    }
+
+    public int getObjectivesScore(Player player) {
+        return getPlayerData(player).getObjectivesScore();
+    }
+
+    // OTHER METHODS ___________________________________________________________________________________________________
     private void saveDeckOnFile(String name) {
         try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/" + name + ".json")) {
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -330,7 +484,7 @@ public class Game {
             gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
             Gson gson = gsonBuilder.setPrettyPrinting().create();
             // Convertire la lista di oggetti in formato JSON utilizzando l'oggetto Gson
-            gson.toJson(startDeck, fileWriter);
+            gson.toJson(starterDeck, fileWriter);
             gson.toJson(resourceDeck, fileWriter);
             gson.toJson(goldDeck, fileWriter);
 
@@ -375,7 +529,8 @@ public class Game {
         PlayableCard cardBack;
         Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/card.json")) {
+        try (FileReader reader =
+                     new FileReader("src/main/resources/it/polimi/sw/gianpaolocugola50/cardJson/card.json")) {
 
             JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
 
@@ -423,7 +578,7 @@ public class Game {
                         //this is the creation of a starter card
                         cardFront = new PlayableCard(color, point, cornerTmp, fixedResources);
                         cardBack = new PlayableCard(color, 0, cornerTmp2);
-                        startDeck.add(
+                        starterDeck.add(
                                 new PhysicalCard(
                                         type,
                                         cardFront,
@@ -475,19 +630,24 @@ public class Game {
                     } else if ("OB01".equals(front.get("code").getAsString())) {
                         JsonObject caveObjective = front.getAsJsonObject("caveObjective");
                         objective = new CaveObjective(
-                                Color.valueOf(caveObjective.get("color").getAsString()), Color.valueOf(caveObjective.get("color2").getAsString()),
+                                Color.valueOf(caveObjective.get("color").getAsString()),
+                                Color.valueOf(caveObjective.get("color2").getAsString()),
                                 CaveOrientation.valueOf(caveObjective.get("orientation").getAsString())
                         );
                     } else if ("OB02".equals(front.get("code").getAsString())) {
-                        JsonObject identicalResourcesObjective = front.getAsJsonObject("identicalResourcesObjective");
+                        JsonObject identicalResourcesObjective =
+                                front.getAsJsonObject("identicalResourcesObjective");
                         objective = new IdenticalResourcesObjective(
                                 Resource.valueOf(identicalResourcesObjective.get("typeOfResource").getAsString()),
                                 identicalResourcesObjective.get("numOfResource").getAsInt()
                         );
                     } else if ("OB03".equals(front.get("code").getAsString())) {
-                        JsonObject differentResourcesObjective = front.getAsJsonObject("differentResourcesObjective");
-                        JsonArray typeOfDifferentResource = differentResourcesObjective.getAsJsonArray("typeOfDifferentResource");
-                        objective = new DifferentResourcesObjective(FromListToSet(fixedValueFromJsonArray(typeOfDifferentResource)));
+                        JsonObject differentResourcesObjective =
+                                front.getAsJsonObject("differentResourcesObjective");
+                        JsonArray typeOfDifferentResource =
+                                differentResourcesObjective.getAsJsonArray("typeOfDifferentResource");
+                        objective = new DifferentResourcesObjective
+                                (new HashSet<>(fixedValueFromJsonArray(typeOfDifferentResource)));
                     }
 
                     objectiveDeck.add(
@@ -534,12 +694,20 @@ public class Game {
         return fixedResources;
     }
 
-    private Set<Resource> FromListToSet(List<Resource> list) {
-        Set<Resource> convert = new HashSet<>(list);
-        return convert;
+    // TEST METHODS ____________________________________________________________________________________________________
+    public List<ObjectiveCard> getObjectives(int quantity) {
+        return pickObjectivesList(quantity);
+    }
+
+    public int resourceDeckSize() {
+        return resourceDeck.size();
+    }
+
+    public int goldDeckSize() {
+        return goldDeck.size();
+    }
+
+    public void forceEnd() {
+        end();
     }
 }
-
-
-
-

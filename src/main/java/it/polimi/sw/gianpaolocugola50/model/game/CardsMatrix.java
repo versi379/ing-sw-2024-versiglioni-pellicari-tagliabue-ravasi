@@ -1,5 +1,6 @@
 package it.polimi.sw.gianpaolocugola50.model.game;
 
+import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PlayableCard;
 
 /**
@@ -140,5 +141,21 @@ public class CardsMatrix {
             }
         }
         return this;
+    }
+
+    //test
+    public void printCardsArea() {
+        System.out.println("_____________________________________________________________________________________________");
+        for (int j = 47; j > 35; j--) {
+            for (int i = 35; i < 47; i++) {
+                PlayableCard x = get(i, j);
+                if (x != null) {
+                    System.out.print((x.getColor() + "\t"));
+                } else {
+                    System.out.print("null\t");
+                }
+            }
+            System.out.print("\n");
+        }
     }
 }
