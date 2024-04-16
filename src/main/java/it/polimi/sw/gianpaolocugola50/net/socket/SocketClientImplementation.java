@@ -1,4 +1,4 @@
-package it.polimi.sw.gianpaolocugola50.net.socket;
+package it.polimi.sw.GC50.net.socket;
 
 public class SocketClientImplementation implements ClientInterface,Runnable {
     @Override

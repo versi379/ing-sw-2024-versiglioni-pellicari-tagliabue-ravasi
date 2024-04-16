@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.polimi.sw</groupId>
-  <artifactId>GianpaoloCugola50</artifactId>
+  <artifactId>GC50</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>ing-sw-2024-versiglioni-pellicari-tagliabue-ravasi</name>
 
@@ -69,7 +69,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>it.polimi.sw.gianpaolocugola50/it.polimi.sw.gianpaolocugola50.HelloApplication</mainClass>
+              <mainClass>it.polimi.sw.GC50/it.polimi.sw.GC50.HelloApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
