@@ -1,19 +1,17 @@
 package it.polimi.sw.gianpaolocugola50.game;
 
-import it.polimi.sw.gianpaolocugola50.controller.ClientController;
+import it.polimi.sw.gianpaolocugola50.controller.Controller;
 import it.polimi.sw.gianpaolocugola50.model.card.Corner;
 import it.polimi.sw.gianpaolocugola50.model.card.PhysicalCard;
 import it.polimi.sw.gianpaolocugola50.model.game.*;
 import it.polimi.sw.gianpaolocugola50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
-
 class GameTest2 {
 
     @Test
     public void TestCardsVisualization() {
-        ClientController controller = new ClientController(null);
+        Controller controller = new Controller(null);
         controller.setPlayer("Francesco");
 
         controller.createGame("a", 1, 20);
@@ -36,7 +34,7 @@ class GameTest2 {
 
     @Test
     public void TestCardsPlacement() {
-        ClientController controller = new ClientController(null);
+        Controller controller = new Controller(null);
         controller.setPlayer("Francesco");
 
         controller.createGame("a", 1, 20);
@@ -74,14 +72,14 @@ class GameTest2 {
 
     @Test
     public void TestMultiplayer() {
-        ClientController controller1 = new ClientController(null);
+        Controller controller1 = new Controller(null);
         controller1.setPlayer("Francesco");
 
         controller1.createGame("a", 2, 20);
         Game game = GamesManager.getInstance().getGame("a");
         PlayerData board1 = game.getPlayerData("Francesco");
 
-        ClientController controller2 = new ClientController(null);
+        Controller controller2 = new Controller(null);
         controller2.setPlayer("Pietro");
         controller2.joinGame("a");
         PlayerData board2 = game.getPlayerData("Pietro");

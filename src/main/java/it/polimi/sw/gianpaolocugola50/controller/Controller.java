@@ -7,11 +7,11 @@ import it.polimi.sw.gianpaolocugola50.view.View;
 
 import java.util.List;
 
-public class ClientController implements ViewObserver {
+public class Controller implements ViewObserver {
     private final View view;
     private Player player;
 
-    public ClientController(View view) {
+    public Controller(View view) {
         this.view = view;
         player = null;
     }
