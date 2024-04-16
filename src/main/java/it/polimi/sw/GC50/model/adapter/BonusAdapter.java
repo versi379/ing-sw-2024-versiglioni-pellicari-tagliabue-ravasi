@@ -8,6 +8,13 @@ import it.polimi.sw.GC50.model.card.*;
 import java.io.IOException;
 
 public class BonusAdapter extends TypeAdapter<Bonus> {
+
+    /**
+     *
+     * @param out
+     * @param bonus
+     * @throws IOException
+     */
     @Override
     public void write(JsonWriter out, Bonus bonus) throws IOException {
 
@@ -21,6 +28,12 @@ public class BonusAdapter extends TypeAdapter<Bonus> {
         out.endObject();
     }
 
+    /**
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     @Override
     public Bonus read(JsonReader in) throws IOException {
         in.beginObject();
@@ -46,5 +59,5 @@ public class BonusAdapter extends TypeAdapter<Bonus> {
         }
         return null;
     }
-}
 
+}

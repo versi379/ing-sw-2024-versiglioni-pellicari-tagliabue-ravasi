@@ -1,9 +1,11 @@
 package it.polimi.sw.GC50.net;
 
-import it.polimi.sw.GC50.net.rmi.*;
+import it.polimi.sw.GC50.net.rmi.RmiClientImplementation;
+import it.polimi.sw.GC50.net.rmi.RmiClientInterface;
+import it.polimi.sw.GC50.net.rmi.RmiConnection;
+import it.polimi.sw.GC50.net.rmi.RmiServerInterface;
 import it.polimi.sw.GC50.net.socket.ServerInterface;
 import it.polimi.sw.GC50.net.socket.SocketServerImplementation;
-
 
 import java.io.IOException;
 import java.net.Socket;

@@ -1,10 +1,10 @@
 package it.polimi.sw.GC50.model.chat;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 import com.google.gson.annotations.Expose;
 import it.polimi.sw.GC50.model.game.Player;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class defines messages that players can send to each other

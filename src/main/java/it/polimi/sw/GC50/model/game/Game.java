@@ -1,22 +1,20 @@
 package it.polimi.sw.GC50.model.game;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.GC50.model.adapter.*;
 import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.*;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import java.io.FileReader;
 
 public class Game {
     private final String id;

@@ -1,9 +1,10 @@
 package it.polimi.sw.GC50.model.chat;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import it.polimi.sw.GC50.model.game.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is for the player chat so that the players can send each other messages while playing

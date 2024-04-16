@@ -3,9 +3,6 @@ package it.polimi.sw.GC50.net;
 import it.polimi.sw.GC50.view.GUI.Gui;
 import it.polimi.sw.GC50.view.TUI.Tui;
 
-import java.io.IOException;
-import java.rmi.NotBoundException;
-
 public class Client {
     public static void main(String[] args) {
         String view="tui";

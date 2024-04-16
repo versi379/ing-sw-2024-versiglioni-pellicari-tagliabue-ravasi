@@ -1,12 +1,15 @@
 package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.Corner;
+import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.card.Resource;
-import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class PlayerData {
     private final int matrixLength;

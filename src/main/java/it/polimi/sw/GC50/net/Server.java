@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.net;
 
-import it.polimi.sw.GC50.net.rmi.*;
+import it.polimi.sw.GC50.net.rmi.RmiConnectionImpl;
 
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;

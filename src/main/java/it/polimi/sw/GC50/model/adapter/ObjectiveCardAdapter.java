@@ -9,6 +9,13 @@ import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import java.io.IOException;
 
 public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
+
+    /**
+     *
+     * @param out
+     * @param card
+     * @throws IOException
+     */
     @Override
     public void write(JsonWriter out, ObjectiveCard card) throws IOException {
         out.beginObject();
@@ -18,6 +25,12 @@ public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
         out.endObject();
     }
 
+    /**
+     *
+     * @param in
+     * @return
+     * @throws IOException
+     */
     @Override
     public ObjectiveCard read(JsonReader in) throws IOException {
         in.beginObject();
@@ -43,4 +56,5 @@ public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
         return new ObjectiveCard(point,objective);
 
     }
+
 }

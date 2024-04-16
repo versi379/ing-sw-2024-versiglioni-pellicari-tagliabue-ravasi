@@ -1,9 +1,9 @@
 package it.polimi.sw.GC50.model.objective;
 
-import it.polimi.sw.GC50.model.game.PlayerData;
 import it.polimi.sw.GC50.model.card.Resource;
+import it.polimi.sw.GC50.model.game.PlayerData;
 
-import java.util.*;
+import java.util.Set;
 
 public class DifferentResourcesObjective implements Objective {
     private final Set<Resource> targetResources;

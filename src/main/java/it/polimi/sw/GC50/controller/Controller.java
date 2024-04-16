@@ -8,14 +8,22 @@ import it.polimi.sw.GC50.view.View;
 import java.util.List;
 
 public class Controller implements ViewObserver {
+
     private final View view;
     private Player player;
 
+    /**
+     * @param view
+     */
     public Controller(View view) {
         this.view = view;
         player = null;
     }
 
+    /**
+     *
+     * @param nickName
+     */
     public void setPlayer(String nickName) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (!gamesManager.containsPlayer(new Player(nickName))) {
@@ -27,6 +35,9 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     */
     public void resetPlayer() {
         GamesManager gamesManager = GamesManager.getInstance();
         if (player != null) {
@@ -36,6 +47,12 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param numPlayers
+     * @param endScore
+     */
     public void createGame(String id, int numPlayers, int endScore) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (!gamesManager.containsGame(id)) {
@@ -49,6 +66,10 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param id
+     */
     public void joinGame(String id) {
         GamesManager gamesManager = GamesManager.getInstance();
         if (gamesManager.containsGame(id)) {
@@ -63,6 +84,9 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     */
     public void abandonCurrentGame() {
         Game game = player.getCurrentGame();
         if (isInGame(game)) {
@@ -72,6 +96,10 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param face
+     */
     public void chooseStarterFace(boolean face) {
         Game game = player.getCurrentGame();
         if (isInGame(game) && isStarting(game)) {
@@ -81,6 +109,10 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param index
+     */
     public void chooseObjective(int index) {
         Game game = player.getCurrentGame();
         if (isInGame(game) && isStarting(game)) {
@@ -94,6 +126,13 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param index
+     * @param face
+     * @param x
+     * @param y
+     */
     public void placeCard(int index, boolean face, int x, int y) {
         Game game = player.getCurrentGame();
         if (isInGame(game) && isPlacingPhase(game)) {
@@ -114,6 +153,10 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param position
+     */
     public void drawCard(DrawingPosition position) {
         Game game = player.getCurrentGame();
         if (isInGame(game) && isDrawingPhase(game)) {
@@ -128,27 +171,53 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     *
+     * @param game
+     * @return
+     */
     private boolean isInGame(Game game) {
         return game != null;
     }
 
+    /**
+     *
+     * @param game
+     * @return
+     */
     private boolean isStarting(Game game) {
         return game.getStatus().equals(GameStatus.SETUP);
     }
 
+    /**
+     *
+     * @param game
+     * @return
+     */
     private boolean isPlacingPhase(Game game) {
         return game.getStatus().equals(GameStatus.PLAYING) &&
                 game.getCurrentPhase().equals(PlayingPhase.PLACING) &&
                 isPlayerTurn(game);
     }
 
+    /**
+     *
+     * @param game
+     * @return
+     */
     private boolean isDrawingPhase(Game game) {
         return game.getStatus().equals(GameStatus.PLAYING) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING) &&
                 isPlayerTurn(game);
     }
 
+    /**
+     *
+     * @param game
+     * @return
+     */
     private boolean isPlayerTurn(Game game) {
         return game.getCurrentPlayer().equals(player);
     }
+
 }
