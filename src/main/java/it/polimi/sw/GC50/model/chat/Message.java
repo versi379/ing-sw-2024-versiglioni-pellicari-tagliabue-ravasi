@@ -42,7 +42,7 @@ public class Message {
         this.time = time.format(formatter);
         this.receiver = receiver;
     }
-    
+
     public Player getSender() {
         return sender;
     }
