@@ -11,6 +11,7 @@ import java.util.Arrays;
  * in the instant immediately after the placement
  */
 public class ResourcesBonus implements Bonus {
+
     private final Resource targetResource;
 
     public ResourcesBonus(Resource targetResource) {

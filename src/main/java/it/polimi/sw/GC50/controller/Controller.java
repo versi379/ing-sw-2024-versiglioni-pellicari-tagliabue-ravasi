@@ -12,17 +12,14 @@ public class Controller implements ViewObserver {
     private final View view;
     private Player player;
 
-    /**
-     * @param view
-     */
     public Controller(View view) {
         this.view = view;
         player = null;
     }
 
     /**
-     *
-     * @param nickName
+     * Create new player
+     * @param nickName (player nickname)
      */
     public void setPlayer(String nickName) {
         GamesManager gamesManager = GamesManager.getInstance();
@@ -36,7 +33,7 @@ public class Controller implements ViewObserver {
     }
 
     /**
-     *
+     * Reset player status (remove from any game and set to null)
      */
     public void resetPlayer() {
         GamesManager gamesManager = GamesManager.getInstance();
@@ -48,8 +45,8 @@ public class Controller implements ViewObserver {
     }
 
     /**
-     *
-     * @param id
+     * Create new game
+     * @param id (game id)
      * @param numPlayers
      * @param endScore
      */
@@ -67,8 +64,8 @@ public class Controller implements ViewObserver {
     }
 
     /**
-     *
-     * @param id
+     * Add player to existing game
+     * @param id (game id)
      */
     public void joinGame(String id) {
         GamesManager gamesManager = GamesManager.getInstance();
@@ -84,9 +81,6 @@ public class Controller implements ViewObserver {
         }
     }
 
-    /**
-     *
-     */
     public void abandonCurrentGame() {
         Game game = player.getCurrentGame();
         if (isInGame(game)) {
@@ -97,7 +91,7 @@ public class Controller implements ViewObserver {
     }
 
     /**
-     *
+     * Set starter card front if face True, otherwise back
      * @param face
      */
     public void chooseStarterFace(boolean face) {

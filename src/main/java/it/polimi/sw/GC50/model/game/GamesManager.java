@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class GamesManager {
+
     private static GamesManager instance = null;
     private final Set<Player> playersList;
     private final Map<String, Game> gamesList;
@@ -49,4 +50,5 @@ public class GamesManager {
     public Game getGame(String id) {
         return gamesList.get(id);
     }
+
 }
