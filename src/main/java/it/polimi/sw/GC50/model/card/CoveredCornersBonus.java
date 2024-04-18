@@ -6,12 +6,11 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Utilized for cards whose score depends on the amount of corners is covered by them
+ * Utilized for cards whose score depends on the amount of corners covered by them
  */
 public class CoveredCornersBonus implements Bonus {
 
     /**
-     *
      * @param card
      * @param playerData
      * @param x

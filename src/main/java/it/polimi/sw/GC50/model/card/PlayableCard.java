@@ -8,7 +8,11 @@ import java.util.List;
 
 import static java.util.stream.Stream.concat;
 
+/**
+ * Represents either front or back of a game card
+ */
 public class PlayableCard {
+
     private final Color color;
 
     /**
@@ -43,7 +47,9 @@ public class PlayableCard {
         this.corners = corners.clone();
     }
 
-    //constructor for the card without the bonus;
+    /**
+     * Constructor for cards without bonus
+     */
     public PlayableCard(Color color, int points, Corner[] corners) {
         this.color = color;
         this.points = points;
@@ -52,7 +58,9 @@ public class PlayableCard {
         this.corners = corners.clone();
     }
 
-    //constructor for the card without the bonus and the resource in the center(usually the back of a card or the starter card;
+    /**
+     * Constructor for cards without bonus and central resource
+     */
     public PlayableCard(Color color, int points, Corner[] corners, List<Resource> fixedResources) {
         this.color = color;
         this.points = points;
@@ -113,4 +121,5 @@ public class PlayableCard {
     public int scoreIncrement(PlayerData board, int x, int y) {
         return points * bonus.checkBonus(this, board, x, y);
     }
+
 }

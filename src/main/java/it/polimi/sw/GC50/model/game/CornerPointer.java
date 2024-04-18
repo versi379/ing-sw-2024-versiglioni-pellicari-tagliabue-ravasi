@@ -2,7 +2,12 @@ package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.Corner;
 
+/**
+ * Represents the status of corner in thw board (present or not),
+ * and stores the associated Corner object (with further corner info)
+ */
 public class CornerPointer {
+
     private boolean present;
     private Corner corner;
 
@@ -23,4 +28,5 @@ public class CornerPointer {
     public Corner getCorner() {
         return isPresent() ? corner : null;
     }
+
 }

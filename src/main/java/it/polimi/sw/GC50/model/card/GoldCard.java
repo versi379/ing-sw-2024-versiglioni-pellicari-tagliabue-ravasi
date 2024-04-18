@@ -7,6 +7,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Specific type of playable card, characterized by specific rules
+ */
 public class GoldCard extends PlayableCard {
 
     /**
@@ -15,15 +18,6 @@ public class GoldCard extends PlayableCard {
      */
     private final Map<Resource, Integer> constraint;
 
-    /**
-     *
-     * @param color
-     * @param points
-     * @param bonus
-     * @param fixedResources
-     * @param corners
-     * @param constraint
-     */
     public GoldCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
         super(color, points, bonus, fixedResources, corners);
 
@@ -38,10 +32,6 @@ public class GoldCard extends PlayableCard {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public List<Resource> getConstraintList() {
         List<Resource> listConstraint = new ArrayList<>();
         for (Map.Entry<Resource, Integer> entry : constraint.entrySet()) {
@@ -54,25 +44,12 @@ public class GoldCard extends PlayableCard {
         return listConstraint;
     }
 
-    /**
-     *
-     * @param board
-     * @param x
-     * @param y
-     * @return
-     */
     @Override
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y) &&
                 this.checkConstraint(board);
     }
 
-    /**
-     * Checks if the player has enough resources to place this card
-     *
-     * @param playerData
-     * @return
-     */
     public boolean checkConstraint(PlayerData playerData) {
         return constraint.keySet().stream()
                 .noneMatch(x -> constraint.get(x) > playerData.numOfResource(x));

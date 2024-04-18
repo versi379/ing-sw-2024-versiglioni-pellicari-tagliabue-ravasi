@@ -11,6 +11,7 @@ public class BlankBonus implements Bonus {
     }
 
     /**
+     * Return bonus points associated with these kind of cards (1)
      *
      * @param card
      * @param playerData

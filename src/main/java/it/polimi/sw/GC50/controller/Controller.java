@@ -7,6 +7,10 @@ import it.polimi.sw.GC50.view.View;
 
 import java.util.List;
 
+/**
+ * Controller class that manages game instances, and
+ * allows invocation of fundamental methods to play a game instance
+ */
 public class Controller implements ViewObserver {
 
     private final View view;
@@ -19,6 +23,7 @@ public class Controller implements ViewObserver {
 
     /**
      * Create new player
+     *
      * @param nickName (player nickname)
      */
     public void setPlayer(String nickName) {
@@ -46,7 +51,8 @@ public class Controller implements ViewObserver {
 
     /**
      * Create new game
-     * @param id (game id)
+     *
+     * @param id         (game id)
      * @param numPlayers
      * @param endScore
      */
@@ -65,6 +71,7 @@ public class Controller implements ViewObserver {
 
     /**
      * Add player to existing game
+     *
      * @param id (game id)
      */
     public void joinGame(String id) {
@@ -81,6 +88,9 @@ public class Controller implements ViewObserver {
         }
     }
 
+    /**
+     * Remove player from currently playing game
+     */
     public void abandonCurrentGame() {
         Game game = player.getCurrentGame();
         if (isInGame(game)) {
@@ -91,7 +101,9 @@ public class Controller implements ViewObserver {
     }
 
     /**
-     * Set starter card front if face True, otherwise back
+     * Choose front or back of starter card
+     * If face True set front, otherwise back
+     *
      * @param face
      */
     public void chooseStarterFace(boolean face) {
@@ -104,6 +116,7 @@ public class Controller implements ViewObserver {
     }
 
     /**
+     * Choose secrete objective, by index in secret objective list
      *
      * @param index
      */
@@ -121,6 +134,7 @@ public class Controller implements ViewObserver {
     }
 
     /**
+     * Place card, by index in hand, face, and xy coordinates
      *
      * @param index
      * @param face
@@ -148,6 +162,7 @@ public class Controller implements ViewObserver {
     }
 
     /**
+     * Draw card, by source deck
      *
      * @param position
      */
@@ -165,51 +180,26 @@ public class Controller implements ViewObserver {
         }
     }
 
-    /**
-     *
-     * @param game
-     * @return
-     */
     private boolean isInGame(Game game) {
         return game != null;
     }
 
-    /**
-     *
-     * @param game
-     * @return
-     */
     private boolean isStarting(Game game) {
         return game.getStatus().equals(GameStatus.SETUP);
     }
 
-    /**
-     *
-     * @param game
-     * @return
-     */
     private boolean isPlacingPhase(Game game) {
         return game.getStatus().equals(GameStatus.PLAYING) &&
                 game.getCurrentPhase().equals(PlayingPhase.PLACING) &&
                 isPlayerTurn(game);
     }
 
-    /**
-     *
-     * @param game
-     * @return
-     */
     private boolean isDrawingPhase(Game game) {
         return game.getStatus().equals(GameStatus.PLAYING) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING) &&
                 isPlayerTurn(game);
     }
 
-    /**
-     *
-     * @param game
-     * @return
-     */
     private boolean isPlayerTurn(Game game) {
         return game.getCurrentPlayer().equals(player);
     }

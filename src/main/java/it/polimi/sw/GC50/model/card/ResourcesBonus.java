@@ -22,6 +22,13 @@ public class ResourcesBonus implements Bonus {
         return targetResource;
     }
 
+    /**
+     * @param card
+     * @param playerData
+     * @param x
+     * @param y
+     * @return
+     */
     @Override
     public int checkBonus(PlayableCard card, PlayerData playerData, int x, int y) {
         return playerData.numOfResource(targetResource)
@@ -32,4 +39,5 @@ public class ResourcesBonus implements Bonus {
                 .count()
                 + card.resourceCount(targetResource);
     }
+
 }

@@ -16,47 +16,40 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ *
+ */
 public class Game {
+
     private final String id;
-
-    //number of players
     private final int numPlayers;
-
     private final int endScore;
-
     private final int deckSize;
-
-    //status of the game
     private GameStatus status;
-
     private boolean lastTurn;
 
-    //list of player of one game, max numPlayers
-    //the first player on the list is the black one
+    /**
+     * List of player of a given game, with the first player of the list being the black one
+     */
     private final List<Player> playerList;
 
-    //index of the currently playing player
+    /**
+     * Index of currently playing player
+     */
     private int currentIndex;
+
+    /**
+     * Store mappings between each player and its game area (PlayerData instance)
+     */
+    private final Map<Player, PlayerData> playerAreas;
 
     private PlayingPhase currentPhase;
 
-    //map of player's data
-    private final Map<Player, PlayerData> playerAreas;
-
-    //deck of resourceCard
     private final Stack<PhysicalCard> resourceDeck;
-
-    //deck of goldCard
     private final Stack<PhysicalCard> goldDeck;
-
     private final PhysicalCard[] revealedCards;
-
-    //deck of StarterCard
     private final Stack<PhysicalCard> starterDeck;
-
     private final Stack<ObjectiveCard> objectiveDeck;
-
-    //these are the objective that all players have in common
     private final List<ObjectiveCard> commonObjectives;
 
     private final Chat chat;

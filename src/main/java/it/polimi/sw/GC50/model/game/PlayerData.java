@@ -11,30 +11,26 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Comprises game info with respect to a player, e.g. board, hand, score
+ */
 public class PlayerData {
+
     private final int matrixLength;
-
     private final CornerPointer[][] cornersArea;
-
     private final CardsMatrix cardsArea;
-
     private int totalScore;
-
     private int objectivesScore;
-
     private final Map<Resource, Integer> numOfResources;
-
     private ObjectiveCard secretObjective;
-
     private final List<PhysicalCard> hand;
 
-    // utilizzati solo in fase di setup
+    /**
+     * Utilized for setup phase
+     */
     private boolean ready;
-
     private PhysicalCard starterCard;
-
     private List<ObjectiveCard> secretObjectivesList;
-
 
     public PlayerData(int deckSize) {
         matrixLength = (deckSize * 2) + 2;
@@ -178,7 +174,7 @@ public class PlayerData {
         return objectiveCard.checkObjective(this);
     }
 
-    //test
+    // test
     public void printCornersArea() {
         System.out.println("_____________________________________________________________________________________________");
         for (int j = 47; j > 35; j--) {
@@ -199,4 +195,5 @@ public class PlayerData {
             System.out.print("\n");
         }
     }
+
 }

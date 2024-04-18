@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
  * Represents a square matrix of PlayableCards
  */
 public class CardsMatrix {
+
     private final PlayableCard[][] matrix;
 
     public CardsMatrix(int length) {
@@ -33,6 +34,7 @@ public class CardsMatrix {
     /**
      * Converts the position utilized for storing information in cornersArea
      * to the corresponding X coordinate in cardsArea
+     *
      * @param x
      * @param y
      * @return
@@ -44,6 +46,7 @@ public class CardsMatrix {
     /**
      * Converts the position utilized for storing information in cornersArea
      * to the corresponding Y coordinate in cardsArea
+     *
      * @param x
      * @param y
      * @return
@@ -54,6 +57,7 @@ public class CardsMatrix {
 
     /**
      * Inserts an element at the position (x, y)
+     *
      * @param card
      * @param x
      * @param y
@@ -65,6 +69,7 @@ public class CardsMatrix {
     /**
      * Converts the received cornersArea's coordinates to the corresponding ones in cardsArea
      * and inserts an element at such position
+     *
      * @param card
      * @param x
      * @param y
@@ -75,6 +80,7 @@ public class CardsMatrix {
 
     /**
      * Gets the element present at the position (x, y)
+     *
      * @param x
      * @param y
      * @return
@@ -86,6 +92,7 @@ public class CardsMatrix {
     /**
      * Converts the received cornersArea's coordinates to the corresponding ones in cardsArea
      * and gets the element present at such position
+     *
      * @param x
      * @param y
      * @return
@@ -96,6 +103,7 @@ public class CardsMatrix {
 
     /**
      * Returns all adjacent cards to the one present at the position (a, b)
+     *
      * @param x
      * @param y
      * @return
@@ -114,6 +122,7 @@ public class CardsMatrix {
 
     /**
      * Transposes this matrix
+     *
      * @return
      */
     public CardsMatrix transpose() {
@@ -129,6 +138,7 @@ public class CardsMatrix {
 
     /**
      * Rotates of 180 degrees this matrix
+     *
      * @return
      */
     public CardsMatrix invert() {
@@ -142,7 +152,7 @@ public class CardsMatrix {
         return this;
     }
 
-    //test
+    // test
     public void printCardsArea() {
         System.out.println("_____________________________________________________________________________________________");
         for (int j = 47; j > 35; j--) {
@@ -157,4 +167,5 @@ public class CardsMatrix {
             System.out.print("\n");
         }
     }
+
 }
