@@ -11,12 +11,6 @@ import java.io.IOException;
 
 public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
 
-    /**
-     *
-     * @param out
-     * @param card
-     * @throws IOException
-     */
     @Override
     public void write(JsonWriter out, PhysicalCard card) throws IOException {
         out.beginObject();
@@ -29,12 +23,6 @@ public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
         out.endObject();
     }
 
-    /**
-     *
-     * @param in
-     * @return
-     * @throws IOException
-     */
     @Override
     public PhysicalCard read(JsonReader in) throws IOException {
         in.beginObject();

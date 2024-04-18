@@ -11,12 +11,6 @@ import java.util.List;
 
 public class GoldCardAdapter extends TypeAdapter<GoldCard> {
 
-    /**
-     *
-     * @param out
-     * @param card
-     * @throws IOException
-     */
     @Override
     public void write(JsonWriter out, GoldCard card) throws IOException {
         out.beginObject();
@@ -47,12 +41,6 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
         out.endObject();
     }
 
-    /**
-     *
-     * @param in
-     * @return
-     * @throws IOException
-     */
     @Override
     public GoldCard read(JsonReader in) throws IOException {
         in.beginObject();

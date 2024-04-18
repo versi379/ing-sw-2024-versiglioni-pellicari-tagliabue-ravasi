@@ -2,6 +2,9 @@ package it.polimi.sw.GC50.model.objective;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+/**
+ *
+ */
 public class ObjectiveCard {
     private final int pointsPerCompletion;
     private final Objective objective;
@@ -22,4 +25,5 @@ public class ObjectiveCard {
     public int checkObjective(PlayerData playerData) {
         return pointsPerCompletion * objective.checkCondition(playerData);
     }
+
 }

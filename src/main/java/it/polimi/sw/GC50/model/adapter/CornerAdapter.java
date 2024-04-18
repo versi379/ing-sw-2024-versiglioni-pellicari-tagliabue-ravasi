@@ -11,12 +11,6 @@ import java.io.IOException;
 
 public class CornerAdapter extends TypeAdapter<Corner> {
 
-    /**
-     *
-     * @param out
-     * @param corner
-     * @throws IOException
-     */
     @Override
     public void write(JsonWriter out, Corner corner) throws IOException {
         out.beginObject();
@@ -27,12 +21,6 @@ public class CornerAdapter extends TypeAdapter<Corner> {
         out.endObject();
     }
 
-    /**
-     *
-     * @param in
-     * @return
-     * @throws IOException
-     */
     @Override
     public Corner read(JsonReader in) throws IOException {
         in.beginObject();

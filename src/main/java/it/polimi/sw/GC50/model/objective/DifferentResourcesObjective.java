@@ -5,6 +5,9 @@ import it.polimi.sw.GC50.model.game.PlayerData;
 
 import java.util.Set;
 
+/**
+ *
+ */
 public class DifferentResourcesObjective implements Objective {
     private final Set<Resource> targetResources;
 
@@ -23,4 +26,5 @@ public class DifferentResourcesObjective implements Objective {
                 .min(Integer::compareTo)
                 .orElse(0);
     }
+
 }

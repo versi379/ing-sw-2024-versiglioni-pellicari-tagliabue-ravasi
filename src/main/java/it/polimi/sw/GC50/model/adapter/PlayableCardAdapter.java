@@ -11,12 +11,6 @@ import java.util.List;
 
 public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
 
-    /**
-     *
-     * @param out
-     * @param card
-     * @throws IOException
-     */
     @Override
     public void write(JsonWriter out, PlayableCard card) throws IOException {
         out.beginObject();
@@ -45,12 +39,6 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
         out.endObject();
     }
 
-    /**
-     *
-     * @param in
-     * @return
-     * @throws IOException
-     */
     @Override
     public PlayableCard read(JsonReader in) throws IOException {
         in.beginObject();

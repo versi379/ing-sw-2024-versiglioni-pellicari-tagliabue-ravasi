@@ -87,4 +87,5 @@ public class CaveObjective implements Objective {
             }
         }
     }
+
 }

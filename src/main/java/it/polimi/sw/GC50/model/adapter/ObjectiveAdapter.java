@@ -15,12 +15,6 @@ import java.util.Set;
 
 public class ObjectiveAdapter extends TypeAdapter<Objective> {
 
-    /**
-     *
-     * @param out
-     * @param objective
-     * @throws IOException
-     */
     @Override
     public void write(JsonWriter out, Objective objective) throws IOException {
         out.beginObject();
@@ -60,12 +54,6 @@ public class ObjectiveAdapter extends TypeAdapter<Objective> {
         out.endObject();
     }
 
-    /**
-     *
-     * @param in
-     * @return
-     * @throws IOException
-     */
     @Override
     public Objective read(JsonReader in) throws IOException {
         in.beginObject();
