@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.model.chat;
 
-import com.google.gson.annotations.Expose;
 import it.polimi.sw.GC50.model.game.Player;
 
 import java.time.LocalTime;
@@ -11,13 +10,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Message {
 
-    @Expose
     private final Player sender;
-    @Expose
     private final String content;
-    @Expose
     private final String time;
-    @Expose
     private final Player receiver;
 
     /**

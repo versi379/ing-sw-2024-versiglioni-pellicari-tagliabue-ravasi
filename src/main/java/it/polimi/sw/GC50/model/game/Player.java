@@ -2,6 +2,9 @@ package it.polimi.sw.GC50.model.game;
 
 import java.util.Objects;
 
+/**
+ *
+ */
 public class Player {
     //name of the player and is also used like an id, no double name during all the game
     private final String nickName;

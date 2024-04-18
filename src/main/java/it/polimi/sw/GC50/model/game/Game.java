@@ -54,7 +54,6 @@ public class Game {
 
     private final Chat chat;
 
-
     public Game(String id, int numPlayers, int endScore, Player creator) {
         this.id = id;
         this.numPlayers = numPlayers;
@@ -651,7 +650,7 @@ public class Game {
             e.printStackTrace();
         }
         //after the parsing, used the method to mix the cards of the decks
-        // mixAllDecks(resourceDeck);
+        //mixAllDecks(resourceDeck);
         //mixAllDecks(startDeck);
         //mixAllDecks(goldDeck);
         //mixObjective(objectiveDeck);
@@ -701,4 +700,5 @@ public class Game {
     public void forceEnd() {
         end();
     }
+
 }

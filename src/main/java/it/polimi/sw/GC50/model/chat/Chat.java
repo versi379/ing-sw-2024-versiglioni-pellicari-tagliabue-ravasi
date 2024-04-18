@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.model.chat;
 
-import com.google.gson.annotations.Expose;
 import it.polimi.sw.GC50.model.game.Player;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
  */
 public class Chat {
 
-    @Expose
     private final List<Message> messages;
 
     public Chat() {

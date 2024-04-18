@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ *
+ */
 public class GamesManager {
 
     private static GamesManager instance = null;
