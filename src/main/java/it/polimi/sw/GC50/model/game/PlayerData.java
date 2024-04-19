@@ -18,7 +18,7 @@ public class PlayerData {
 
     private final int matrixLength;
     private final CornerPointer[][] cornersArea;
-    private final CardsMatrix cardsArea;
+    private CardsMatrix cardsArea;
     private int totalScore;
     private int objectivesScore;
     private final Map<Resource, Integer> numOfResources;
@@ -41,6 +41,25 @@ public class PlayerData {
             }
         }
         cardsArea = new CardsMatrix(matrixLength);
+        totalScore = 0;
+        objectivesScore = 0;
+        numOfResources = new EnumMap<>(Resource.class);
+        for (Resource resource : Resource.values()) {
+            numOfResources.put(resource, 0);
+        }
+        secretObjective = null;
+        hand = new ArrayList<>();
+    }
+
+    public PlayerData(CardsMatrix customCardsArea) {
+        matrixLength = customCardsArea.getCardsMatrixDim();
+        cornersArea = new CornerPointer[matrixLength][matrixLength];
+        for (int i = 0; i < matrixLength; i++) {
+            for (int j = 0; j < matrixLength; j++) {
+                cornersArea[i][j] = new CornerPointer();
+            }
+        }
+        cardsArea = customCardsArea;
         totalScore = 0;
         objectivesScore = 0;
         numOfResources = new EnumMap<>(Resource.class);
