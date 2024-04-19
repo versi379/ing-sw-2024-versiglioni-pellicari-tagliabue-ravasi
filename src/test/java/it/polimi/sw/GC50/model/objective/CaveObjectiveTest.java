@@ -30,8 +30,8 @@ class CaveObjectiveTest {
         Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
         Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
         PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-        PlayableCard bluePlayableCard = new PlayableCard(Color.RED, 1, corners);
-        PlayableCard redPlayableCard = new PlayableCard(Color.BLUE, 1, corners);
+        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
+        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
         PlayableCard[][] testPlayableCards = {
                 {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
                 {genericPlayableCard, genericPlayableCard, redPlayableCard, genericPlayableCard, genericPlayableCard},

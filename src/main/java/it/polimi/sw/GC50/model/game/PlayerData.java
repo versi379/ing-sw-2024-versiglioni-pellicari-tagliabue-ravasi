@@ -18,7 +18,7 @@ public class PlayerData {
 
     private final int matrixLength;
     private final CornerPointer[][] cornersArea;
-    private CardsMatrix cardsArea;
+    private final CardsMatrix cardsArea;
     private int totalScore;
     private int objectivesScore;
     private final Map<Resource, Integer> numOfResources;
@@ -32,6 +32,11 @@ public class PlayerData {
     private PhysicalCard starterCard;
     private List<ObjectiveCard> secretObjectivesList;
 
+    /**
+     * Constructor to build player area in a real match
+     *
+     * @param deckSize
+     */
     public PlayerData(int deckSize) {
         matrixLength = (deckSize * 2) + 2;
         cornersArea = new CornerPointer[matrixLength][matrixLength];
@@ -51,6 +56,11 @@ public class PlayerData {
         hand = new ArrayList<>();
     }
 
+    /**
+     * Constructor used for testing different game situations and patterns
+     *
+     * @param customCardsArea
+     */
     public PlayerData(CardsMatrix customCardsArea) {
         matrixLength = customCardsArea.getCardsMatrixDim();
         cornersArea = new CornerPointer[matrixLength][matrixLength];
