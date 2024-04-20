@@ -21,7 +21,7 @@ public class PlayerData {
     private final CardsMatrix cardsArea;
     private int totalScore;
     private int objectivesScore;
-    private final Map<Resource, Integer> numOfResources;
+    private Map<Resource, Integer> numOfResources;
     private ObjectiveCard secretObjective;
     private final List<PhysicalCard> hand;
 
@@ -223,6 +223,10 @@ public class PlayerData {
             }
             System.out.print("\n");
         }
-    }
 
+
+    }
+   public void setNumOfResources(Map<Resource, Integer> numOfResources){
+       this.numOfResources = numOfResources;
+   }
 }

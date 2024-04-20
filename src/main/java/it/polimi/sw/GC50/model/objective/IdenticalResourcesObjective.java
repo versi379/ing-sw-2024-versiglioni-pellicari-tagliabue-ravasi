@@ -25,6 +25,7 @@ public class IdenticalResourcesObjective implements Objective {
 
     @Override
     public int checkCondition(PlayerData playerData) {
+
         return playerData.numOfResource(targetResource) / count;
     }
 
