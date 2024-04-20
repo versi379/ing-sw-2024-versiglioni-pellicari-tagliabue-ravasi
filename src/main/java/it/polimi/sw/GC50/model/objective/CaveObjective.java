@@ -71,7 +71,7 @@ public class CaveObjective implements Objective {
         return result;
     }
 
-    private CardsMatrix adjustOrientation(CardsMatrix matrix) {
+    public CardsMatrix adjustOrientation(CardsMatrix matrix) {
         switch (orientation) {
             case CaveOrientation.INVERTEDL -> {
                 return matrix.transpose();

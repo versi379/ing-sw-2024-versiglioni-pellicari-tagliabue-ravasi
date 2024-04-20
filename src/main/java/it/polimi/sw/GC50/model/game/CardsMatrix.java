@@ -153,7 +153,6 @@ public class CardsMatrix {
     }
 
     public void setCardsMatrix(PlayableCard[][] testPlayableCardsMatrix) {
-        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCardsMatrix.length);
         for (int i = 0; i < testPlayableCardsMatrix.length; i++) {
             for (int j = 0; j < testPlayableCardsMatrix[i].length; j++) {
                 matrix[i][j] = testPlayableCardsMatrix[i][j];
