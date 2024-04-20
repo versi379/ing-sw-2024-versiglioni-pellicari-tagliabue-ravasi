@@ -54,7 +54,7 @@ public class MonolithObjective implements Objective {
 
     private CardsMatrix adjustOrientation(CardsMatrix matrix) {
         if (orientation == MonolithOrientation.LEFTDIAGONAL) {
-            return matrix.transpose();
+            return matrix.transposePrimary();
         }
         return matrix;
     }

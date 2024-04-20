@@ -47,7 +47,7 @@ class CaveObjectiveTest {
     }
 
     @Test
-    void testInvertedJCondition() {
+    void testUprightJCondition() {
         Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
         Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
         PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
@@ -55,15 +55,15 @@ class CaveObjectiveTest {
         PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
         PlayableCard[][] testPlayableCards = {
                 {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, bluePlayableCard, redPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, redPlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard},
                 {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
         };
         CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
         testCardsMatrix.setCardsMatrix(testPlayableCards);
         PlayerData testPlayerData = new PlayerData(testCardsMatrix);
-        CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDJ);
+        CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTJ);
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
@@ -87,6 +87,28 @@ class CaveObjectiveTest {
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDL);
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
+
+    @Test
+    void testInvertedJCondition() {
+        Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
+        Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
+        PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
+        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
+        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
+        PlayableCard[][] testPlayableCards = {
+                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, bluePlayableCard, redPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
+                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
+        };
+        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
+        testCardsMatrix.setCardsMatrix(testPlayableCards);
+        PlayerData testPlayerData = new PlayerData(testCardsMatrix);
+        CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDJ);
+        assertEquals(1, caveObjective.checkCondition(testPlayerData));
+    }
+
 
     @Test
     void getTargetColor1() {

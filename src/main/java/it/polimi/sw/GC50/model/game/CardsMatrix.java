@@ -25,7 +25,7 @@ public class CardsMatrix {
 
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result.insert(matrix[i][j], i, j);
+                result.insert(get(i, j), i, j);
             }
         }
         return result;
@@ -75,7 +75,7 @@ public class CardsMatrix {
      * @param y
      */
     public void insertAtCornersCoordinates(PlayableCard card, int x, int y) {
-        matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)] = card;
+        insert(card, cornersToCardsX(x, y), cornersToCardsY(x, y));
     }
 
     /**
@@ -98,7 +98,7 @@ public class CardsMatrix {
      * @return
      */
     public PlayableCard getAtCornersCoordinates(int x, int y) {
-        return matrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)];
+        return get(cornersToCardsX(x, y), cornersToCardsY(x, y));
     }
 
     /**
@@ -113,55 +113,43 @@ public class CardsMatrix {
         int a = cornersToCardsX(x, y);
         int b = cornersToCardsY(x, y);
 
-        result[0] = (a > 0) ? matrix[a - 1][b] : null;
-        result[1] = (b < length() - 1) ? matrix[a][b + 1] : null;
-        result[2] = (a < length() - 1) ? matrix[a + 1][b] : null;
-        result[3] = (b > 0) ? matrix[a][b - 1] : null;
+        result[0] = (a > 0) ? get(a - 1, b) : null;
+        result[1] = (b < length() - 1) ? get(a, b + 1) : null;
+        result[2] = (a < length() - 1) ? get(a + 1, b) : null;
+        result[3] = (b > 0) ? get(a, b - 1) : null;
         return result;
     }
 
     /**
-     * Transposes this matrix
+     * Flips matrix over its primary diagonal
      *
      * @return
      */
-    public CardsMatrix transpose() {
+    public CardsMatrix transposePrimary() {
+        CardsMatrix result = new CardsMatrix(length());
+
         for (int i = 0; i < length(); i++) {
-            for (int j = i; j < length(); j++) {
-                PlayableCard tmp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = tmp;
+            for (int j = 0; j < length(); j++) {
+                result.insert(get(j, i), i, j);
             }
         }
-        return this;
+        return result;
     }
 
     /**
-     * Rotates of 180 degrees this matrix
+     * Flips matrix over its secondary diagonal
      *
      * @return
      */
-    public CardsMatrix invert() {
+    public CardsMatrix transposeSecondary() {
+        CardsMatrix result = new CardsMatrix(length());
+
         for (int i = 0; i < length(); i++) {
-            for (int j = 0; j < length() - i; j++) {
-                PlayableCard tmp = matrix[i][j];
-                matrix[i][j] = matrix[length() - 1 - i][length() - 1 - j];
-                matrix[length() - 1 - i][length() - 1 - j] = tmp;
+            for (int j = 0; j < length(); j++) {
+                result.insert(get(length() - 1 - j, length() - 1 - i), i, j);
             }
         }
-        return this;
-    }
-
-    public void setCardsMatrix(PlayableCard[][] testPlayableCardsMatrix) {
-        for (int i = 0; i < testPlayableCardsMatrix.length; i++) {
-            for (int j = 0; j < testPlayableCardsMatrix[i].length; j++) {
-                matrix[i][j] = testPlayableCardsMatrix[i][j];
-            }
-        }
-    }
-
-    public int getCardsMatrixDim() {
-        return matrix.length;
+        return result;
     }
 
     // test
@@ -180,4 +168,11 @@ public class CardsMatrix {
         }
     }
 
+    public void setCardsMatrix(PlayableCard[][] testPlayableCardsMatrix) {
+        for (int i = 0; i < testPlayableCardsMatrix.length; i++) {
+            for (int j = 0; j < testPlayableCardsMatrix[i].length; j++) {
+                insert(testPlayableCardsMatrix[i][j], i, j);
+            }
+        }
+    }
 }

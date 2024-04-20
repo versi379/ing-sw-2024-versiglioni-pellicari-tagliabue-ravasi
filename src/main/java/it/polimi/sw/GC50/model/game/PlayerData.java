@@ -62,7 +62,7 @@ public class PlayerData {
      * @param customCardsArea
      */
     public PlayerData(CardsMatrix customCardsArea) {
-        matrixLength = customCardsArea.getCardsMatrixDim();
+        matrixLength = customCardsArea.length();
         cornersArea = new CornerPointer[matrixLength][matrixLength];
         for (int i = 0; i < matrixLength; i++) {
             for (int j = 0; j < matrixLength; j++) {
