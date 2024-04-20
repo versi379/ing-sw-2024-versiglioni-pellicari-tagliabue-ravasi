@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayableCardTest {
 
     @Test
-    public void testPlayableCardFullConstructor() {
+    void testPlayableCardFullConstructor() {
         Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
         List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
         Corner[] corners = new Corner[4];
@@ -21,71 +21,135 @@ class PlayableCardTest {
     }
 
     @Test
-    public void testPlayableCardNoBonusConstructor() {
-        Corner[] corners = new Corner[4];
+    void testPlayableCardNoBonusConstructor() {
         List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.PLANT, Resource.FUNGI));
-        PlayableCard card = new PlayableCard(Color.GREEN, 2, corners, fixedResources);
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.GREEN, 2, fixedResources, corners);
         assertEquals(Color.GREEN, card.getColor());
         assertEquals(2, card.getPoints());
-        assertEquals(new BlankBonus(), card.getBonus());
+        assertInstanceOf(BlankBonus.class, card.getBonus());
         assertEquals(fixedResources, card.getFixedResources());
     }
 
     @Test
-    public void testPlayableCardNoBonusCentralResourcesConstructor() {
+    void testPlayableCardNoBonusCentralResourcesConstructor() {
         Corner[] corners = new Corner[4];
         PlayableCard card = new PlayableCard(Color.RED, 1, corners);
         assertEquals(Color.RED, card.getColor());
         assertEquals(1, card.getPoints());
-        assertEquals(new BlankBonus(), card.getBonus());
+        assertInstanceOf(BlankBonus.class, card.getBonus());
         assertEquals(new ArrayList<>(), card.getFixedResources());
     }
 
     @Test
-    void getColor() {
+    void testGetColor() {
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.PURPLE, 0, corners);
+        assertEquals(Color.PURPLE, card.getColor());
     }
 
     @Test
-    void getPoints() {
+    void testGetPoints() {
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.PURPLE, 3, corners);
+        assertEquals(3, card.getPoints());
     }
 
     @Test
-    void getBonus() {
+    void testGetBonus() {
+        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+        assertEquals(bonus, card.getBonus());
     }
 
     @Test
-    void getCorners() {
+    void testGetFixedResourcesFull() {
+        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+        assertEquals(fixedResources, card.getFixedResources());
+    }
+    @Test
+    void testGetFixedResourcesEmpty() {
+        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
+        List<Resource> fixedResources = new ArrayList<>();
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+        assertEquals(fixedResources, card.getFixedResources());
     }
 
     @Test
-    void getFixedResources() {
+    void testGetSwCorner() {
+        Corner[] corners = new Corner[4];
+        Corner testCorner = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        corners[0] = testCorner;
+        PlayableCard card = new PlayableCard(Color.RED, 3, corners);
+        assertEquals(testCorner, card.getSwCorner());
     }
 
     @Test
-    void getSwCorner() {
+    void testGetNwCorner() {
+        Corner[] corners = new Corner[4];
+        Corner testCorner = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        corners[1] = testCorner;
+        PlayableCard card = new PlayableCard(Color.RED, 3, corners);
+        assertEquals(testCorner, card.getNwCorner());
     }
 
     @Test
-    void getNwCorner() {
+    void testGetNeCorner() {
+        Corner[] corners = new Corner[4];
+        Corner testCorner = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        corners[2] = testCorner;
+        PlayableCard card = new PlayableCard(Color.RED, 3, corners);
+        assertEquals(testCorner, card.getNeCorner());
     }
 
     @Test
-    void getNeCorner() {
+    void testGetSeCorner() {
+        Corner[] corners = new Corner[4];
+        Corner testCorner = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        corners[3] = testCorner;
+        PlayableCard card = new PlayableCard(Color.RED, 3, corners);
+        assertEquals(testCorner, card.getSeCorner());
     }
 
     @Test
-    void getSeCorner() {
+    void testResourceCountZero() {
+        Corner[] corners = new Corner[4];
+        corners[0] = new Corner(CornerStatus.HIDDEN, null);
+        corners[1] = new Corner(CornerStatus.EMPTY, null);
+        corners[2] = new Corner(CornerStatus.FULL, Resource.PLANT);
+        corners[3] = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        PlayableCard card = new PlayableCard(Color.RED, 3, corners);
+        assertEquals(0, card.resourceCount(Resource.ANIMAL));
+    }
+    @Test
+    void testResourceCountPositive() {
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.PLANT, Resource.FUNGI));
+        Corner[] corners = new Corner[4];
+        corners[0] = new Corner(CornerStatus.HIDDEN, null);
+        corners[1] = new Corner(CornerStatus.EMPTY, null);
+        corners[2] = new Corner(CornerStatus.FULL, Resource.INK);
+        corners[3] = new Corner(CornerStatus.FULL, Resource.FUNGI);
+        PlayableCard card = new PlayableCard(Color.RED, 3, fixedResources, corners);
+        assertEquals(2, card.resourceCount(Resource.FUNGI));
     }
 
     @Test
-    void resourceCount() {
+    void testIsPlaceableNegative() {
+    }
+    @Test
+    void testIsPlaceablePositive() {
     }
 
     @Test
-    void isPlaceable() {
-    }
-
-    @Test
-    void scoreIncrement() {
+    void testScoreIncrement() {
+        Corner[] corners = new Corner[4];
+        PlayableCard card = new PlayableCard(Color.BLUE, 3, corners);
+        assertEquals(3, card.scoreIncrement(null, 0, 0));
     }
 }

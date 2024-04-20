@@ -7,7 +7,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
  */
 public class CardsMatrix {
 
-    private PlayableCard[][] matrix;
+    private final PlayableCard[][] matrix;
 
     public CardsMatrix(int length) {
         matrix = new PlayableCard[length][length];

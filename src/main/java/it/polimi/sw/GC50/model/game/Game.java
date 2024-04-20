@@ -553,7 +553,7 @@ public class Game {
                     if (CardType.RESOURCE.equals(type)) {
                         //this is for the resource card
                         cardFront = new PlayableCard(color, point, cornerTmp);
-                        cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
+                        cardBack = new PlayableCard(color, 0, fixedResources, cornerTmp2);
                         resourceDeck.add(
                                 new PhysicalCard(
                                         type,
@@ -566,7 +566,7 @@ public class Game {
                     }
                     if (CardType.STARTER.equals(type)) {
                         //this is the creation of a starter card
-                        cardFront = new PlayableCard(color, point, cornerTmp, fixedResources);
+                        cardFront = new PlayableCard(color, point, fixedResources, cornerTmp);
                         cardBack = new PlayableCard(color, 0, cornerTmp2);
                         starterDeck.add(
                                 new PhysicalCard(
@@ -598,7 +598,7 @@ public class Game {
                         requirement = fixedValueFromJsonArray(requirementArray);
 
                         cardFront = new GoldCard(color, point, bonus, null, cornerTmp, requirement);
-                        cardBack = new PlayableCard(color, 0, cornerTmp2, fixedResources);
+                        cardBack = new PlayableCard(color, 0, fixedResources, cornerTmp2);
 
                         goldDeck.add(
                                 new PhysicalCard(

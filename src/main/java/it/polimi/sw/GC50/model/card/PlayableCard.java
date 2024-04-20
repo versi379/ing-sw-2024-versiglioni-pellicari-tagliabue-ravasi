@@ -50,7 +50,7 @@ public class PlayableCard {
     /**
      * Constructor for cards without bonus
      */
-    public PlayableCard(Color color, int points, Corner[] corners, List<Resource> fixedResources) {
+    public PlayableCard(Color color, int points, List<Resource> fixedResources, Corner[] corners) {
         this.color = color;
         this.points = points;
         this.bonus = new BlankBonus();
@@ -81,14 +81,7 @@ public class PlayableCard {
         return bonus;
     }
 
-    public Corner[] getCorners() {
-        return corners;
-    }
-
     public List<Resource> getFixedResources() {
-        if (fixedResources == null) {
-            return null;
-        }
         return new ArrayList<>(fixedResources);
     }
 
