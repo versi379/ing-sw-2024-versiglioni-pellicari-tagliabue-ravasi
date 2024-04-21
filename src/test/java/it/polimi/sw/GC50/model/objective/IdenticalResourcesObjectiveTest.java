@@ -27,8 +27,5 @@ class IdenticalResourcesObjectiveTest {
         IdenticalResourcesObjective identicalResourcesObjective = new IdenticalResourcesObjective(Resource.PLANT,2);
         assertEquals(identicalResourcesObjective.checkCondition(playerData),1);
 
-
-
-
     }
 }
