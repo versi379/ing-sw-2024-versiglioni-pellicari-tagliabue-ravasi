@@ -103,6 +103,7 @@ public class Game {
             playerAreas.remove(player);
             player.setCurrentGame(null);
 
+
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
             }
