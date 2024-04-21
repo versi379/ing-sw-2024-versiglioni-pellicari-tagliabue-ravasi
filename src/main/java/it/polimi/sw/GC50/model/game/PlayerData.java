@@ -173,6 +173,10 @@ public class PlayerData {
         return objectivesScore;
     }
 
+    public ObjectiveCard getSecretObjective() {
+        return secretObjective;
+    }
+
     public int objectiveIncrement(ObjectiveCard objectiveCard) {
         return objectiveCard.checkObjective(this);
     }

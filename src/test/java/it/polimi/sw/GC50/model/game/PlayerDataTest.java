@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.*;
+import it.polimi.sw.GC50.model.objective.IdenticalResourcesObjective;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
@@ -43,15 +44,29 @@ class PlayerDataTest {
     }
 
     @Test
-    void getStarterCard() {
+    void testGetStarterCard() {
+        PlayerData playerData = new PlayerData(40);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
+        playerData.setStartingChoices(starterCard, secretObjectivesList);
+        assertEquals(starterCard, playerData.getStarterCard());
     }
 
     @Test
-    void getSecretObjectivesList() {
+    void testGetSecretObjectivesList() {
+        PlayerData playerData = new PlayerData(40);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
+        playerData.setStartingChoices(starterCard, secretObjectivesList);
+        assertEquals(secretObjectivesList, playerData.getSecretObjectivesList());
     }
 
     @Test
     void setSecretObjective() {
+        PlayerData playerData = new PlayerData(40);
+        ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
+        playerData.setSecretObjective(secretObjective);
+        assertEquals(secretObjective, playerData.getSecretObjective());
     }
 
     @Test
