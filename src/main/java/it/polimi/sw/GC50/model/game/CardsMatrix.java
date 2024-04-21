@@ -52,7 +52,7 @@ public class CardsMatrix {
      * @return
      */
     private int cornersToCardsY(int x, int y) {
-        return ((length() - 2) - x + y) / 2;
+        return (length() - x + y) / 2;
     }
 
     /**

@@ -45,31 +45,7 @@ public class PlayerData {
                 cornersArea[i][j] = new CornerPointer();
             }
         }
-        cardsArea = new CardsMatrix(matrixLength);
-        totalScore = 0;
-        objectivesScore = 0;
-        numOfResources = new EnumMap<>(Resource.class);
-        for (Resource resource : Resource.values()) {
-            numOfResources.put(resource, 0);
-        }
-        secretObjective = null;
-        hand = new ArrayList<>();
-    }
-
-    /**
-     * Constructor used for testing different game situations and patterns
-     *
-     * @param customCardsArea
-     */
-    public PlayerData(CardsMatrix customCardsArea) {
-        matrixLength = customCardsArea.length();
-        cornersArea = new CornerPointer[matrixLength][matrixLength];
-        for (int i = 0; i < matrixLength; i++) {
-            for (int j = 0; j < matrixLength; j++) {
-                cornersArea[i][j] = new CornerPointer();
-            }
-        }
-        cardsArea = customCardsArea;
+        cardsArea = new CardsMatrix(matrixLength - 1);
         totalScore = 0;
         objectivesScore = 0;
         numOfResources = new EnumMap<>(Resource.class);
@@ -223,10 +199,33 @@ public class PlayerData {
             }
             System.out.print("\n");
         }
-
-
     }
-   public void setNumOfResources(Map<Resource, Integer> numOfResources){
-       this.numOfResources = numOfResources;
-   }
+
+    /**
+     * Constructor used for testing different game situations and patterns
+     *
+     * @param customCardsArea
+     */
+    public PlayerData(CardsMatrix customCardsArea) {
+        matrixLength = customCardsArea.length();
+        cornersArea = new CornerPointer[matrixLength][matrixLength];
+        for (int i = 0; i < matrixLength; i++) {
+            for (int j = 0; j < matrixLength; j++) {
+                cornersArea[i][j] = new CornerPointer();
+            }
+        }
+        cardsArea = customCardsArea;
+        totalScore = 0;
+        objectivesScore = 0;
+        numOfResources = new EnumMap<>(Resource.class);
+        for (Resource resource : Resource.values()) {
+            numOfResources.put(resource, 0);
+        }
+        secretObjective = null;
+        hand = new ArrayList<>();
+    }
+
+    public void setNumOfResources(Map<Resource, Integer> numOfResources) {
+        this.numOfResources = numOfResources;
+    }
 }
