@@ -16,14 +16,14 @@ import java.util.Map;
  */
 public class PlayerData {
 
-    private final int matrixLength;
+    private final int boardSize;
     private final CornerPointer[][] cornersArea;
     private final CardsMatrix cardsArea;
+    private final List<PhysicalCard> hand;
+    private final Map<Resource, Integer> numOfResources;
+    private ObjectiveCard secretObjective;
     private int totalScore;
     private int objectivesScore;
-    private Map<Resource, Integer> numOfResources;
-    private ObjectiveCard secretObjective;
-    private final List<PhysicalCard> hand;
 
     /**
      * Utilized for setup phase
@@ -33,29 +33,32 @@ public class PlayerData {
     private List<ObjectiveCard> secretObjectivesList;
 
     /**
-     * Constructor to build player area in a real match
+     * Constructor to build player area
      *
      * @param deckSize
      */
     public PlayerData(int deckSize) {
-        matrixLength = (deckSize * 2) + 2;
-        cornersArea = new CornerPointer[matrixLength][matrixLength];
-        for (int i = 0; i < matrixLength; i++) {
-            for (int j = 0; j < matrixLength; j++) {
+        boardSize = (deckSize * 2) + 2;
+
+        cornersArea = new CornerPointer[boardSize()][boardSize()];
+        for (int i = 0; i < boardSize(); i++) {
+            for (int j = 0; j < boardSize(); j++) {
                 cornersArea[i][j] = new CornerPointer();
             }
         }
-        cardsArea = new CardsMatrix(matrixLength - 1);
-        totalScore = 0;
-        objectivesScore = 0;
+        cardsArea = new CardsMatrix(boardSize() - 1);
+        hand = new ArrayList<>();
+
         numOfResources = new EnumMap<>(Resource.class);
         for (Resource resource : Resource.values()) {
             numOfResources.put(resource, 0);
         }
         secretObjective = null;
-        hand = new ArrayList<>();
+        totalScore = 0;
+        objectivesScore = 0;
     }
 
+    // SETUP PHASE _____________________________________________________________________________________________________
     public void setStartingChoices(PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         ready = false;
         this.starterCard = starterCard;
@@ -75,8 +78,7 @@ public class PlayerData {
     }
 
     public void checkPreparation() {
-        if (cardsArea.getAtCornersCoordinates((matrixLength / 2) - 1, (matrixLength / 2) - 1) != null &&
-                secretObjective != null) {
+        if (getCard((boardSize() / 2) - 1, (boardSize() / 2) - 1) != null && secretObjective != null) {
             ready = true;
         }
     }
@@ -85,33 +87,37 @@ public class PlayerData {
         return ready;
     }
 
+    // BOARD MANAGEMENT ________________________________________________________________________________________________
+    public int boardSize() {
+        return boardSize;
+    }
+
     public CardsMatrix getCardsArea() {
         return cardsArea.copy();
     }
 
-    public int numOfResource(Resource resource) {
-        return numOfResources.get(resource);
+    public PlayableCard getCard(int x, int y) {
+        return cardsArea.getAtCornersCoordinates(x, y);
     }
 
     public CornerPointer[] getTargetCorners(int x, int y) {
         CornerPointer[] result = new CornerPointer[4];
 
         result[0] = (cornersArea[x][y]);
-        result[1] = (y < matrixLength - 1) ? cornersArea[x][y + 1] : new CornerPointer();
-        result[2] = (x < matrixLength - 1 && y < matrixLength - 1) ? cornersArea[x + 1][y + 1] : new CornerPointer();
-        result[3] = (x < matrixLength - 1) ? cornersArea[x + 1][y] : new CornerPointer();
+        result[1] = (y < boardSize() - 1) ? cornersArea[x][y + 1] : new CornerPointer();
+        result[2] = (x < boardSize() - 1 && y < boardSize() - 1) ? cornersArea[x + 1][y + 1] : new CornerPointer();
+        result[3] = (x < boardSize() - 1) ? cornersArea[x + 1][y] : new CornerPointer();
         return result;
     }
 
     public boolean isPositionValid(int x, int y) {
-        if (x < 0 || x >= matrixLength - 2 || y < 0 || y >= matrixLength - 2) {
+        if (x < 0 || x >= boardSize() - 2 || y < 0 || y >= boardSize() - 2) {
             return false;
         }
         CornerPointer[] targetCorners = this.getTargetCorners(x, y);
         for (CornerPointer cornerPointer : targetCorners) {
             if (cornerPointer.isPresent() && cornerPointer.getCorner().isVisible()) {
-                return (x + y) % 2 == 0 &&
-                        cardsArea.getAtCornersCoordinates(x, y) == null;
+                return (x + y) % 2 == 0 && getCard(x, y) == null;
             }
         }
         return false;
@@ -137,10 +143,15 @@ public class PlayerData {
         }
     }
 
+    public int numOfResource(Resource resource) {
+        return numOfResources.get(resource);
+    }
+
     private void unitaryDecrement(Resource resource) {
         numOfResources.replace(resource, numOfResources.get(resource) - 1);
     }
 
+    // HAND MANAGEMENT _________________________________________________________________________________________________
     public void addCard(PhysicalCard card) {
         hand.add(card);
     }
@@ -153,12 +164,17 @@ public class PlayerData {
         return hand;
     }
 
+    // SCORE MANAGEMENT ________________________________________________________________________________________________
     public int getTotalScore() {
         return totalScore;
     }
 
     public int getObjectivesScore() {
         return objectivesScore;
+    }
+
+    public int objectiveIncrement(ObjectiveCard objectiveCard) {
+        return objectiveCard.checkObjective(this);
     }
 
     public void setFinalScore(List<ObjectiveCard> commonObjectives) {
@@ -175,11 +191,7 @@ public class PlayerData {
         }
     }
 
-    public int objectiveIncrement(ObjectiveCard objectiveCard) {
-        return objectiveCard.checkObjective(this);
-    }
-
-    // test
+    // TEST METHODS ____________________________________________________________________________________________________
     public void printCornersArea() {
         System.out.println("_____________________________________________________________________________________________");
         for (int j = 47; j > 35; j--) {
@@ -207,25 +219,28 @@ public class PlayerData {
      * @param customCardsArea
      */
     public PlayerData(CardsMatrix customCardsArea) {
-        matrixLength = customCardsArea.length();
-        cornersArea = new CornerPointer[matrixLength][matrixLength];
-        for (int i = 0; i < matrixLength; i++) {
-            for (int j = 0; j < matrixLength; j++) {
+        boardSize = customCardsArea.length();
+        cornersArea = new CornerPointer[boardSize()][boardSize()];
+        for (int i = 0; i < boardSize(); i++) {
+            for (int j = 0; j < boardSize(); j++) {
                 cornersArea[i][j] = new CornerPointer();
             }
         }
-        cardsArea = customCardsArea;
-        totalScore = 0;
-        objectivesScore = 0;
+        cardsArea = customCardsArea.copy();
+        hand = new ArrayList<>();
+
         numOfResources = new EnumMap<>(Resource.class);
         for (Resource resource : Resource.values()) {
             numOfResources.put(resource, 0);
         }
         secretObjective = null;
-        hand = new ArrayList<>();
+        totalScore = 0;
+        objectivesScore = 0;
     }
 
     public void setNumOfResources(Map<Resource, Integer> numOfResources) {
-        this.numOfResources = numOfResources;
+        for (Resource resource : Resource.values()) {
+            this.numOfResources.put(resource, numOfResources.get(resource));
+        }
     }
 }

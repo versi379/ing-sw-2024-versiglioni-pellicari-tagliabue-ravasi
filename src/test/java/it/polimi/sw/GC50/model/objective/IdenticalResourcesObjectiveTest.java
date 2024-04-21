@@ -12,20 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IdenticalResourcesObjectiveTest {
 
     @Test
-    void IdenticalResourcesObjective(){
+    void IdenticalResourcesObjective() {
         IdenticalResourcesObjective identicalResourcesObjective = new IdenticalResourcesObjective(Resource.PLANT, 1);
         assertEquals(identicalResourcesObjective.getTargetResource(), Resource.PLANT);
-        assertEquals(identicalResourcesObjective.getCount(),1);
+        assertEquals(identicalResourcesObjective.getCount(), 1);
     }
 
     @Test
     void checkCondition() {
         PlayerData playerData = new PlayerData(5);
-        Map<Resource,Integer> map = new HashMap<Resource, Integer>();
-        map.put(Resource.PLANT,2);
+        Map<Resource, Integer> map = new HashMap<Resource, Integer>();
+        map.put(Resource.PLANT, 2);
         playerData.setNumOfResources(map);
-        IdenticalResourcesObjective identicalResourcesObjective = new IdenticalResourcesObjective(Resource.PLANT,2);
-        assertEquals(identicalResourcesObjective.checkCondition(playerData),1);
-
+        IdenticalResourcesObjective identicalResourcesObjective = new IdenticalResourcesObjective(Resource.PLANT, 2);
+        assertEquals(identicalResourcesObjective.checkCondition(playerData), 1);
     }
 }

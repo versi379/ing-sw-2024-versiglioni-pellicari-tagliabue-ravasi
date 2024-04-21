@@ -7,23 +7,17 @@ package it.polimi.sw.GC50.model.card;
 public class PhysicalCard {
 
     private final CardType cardType;
-    private final int quantity;
     private final PlayableCard front;
     private final PlayableCard back;
 
-    public PhysicalCard(CardType cardType, PlayableCard front, PlayableCard back, int quantity) {
+    public PhysicalCard(CardType cardType, PlayableCard front, PlayableCard back) {
         this.cardType = cardType;
         this.front = front;
         this.back = back;
-        this.quantity = quantity;
     }
 
     public CardType getCardType() {
         return cardType;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public PlayableCard getFront() {

@@ -2,7 +2,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -51,7 +50,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -100,7 +98,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -150,7 +147,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -200,7 +196,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -251,7 +246,6 @@
   {
     "type": "STARTER",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -302,7 +296,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -351,7 +344,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -400,7 +392,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -449,7 +440,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -498,7 +488,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -547,7 +536,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -596,7 +584,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -645,7 +632,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -694,7 +680,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -743,7 +728,6 @@
   {
     "type": "RESOURCE",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -792,7 +776,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -841,7 +824,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -890,7 +872,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -939,7 +920,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -988,7 +968,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1037,7 +1016,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1086,7 +1064,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1135,7 +1112,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1184,7 +1160,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1233,7 +1208,6 @@
   {
     "type": "RESOURCE",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1282,7 +1256,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1331,7 +1304,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1380,7 +1352,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1429,7 +1400,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1478,7 +1448,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1527,7 +1496,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1576,7 +1544,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1625,7 +1592,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1674,7 +1640,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1723,7 +1688,6 @@
   {
     "type": "RESOURCE",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -1772,7 +1736,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1821,7 +1784,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1870,7 +1832,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1919,7 +1880,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -1968,7 +1928,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -2017,7 +1976,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -2066,7 +2024,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 0,
       "corner": {
@@ -2115,7 +2072,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -2164,7 +2120,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -2213,7 +2168,6 @@
   {
     "type": "RESOURCE",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "corner": {
@@ -2262,7 +2216,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "QUILL",
@@ -2318,7 +2271,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "INK",
@@ -2374,7 +2326,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "SCROLL",
@@ -2430,7 +2381,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -2487,7 +2437,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -2544,7 +2493,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -2601,7 +2549,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": "null",
@@ -2657,7 +2604,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -2713,7 +2659,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -2769,7 +2714,6 @@
   {
     "type": "GOLD",
     "color": "RED",
-    "quantity": 1,
     "front": {
       "point": 5,
       "restriction": null,
@@ -2827,7 +2771,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "QUILL",
@@ -2883,7 +2826,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "SCROLL",
@@ -2939,7 +2881,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "INK",
@@ -2995,7 +2936,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3052,7 +2992,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3109,7 +3048,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3166,7 +3104,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3222,7 +3159,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3278,7 +3214,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3334,7 +3269,6 @@
   {
     "type": "GOLD",
     "color": "GREEN",
-    "quantity": 1,
     "front": {
       "point": 5,
       "restriction": null,
@@ -3392,7 +3326,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "INK",
@@ -3448,7 +3381,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "SCROLL",
@@ -3504,7 +3436,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "QUILL",
@@ -3560,7 +3491,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3617,7 +3547,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3674,7 +3603,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -3731,7 +3659,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3787,7 +3714,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3843,7 +3769,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -3899,7 +3824,6 @@
   {
     "type": "GOLD",
     "color": "BLUE",
-    "quantity": 1,
     "front": {
       "point": 5,
       "restriction": null,
@@ -3957,7 +3881,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "QUILL",
@@ -4013,7 +3936,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "SCROLL",
@@ -4069,7 +3991,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 1,
       "restriction": "INK",
@@ -4125,7 +4046,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -4182,7 +4102,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -4239,7 +4158,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "restriction": null,
@@ -4296,7 +4214,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -4352,7 +4269,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -4408,7 +4324,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "restriction": null,
@@ -4464,7 +4379,6 @@
   {
     "type": "GOLD",
     "color": "PURPLE",
-    "quantity": 1,
     "front": {
       "point": 5,
       "restriction": null,
@@ -4522,7 +4436,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB00",
@@ -4537,7 +4450,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB00",
@@ -4552,7 +4464,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB00",
@@ -4567,7 +4478,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB00",
@@ -4582,7 +4492,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "code": "OB01",
@@ -4599,7 +4508,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "code": "OB01",
@@ -4616,7 +4524,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "code": "OB01",
@@ -4633,7 +4540,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "code": "OB01",
@@ -4650,7 +4556,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4664,7 +4569,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4678,7 +4582,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4692,7 +4595,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4706,7 +4608,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 3,
       "code": "OB03",
@@ -4724,7 +4625,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4738,7 +4638,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",
@@ -4752,7 +4651,6 @@
   {
     "type": "OBJECTIVE",
     "color": "WHITE",
-    "quantity": 1,
     "front": {
       "point": 2,
       "code": "OB02",

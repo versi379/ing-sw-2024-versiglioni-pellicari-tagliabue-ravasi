@@ -115,4 +115,8 @@ public class PlayableCard {
         return points * bonus.checkBonus(this, board, x, y);
     }
 
+    // TEST METHODS ____________________________________________________________________________________________________
+    public List<Corner> getCorners() {
+        return new ArrayList<>(Arrays.asList(corners));
+    }
 }

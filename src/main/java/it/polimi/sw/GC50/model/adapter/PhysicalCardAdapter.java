@@ -15,7 +15,6 @@ public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
     public void write(JsonWriter out, PhysicalCard card) throws IOException {
         out.beginObject();
         out.name("cardType").value(card.getCardType().toString());
-        out.name("quantity").value(card.getQuantity());
         out.name("front");
         new PlayableCardAdapter().write(out, card.getFront());
         out.name("back");
@@ -27,16 +26,12 @@ public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
     public PhysicalCard read(JsonReader in) throws IOException {
         in.beginObject();
         CardType cardType = null;
-        int quantity = 0;
         PlayableCard front = null;
         PlayableCard back = null;
         while (in.hasNext()) {
             switch (in.nextName()) {
                 case "cardType":
                     cardType = CardType.valueOf(in.nextString());
-                    break;
-                case "quantity":
-                    quantity = in.nextInt();
                     break;
                 case "front":
                     front = new PlayableCardAdapter().read(in);
@@ -50,7 +45,6 @@ public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
             }
         }
         in.endObject();
-        return new PhysicalCard(cardType, front, back, quantity);
+        return new PhysicalCard(cardType, front, back);
     }
-
 }

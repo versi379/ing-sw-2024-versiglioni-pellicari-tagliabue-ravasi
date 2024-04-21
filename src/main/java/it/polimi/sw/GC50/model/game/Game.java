@@ -509,7 +509,6 @@ public class Game {
     private void setDeck() {
 
         CardType type;
-        int quantity;
         Color color;
         int point;
         Corner[] cornerTmp;
@@ -530,7 +529,6 @@ public class Game {
                 JsonObject front = jsonObject.getAsJsonObject("front");
 
                 type = CardType.valueOf(jsonObject.get("type").getAsString());
-                quantity = jsonObject.get("quantity").getAsInt();
                 point = front.get("point").getAsInt();
                 color = Color.valueOf(jsonObject.get("color").getAsString());
 
@@ -558,8 +556,7 @@ public class Game {
                                 new PhysicalCard(
                                         type,
                                         cardFront,
-                                        cardBack,
-                                        quantity
+                                        cardBack
                                 )
                         );
 
@@ -572,8 +569,7 @@ public class Game {
                                 new PhysicalCard(
                                         type,
                                         cardFront,
-                                        cardBack,
-                                        quantity
+                                        cardBack
                                 )
                         );
                     }
@@ -604,8 +600,7 @@ public class Game {
                                 new PhysicalCard(
                                         type,
                                         cardFront,
-                                        cardBack,
-                                        quantity
+                                        cardBack
                                 )
                         );
                     }

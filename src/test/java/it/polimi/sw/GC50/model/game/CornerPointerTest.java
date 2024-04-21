@@ -1,11 +1,8 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.*;
+import it.polimi.sw.GC50.model.card.Corner;
+import it.polimi.sw.GC50.model.card.CornerStatus;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

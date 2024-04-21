@@ -5,10 +5,7 @@ import it.polimi.sw.GC50.model.card.Corner;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CardsMatrixTest {
 
