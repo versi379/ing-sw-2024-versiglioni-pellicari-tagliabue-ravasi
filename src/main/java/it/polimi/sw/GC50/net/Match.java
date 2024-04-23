@@ -1,26 +1,33 @@
 package it.polimi.sw.GC50.net;
 
 import it.polimi.sw.GC50.controller.Controller;
+import it.polimi.sw.GC50.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Match {
-    public boolean isFree;
+    private boolean isFree;
     private int numOfPlayer;
     private final int code;
     private List<ClientInterface> player;
     private final Controller controller;
 
-    public Match(int code) {
-        this.code=code;
-        this.player=new ArrayList<>();
-        controller=new Controller();
+    public Match(int code,ClientInterface player, int numOfPlayer) {
+        this.code = code;
+        this.player = new ArrayList<>();
+        this.player.add(player);
+        this.controller = new Controller(new View());
+        this.numOfPlayer=numOfPlayer;
 
     }
-    public void addPlayer(){
 
+    public boolean isFree() {
+        return isFree;
+    }
 
+    public void addPlayer(ClientInterface player) {
+        this.player.add(player);
     }
 
     public int getNumOfPlayer() {

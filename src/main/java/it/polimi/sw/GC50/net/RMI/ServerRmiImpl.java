@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.net.ClientInterface;
 import it.polimi.sw.GC50.net.Server;
 
 import java.rmi.RemoteException;
@@ -15,7 +16,6 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     public ServerRmiImpl(Server server, int port) throws RemoteException {
         this.server = server;
         this.port = port;
-
     }
 
     @Override
@@ -24,7 +24,13 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
             registry = LocateRegistry.createRegistry(this.port);
             registry.rebind("server", serverRmi);
         } catch (Exception e){
-            System.err.println("bind to RMI server is failed");
+            System.err.println("");
         }
+    }
+    public void addClient(ClientInterface client){
+        server.connect(client);
+    }
+    public void createGame(ClientInterface client,int numOfPlayer){
+        server.createMatch(client,numOfPlayer);
     }
 }

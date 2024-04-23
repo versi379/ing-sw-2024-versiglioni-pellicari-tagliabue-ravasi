@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.net.socket;
 
+import it.polimi.sw.GC50.view.TypeOfView;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,6 +17,7 @@ public class ClientSCK {
     private final ObjectOutputStream output;
     private final ExecutorService executorService;
     private int codeMatch;
+    private TypeOfView typeOfView;
 
     public ClientSCK(int port,String address) throws IOException {
         this.port=port;
@@ -26,6 +29,13 @@ public class ClientSCK {
         this.executorService = Executors.newSingleThreadScheduledExecutor();
     }
     public void lobby(/*user wiew*/){
+
+
+    }
+    public void myTurn(){
+
+    }
+    public void placeCard(){
 
     }
     public void sendMessage(){
