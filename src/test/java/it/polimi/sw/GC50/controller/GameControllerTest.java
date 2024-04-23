@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class GameControllerTest {
     @Test
     public void testCardsVisualization() {
-        Controller controller = new Controller(null);
+        Controller controller = new Controller();
         controller.setPlayer("Francesco");
 
         controller.createGame("a", 1, 20);
@@ -38,7 +38,7 @@ class GameControllerTest {
 
     @Test
     public void testCardsPlacement() {
-        Controller controller = new Controller(null);
+        Controller controller = new Controller();
         controller.setPlayer("Francesco");
 
         controller.createGame("a", 1, 20);
@@ -76,14 +76,14 @@ class GameControllerTest {
 
     @Test
     public void testMultiplayer() {
-        Controller controller1 = new Controller(null);
+        Controller controller1 = new Controller();
         controller1.setPlayer("Francesco");
 
         controller1.createGame("a", 2, 20);
         Game game = GamesManager.getInstance().getGame("a");
         PlayerData board1 = game.getPlayerData("Francesco");
 
-        Controller controller2 = new Controller(null);
+        Controller controller2 = new Controller();
         controller2.setPlayer("Pietro");
         controller2.joinGame("a");
         PlayerData board2 = game.getPlayerData("Pietro");

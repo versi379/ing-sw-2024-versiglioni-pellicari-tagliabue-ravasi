@@ -13,15 +13,15 @@ import java.rmi.RemoteException;
 
 public class Tui {
     public void start()  {
-     /*  try{
+     try{
            ClientInterface client = new ClientRmi("localhost");
            ((ClientRmi) client).connect();
            ((ClientRmi) client).lobby();
 
        }catch (RemoteException e){
 
-       }*/
-
+       }
+        /*
         View view= new View();
         ClientSCKAdaptor clientSCKAdaptor= new ClientSCKAdaptor(view);
 
@@ -32,7 +32,7 @@ public class Tui {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-
+*/
 
 
 

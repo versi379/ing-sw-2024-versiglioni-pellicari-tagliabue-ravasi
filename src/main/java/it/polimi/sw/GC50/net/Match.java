@@ -17,7 +17,7 @@ public class Match {
         this.code = code;
         this.player = new ArrayList<>();
         this.player.add(player);
-        this.controller = new Controller(new View());
+        this.controller = new Controller();
         this.numOfPlayer=numOfPlayer;
 
     }

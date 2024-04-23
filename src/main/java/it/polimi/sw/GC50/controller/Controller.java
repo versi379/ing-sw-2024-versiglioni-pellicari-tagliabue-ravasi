@@ -13,11 +13,11 @@ import java.util.List;
  */
 public class Controller implements ViewObserver {
 
-    private final View view;
+
     private Player player;
 
-    public Controller(View view) {
-        this.view = view;
+    public Controller() {
+
         player = null;
     }
 
