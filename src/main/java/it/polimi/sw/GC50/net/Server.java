@@ -1,23 +1,22 @@
 package it.polimi.sw.GC50.net;
 
-import it.polimi.sw.GC50.net.rmi.RmiConnectionImpl;
-
-import java.rmi.AlreadyBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 public class Server {
-    public static void main(String[] args) throws RemoteException {
+    ArrayList<Match> matches;
+    int test;
+    public Server() {
+        this.matches =new ArrayList<>();
+        System.out.println("Server Ready!");
+    }
 
-        try {
-            RmiConnectionImpl rmiConnection=new RmiConnectionImpl();
-            Registry registry = LocateRegistry.createRegistry(1099);
-            registry.bind("default", rmiConnection);
+    public void connect() {
 
-        } catch (AlreadyBoundException e) {
-            throw new RuntimeException(e);
-        }
-
+    }
+    public void createMatch(){
+        matches.add(new Match(matches.size()));
+    }
+    public void enterMatch(int code){
+        if(matches.get(code).isFree)
     }
 }

@@ -1,11 +1,6 @@
 package it.polimi.sw.GC50.net;
 
-import it.polimi.sw.GC50.net.rmi.RmiClientImplementation;
-import it.polimi.sw.GC50.net.rmi.RmiClientInterface;
-import it.polimi.sw.GC50.net.rmi.RmiConnection;
-import it.polimi.sw.GC50.net.rmi.RmiServerInterface;
-import it.polimi.sw.GC50.net.socket.ServerInterface;
-import it.polimi.sw.GC50.net.socket.SocketServerImplementation;
+
 
 import java.io.IOException;
 import java.net.Socket;
@@ -15,7 +10,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class ConnectionFromClientToServer {
-    static public ServerInterface createSocketConnection(int port, String host) throws IOException {
+    /*static public ServerInterface createSocketConnection(int port, String host) throws IOException {
         Socket socket = new Socket(host, port);
         socket.setSoTimeout(10000);
         SocketServerImplementation serverSocket = new SocketServerImplementation(socket);
@@ -30,5 +25,5 @@ public class ConnectionFromClientToServer {
         RmiClientInterface rmiClient = new RmiClientImplementation();
         RmiServerInterface rmiServerInterface = rmiConnection.registerClient(rmiClient);
         return rmiServerInterface;
-    }
+    }*/
 }
