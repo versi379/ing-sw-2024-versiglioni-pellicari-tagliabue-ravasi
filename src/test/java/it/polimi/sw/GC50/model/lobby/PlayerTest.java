@@ -1,11 +1,13 @@
-package it.polimi.sw.GC50.model.game;
+package it.polimi.sw.GC50.model.lobby;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
     @Test
-    void getNickName() {
+    void getNickname() {
     }
 
     @Test
@@ -14,6 +16,10 @@ class PlayerTest {
 
     @Test
     void getCurrentGame() {
+    }
+
+    @Test
+    void addError() {
     }
 
     @Test

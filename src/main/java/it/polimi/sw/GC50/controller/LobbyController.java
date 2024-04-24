@@ -2,18 +2,18 @@ package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.GameStatus;
-import it.polimi.sw.GC50.model.lobby.GamesManager;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.model.lobby.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainController {
-    private final GamesManager gamesManager;
+public class LobbyController {
+    private final Lobby lobby;
     private final Map<Integer, Player> playerMap;
 
-    public MainController(GamesManager gamesManager) {
-        this.gamesManager = gamesManager;
+    public LobbyController(Lobby lobby) {
+        this.lobby = lobby;
         playerMap = new HashMap<>();
     }
 
@@ -45,10 +45,10 @@ public class MainController {
     public void createGame(Integer clientId, String gameId, int numPlayers, int endScore) {
         if (isPresent(clientId)) {
             Player player = getPlayer(clientId);
-            if (!gamesManager.containsGame(gameId)) {
+            if (!lobby.containsGame(gameId)) {
                 if (numPlayers >= 1 && numPlayers <= 4) {
                     Game game = new Game(gameId, numPlayers, endScore, player);
-                    gamesManager.addGame(game);
+                    lobby.addGame(game);
                 } else {
                     sendError(player, "Numero giocatori non valido");
                 }
@@ -68,8 +68,8 @@ public class MainController {
     public void joinGame(Integer clientId, String gameId) {
         if (isPresent(clientId)) {
             Player player = getPlayer(clientId);
-            if (gamesManager.containsGame(gameId)) {
-                Game game = gamesManager.getGame(gameId);
+            if (lobby.containsGame(gameId)) {
+                Game game = lobby.getGame(gameId);
                 if (game.getStatus().equals(GameStatus.WAITING)) {
                     if (!game.containsPlayer(player)) {
                         game.addPlayer(getPlayer(clientId));
@@ -109,6 +109,6 @@ public class MainController {
     }
 
     private GameController getGameController(Game game) {
-        return gamesManager.getController(game);
+        return lobby.getController(game);
     }
 }

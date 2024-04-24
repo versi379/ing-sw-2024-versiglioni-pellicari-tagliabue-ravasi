@@ -15,8 +15,8 @@ class PlayerDataTest {
     @Test
     void testPlayerDataConstructor() {
         PlayerData playerData = new PlayerData(40);
-        assertEquals(82, playerData.boardSize());
 
+        assertEquals(82, playerData.boardSize());
         for (int i = 0; i < playerData.boardSize() - 1; i = i + 2) {
             for (int j = 0; j < playerData.boardSize() - 1; j = j + 2) {
                 assertNull(playerData.getCard(i, j));
@@ -39,6 +39,7 @@ class PlayerDataTest {
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
+
         assertEquals(starterCard, playerData.getStarterCard());
         assertEquals(secretObjectivesList, playerData.getSecretObjectivesList());
     }
@@ -46,18 +47,28 @@ class PlayerDataTest {
     @Test
     void testGetStarterCard() {
         PlayerData playerData = new PlayerData(40);
+
+        assertNull(playerData.getStarterCard());
+
+
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
+
         assertEquals(starterCard, playerData.getStarterCard());
     }
 
     @Test
     void testGetSecretObjectivesList() {
         PlayerData playerData = new PlayerData(40);
+
+        assertNull(playerData.getSecretObjectivesList());
+
+
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
+
         assertEquals(secretObjectivesList, playerData.getSecretObjectivesList());
     }
 
@@ -66,6 +77,7 @@ class PlayerDataTest {
         PlayerData playerData = new PlayerData(40);
         ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
         playerData.setSecretObjective(secretObjective);
+
         assertEquals(secretObjective, playerData.getSecretObjective());
     }
 
@@ -75,9 +87,8 @@ class PlayerDataTest {
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
-        assertFalse(playerData.isReady());
-
         playerData.checkPreparation();
+
         assertFalse(playerData.isReady());
     }
 
@@ -87,12 +98,14 @@ class PlayerDataTest {
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
-        assertFalse(playerData.isReady());
+
 
         ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
         playerData.setSecretObjective(secretObjective);
         playerData.checkPreparation();
+
         assertFalse(playerData.isReady());
+
 
         Corner[] corners = new Corner[4];
         for (int i = 0; i < corners.length; i++) {
@@ -101,15 +114,30 @@ class PlayerDataTest {
         PlayableCard card = new PlayableCard(Color.WHITE, 0, corners);
         playerData.placeCard(card, 40, 40);
         playerData.checkPreparation();
+
         assertTrue(playerData.isReady());
     }
 
     @Test
-    void isReady() {
+    void testIsReady() {
+        PlayerData playerData = new PlayerData(40);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
+        playerData.setStartingChoices(starterCard, secretObjectivesList);
+
+        assertFalse(playerData.isReady());
     }
 
     @Test
-    void getCardsArea() {
+    void testBoardSize() {
+        PlayerData playerData = new PlayerData(40);
+
+        assertEquals(82, playerData.boardSize());
+    }
+
+
+    @Test
+    void testGetCardsArea() {
     }
 
     @Test

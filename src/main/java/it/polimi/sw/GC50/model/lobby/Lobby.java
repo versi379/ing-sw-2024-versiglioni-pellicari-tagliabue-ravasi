@@ -11,11 +11,11 @@ import java.util.Set;
 /**
  *
  */
-public class GamesManager {
+public class Lobby {
     private final Set<Player> players;
     private final Map<Game, GameController> gameControllers;
 
-    public GamesManager() {
+    public Lobby() {
         players = new HashSet<>();
         gameControllers = new HashMap<>();
     }
@@ -47,12 +47,10 @@ public class GamesManager {
     }
 
     public Game getGame(String gameId) {
-        for (Game game : gameControllers.keySet()) {
-            if (gameId.equals(game.getId())) {
-                return game;
-            }
-        }
-        return null;
+        return gameControllers.keySet().stream()
+                .filter(x -> gameId.equals(x.getId()))
+                .findAny()
+                .orElse(null);
     }
 
     public GameController getController(Game game) {
