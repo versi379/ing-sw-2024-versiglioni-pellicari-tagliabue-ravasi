@@ -2,12 +2,11 @@ package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.CardType;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
+import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;

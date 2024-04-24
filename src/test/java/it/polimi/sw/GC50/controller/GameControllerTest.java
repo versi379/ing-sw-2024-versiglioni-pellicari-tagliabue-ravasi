@@ -2,10 +2,8 @@ package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.model.card.Corner;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.Game;
-import it.polimi.sw.GC50.model.game.GamesManager;
-import it.polimi.sw.GC50.model.game.PlayerData;
+import it.polimi.sw.GC50.model.game.*;
+import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
@@ -15,35 +13,31 @@ import org.junit.jupiter.api.Test;
 class GameControllerTest {
     @Test
     public void testCardsVisualization() {
-        Controller controller = new Controller();
-        controller.setPlayer("Francesco");
+        Player player = new Player("Francesco");
+        Game game = new Game("Partita", 1, 20, player);
 
-        controller.createGame("a", 1, 20);
-        Game a = GamesManager.getInstance().getGame("a");
-
-        for (int i = 0; i < a.resourceDeckSize(); i++) {
+        for (int i = 0; i < game.resourceDeckSize(); i++) {
             System.out.println(i);
-            PhysicalCard card = a.pickCard(DrawingPosition.RESOURCEDECK);
+            PhysicalCard card = game.pickCard(DrawingPosition.RESOURCEDECK);
             printPhysicalCard(card);
         }
-        for (int i = 0; i < a.goldDeckSize(); i++) {
+        for (int i = 0; i < game.goldDeckSize(); i++) {
             System.out.println(i);
-            PhysicalCard card = a.pickCard(DrawingPosition.GOLDDECK);
+            PhysicalCard card = game.pickCard(DrawingPosition.GOLDDECK);
             printPhysicalCard(card);
         }
-        a.getObjectives(20).stream()
+        game.getObjectives(20).stream()
                 .map(ObjectiveCard::getPointsPerCompletion)
                 .forEach(System.out::println);
     }
 
     @Test
     public void testCardsPlacement() {
-        Controller controller = new Controller();
-        controller.setPlayer("Francesco");
+        Player player = new Player("Francesco");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
 
-        controller.createGame("a", 1, 20);
-        Game game = GamesManager.getInstance().getGame("a");
-        PlayerData board = game.getPlayerData("Francesco");
+        PlayerData board = game.getPlayerData(player);
 
         for (PhysicalCard card : board.getHand()) {
             printPhysicalCard(card);
@@ -51,42 +45,41 @@ class GameControllerTest {
         board.printCornersArea();
         board.getCardsArea().printCardsArea();
 
-        controller.chooseStarterFace(true);
-        controller.chooseObjective(0);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
 
         System.out.println("\nLISTA GIOCATORI:");
         game.getPlayerList().forEach(System.out::println);
 
         System.out.println("\nPIAZZA CARTA 1");
-        controller.placeCard(1, true, 41, 41);
+        controller.placeCard(player, 1, true, 41, 41);
         board.printCornersArea();
         board.getCardsArea().printCardsArea();
 
         System.out.println("\nPESCA CARTA");
-        controller.drawCard(DrawingPosition.RESOURCE1);
+        controller.drawCard(player, DrawingPosition.RESOURCE1);
         for (PhysicalCard card : board.getHand()) {
             printPhysicalCard(card);
         }
 
         System.out.println("\nPIAZZA CARTA 2");
-        controller.placeCard(2, true, 42, 40);
+        controller.placeCard(player, 2, true, 42, 40);
         board.printCornersArea();
         board.getCardsArea().printCardsArea();
     }
 
+
     @Test
     public void testMultiplayer() {
-        Controller controller1 = new Controller();
-        controller1.setPlayer("Francesco");
+        Player player1 = new Player("Francesco");
+        Game game = new Game("Partita", 2, 20, player1);
+        GameController controller = new GameController(game);
 
-        controller1.createGame("a", 2, 20);
-        Game game = GamesManager.getInstance().getGame("a");
-        PlayerData board1 = game.getPlayerData("Francesco");
+        Player player2 = new Player("Pietro");
+        controller.addPlayer(player2);
 
-        Controller controller2 = new Controller();
-        controller2.setPlayer("Pietro");
-        controller2.joinGame("a");
-        PlayerData board2 = game.getPlayerData("Pietro");
+        PlayerData board1 = game.getPlayerData(player1);
+        PlayerData board2 = game.getPlayerData(player2);
 
         System.out.println("\nLISTA GIOCATORI:");
         game.getPlayerList().forEach(System.out::println);
@@ -101,11 +94,11 @@ class GameControllerTest {
             printPhysicalCard(card);
         }
 
-        controller1.chooseStarterFace(true);
-        controller1.chooseObjective(0);
+        controller.chooseStarterFace(player1, true);
+        controller.chooseObjective(player1, 0);
 
-        controller2.chooseStarterFace(true);
-        controller2.chooseObjective(0);
+        controller.chooseStarterFace(player2, true);
+        controller.chooseObjective(player2, 0);
 
         System.out.println("\nAREA FRANCESCO:");
         board1.printCornersArea();
@@ -115,7 +108,7 @@ class GameControllerTest {
         board2.printCornersArea();
         board2.getCardsArea().printCardsArea();
 
-        controller1.placeCard(0, true, 41, 41);
+        controller.placeCard(player1, 0, true, 41, 41);
 
         System.out.println("\nAREA FRANCESCO:");
         board1.printCornersArea();
@@ -123,9 +116,6 @@ class GameControllerTest {
 
         System.out.println("\nFINE GIOCO");
         game.forceEnd();
-
-        controller1.abandonCurrentGame();
-        controller2.abandonCurrentGame();
     }
 
     // Test Methods ____________________________________________________________________________________________________

@@ -18,5 +18,4 @@ public interface Bonus {
      * @return
      */
     int checkBonus(PlayableCard card, PlayerData playerData, int x, int y);
-
 }

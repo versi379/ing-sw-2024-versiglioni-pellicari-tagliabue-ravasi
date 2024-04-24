@@ -18,7 +18,4 @@ public enum Request {
     DRAWRESOURCE1,
     DRAWRESOURCE2,
     GETTURN,
-
-
-
 }

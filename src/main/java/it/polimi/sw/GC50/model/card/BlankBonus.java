@@ -24,4 +24,13 @@ public class BlankBonus implements Bonus {
         return 1;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof BlankBonus;
+    }
+
+    @Override
+    public int hashCode() {
+        return BlankBonus.class.hashCode();
+    }
 }

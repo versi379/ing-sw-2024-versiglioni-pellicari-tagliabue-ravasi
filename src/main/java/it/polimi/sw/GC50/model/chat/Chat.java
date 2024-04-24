@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.model.chat;
 
-import it.polimi.sw.GC50.model.game.Player;
+import it.polimi.sw.GC50.model.lobby.Player;
 
 import java.util.ArrayList;
 import java.util.List;

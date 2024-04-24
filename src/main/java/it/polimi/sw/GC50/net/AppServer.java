@@ -11,17 +11,17 @@ import java.io.InputStreamReader;
 public class AppServer {
     public static void main(String[] args) throws IOException {
 
-        Server server= new Server();
+        Server server = new Server();
         //SERVER RMI
         System.setProperty("java.rmi.server.hostname", "localhost");
-        ServerRmi serverR= new ServerRmiImpl(server,1099);
+        ServerRmi serverR = new ServerRmiImpl(server, 1099);
         serverR.start(serverR);
 
 
         //server socket
-        ServerSCK serverSck=new ServerSCK(server,2012);
+        ServerSCK serverSck = new ServerSCK(server, 2012);
 
-        Thread thread = new Thread (serverSck, "serverSocket");
+        Thread thread = new Thread(serverSck, "serverSocket");
         thread.start();
 
     }

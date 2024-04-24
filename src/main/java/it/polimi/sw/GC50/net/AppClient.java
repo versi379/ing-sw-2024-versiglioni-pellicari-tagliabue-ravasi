@@ -5,7 +5,7 @@ import it.polimi.sw.GC50.view.TUI.Tui;
 
 public class AppClient {
     public static void main(String[] args) {
-        String view="tui";
+        String view = "tui";
 
         if (view.equals("tui"))
             tuiStart();

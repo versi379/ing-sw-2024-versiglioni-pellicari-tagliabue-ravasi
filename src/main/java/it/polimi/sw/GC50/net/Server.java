@@ -1,9 +1,15 @@
 package it.polimi.sw.GC50.net;
 
+import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.controller.MainController;
+
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 public class Server {
+    MainController mainController;
+    Map<String, GameController> gameControllers;
     ArrayList<ClientInterface> freeClient;
     ArrayList<Match> matches;
     int test;

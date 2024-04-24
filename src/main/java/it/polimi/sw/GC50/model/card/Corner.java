@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.model.card;
 
+import java.util.Objects;
+
 /**
  * Class to represent a corner of the board,
  * comprising its status and its associated resource
@@ -35,4 +37,20 @@ public class Corner {
         return status;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Corner corner)) {
+            return false;
+        }
+        return getStatus().equals(corner.getStatus()) &&
+                (!isFull() || getResource().equals(corner.getResource()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getStatus(), getResource());
+    }
 }

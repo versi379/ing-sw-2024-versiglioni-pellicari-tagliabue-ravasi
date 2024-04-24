@@ -62,7 +62,7 @@ class PlayerDataTest {
     }
 
     @Test
-    void setSecretObjective() {
+    void testSetSecretObjective() {
         PlayerData playerData = new PlayerData(40);
         ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
         playerData.setSecretObjective(secretObjective);
@@ -70,7 +70,38 @@ class PlayerDataTest {
     }
 
     @Test
-    void checkPreparation() {
+    void testCheckPreparationFalse() {
+        PlayerData playerData = new PlayerData(40);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
+        playerData.setStartingChoices(starterCard, secretObjectivesList);
+        assertFalse(playerData.isReady());
+
+        playerData.checkPreparation();
+        assertFalse(playerData.isReady());
+    }
+
+    @Test
+    void testCheckPreparationTrue() {
+        PlayerData playerData = new PlayerData(40);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
+        playerData.setStartingChoices(starterCard, secretObjectivesList);
+        assertFalse(playerData.isReady());
+
+        ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
+        playerData.setSecretObjective(secretObjective);
+        playerData.checkPreparation();
+        assertFalse(playerData.isReady());
+
+        Corner[] corners = new Corner[4];
+        for (int i = 0; i < corners.length; i++) {
+            corners[i] = new Corner(CornerStatus.EMPTY, null);
+        }
+        PlayableCard card = new PlayableCard(Color.WHITE, 0, corners);
+        playerData.placeCard(card, 40, 40);
+        playerData.checkPreparation();
+        assertTrue(playerData.isReady());
     }
 
     @Test

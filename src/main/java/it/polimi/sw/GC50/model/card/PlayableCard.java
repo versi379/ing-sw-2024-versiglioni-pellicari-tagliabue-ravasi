@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.game.PlayerData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Stream.concat;
 
@@ -85,6 +86,10 @@ public class PlayableCard {
         return new ArrayList<>(fixedResources);
     }
 
+    public List<Corner> getCorners() {
+        return new ArrayList<>(Arrays.asList(corners));
+    }
+
     public Corner getSwCorner() {
         return corners[0];
     }
@@ -115,8 +120,23 @@ public class PlayableCard {
         return points * bonus.checkBonus(this, board, x, y);
     }
 
-    // TEST METHODS ____________________________________________________________________________________________________
-    public List<Corner> getCorners() {
-        return new ArrayList<>(Arrays.asList(corners));
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof PlayableCard playableCard)) {
+            return false;
+        }
+        return getColor().equals(playableCard.getColor()) &&
+                getPoints() == playableCard.getPoints() &&
+                getBonus().equals(playableCard.getBonus()) &&
+                getFixedResources().equals(playableCard.getFixedResources()) &&
+                getCorners().equals(playableCard.getCorners());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners());
     }
 }

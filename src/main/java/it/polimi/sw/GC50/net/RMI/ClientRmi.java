@@ -21,29 +21,36 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private int codeMatch;
 
 
-    public  ClientRmi(String name) throws RemoteException {
+    public ClientRmi(String name) throws RemoteException {
 
-        this.name=name;
+        this.name = name;
     }
+
     public void connect() throws RemoteException {
         try {
-            serverRmi=(ServerRmi) Naming.lookup(name);
-            Thread ckConnection = new Thread(ckConnection(),"ckConnection");
+            serverRmi = (ServerRmi) Naming.lookup(name);
+            Thread ckConnection = new Thread(ckConnection(), "ckConnection");
             ckConnection.start();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
-    public void lobby(){
 
-    }
-    public void myTurn(){
-
-    }
-    public void placeCard(){
+    public void lobby() {
 
     }
 
-    public void waiting()throws InterruptedException{}
-    public Runnable ckConnection(){
+    public void myTurn() {
+
+    }
+
+    public void placeCard() {
+
+    }
+
+    public void waiting() throws InterruptedException {
+    }
+
+    public Runnable ckConnection() {
         return null;
     }
 

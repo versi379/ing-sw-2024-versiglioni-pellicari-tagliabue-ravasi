@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.GC50.model.adapter.*;
 import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
 
 import java.io.FileReader;
@@ -87,6 +88,13 @@ public class Game {
     }
 
     // PLAYERS MANAGEMENT ______________________________________________________________________________________________
+    public boolean containsPlayer(Player player) {
+        String playerNickname = player.getNickname();
+        return playerList.stream()
+                .map(Player::getNickname)
+                .anyMatch(playerNickname::equals);
+    }
+
     public void addPlayer(Player player) {
         playerList.add(player);
         playerAreas.put(player, new PlayerData(deckSize));
@@ -101,14 +109,9 @@ public class Game {
         if (playerList.contains(player)) {
             playerList.remove(player);
             playerAreas.remove(player);
-            player.setCurrentGame(null);
-
 
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
-            }
-            if (playerList.isEmpty()) {
-                GamesManager.getInstance().deleteGame(getId());
             }
         }
     }
@@ -680,6 +683,27 @@ public class Game {
         return fixedResources;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Game game)) {
+            return false;
+        }
+        return getId().equals(game.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        return getId();
+    }
+
     // TEST METHODS ____________________________________________________________________________________________________
     public List<ObjectiveCard> getObjectives(int quantity) {
         return pickObjectivesList(quantity);
@@ -696,5 +720,4 @@ public class Game {
     public void forceEnd() {
         end();
     }
-
 }

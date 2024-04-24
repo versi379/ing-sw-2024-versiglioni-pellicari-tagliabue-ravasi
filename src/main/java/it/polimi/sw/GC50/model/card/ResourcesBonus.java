@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.model.game.CornerPointer;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Utilized for cards whose score depends on the amount
@@ -40,4 +41,19 @@ public class ResourcesBonus implements Bonus {
                 + card.resourceCount(targetResource);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof ResourcesBonus resourcesBonus)) {
+            return false;
+        }
+        return getTargetResource().equals(resourcesBonus.getTargetResource());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTargetResource());
+    }
 }

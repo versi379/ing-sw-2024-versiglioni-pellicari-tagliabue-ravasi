@@ -24,4 +24,13 @@ public class CoveredCornersBonus implements Bonus {
                 .count();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof CoveredCornersBonus;
+    }
+
+    @Override
+    public int hashCode() {
+        return CoveredCornersBonus.class.hashCode();
+    }
 }
