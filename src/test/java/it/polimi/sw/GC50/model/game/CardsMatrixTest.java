@@ -1,19 +1,13 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.Color;
-import it.polimi.sw.GC50.model.card.Corner;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-class CardsMatrixTest {
-    static final Corner[] corners = new Corner[4];
-    static final PlayableCard whitePlayableCard = new PlayableCard(Color.WHITE, 0, corners);
-    static final PlayableCard greenPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-    static final PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
-    static final PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
-    static final PlayableCard purplePlayableCard = new PlayableCard(Color.PURPLE, 1, corners);
+public class CardsMatrixTest {
 
     @Test
     void testCardsMatrixConstructor() {
@@ -29,9 +23,8 @@ class CardsMatrixTest {
 
     @Test
     void testCopy() {
+        CardsMatrix cardsMatrix1 = testCardsMatrix();
         PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix1 = new CardsMatrix(testMatrix.length);
-        cardsMatrix1.setCardsMatrix(testMatrix);
         CardsMatrix cardsMatrix2 = cardsMatrix1.copy();
 
         for (int i = 0; i < cardsMatrix2.length(); i++) {
@@ -43,9 +36,8 @@ class CardsMatrixTest {
 
     @Test
     void testInsert() {
+        CardsMatrix cardsMatrix = testCardsMatrix();
         PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
         cardsMatrix.insert(purplePlayableCard, 2, 3);
 
         for (int i = 0; i < cardsMatrix.length(); i++) {
@@ -61,9 +53,7 @@ class CardsMatrixTest {
 
     @Test
     void testInsertAtCornersCoordinates() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 2, 4);
 
         assertEquals(purplePlayableCard, cardsMatrix.getAtCornersCoordinates(2, 4));
@@ -71,9 +61,8 @@ class CardsMatrixTest {
 
     @Test
     void testGet() {
+        CardsMatrix cardsMatrix = testCardsMatrix();
         PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
 
         for (int i = 0; i < cardsMatrix.length(); i++) {
             for (int j = 0; j < cardsMatrix.length(); j++) {
@@ -84,9 +73,7 @@ class CardsMatrixTest {
 
     @Test
     void testGetAtCornersCoordinates() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         cardsMatrix.insert(purplePlayableCard, 1, 1);
 
         assertEquals(purplePlayableCard, cardsMatrix.getAtCornersCoordinates(2, 0));
@@ -94,9 +81,7 @@ class CardsMatrixTest {
 
     @Test
     void testGetNearCardsCenter() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         PlayableCard[] nearCards = cardsMatrix.getNearCards(1, 3);
 
         assertNull(nearCards[0]);
@@ -107,9 +92,7 @@ class CardsMatrixTest {
 
     @Test
     void testGetNearCardsEdge() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         PlayableCard[] nearCards = cardsMatrix.getNearCards(0, 4);
 
         assertNull(nearCards[0]);
@@ -120,12 +103,10 @@ class CardsMatrixTest {
 
     @Test
     void testTransposePrimary() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         cardsMatrix = cardsMatrix.transposePrimary();
-
         PlayableCard[][] testMatrixTransposedPrimary = testMatrixTransposedPrimary();
+
         for (int i = 0; i < cardsMatrix.length(); i++) {
             for (int j = 0; j < cardsMatrix.length(); j++) {
                 assertEquals(testMatrixTransposedPrimary[i][j], cardsMatrix.get(i, j));
@@ -135,12 +116,10 @@ class CardsMatrixTest {
 
     @Test
     void testTransposeSecondary() {
-        PlayableCard[][] testMatrix = testMatrix();
-        CardsMatrix cardsMatrix = new CardsMatrix(testMatrix.length);
-        cardsMatrix.setCardsMatrix(testMatrix);
+        CardsMatrix cardsMatrix = testCardsMatrix();
         cardsMatrix = cardsMatrix.transposeSecondary();
-
         PlayableCard[][] testMatrixTransposedSecondary = testMatrixTransposedSecondary();
+
         for (int i = 0; i < cardsMatrix.length(); i++) {
             for (int j = 0; j < cardsMatrix.length(); j++) {
                 assertEquals(testMatrixTransposedSecondary[i][j], cardsMatrix.get(i, j));
@@ -148,7 +127,25 @@ class CardsMatrixTest {
         }
     }
 
-    private static PlayableCard[][] testMatrix() {
+
+    public static CardsMatrix testCardsMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, greenPlayableCard, null, null},
+                {null, redPlayableCard, bluePlayableCard, null, null},
+                {null, null, whitePlayableCard, greenPlayableCard, redPlayableCard},
+                {null, bluePlayableCard, redPlayableCard, bluePlayableCard, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
+    }
+
+    public static PlayableCard[][] testMatrix() {
         return new PlayableCard[][]{
                 {null, null, greenPlayableCard, null, null},
                 {null, redPlayableCard, bluePlayableCard, null, null},
@@ -158,7 +155,7 @@ class CardsMatrixTest {
         };
     }
 
-    private static PlayableCard[][] testMatrixTransposedPrimary() {
+    public static PlayableCard[][] testMatrixTransposedPrimary() {
         return new PlayableCard[][]{
                 {null, null, null, null, null},
                 {null, redPlayableCard, null, bluePlayableCard, null},
@@ -168,7 +165,7 @@ class CardsMatrixTest {
         };
     }
 
-    private static PlayableCard[][] testMatrixTransposedSecondary() {
+    public static PlayableCard[][] testMatrixTransposedSecondary() {
         return new PlayableCard[][]{
                 {null, null, redPlayableCard, null, null},
                 {null, bluePlayableCard, greenPlayableCard, null, null},

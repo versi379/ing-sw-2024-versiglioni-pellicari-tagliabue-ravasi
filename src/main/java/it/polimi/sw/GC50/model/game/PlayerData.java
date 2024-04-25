@@ -111,13 +111,19 @@ public class PlayerData {
     }
 
     public boolean isPositionValid(int x, int y) {
-        if (x < 0 || x >= boardSize() - 2 || y < 0 || y >= boardSize() - 2) {
+        if (x < 0 || x >= boardSize() - 1 || y < 0 || y >= boardSize() - 1) {
+            return false;
+        }
+        if ((x + y) % 2 != 0) {
+            return false;
+        }
+        if (getCard(x, y) != null) {
             return false;
         }
         CornerPointer[] targetCorners = this.getTargetCorners(x, y);
         for (CornerPointer cornerPointer : targetCorners) {
             if (cornerPointer.isPresent() && cornerPointer.getCorner().isVisible()) {
-                return (x + y) % 2 == 0 && getCard(x, y) == null;
+                return true;
             }
         }
         return false;

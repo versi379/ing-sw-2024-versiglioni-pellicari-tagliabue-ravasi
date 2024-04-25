@@ -5,13 +5,15 @@ import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.PlayerData;
 import org.junit.jupiter.api.Test;
 
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CaveObjectiveTest {
+public class CaveObjectiveTest {
 
     @Test
     void testCaveObjectiveConstructor() {
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDL);
+
         assertEquals(Color.BLUE, caveObjective.getTargetColor1());
         assertEquals(Color.RED, caveObjective.getTargetColor2());
         assertEquals(CaveOrientation.INVERTEDL, caveObjective.getOrientation());
@@ -22,90 +24,35 @@ class CaveObjectiveTest {
 
     }
 
-    /**
-     *
-     */
     @Test
     void testUprightLCondition() {
-        Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
-        Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
-        PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
-        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
-        PlayableCard[][] testPlayableCards = {
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, redPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
-        };
-        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
-        testCardsMatrix.setCardsMatrix(testPlayableCards);
-        PlayerData testPlayerData = new PlayerData(testCardsMatrix);
+        PlayerData testPlayerData = new PlayerData(uprightLMatrix());
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL);
+
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
     @Test
     void testUprightJCondition() {
-        Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
-        Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
-        PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
-        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
-        PlayableCard[][] testPlayableCards = {
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, redPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
-        };
-        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
-        testCardsMatrix.setCardsMatrix(testPlayableCards);
-        PlayerData testPlayerData = new PlayerData(testCardsMatrix);
+        PlayerData testPlayerData = new PlayerData(uprightJMatrix());
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTJ);
+
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
     @Test
     void testInvertedLCondition() {
-        Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
-        Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
-        PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
-        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
-        PlayableCard[][] testPlayableCards = {
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, redPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
-        };
-        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
-        testCardsMatrix.setCardsMatrix(testPlayableCards);
-        PlayerData testPlayerData = new PlayerData(testCardsMatrix);
+        PlayerData testPlayerData = new PlayerData(invertedLMatrix());
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDL);
+
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
     @Test
     void testInvertedJCondition() {
-        Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
-        Corner[] corners = new Corner[]{emptyCorner, emptyCorner, emptyCorner, emptyCorner};
-        PlayableCard genericPlayableCard = new PlayableCard(Color.GREEN, 1, corners);
-        PlayableCard bluePlayableCard = new PlayableCard(Color.BLUE, 1, corners);
-        PlayableCard redPlayableCard = new PlayableCard(Color.RED, 1, corners);
-        PlayableCard[][] testPlayableCards = {
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, bluePlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, bluePlayableCard, redPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard},
-                {genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard, genericPlayableCard}
-        };
-        CardsMatrix testCardsMatrix = new CardsMatrix(testPlayableCards.length);
-        testCardsMatrix.setCardsMatrix(testPlayableCards);
-        PlayerData testPlayerData = new PlayerData(testCardsMatrix);
+        PlayerData testPlayerData = new PlayerData(invertedJMatrix());
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.INVERTEDJ);
+
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
@@ -124,5 +71,74 @@ class CaveObjectiveTest {
 
     @Test
     void checkCondition() {
+    }
+
+
+    public static CardsMatrix uprightLMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, redPlayableCard, bluePlayableCard, null, null},
+                {null, null, null, bluePlayableCard, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
+    }
+
+    public static CardsMatrix uprightJMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, null, redPlayableCard, null, null},
+                {null, null, bluePlayableCard, null, null},
+                {null, null, null, bluePlayableCard, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
+    }
+
+    public static CardsMatrix invertedLMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, bluePlayableCard, null, null, null},
+                {null, null, bluePlayableCard, null, null},
+                {null, null, redPlayableCard, null, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
+    }
+
+    public static CardsMatrix invertedJMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, bluePlayableCard, null, null, null},
+                {null, null, bluePlayableCard, redPlayableCard, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
     }
 }

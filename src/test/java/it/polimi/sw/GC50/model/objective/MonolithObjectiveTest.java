@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MonolithObjectiveTest {
+public class MonolithObjectiveTest {
     @Test
     void monolithObjectiveTest(){
         MonolithObjective monolithObjective = new MonolithObjective(Color.PURPLE, MonolithOrientation.LEFTDIAGONAL);

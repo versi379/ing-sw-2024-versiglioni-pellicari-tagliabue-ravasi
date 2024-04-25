@@ -10,7 +10,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DifferentResourcesObjectiveTest {
+public class DifferentResourcesObjectiveTest {
     @Test
     void DifferentResourcesObjective(){
         Set<Resource> x = new HashSet<>();

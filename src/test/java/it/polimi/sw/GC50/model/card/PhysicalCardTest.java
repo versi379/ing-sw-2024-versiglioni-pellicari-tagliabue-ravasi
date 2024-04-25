@@ -2,7 +2,7 @@ package it.polimi.sw.GC50.model.card;
 
 import org.junit.jupiter.api.Test;
 
-class PhysicalCardTest {
+public class PhysicalCardTest {
 
     @Test
     void getCardType() {

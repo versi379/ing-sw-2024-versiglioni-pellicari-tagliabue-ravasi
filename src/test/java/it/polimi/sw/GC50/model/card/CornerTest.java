@@ -4,7 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CornerTest {
+public class CornerTest {
+    public static final Corner hiddenCorner = new Corner(CornerStatus.HIDDEN, null);
+    public static final Corner emptyCorner = new Corner(CornerStatus.EMPTY, null);
+    public static final Corner plantCorner = new Corner(CornerStatus.FULL, Resource.PLANT);
+    public static final Corner animalCorner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
+    public static final Corner fungiCorner = new Corner(CornerStatus.FULL, Resource.FUNGI);
+    public static final Corner insectCorner = new Corner(CornerStatus.FULL, Resource.INSECT);
+    public static final Corner inkCorner = new Corner(CornerStatus.FULL, Resource.INK);
 
     @Test
     void testCornerConstructorHidden() {

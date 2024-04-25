@@ -2,7 +2,7 @@ package it.polimi.sw.GC50.model.chat;
 
 import org.junit.jupiter.api.Test;
 
-class MessageTest {
+public class MessageTest {
 
     @Test
     void getSender() {

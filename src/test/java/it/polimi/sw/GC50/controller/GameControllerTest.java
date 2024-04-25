@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 /**
  * !!!!!!!!! CLASSE PROVVISORIA GIUSTO PER AVERE SOTTO MANO QUESTI TEST !!!!!!!!!
  */
-class GameControllerTest {
+public class GameControllerTest {
     @Test
     public void testCardsVisualization() {
         Player player = new Player("Francesco");
