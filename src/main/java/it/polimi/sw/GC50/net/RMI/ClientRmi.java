@@ -22,15 +22,17 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
 
     public ClientRmi(String name) throws RemoteException {
-
         this.name = name;
+        connect();
     }
 
     public void connect() throws RemoteException {
         try {
-            serverRmi = (ServerRmi) Naming.lookup(name);
+            this.serverRmi = (ServerRmi) Naming.lookup(name);
+            this.serverRmi.addClient(this);
             Thread ckConnection = new Thread(ckConnection(), "ckConnection");
             ckConnection.start();
+
         } catch (Exception e) {
         }
     }

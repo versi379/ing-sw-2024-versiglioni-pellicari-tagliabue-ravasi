@@ -13,9 +13,9 @@ import java.rmi.RemoteException;
 
 public class Tui {
     public void start()  {
+
      try{
-           ClientInterface client = new ClientRmi("localhost");
-           ((ClientRmi) client).connect();
+           ClientInterface client = new ClientRmi("server");
            ((ClientRmi) client).lobby();
 
        }catch (RemoteException e){

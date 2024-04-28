@@ -4,4 +4,5 @@ module it.polimi.sw.GC50 {
     requires com.google.gson;
     requires java.rmi;
     exports it.polimi.sw.GC50.net.RMI;
+    exports it.polimi.sw.GC50.net;
 }

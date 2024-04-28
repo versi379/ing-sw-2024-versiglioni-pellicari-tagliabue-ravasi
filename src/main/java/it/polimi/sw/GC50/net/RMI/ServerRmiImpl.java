@@ -27,9 +27,13 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
             System.err.println("");
         }
     }
-    public void addClient(ClientInterface client){
+
+    @Override
+    public void addClient(ClientInterface client) {
+        System.out.println("client connected");
         server.connect(client);
     }
+
     public void createGame(ClientInterface client,int numOfPlayer){
         server.createMatch(client,numOfPlayer);
     }
