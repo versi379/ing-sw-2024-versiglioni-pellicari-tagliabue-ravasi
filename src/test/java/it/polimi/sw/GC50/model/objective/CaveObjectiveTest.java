@@ -56,24 +56,6 @@ public class CaveObjectiveTest {
         assertEquals(1, caveObjective.checkCondition(testPlayerData));
     }
 
-
-    @Test
-    void getTargetColor1() {
-    }
-
-    @Test
-    void getTargetColor2() {
-    }
-
-    @Test
-    void getOrientation() {
-    }
-
-    @Test
-    void checkCondition() {
-    }
-
-
     public static CardsMatrix uprightLMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},

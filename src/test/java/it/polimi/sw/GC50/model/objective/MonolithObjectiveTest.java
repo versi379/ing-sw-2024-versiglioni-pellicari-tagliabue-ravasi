@@ -1,24 +1,71 @@
 package it.polimi.sw.GC50.model.objective;
 
 import it.polimi.sw.GC50.model.card.Color;
+import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.PlayerData;
 import org.junit.jupiter.api.Test;
 
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.redPlayableCard;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MonolithObjectiveTest {
+
     @Test
-    void monolithObjectiveTest(){
+    void monolithObjectiveTest() {
         MonolithObjective monolithObjective = new MonolithObjective(Color.PURPLE, MonolithOrientation.LEFTDIAGONAL);
-        assertEquals(monolithObjective.getTargetColor(),Color.PURPLE);
-        assertEquals(monolithObjective.getOrientation(),MonolithOrientation.LEFTDIAGONAL);
+
+        assertEquals(monolithObjective.getTargetColor(), Color.PURPLE);
+        assertEquals(monolithObjective.getOrientation(), MonolithOrientation.LEFTDIAGONAL);
     }
 
+    @Test
+    void testRightDiagonalCondition() {
+        PlayerData testPlayerData = new PlayerData(rightDiagonalMatrix());
+        MonolithObjective monolithObjective = new MonolithObjective(Color.RED, MonolithOrientation.RIGHTDIAGONAL);
+
+        assertEquals(1, monolithObjective.checkCondition(testPlayerData));
+    }
 
     @Test
-    void checkCondition() {
-        PlayerData playerData = new PlayerData(5);
-        MonolithObjective monolithObjective = new MonolithObjective(Color.PURPLE,MonolithOrientation.LEFTDIAGONAL);
-        assertEquals(monolithObjective.checkCondition(playerData),0);
+    void testLeftDiagonalCondition() {
+        PlayerData testPlayerData = new PlayerData(leftDiagonalMatrix());
+        MonolithObjective monolithObjective = new MonolithObjective(Color.RED, MonolithOrientation.LEFTDIAGONAL);
+
+        assertEquals(1, monolithObjective.checkCondition(testPlayerData));
+    }
+
+    public static CardsMatrix rightDiagonalMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, redPlayableCard, redPlayableCard, redPlayableCard, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
+    }
+
+    public static CardsMatrix leftDiagonalMatrix() {
+        PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
+                {null, null, null, null, null},
+                {null, null, redPlayableCard, null, null},
+                {null, null, redPlayableCard, null, null},
+                {null, null, redPlayableCard, null, null},
+                {null, null, null, null, null}
+        };
+        CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
+        for (int i = 0; i < playableCardsMatrix.length; i++) {
+            for (int j = 0; j < playableCardsMatrix[i].length; j++) {
+                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+            }
+        }
+        return testMatrix;
     }
 }

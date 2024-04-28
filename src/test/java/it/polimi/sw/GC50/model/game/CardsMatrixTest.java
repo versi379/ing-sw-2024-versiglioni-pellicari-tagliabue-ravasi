@@ -12,13 +12,13 @@ public class CardsMatrixTest {
     @Test
     void testCardsMatrixConstructor() {
         CardsMatrix cardsMatrix = new CardsMatrix(80);
-        assertEquals(80, cardsMatrix.length());
-    }
 
-    @Test
-    void testLength() {
-        CardsMatrix cardsMatrix = new CardsMatrix(80);
         assertEquals(80, cardsMatrix.length());
+        for (int i = 0; i < cardsMatrix.length(); i++) {
+            for (int j = 0; j < cardsMatrix.length(); j++) {
+                assertNull(cardsMatrix.get(i, j));
+            }
+        }
     }
 
     @Test

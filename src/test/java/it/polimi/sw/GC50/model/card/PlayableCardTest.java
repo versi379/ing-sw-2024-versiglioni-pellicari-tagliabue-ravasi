@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.model.card;
 
+import it.polimi.sw.GC50.model.game.CardsMatrixTest;
+import it.polimi.sw.GC50.model.game.PlayerData;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -47,43 +49,6 @@ public class PlayableCardTest {
         assertEquals(1, card.getPoints());
         assertEquals(new BlankBonus(), card.getBonus());
         assertEquals(new ArrayList<>(), card.getFixedResources());
-    }
-
-    @Test
-    void testGetColor() {
-        assertEquals(Color.PURPLE, purplePlayableCard.getColor());
-    }
-
-    @Test
-    void testGetPoints() {
-        assertEquals(1, greenPlayableCard.getPoints());
-    }
-
-    @Test
-    void testGetBonus() {
-        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
-        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
-
-        assertEquals(bonus, card.getBonus());
-    }
-
-    @Test
-    void testGetFixedResourcesFull() {
-        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
-        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
-
-        assertEquals(fixedResources, card.getFixedResources());
-    }
-
-    @Test
-    void testGetFixedResourcesEmpty() {
-        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
-        List<Resource> fixedResources = new ArrayList<>();
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
-
-        assertEquals(fixedResources, card.getFixedResources());
     }
 
     @Test
@@ -145,14 +110,52 @@ public class PlayableCardTest {
 
     @Test
     void testIsPlaceableNegative() {
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
+
+        assertFalse(redPlayableCard.isPlaceable(playerData, 100, 100));
     }
 
     @Test
     void testIsPlaceablePositive() {
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
+        playerData.placeCard(whitePlayableCard, 2, 2);
+
+        assertTrue(redPlayableCard.isPlaceable(playerData, 3, 1));
     }
 
     @Test
     void testScoreIncrement() {
-        assertEquals(1, greenPlayableCard.scoreIncrement(null, 0, 0));
+        PlayerData playerData = new PlayerData(2);
+        playerData.placeCard(whitePlayableCard, 2, 2);
+        PlayableCard card = new PlayableCard(Color.RED, 2, new CoveredCornersBonus(), new ArrayList<>(), corners);
+
+        assertEquals(2, card.scoreIncrement(playerData, 3, 3));
+    }
+
+    @Test
+    void testEqualsFalse() {
+        Corner[] testCorners = corners.clone();
+        testCorners[0] = fungiCorner;
+        PlayableCard card1 = new PlayableCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners);
+        PlayableCard card2 = new PlayableCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), corners);
+        PlayableCard card3 = new PlayableCard(Color.RED, 1, new ArrayList<>(), testCorners);
+
+        assertFalse(card1.equals(card2));
+        assertNotEquals(card1.hashCode(), card2.hashCode());
+        assertFalse(card1.equals(card3));
+        assertNotEquals(card1.hashCode(), card3.hashCode());
+        assertFalse(card1.equals(redPlayableCard));
+        assertNotEquals(card1.hashCode(), redPlayableCard.hashCode());
+    }
+
+    @Test
+    void testEqualsTrue() {
+        Corner[] testCorners = corners.clone();
+        testCorners[0] = fungiCorner;
+        PlayableCard card1 = new PlayableCard(Color.RED, 1, new BlankBonus(), new ArrayList<>(), testCorners);
+        PlayableCard card2 = new PlayableCard(Color.RED, 1, testCorners);
+
+        assertTrue(card1.equals(card2));
+        assertEquals(card1.hashCode(), card2.hashCode());
     }
 }

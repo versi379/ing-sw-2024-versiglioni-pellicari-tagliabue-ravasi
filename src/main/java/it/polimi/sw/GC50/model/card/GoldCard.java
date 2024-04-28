@@ -2,10 +2,7 @@ package it.polimi.sw.GC50.model.card;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Specific type of playable card, characterized by specific rules
@@ -33,15 +30,14 @@ public class GoldCard extends PlayableCard {
     }
 
     public List<Resource> getConstraintList() {
-        List<Resource> listConstraint = new ArrayList<>();
+        List<Resource> constraintList = new ArrayList<>();
         for (Map.Entry<Resource, Integer> entry : constraint.entrySet()) {
             Resource resource = entry.getKey();
-            int value = entry.getValue();
-            for (int i = 0; i < value; i++) {
-                listConstraint.add(resource);
+            for (int i = entry.getValue(); i > 0; i--) {
+                constraintList.add(resource);
             }
         }
-        return listConstraint;
+        return constraintList;
     }
 
     @Override
@@ -55,4 +51,24 @@ public class GoldCard extends PlayableCard {
                 .noneMatch(x -> constraint.get(x) > playerData.numOfResource(x));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof GoldCard goldCard)) {
+            return false;
+        }
+        return getColor().equals(goldCard.getColor()) &&
+                getPoints() == goldCard.getPoints() &&
+                getBonus().equals(goldCard.getBonus()) &&
+                getFixedResources().equals(goldCard.getFixedResources()) &&
+                getCorners().equals(goldCard.getCorners()) &&
+                getConstraintList().equals(goldCard.getConstraintList());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners(), getConstraintList());
+    }
 }

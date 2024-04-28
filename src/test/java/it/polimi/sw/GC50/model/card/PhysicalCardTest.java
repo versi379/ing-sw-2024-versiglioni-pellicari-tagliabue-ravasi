@@ -2,21 +2,17 @@ package it.polimi.sw.GC50.model.card;
 
 import org.junit.jupiter.api.Test;
 
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class PhysicalCardTest {
 
     @Test
-    void getCardType() {
-    }
+    void testPhysicalCardConstructor() {
+        PhysicalCard card = new PhysicalCard(CardType.RESOURCE, redPlayableCard, greenPlayableCard);
 
-    @Test
-    void getQuantity() {
-    }
-
-    @Test
-    void getFront() {
-    }
-
-    @Test
-    void getBack() {
+        assertEquals(CardType.RESOURCE, card.getCardType());
+        assertEquals(redPlayableCard, card.getFront());
+        assertEquals(greenPlayableCard, card.getBack());
     }
 }

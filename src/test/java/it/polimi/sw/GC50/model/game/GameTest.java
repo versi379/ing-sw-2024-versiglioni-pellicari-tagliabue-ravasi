@@ -209,10 +209,10 @@ public class GameTest {
         a.addPlayer(pl2);
         a.addPlayer(pl3);
         PhysicalCard card1;
-        card1= a.pickCard(DrawingPosition.GOLD2);
-        a.addCard(pl1,card1);
-        List<PhysicalCard> cards= a.getHand(pl1);
-        assertEquals(card1,cards.get(0));
+        card1 = a.pickCard(DrawingPosition.GOLD2);
+        a.addCard(pl1, card1);
+        List<PhysicalCard> cards = a.getHand(pl1);
+        assertEquals(card1, cards.get(0));
 
 
     }
@@ -225,21 +225,21 @@ public class GameTest {
         Game a = new Game("TEST GAME", 3, 20, pl1);
         a.addPlayer(pl2);
         a.addPlayer(pl3);
-        PhysicalCard card1,card2;
-        card1= a.pickCard(DrawingPosition.GOLD2);
-        card2= a.pickCard(DrawingPosition.RESOURCE1);
+        PhysicalCard card1, card2;
+        card1 = a.pickCard(DrawingPosition.GOLD2);
+        card2 = a.pickCard(DrawingPosition.RESOURCE1);
 
-        a.addCard(pl1,card1);
-        a.addCard(pl1,card2);
+        a.addCard(pl1, card1);
+        a.addCard(pl1, card2);
 
-        a.removeCard(pl1,0);
-        List<PhysicalCard> cards= a.getHand(pl1);
-        assertEquals(card2,cards.get(0));
-        assertEquals(1,cards.size());
-        a.addCard(pl1,card1);
-        a.removeCard(pl1,1);
-        a.removeCard(pl1,0);
-        assertEquals(null,a.getHand(pl1));
+        a.removeCard(pl1, 0);
+        List<PhysicalCard> cards = a.getHand(pl1);
+        assertEquals(card2, cards.get(0));
+        assertEquals(1, cards.size());
+        a.addCard(pl1, card1);
+        a.removeCard(pl1, 1);
+        a.removeCard(pl1, 0);
+        assertEquals(null, a.getHand(pl1));
 
     }
 
@@ -251,15 +251,15 @@ public class GameTest {
         Game a = new Game("TEST GAME", 3, 20, pl1);
         a.addPlayer(pl2);
         a.addPlayer(pl3);
-        PhysicalCard card1,card2;
-        card1= a.pickCard(DrawingPosition.GOLD2);
-        card2= a.pickCard(DrawingPosition.RESOURCE1);
+        PhysicalCard card1, card2;
+        card1 = a.pickCard(DrawingPosition.GOLD2);
+        card2 = a.pickCard(DrawingPosition.RESOURCE1);
 
-        a.addCard(pl1,card1);
-        a.addCard(pl1,card2);
-        List<PhysicalCard> cards= a.getHand(pl1);
-        assertEquals(card1,cards.get(0));
-        assertEquals(card2,cards.get(1));
+        a.addCard(pl1, card1);
+        a.addCard(pl1, card2);
+        List<PhysicalCard> cards = a.getHand(pl1);
+        assertEquals(card1, cards.get(0));
+        assertEquals(card2, cards.get(1));
 
 
     }

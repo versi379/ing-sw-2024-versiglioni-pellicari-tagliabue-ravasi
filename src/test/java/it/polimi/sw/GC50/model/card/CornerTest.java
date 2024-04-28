@@ -16,6 +16,7 @@ public class CornerTest {
     @Test
     void testCornerConstructorHidden() {
         Corner corner = new Corner(CornerStatus.HIDDEN, null);
+
         assertEquals(CornerStatus.HIDDEN, corner.getStatus());
         assertNull(corner.getResource());
     }
@@ -23,6 +24,7 @@ public class CornerTest {
     @Test
     void testCornerConstructorEmpty() {
         Corner corner = new Corner(CornerStatus.EMPTY, null);
+
         assertEquals(CornerStatus.EMPTY, corner.getStatus());
         assertNull(corner.getResource());
     }
@@ -30,55 +32,51 @@ public class CornerTest {
     @Test
     void testCornerConstructorFull() {
         Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
+
         assertEquals(CornerStatus.FULL, corner.getStatus());
         assertEquals(Resource.ANIMAL, corner.getResource());
     }
 
     @Test
     void testIsVisibleHidden() {
-        Corner corner = new Corner(CornerStatus.HIDDEN, null);
-        assertFalse(corner.isVisible());
+        assertFalse(hiddenCorner.isVisible());
     }
 
     @Test
     void testIsVisibleEmpty() {
-        Corner corner = new Corner(CornerStatus.EMPTY, null);
-        assertTrue(corner.isVisible());
+        assertTrue(emptyCorner.isVisible());
     }
 
     @Test
     void testIsVisibleFull() {
-        Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
-        assertTrue(corner.isVisible());
+        assertTrue(animalCorner.isVisible());
     }
 
     @Test
     void testIsFullHidden() {
-        Corner corner = new Corner(CornerStatus.HIDDEN, null);
-        assertFalse(corner.isFull());
+        assertFalse(hiddenCorner.isFull());
     }
 
     @Test
     void testIsFullFull() {
+        assertTrue(animalCorner.isFull());
+    }
+
+    @Test
+    void testEqualsFalse() {
         Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
-        assertTrue(corner.isFull());
+
+        assertFalse(corner.equals(fungiCorner));
+        assertNotEquals(corner.hashCode(), fungiCorner.hashCode());
+        assertFalse(corner.equals(hiddenCorner));
+        assertNotEquals(corner.hashCode(), hiddenCorner.hashCode());
     }
 
     @Test
-    void testGetResourceHidden() {
-        Corner corner = new Corner(CornerStatus.HIDDEN, null);
-        assertNull(corner.getResource());
-    }
-
-    @Test
-    void testGetResourceFull() {
+    void testEqualsTrue() {
         Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
-        assertEquals(Resource.ANIMAL, corner.getResource());
-    }
 
-    @Test
-    void testGetStatus() {
-        Corner corner = new Corner(CornerStatus.HIDDEN, null);
-        assertEquals(CornerStatus.HIDDEN, corner.getStatus());
+        assertTrue(corner.equals(animalCorner));
+        assertEquals(corner.hashCode(), animalCorner.hashCode());
     }
 }

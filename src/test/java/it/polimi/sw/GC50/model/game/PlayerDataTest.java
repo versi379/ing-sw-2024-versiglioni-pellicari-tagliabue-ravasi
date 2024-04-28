@@ -1,8 +1,7 @@
 package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.*;
-import it.polimi.sw.GC50.model.objective.IdenticalResourcesObjective;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.model.objective.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -88,7 +87,7 @@ public class PlayerDataTest {
     @Test
     void testCheckPreparationFalse() {
         PlayerData playerData = new PlayerData(40);
-        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
+        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, whitePlayableCard, whitePlayableCard);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
         playerData.checkPreparation();
@@ -115,16 +114,6 @@ public class PlayerDataTest {
         playerData.checkPreparation();
 
         assertTrue(playerData.isReady());
-    }
-
-    @Test
-    void testIsReady() {
-        PlayerData playerData = new PlayerData(40);
-        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, whitePlayableCard, whitePlayableCard);
-        List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
-        playerData.setStartingChoices(starterCard, secretObjectivesList);
-
-        assertFalse(playerData.isReady());
     }
 
     // BOARD MANAGEMENT ________________________________________________________________________________________________
@@ -188,16 +177,14 @@ public class PlayerDataTest {
 
     @Test
     void testIsPositionValidOutOfBounds() {
-        CardsMatrix cardsArea = CardsMatrixTest.testCardsMatrix();
-        PlayerData playerData = new PlayerData(cardsArea);
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
 
         assertFalse(playerData.isPositionValid(100, 100));
     }
 
     @Test
     void testIsPositionValidOccupiedPosition() {
-        CardsMatrix cardsArea = CardsMatrixTest.testCardsMatrix();
-        PlayerData playerData = new PlayerData(cardsArea);
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
         playerData.placeCard(whitePlayableCard, 2, 2);
 
         assertFalse(playerData.isPositionValid(2, 2));
@@ -205,8 +192,7 @@ public class PlayerDataTest {
 
     @Test
     void testIsPositionValidOddPosition() {
-        CardsMatrix cardsArea = CardsMatrixTest.testCardsMatrix();
-        PlayerData playerData = new PlayerData(cardsArea);
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
         playerData.placeCard(whitePlayableCard, 2, 2);
 
         assertFalse(playerData.isPositionValid(2, 3));
@@ -214,16 +200,14 @@ public class PlayerDataTest {
 
     @Test
     void testIsPositionValidNoCoveredCorner() {
-        CardsMatrix cardsArea = CardsMatrixTest.testCardsMatrix();
-        PlayerData playerData = new PlayerData(cardsArea);
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
 
         assertFalse(playerData.isPositionValid(3, 1));
     }
 
     @Test
     void testIsPositionValidTrue() {
-        CardsMatrix cardsArea = CardsMatrixTest.testCardsMatrix();
-        PlayerData playerData = new PlayerData(cardsArea);
+        PlayerData playerData = new PlayerData(CardsMatrixTest.testCardsMatrix());
         playerData.placeCard(whitePlayableCard, 2, 2);
 
         assertTrue(playerData.isPositionValid(3, 1));
@@ -267,47 +251,68 @@ public class PlayerDataTest {
     // HAND MANAGEMENT _________________________________________________________________________________________________
     @Test
     void testAddCard() {
-    }
-
-    @Test
-    void testRemoveCard() {
-    }
-
-    @Test
-    void testGetHand() {
         PlayerData playerData = new PlayerData(2);
 
         assertEquals(new ArrayList<>(), playerData.getHand());
 
 
-        PhysicalCard card = new PhysicalCard(CardType.RESOURCE, redPlayableCard, redPlayableCard);
-        playerData.addCard(card);
+        PhysicalCard redCard = new PhysicalCard(CardType.RESOURCE, redPlayableCard, redPlayableCard);
+        PhysicalCard blueCard = new PhysicalCard(CardType.RESOURCE, bluePlayableCard, bluePlayableCard);
+        PhysicalCard greenCard = new PhysicalCard(CardType.RESOURCE, greenPlayableCard, greenPlayableCard);
+        playerData.addCard(redCard);
+        playerData.addCard(blueCard);
+        playerData.addCard(greenCard);
 
-        assertEquals(new ArrayList<>(List.of(card)), playerData.getHand());
+        assertEquals(new ArrayList<>(Arrays.asList(redCard, blueCard, greenCard)), playerData.getHand());
+    }
+
+    @Test
+    void testRemoveCard() {
+        PlayerData playerData = new PlayerData(2);
+        PhysicalCard redCard = new PhysicalCard(CardType.RESOURCE, redPlayableCard, redPlayableCard);
+        PhysicalCard blueCard = new PhysicalCard(CardType.RESOURCE, bluePlayableCard, bluePlayableCard);
+        PhysicalCard greenCard = new PhysicalCard(CardType.RESOURCE, greenPlayableCard, greenPlayableCard);
+        playerData.addCard(redCard);
+        playerData.addCard(blueCard);
+        playerData.addCard(greenCard);
+        playerData.removeCard(1);
+
+        assertEquals(new ArrayList<>(Arrays.asList(redCard, greenCard)), playerData.getHand());
     }
 
     // SCORE MANAGEMENT ________________________________________________________________________________________________
     @Test
-    void getTotalScore() {
+    void testObjectiveIncrement() {
+        PlayerData playerData = new PlayerData(CaveObjectiveTest.uprightLMatrix());
+        ObjectiveCard objective = new ObjectiveCard(3,
+                new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL));
+
+        assertEquals(3, playerData.objectiveIncrement(objective));
     }
 
     @Test
-    void getObjectivesScore() {
+    void testSetFinalScore() {
+        PlayerData playerData = new PlayerData(CaveObjectiveTest.uprightLMatrix());
+        playerData.placeCard(greenPlayableCard, 0, 0);
+        ObjectiveCard objective = new ObjectiveCard(3,
+                new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL));
+        playerData.setSecretObjective(objective);
+        List<ObjectiveCard> commonObjectives = new ArrayList<>(Arrays.asList(objective, objective));
+        playerData.setFinalScore(commonObjectives);
+
+        assertEquals(9 + greenPlayableCard.getPoints(), playerData.getTotalScore());
     }
 
     @Test
-    void getSecretObjective() {
-    }
+    void testSetObjectivesScore() {
+        PlayerData playerData = new PlayerData(CaveObjectiveTest.uprightLMatrix());
+        playerData.placeCard(greenPlayableCard, 0, 0);
+        ObjectiveCard objective = new ObjectiveCard(3,
+                new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL));
+        playerData.setSecretObjective(objective);
+        List<ObjectiveCard> commonObjectives = new ArrayList<>(Arrays.asList(objective, objective));
+        playerData.setFinalScore(commonObjectives);
 
-    @Test
-    void objectiveIncrement() {
-    }
-
-    @Test
-    void setFinalScore() {
-    }
-
-    @Test
-    void setObjectivesScore() {
+        assertEquals(9, playerData.getObjectivesScore());
     }
 }

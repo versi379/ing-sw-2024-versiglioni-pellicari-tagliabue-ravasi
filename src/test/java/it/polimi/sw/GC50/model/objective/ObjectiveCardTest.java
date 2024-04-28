@@ -10,19 +10,18 @@ public class ObjectiveCardTest {
 
     @Test
     void objectiveCardTest() {
-        CaveObjective caveObjective = new CaveObjective(Color.BLUE,Color.RED,CaveOrientation.UPRIGHTL);
-        ObjectiveCard objectiveCard = new ObjectiveCard(2, caveObjective );
-        assertEquals(objectiveCard.getPointsPerCompletion(),2);
-        assertEquals(objectiveCard.getObjective(),caveObjective);
+        CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL);
+        ObjectiveCard objectiveCard = new ObjectiveCard(2, caveObjective);
+        assertEquals(objectiveCard.getPointsPerCompletion(), 2);
+        assertEquals(objectiveCard.getObjective(), caveObjective);
     }
-
 
     @Test
     void checkObjective() {
         PlayerData playerData = new PlayerData(5);
-        CaveObjective caveObjective = new CaveObjective(Color.RED,Color.BLUE,CaveOrientation.UPRIGHTL);
-        ObjectiveCard objectiveCard = new ObjectiveCard(2,caveObjective );
-        assertEquals(objectiveCard.getPointsPerCompletion()*caveObjective.checkCondition(playerData),0);
+        CaveObjective caveObjective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.UPRIGHTL);
+        ObjectiveCard objectiveCard = new ObjectiveCard(2, caveObjective);
+        assertEquals(objectiveCard.getPointsPerCompletion() * caveObjective.checkCondition(playerData), 0);
 
     }
 }
