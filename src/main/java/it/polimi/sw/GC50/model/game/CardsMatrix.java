@@ -167,12 +167,4 @@ public class CardsMatrix {
             System.out.print("\n");
         }
     }
-
-    public void setCardsMatrix(PlayableCard[][] testPlayableCardsMatrix) {
-        for (int i = 0; i < testPlayableCardsMatrix.length; i++) {
-            for (int j = 0; j < testPlayableCardsMatrix[i].length; j++) {
-                insert(testPlayableCardsMatrix[i][j], i, j);
-            }
-        }
-    }
 }
