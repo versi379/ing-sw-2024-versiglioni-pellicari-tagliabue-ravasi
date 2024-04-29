@@ -17,7 +17,7 @@ public class ClientSCK {
     private final ObjectOutputStream output;
     private final ExecutorService executorService;
     private int codeMatch;
-    private TypeOfView typeOfView;
+
 
     public ClientSCK(int port,String address) throws IOException {
         this.port=port;

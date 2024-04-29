@@ -35,6 +35,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 socketClient.setSoTimeout(0);
                 ClientHandler clientHandler = new ClientHandler(socketClient,this);
                 client.add(clientHandler);
+                server.connect(clientHandler);
                 Thread clientThread = new Thread(clientHandler);
                 clientThread.start();
                 System.out.println("client connected");

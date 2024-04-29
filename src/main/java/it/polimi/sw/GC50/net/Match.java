@@ -1,6 +1,10 @@
 package it.polimi.sw.GC50.net;
 
+import it.polimi.sw.GC50.controller.Controller2;
 import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.model.game.Game;
+import it.polimi.sw.GC50.model.lobby.Player;
+import it.polimi.sw.GC50.view.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +14,20 @@ public class Match {
     private int numOfPlayer;
     private final int code;
     private List<ClientInterface> player;
-    private GameController gameController;
+    //private GameController gameController;
+    private final Controller2 controller;
+
 
     public Match(int code,ClientInterface player, int numOfPlayer) {
         this.code = code;
         this.player = new ArrayList<>();
         this.player.add(player);
         //this.gameController = new GameController();
+        this.controller=new Controller2(new Game(null,numOfPlayer,20,new Player(null)));
         this.numOfPlayer=numOfPlayer;
+    }
+    public void addObserver(Observer ob){
+        controller.addObserver(ob);
     }
 
     public boolean isFree() {
@@ -49,6 +59,7 @@ public class Match {
     }
 
     public GameController getController() {
-        return gameController;
+        //return gameController;
+        return null;
     }
 }

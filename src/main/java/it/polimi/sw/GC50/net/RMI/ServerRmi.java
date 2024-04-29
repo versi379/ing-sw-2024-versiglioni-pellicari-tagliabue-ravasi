@@ -7,5 +7,5 @@ import java.rmi.RemoteException;
 
 public interface ServerRmi extends Remote {
     public void start( ServerRmi serverRmi) throws RemoteException;
-    public void addClient(ClientInterface client)throws RemoteException;
+    public int addClient(ClientInterface client)throws RemoteException;
 }
