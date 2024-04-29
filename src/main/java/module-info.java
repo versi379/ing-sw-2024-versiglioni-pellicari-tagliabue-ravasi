@@ -5,4 +5,6 @@ module it.polimi.sw.GC50 {
     requires java.rmi;
     exports it.polimi.sw.GC50.net.RMI;
     exports it.polimi.sw.GC50.net;
+    exports it.polimi.sw.GC50.app;
+    exports it.polimi.sw.GC50.net.util;
 }

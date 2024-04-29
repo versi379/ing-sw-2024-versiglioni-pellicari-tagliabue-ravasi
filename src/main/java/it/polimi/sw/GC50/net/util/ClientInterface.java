@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.net.util;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

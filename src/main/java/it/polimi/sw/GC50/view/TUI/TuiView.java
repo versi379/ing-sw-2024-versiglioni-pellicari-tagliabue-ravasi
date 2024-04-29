@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.view.TUI;
 
-import it.polimi.sw.GC50.net.Message;
-import it.polimi.sw.GC50.net.Observable;
+import it.polimi.sw.GC50.net.util.Message;
+import it.polimi.sw.GC50.net.util.Observable;
 import it.polimi.sw.GC50.view.View;
 
 public class TuiView implements View {

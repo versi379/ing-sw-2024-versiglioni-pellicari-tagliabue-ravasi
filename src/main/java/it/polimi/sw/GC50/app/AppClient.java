@@ -1,7 +1,9 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.app;
 
+import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
-import it.polimi.sw.GC50.net.socket.ClientSCKAdaptor;
+import it.polimi.sw.GC50.net.TypeOfConnection;
+import it.polimi.sw.GC50.net.socket.ClientSCK;
 
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
@@ -56,10 +58,11 @@ public class AppClient {
 
         if (read == 1) {
             connection = TypeOfConnection.SOCKET;
-            ClientSCKAdaptor clientSCKAdaptor = new ClientSCKAdaptor(view,typeview);
+            ClientSCK clientSCK= null;
             try {
-                clientSCKAdaptor.connect("localhost", 2012);
-                clientSCKAdaptor.lobby();
+                clientSCK=new ClientSCK(2012,"localhost" );
+                clientSCK.setView(view,typeview);
+                clientSCK.lobby();
 
             } catch (IOException e) {
                 System.err.println(e.getMessage());

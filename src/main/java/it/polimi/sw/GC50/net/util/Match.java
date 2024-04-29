@@ -1,10 +1,7 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.net.util;
 
+import com.google.gson.Gson;
 import it.polimi.sw.GC50.controller.Controller2;
-import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.model.game.Game;
-import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.view.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +10,25 @@ public class Match {
     private boolean isFree;
     private int numOfPlayer;
     private final int code;
+    private final String gameName;
     private List<ClientInterface> player;
     //private GameController gameController;
-    private final Controller2 controller;
+    private Controller2 controller;
 
 
-    public Match(int code,ClientInterface player, int numOfPlayer) {
+    public Match(int code, ClientInterface player, int numOfPlayer, String gameName) {
         this.code = code;
         this.player = new ArrayList<>();
         this.player.add(player);
-        //this.gameController = new GameController();
-        this.controller=new Controller2(new Game(null,numOfPlayer,20,new Player(null)));
-        this.numOfPlayer=numOfPlayer;
+        this.controller = new Controller2();
+        this.numOfPlayer = numOfPlayer;
+        this.gameName = gameName;
     }
-    public void addObserver(Observer ob){
+
+    public void addObserver(Observer ob) {
         controller.addObserver(ob);
+        controller.add();
+
     }
 
     public boolean isFree() {
@@ -58,8 +59,20 @@ public class Match {
         this.player = player;
     }
 
-    public GameController getController() {
-        //return gameController;
+
+    public String getName() {
+        return gameName;
+    }
+
+    //////////////////////////////////////////
+    //ACTIVE GAME
+    ///////////////////////////////////////////
+
+    public Request update(ClientInterface clientInterface, Request request, Gson gson) {
+        return null;
+    }
+
+    public Gson getModel(ClientInterface clientInterface, Request request, Gson gson) {
         return null;
     }
 }

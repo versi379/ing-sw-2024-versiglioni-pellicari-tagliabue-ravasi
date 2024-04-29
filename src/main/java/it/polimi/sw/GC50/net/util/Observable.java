@@ -1,6 +1,4 @@
-package it.polimi.sw.GC50.net;
-
-import it.polimi.sw.GC50.view.Observer;
+package it.polimi.sw.GC50.net.util;
 
 import java.util.Vector;
 
@@ -80,6 +78,7 @@ public class Observable {
          */
         Object[] arrLocal;
 
+
         synchronized (this) {
             /* We don't want the Observer doing callbacks into
              * arbitrary code while holding its own Monitor.
@@ -93,8 +92,9 @@ public class Observable {
              * 2) a recently unregistered Observer will be
              *   wrongly notified when it doesn't care
              */
-            if (!changed)
-                return;
+
+            //if (!changed)
+                //return;
             arrLocal = obs.toArray();
             clearChanged();
         }

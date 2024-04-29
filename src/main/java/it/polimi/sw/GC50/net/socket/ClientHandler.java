@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.ClientInterface;
+import it.polimi.sw.GC50.net.util.ClientInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,6 +16,9 @@ public class ClientHandler implements Runnable, ClientInterface {
 
     private Object lock;
     private Object lock2;
+    //////////////////////////////////////////
+    //Questa classe è un thread connessa ad un client; gestisce un client!!!
+    ///////////////////////////////////////////
 
 
     public ClientHandler(Socket socketClient, ServerSCK serverSCK) {

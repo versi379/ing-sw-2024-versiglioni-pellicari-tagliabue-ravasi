@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.net.util;
 
 public enum Request {
     JOINGAME,
@@ -17,5 +17,5 @@ public enum Request {
     DRAWRESOURCE0,
     DRAWRESOURCE1,
     DRAWRESOURCE2,
-    GETTURN,
+    GETTURN, GAMENOTFOUND,
 }
