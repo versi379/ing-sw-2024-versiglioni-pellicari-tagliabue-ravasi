@@ -129,4 +129,9 @@ public class GameController implements ViewObserver {
         return isPlayerTurn(player) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING);
     }
+
+    // TEST METHODS ____________________________________________________________________________________________________
+    public Game getGame() {
+        return game;
+    }
 }

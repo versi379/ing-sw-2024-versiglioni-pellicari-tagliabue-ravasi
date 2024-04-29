@@ -7,12 +7,130 @@ import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
-/**
- * !!!!!!!!! CLASSE PROVVISORIA GIUSTO PER AVERE SOTTO MANO QUESTI TEST !!!!!!!!!
- */
+import static org.junit.jupiter.api.Assertions.*;
+
 public class GameControllerTest {
+
     @Test
-    public void testCardsVisualization() {
+    void testGameControllerConstructor() {
+        Game game = new Game("Partita", 1, 20, new Player("Creator"));
+        GameController controller = new GameController(game);
+
+        assertEquals(game, controller.getGame());
+    }
+
+    @Test
+    void testAddPlayerNotWaiting() {
+        Game game = new Game("Partita", 1, 20, new Player("Creator"));
+        GameController controller = new GameController(game);
+        Player player = new Player("Francesco");
+        controller.addPlayer(player);
+
+        assertEquals("Partita già iniziata", player.getLatestError());
+    }
+
+    @Test
+    void testAddPlayer() {
+        Game game = new Game("Partita", 2, 20, new Player("Creator"));
+        GameController controller = new GameController(game);
+        Player player = new Player("Francesco");
+        controller.addPlayer(player);
+
+        assertEquals(2, game.getPlayerList().size());
+        assertEquals(player, game.getPlayerList().get(1));
+    }
+
+    @Test
+    void testRemovePlayer() {
+        Game game = new Game("Partita", 2, 20, new Player("Creator"));
+        GameController controller = new GameController(game);
+        Player player = new Player("Francesco");
+        controller.addPlayer(player);
+        controller.removePlayer(player);
+
+        assertEquals(1, game.getPlayerList().size());
+    }
+
+    @Test
+    void testChooseStarterFaceNotStarting() {
+        Player creator = new Player("Creator");
+        Game game = new Game("Partita", 2, 20, creator);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(creator, true);
+
+        assertEquals("Operazione non disponibile", creator.getLatestError());
+    }
+
+    @Test
+    void testChooseStarterFace() {
+        Player creator = new Player("Creator");
+        Game game = new Game("Partita", 1, 20, creator);
+        GameController controller = new GameController(game);
+        PhysicalCard starterCard = game.getStarterCard(creator);
+        controller.chooseStarterFace(creator, true);
+
+        assertEquals(starterCard.getFront(), game.getPlayerData(creator).getCard(40, 40));
+    }
+
+    @Test
+    void testChooseObjectiveNotStarting() {
+        Player creator = new Player("Creator");
+        Game game = new Game("Partita", 2, 20, creator);
+        GameController controller = new GameController(game);
+        controller.chooseObjective(creator, 0);
+
+        assertEquals("Operazione non disponibile", creator.getLatestError());
+    }
+
+    @Test
+    void testChooseObjective() {
+        Player creator = new Player("Creator");
+        Game game = new Game("Partita", 1, 20, creator);
+        GameController controller = new GameController(game);
+        ObjectiveCard secretObjective = game.getSecretObjectivesList(creator).getFirst();
+        controller.chooseObjective(creator, 0);
+
+        assertEquals(secretObjective, game.getPlayerData(creator).getSecretObjective());
+    }
+
+    @Test
+    void testPlaceCardNotPlaying() {
+
+    }
+
+    @Test
+    void testPlaceCardInvalidIndex() {
+
+    }
+
+    @Test
+    void testPlaceCardInvalidPosition() {
+
+    }
+
+    @Test
+    void testPlaceCard() {
+
+    }
+
+    @Test
+    void testDrawCardNotPlaying() {
+
+    }
+
+    @Test
+    void testDrawCardInvalidPosition() {
+
+    }
+
+    @Test
+    void testDrawCard() {
+
+    }
+
+    // OTHER ___________________________________________________________________________________________________________
+    @Test
+    void testCardsVisualization() {
         Player player = new Player("Francesco");
         Game game = new Game("Partita", 1, 20, player);
 
@@ -32,7 +150,7 @@ public class GameControllerTest {
     }
 
     @Test
-    public void testCardsPlacement() {
+    void testCardsPlacement() {
         Player player = new Player("Francesco");
         Game game = new Game("Partita", 1, 20, player);
         GameController controller = new GameController(game);
@@ -70,7 +188,7 @@ public class GameControllerTest {
 
 
     @Test
-    public void testMultiplayer() {
+    void testMultiplayer() {
         Player player1 = new Player("Francesco");
         Game game = new Game("Partita", 2, 20, player1);
         GameController controller = new GameController(game);
@@ -118,7 +236,7 @@ public class GameControllerTest {
         game.forceEnd();
     }
 
-    // Test Methods ____________________________________________________________________________________________________
+    // TEST METHODS ____________________________________________________________________________________________________
     private void printPhysicalCard(PhysicalCard card) {
         System.out.println("______________________________________________________");
         System.out.println(card.getCardType());

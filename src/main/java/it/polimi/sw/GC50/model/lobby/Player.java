@@ -43,6 +43,14 @@ public class Player {
         System.err.println(this + " : " + message);
     }
 
+    public List<String> getErrorLog() {
+        return errorLog;
+    }
+
+    public String getLatestError() {
+        return errorLog.getLast();
+    }
+
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
