@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.controller;
 
+import it.polimi.sw.GC50.model.card.CardType;
 import it.polimi.sw.GC50.model.card.Corner;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.game.*;
@@ -13,7 +14,8 @@ public class GameControllerTest {
 
     @Test
     void testGameControllerConstructor() {
-        Game game = new Game("Partita", 1, 20, new Player("Creator"));
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
         GameController controller = new GameController(game);
 
         assertEquals(game, controller.getGame());
@@ -21,111 +23,235 @@ public class GameControllerTest {
 
     @Test
     void testAddPlayerNotWaiting() {
-        Game game = new Game("Partita", 1, 20, new Player("Creator"));
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 1, 20, player1);
         GameController controller = new GameController(game);
-        Player player = new Player("Francesco");
-        controller.addPlayer(player);
+        controller.addPlayer(player2);
 
-        assertEquals("Partita già iniziata", player.getLatestError());
+        assertEquals("Partita già iniziata", player2.getLatestError());
     }
 
     @Test
     void testAddPlayer() {
-        Game game = new Game("Partita", 2, 20, new Player("Creator"));
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 20, player1);
         GameController controller = new GameController(game);
-        Player player = new Player("Francesco");
-        controller.addPlayer(player);
+        controller.addPlayer(player2);
 
         assertEquals(2, game.getPlayerList().size());
-        assertEquals(player, game.getPlayerList().get(1));
+        assertEquals(player2, game.getPlayerList().get(1));
     }
 
     @Test
     void testRemovePlayer() {
-        Game game = new Game("Partita", 2, 20, new Player("Creator"));
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 20, player1);
         GameController controller = new GameController(game);
-        Player player = new Player("Francesco");
-        controller.addPlayer(player);
-        controller.removePlayer(player);
+        controller.addPlayer(player2);
+        controller.removePlayer(player2);
 
         assertEquals(1, game.getPlayerList().size());
     }
 
     @Test
     void testChooseStarterFaceNotStarting() {
-        Player creator = new Player("Creator");
-        Game game = new Game("Partita", 2, 20, creator);
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 2, 20, player);
         GameController controller = new GameController(game);
-        controller.chooseStarterFace(creator, true);
+        controller.chooseStarterFace(player, true);
 
-        assertEquals("Operazione non disponibile", creator.getLatestError());
+        assertEquals("Operazione non disponibile", player.getLatestError());
     }
 
     @Test
     void testChooseStarterFace() {
-        Player creator = new Player("Creator");
-        Game game = new Game("Partita", 1, 20, creator);
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
         GameController controller = new GameController(game);
-        PhysicalCard starterCard = game.getStarterCard(creator);
-        controller.chooseStarterFace(creator, true);
+        PhysicalCard starterCard = game.getStarterCard(player);
+        controller.chooseStarterFace(player, true);
 
-        assertEquals(starterCard.getFront(), game.getPlayerData(creator).getCard(40, 40));
+        assertEquals(starterCard.getFront(), game.getPlayerData(player).getCard(40, 40));
     }
 
     @Test
     void testChooseObjectiveNotStarting() {
-        Player creator = new Player("Creator");
-        Game game = new Game("Partita", 2, 20, creator);
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 2, 20, player);
         GameController controller = new GameController(game);
-        controller.chooseObjective(creator, 0);
+        controller.chooseObjective(player, 0);
 
-        assertEquals("Operazione non disponibile", creator.getLatestError());
+        assertEquals("Operazione non disponibile", player.getLatestError());
+    }
+
+    @Test
+    void testChooseObjectiveInvalidIndex() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseObjective(player, 100);
+
+        assertEquals("Indice non valido", player.getLatestError());
     }
 
     @Test
     void testChooseObjective() {
-        Player creator = new Player("Creator");
-        Game game = new Game("Partita", 1, 20, creator);
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
         GameController controller = new GameController(game);
-        ObjectiveCard secretObjective = game.getSecretObjectivesList(creator).getFirst();
-        controller.chooseObjective(creator, 0);
+        ObjectiveCard secretObjective = game.getSecretObjectivesList(player).getFirst();
+        controller.chooseObjective(player, 0);
 
-        assertEquals(secretObjective, game.getPlayerData(creator).getSecretObjective());
+        assertEquals(secretObjective, game.getPlayerData(player).getSecretObjective());
     }
 
     @Test
     void testPlaceCardNotPlaying() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 2, 20, player);
+        GameController controller = new GameController(game);
+        controller.placeCard(player, 0, true, 41, 41);
 
+        assertEquals("Operazione non disponibile", player.getLatestError());
+    }
+
+    @Test
+    void testPlaceCardNotPlayerTurn() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 20, player1);
+        GameController controller = new GameController(game);
+        controller.addPlayer(player2);
+        controller.chooseStarterFace(player1, true);
+        controller.chooseObjective(player1, 0);
+        controller.chooseStarterFace(player2, true);
+        controller.chooseObjective(player2, 0);
+        controller.placeCard(player2, 0, true, 41, 41);
+
+        assertEquals("Operazione non disponibile", player2.getLatestError());
     }
 
     @Test
     void testPlaceCardInvalidIndex() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.placeCard(player, 100, true, 41, 41);
 
+        assertEquals("Indice non valido", player.getLatestError());
     }
 
     @Test
     void testPlaceCardInvalidPosition() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.placeCard(player, 0, true, 100, 100);
 
+        assertEquals("Carta non piazzabile", player.getLatestError());
     }
 
     @Test
     void testPlaceCard() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        PhysicalCard card = game.getHand(player).getFirst();
+        controller.placeCard(player, 0, true, 41, 41);
 
+        assertEquals(card.getFront(), game.getPlayerData(player).getCard(41, 41));
+    }
+
+    @Test
+    void testPlaceCardNotPlacingPhase() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.placeCard(player, 0, true, 41, 41);
+        controller.placeCard(player, 0, true, 42, 42);
+
+        assertEquals("Operazione non disponibile", player.getLatestError());
     }
 
     @Test
     void testDrawCardNotPlaying() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 2, 20, player);
+        GameController controller = new GameController(game);
+        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
 
+        assertEquals("Operazione non disponibile", player.getLatestError());
+    }
+
+    @Test
+    void testDrawCardNotPlayerTurn() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 20, player1);
+        GameController controller = new GameController(game);
+        controller.addPlayer(player2);
+        controller.chooseStarterFace(player1, true);
+        controller.chooseObjective(player1, 0);
+        controller.chooseStarterFace(player2, true);
+        controller.chooseObjective(player2, 0);
+        controller.drawCard(player2, DrawingPosition.RESOURCEDECK);
+
+        assertEquals("Operazione non disponibile", player2.getLatestError());
+    }
+
+    @Test
+    void testDrawCardNotDrawingPhase() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+
+        assertEquals("Operazione non disponibile", player.getLatestError());
     }
 
     @Test
     void testDrawCardInvalidPosition() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.placeCard(player, 0, false, 41, 39);
+        for (int i = 0; i < 36; i++) {
+            int position = (i % 2 == 0) ? (40 + ((i / 2) + 1)) : (40 - ((i / 2) + 1));
+            controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+            controller.placeCard(player, 2, false, position, position);
+        }
+        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
 
+        assertEquals("Posizione non disponibile", player.getLatestError());
     }
 
     @Test
     void testDrawCard() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        GameController controller = new GameController(game);
+        controller.chooseStarterFace(player, true);
+        controller.chooseObjective(player, 0);
+        controller.placeCard(player, 0, true, 41, 41);
+        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
 
+        assertEquals(3, game.getHand(player).size());
+        assertEquals(CardType.RESOURCE, game.getHand(player).getLast().getCardType());
     }
 
     // OTHER ___________________________________________________________________________________________________________
