@@ -59,10 +59,10 @@ public class AppClient {
 
         if (read == 1) {
             connection = TypeOfConnection.SOCKET;
-            ClientSCK clientSCK= null;
+            ClientSCK clientSCK = null;
             try {
-                clientSCK=new ClientSCK(2012,"localhost" );
-                clientSCK.setView(view,typeview);
+                clientSCK = new ClientSCK(2012, "localhost");
+                clientSCK.setView(view, typeview);
                 clientSCK.lobby();
 
             } catch (IOException e) {
@@ -73,7 +73,7 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 ClientInterface client = new ClientRmi("server");
-                ((ClientRmi) client).addView(view,typeview);
+                ((ClientRmi) client).addView(view, typeview);
                 ((ClientRmi) client).lobby();
 
             } catch (RemoteException e) {

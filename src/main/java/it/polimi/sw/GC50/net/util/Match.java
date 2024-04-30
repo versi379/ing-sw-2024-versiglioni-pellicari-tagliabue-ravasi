@@ -1,7 +1,9 @@
 package it.polimi.sw.GC50.net.util;
 
 import com.google.gson.Gson;
-import it.polimi.sw.GC50.controller.Controller2;
+
+import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.net.UpdateController;
 import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.observ.Observer;
 
@@ -9,34 +11,28 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match implements Observer {
+public class Match {
     private boolean isFree;
     private int numOfPlayer;
     private final int code;
     private final String gameName;
     private List<ClientInterface> player;
-    //private GameController gameController;
-    private final Controller2 controller;
+    private final GameController controller;
+
+    private final UpdateController updateController;
 
 
     public Match(int code, ClientInterface player, int numOfPlayer, String gameName) {
         this.code = code;
         this.player = new ArrayList<>();
         this.player.add(player);
-        this.controller = new Controller2();
+        this.controller = new GameController();
         this.numOfPlayer = numOfPlayer;
         this.gameName = gameName;
         controller.addObserver(this);
+        this.updateController = new UpdateController();
+        this.isFree = true;
 
-
-    }
-    public void test2(){
-        controller.test();
-    }
-
-    public void addObserver() {
-        //controller.addObserver(ob);
-        controller.addObserver(this);
 
     }
 
@@ -44,25 +40,17 @@ public class Match implements Observer {
         return isFree;
     }
 
-    public void addPlayer(ClientInterface player) {
-        this.player.add(player);
-        controller.addPlayer(player.getNickName());
-    }
+    public Boolean addPlayer(ClientInterface player, String nickName) {
+        Boolean add = false;
+        if (this.player.size() < numOfPlayer) {
+            this.player.add(player);
+            add = true;
+        }
+        if (numOfPlayer == this.player.size()) {
+            this.isFree = false;
+        }
+        return add;
 
-    public int getNumOfPlayer() {
-        return numOfPlayer;
-    }
-
-    public void setNumOfPlayer(int numOfPlayer) {
-        this.numOfPlayer = numOfPlayer;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public List<ClientInterface> getPlayer() {
-        return player;
     }
 
     public void setPlayer(List<ClientInterface> player) {
@@ -79,29 +67,17 @@ public class Match implements Observer {
     ///////////////////////////////////////////
 
 
-    public Request update(ClientInterface clientInterface, Request request, Gson gson) {
-        return null;
+    public Request update(String nickName, ClientInterface clientInterface, Request request, Object object) {
+        Request rq = updateController.update(controller, nickName, clientInterface, request, object);
+        return rq;
     }
 
-    public Gson getModel(ClientInterface clientInterface, Request request, Gson gson) {
-        return null;
+    public Object getModel(ClientInterface clientInterface, Request request, Object object) {
+        return updateController.getModel(controller);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        for (ClientInterface clientInterface : player) {
-            try {
-                clientInterface.message("test");
-                clientInterface.message(arg);
-            } catch (RemoteException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
+    public void addObserver(Observer o) {
+        controller.addObserver(null);
     }
 
-    @Override
-    public void onUpdate(Message message) {
-
-    }
 }

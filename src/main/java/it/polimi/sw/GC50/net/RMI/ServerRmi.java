@@ -13,20 +13,25 @@ public interface ServerRmi extends Remote {
     void start(ServerRmi serverRmi) throws RemoteException;
 
     int addClient(ClientInterface client) throws RemoteException;
+    //////////////////////////////////////////
+    //LOBBY
+    ///////////////////////////////////////////
 
     ArrayList<String> getFreeMatch() throws RemoteException;
 
     void createGame(int numOfPl, String gameName, ClientInterface clientInterface, View view) throws RemoteException;
 
-    void enterGame(String gameName, ClientInterface clientInterface, View view) throws RemoteException;
+    void enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException;
+
+    boolean setName(String name) throws RemoteException;
 
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
 
-    Request message(String gameName, ClientInterface clientInterface, Request request, Gson gson) throws RemoteException;
+    Request message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
 
-    Gson getModel(String gameName, ClientInterface clientInterface, Request request, Gson gson) throws RemoteException;
+    Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
 
 
 }

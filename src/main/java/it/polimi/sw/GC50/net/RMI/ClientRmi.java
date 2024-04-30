@@ -1,6 +1,8 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.util.ClientInterface;
+import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
 
@@ -19,10 +21,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private int codeMatch;
 
 
-
     public ClientRmi(String name) throws RemoteException {
         this.name = name;
-        nickName="Luca";
+        nickName = "Luca";
         connect();
     }
 
@@ -32,14 +33,18 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             this.id = this.serverRmi.addClient(this);
             Thread ckConnection = new Thread(ckConnection(), "ckConnection");
             ckConnection.start();
-
         } catch (Exception e) {
         }
     }
 
     public void lobby() {
         try {
-            serverRmi.createGame(2, "dio", this, view);
+            setNickName();
+            // serverRmi.createGame(2, "test1", this, view);
+
+            for (String freeMatch : serverRmi.getFreeMatch()) {
+                System.out.println(freeMatch);
+            }
 
 
         } catch (RemoteException e) {
@@ -48,12 +53,35 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     }
 
+    public void setNickName() throws RemoteException {
+        String name2;
+        do {
+            name2 = view.askName();
+        } while (!serverRmi.setName(name2));
+
+        nickName = name2;
+    }
+
     public void joinGame(String gameName) {
-        // this.serverRmi.
+        try {
+            serverRmi.enterGame("gameName", this, nickName);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     public void createGame() {
+        String gameName;
+        do {
+            gameName = view.askGameName();
+        } while (gameName == null);
+        int numOfPlayer = view.askNumberOfPlayer();
+        try {
+            serverRmi.createGame(numOfPlayer, gameName, this, null);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -85,17 +113,21 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     @Override
-    public void message(String message) throws RemoteException {
-        System.out.println(message);
-    }
-
-    @Override
     public String getNickName() throws RemoteException {
-        return nickName;
+        return null;
+    }
+
+    //////////////////////////////////////////
+    //OBSERVER
+    ///////////////////////////////////////////
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 
     @Override
-    public void message(Object o) throws RemoteException {
-        System.out.println(o.toString());
+    public void onUpdate(Message message) {
+
     }
 }

@@ -7,16 +7,17 @@ public class Message {
     private final Gson gson;
 
 
-
     public Message(Request request, Gson gson) {
         this.request = request;
         this.gson = gson;
     }
+
     public Message(Request request, String string) {
         this.request = request;
         this.gson = new Gson();
         this.gson.toJson(string);
     }
+
     public Request getRequest() {
         return request;
     }
@@ -24,12 +25,13 @@ public class Message {
     public Gson getGson() {
         return gson;
     }
-    public String getGsonToString(){
+
+    public String getGsonToString() {
         return gson.toString();
     }
 
     public static class MessageSCK extends Message {
-        private final int matchCode,clientCode;
+        private final int matchCode, clientCode;
 
         public MessageSCK(Request request, Gson gson, int matchCode, int clientCode) {
             super(request, gson);

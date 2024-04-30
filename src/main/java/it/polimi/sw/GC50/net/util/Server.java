@@ -13,12 +13,14 @@ public class Server {
 
     private ArrayList<ClientInterface> freeClient;
     private ArrayList<Match> matches;
+    private ArrayList<String> nicknames;
     private int generatorId;
     private int test;
 
     public Server() {
         this.matches = new ArrayList<>();
         this.freeClient = new ArrayList<>();
+        this.nicknames = new ArrayList<>();
         this.generatorId = 1;
         System.out.println("Server Ready!");
     }
@@ -30,28 +32,24 @@ public class Server {
     public int connect(ClientInterface client) {
         freeClient.add(client);
         System.out.println("Client connected to Server");
-        try {
-            System.out.println(client.getNickName());
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        this.generatorId++;
         return this.generatorId;
     }
 
-    public int createMatch(ClientInterface client, int numOfPlayer, String gameName, View view) {
+    public Match createMatch(ClientInterface client, int numOfPlayer, String gameName, View view) {
+
         matches.add(new Match(matches.size(), client, numOfPlayer, gameName));
         System.out.println(gameName + " Match created");
-        matches.get(matches.size()-1).test2();
-        return matches.size() - 1;
+        return matches.get(matches.size()-1);
     }
 
-    public void enterMatch(String code, ClientInterface player, View view) {
+    public Match enterMatch(String code, ClientInterface player, String nickname) {
         for (int i = 0; i < matches.size(); i++) {
             if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
-                matches.get(i).addPlayer(player);
+                matches.get(i).addPlayer(player, nickname);
+                return matches.get(i);
             }
         }
+        return null;
     }
 
 
@@ -64,26 +62,15 @@ public class Server {
         }
         return freeMatch;
     }
-    //////////////////////////////////////////
-    //ACTIVE GAME
-    ///////////////////////////////////////////
 
-    public Request message(String gameName, ClientInterface clientInterface, Request request, Gson gson) {
-        Request rq = Request.GAMENOTFOUND;
-        for (int i = 0; i < matches.size(); i++) {
-            if (matches.get(i).getName().equals(gameName)) {
-                rq = matches.get(i).update(clientInterface, request, gson);
+    public boolean addName(String name) {
+
+        for (int i = 0; i < nicknames.size(); i++)
+            if (name.equals(nicknames.get(i))) {
+                return false;
             }
-        }
-        return rq;
+        nicknames.add(name);
+        return true;
     }
 
-    public Gson getModel(String gameName, ClientInterface clientInterface, Request request, Gson gson) {
-        for (int i = 0; i < matches.size(); i++) {
-            if (matches.get(i).getName().equals(gameName)) {
-                return matches.get(i).getModel(clientInterface, request, gson);
-            }
-        }
-        return null;
-    }
 }
