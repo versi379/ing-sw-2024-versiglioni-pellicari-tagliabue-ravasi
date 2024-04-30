@@ -230,10 +230,12 @@ public class GameControllerTest {
         controller.chooseStarterFace(player, true);
         controller.chooseObjective(player, 0);
         controller.placeCard(player, 0, false, 41, 39);
-        for (int i = 0; i < 36; i++) {
+        int i = 0;
+        while (game.resourceDeckSize() > 0) {
             int position = (i % 2 == 0) ? (40 + ((i / 2) + 1)) : (40 - ((i / 2) + 1));
             controller.drawCard(player, DrawingPosition.RESOURCEDECK);
             controller.placeCard(player, 2, false, position, position);
+            i++;
         }
         controller.drawCard(player, DrawingPosition.RESOURCEDECK);
 

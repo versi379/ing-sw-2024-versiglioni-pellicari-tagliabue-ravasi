@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.sw.GC50.model.adapter.*;
+import it.polimi.sw.GC50.adapter.*;
 import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.lobby.Player;
@@ -71,6 +71,11 @@ public class Game {
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
         chat = new Chat();
+
+        currentIndex = 0;
+        currentPhase = PlayingPhase.PLACING;
+        lastTurn = false;
+
         addPlayer(creator);
     }
 
@@ -173,7 +178,7 @@ public class Game {
             gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
             gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
             Gson gson = gsonBuilder.create();
-            //set resource deck,Gold,And Starter
+
             FileReader reader = new FileReader
                     ("src/main/resources/it/polimi/sw/GC50/cardJson/physicalCardGenerated.json");
             Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
@@ -298,9 +303,6 @@ public class Game {
     // PLAYING PHASE ___________________________________________________________________________________________________
     private void start() {
         status = GameStatus.PLAYING;
-        currentIndex = 0;
-        currentPhase = PlayingPhase.PLACING;
-        lastTurn = false;
         System.err.println("Game \"" + id + "\" has started");
     }
 
@@ -466,222 +468,7 @@ public class Game {
     }
 
     // OTHER METHODS ___________________________________________________________________________________________________
-    private void saveDeckOnFile(String name) {
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/GC50/cardJson/" + name + ".json")) {
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
-            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
-            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
-            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
-            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
-            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
-            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-            // Convertire la lista di oggetti in formato JSON utilizzando l'oggetto Gson
-            gson.toJson(starterDeck, fileWriter);
-            gson.toJson(resourceDeck, fileWriter);
-            gson.toJson(goldDeck, fileWriter);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void saveObjectiveDeckOnFile(String name) {
-        try (FileWriter fileWriter = new FileWriter("src/main/resources/it/polimi/sw/GC50/cardJson/" + name + ".json")) {
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
-            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
-            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
-            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
-            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
-            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
-            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-            gson.toJson(objectiveDeck, fileWriter);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Method used to read the file json with all the cards
-     * then while reading it will add automatically all the cards to the decks
-     */
-    private void setDeck() {
-
-        CardType type;
-        Color color;
-        int point;
-        Corner[] cornerTmp;
-        Corner[] cornerTmp2;
-        List<Resource> fixedResources = new ArrayList<>();
-        PlayableCard cardFront;
-        PlayableCard cardBack;
-        Gson gson = new Gson();
-
-        try (FileReader reader =
-                     new FileReader("src/main/resources/it/polimi/sw/GC50/cardJson/card.json")) {
-
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
-
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                JsonObject front = jsonObject.getAsJsonObject("front");
-
-                type = CardType.valueOf(jsonObject.get("type").getAsString());
-                point = front.get("point").getAsInt();
-                color = Color.valueOf(jsonObject.get("color").getAsString());
-
-                if (!CardType.OBJECTIVE.equals(type)) {
-                    JsonObject back = jsonObject.getAsJsonObject("back");
-                    JsonObject corner = front.getAsJsonObject("corner");
-                    JsonObject backCorner = back.getAsJsonObject("corner");
-                    cornerTmp = cornerFromJsonObj(corner).clone();
-                    cornerTmp2 = cornerFromJsonObj(backCorner).clone();
-
-                    if (CardType.RESOURCE.equals(type) || CardType.GOLD.equals(type)) {
-                        JsonArray centerBack = back.getAsJsonArray("center");
-                        fixedResources = fixedValueFromJsonArray(centerBack);
-
-                    } else if (CardType.STARTER.equals(type)) {
-                        JsonArray center = front.getAsJsonArray("center");
-                        fixedResources = fixedValueFromJsonArray(center);
-                    }
-
-                    if (CardType.RESOURCE.equals(type)) {
-                        //this is for the resource card
-                        cardFront = new PlayableCard(color, point, cornerTmp);
-                        cardBack = new PlayableCard(color, 0, fixedResources, cornerTmp2);
-                        resourceDeck.add(
-                                new PhysicalCard(
-                                        type,
-                                        cardFront,
-                                        cardBack
-                                )
-                        );
-
-                    }
-                    if (CardType.STARTER.equals(type)) {
-                        //this is the creation of a starter card
-                        cardFront = new PlayableCard(color, point, fixedResources, cornerTmp);
-                        cardBack = new PlayableCard(color, 0, cornerTmp2);
-                        starterDeck.add(
-                                new PhysicalCard(
-                                        type,
-                                        cardFront,
-                                        cardBack
-                                )
-                        );
-                    }
-                    if (CardType.GOLD.equals(type)) {
-                        //the restriction are the bonus interface
-
-                        String code = front.get("code").getAsString();
-                        Bonus bonus = null;
-                        if (code.equals("G00")) {
-                            bonus = new BlankBonus();
-                        } else if (code.equals("G01")) {
-                            Resource resourceRequired = Resource.valueOf(front.get("restriction").getAsString());
-                            bonus = new ResourcesBonus(resourceRequired);
-                        } else if (code.equals("G02")) {
-
-                            bonus = new CoveredCornersBonus();
-                        }
-
-                        //the requirement are the constraint
-                        JsonArray requirementArray = front.getAsJsonArray("requirement");
-                        List<Resource> requirement = new ArrayList<>();
-                        requirement = fixedValueFromJsonArray(requirementArray);
-
-                        cardFront = new GoldCard(color, point, bonus, null, cornerTmp, requirement);
-                        cardBack = new PlayableCard(color, 0, fixedResources, cornerTmp2);
-
-                        goldDeck.add(
-                                new PhysicalCard(
-                                        type,
-                                        cardFront,
-                                        cardBack
-                                )
-                        );
-                    }
-                } else {
-                    Objective objective = null;
-                    if ("OB00".equals(front.get("code").getAsString())) {
-                        JsonObject monolithObjective = front.getAsJsonObject("monolithObjective");
-                        objective = new MonolithObjective(
-                                Color.valueOf(monolithObjective.get("color").getAsString()),
-                                MonolithOrientation.valueOf(monolithObjective.get("orientation").getAsString())
-                        );
-                    } else if ("OB01".equals(front.get("code").getAsString())) {
-                        JsonObject caveObjective = front.getAsJsonObject("caveObjective");
-                        objective = new CaveObjective(
-                                Color.valueOf(caveObjective.get("color").getAsString()),
-                                Color.valueOf(caveObjective.get("color2").getAsString()),
-                                CaveOrientation.valueOf(caveObjective.get("orientation").getAsString())
-                        );
-                    } else if ("OB02".equals(front.get("code").getAsString())) {
-                        JsonObject identicalResourcesObjective =
-                                front.getAsJsonObject("identicalResourcesObjective");
-                        objective = new IdenticalResourcesObjective(
-                                Resource.valueOf(identicalResourcesObjective.get("typeOfResource").getAsString()),
-                                identicalResourcesObjective.get("numOfResource").getAsInt()
-                        );
-                    } else if ("OB03".equals(front.get("code").getAsString())) {
-                        JsonObject differentResourcesObjective =
-                                front.getAsJsonObject("differentResourcesObjective");
-                        JsonArray typeOfDifferentResource =
-                                differentResourcesObjective.getAsJsonArray("typeOfDifferentResource");
-                        objective = new DifferentResourcesObjective
-                                (new HashSet<>(fixedValueFromJsonArray(typeOfDifferentResource)));
-                    }
-
-                    objectiveDeck.add(
-                            new ObjectiveCard(point, objective)
-                    );
-
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //after the parsing, used the method to mix the cards of the decks
-        //mixAllDecks(resourceDeck);
-        //mixAllDecks(startDeck);
-        //mixAllDecks(goldDeck);
-        //mixObjective(objectiveDeck);
-    }
-
-    private Corner[] cornerFromJsonObj(JsonObject corner) {
-        Corner[] cornerTmp = new Corner[4];
-       /* cornerTmp[0] = checkCornerStatus(corner, "sw");
-        cornerTmp[1] = checkCornerStatus(corner, "nw");
-        cornerTmp[2] = checkCornerStatus(corner, "ne");
-        cornerTmp[3] = checkCornerStatus(corner, "se");*/
-        cornerTmp[0] = checkCornerStatus(corner, "nw");
-        cornerTmp[1] = checkCornerStatus(corner, "ne");
-        cornerTmp[2] = checkCornerStatus(corner, "sw");
-        cornerTmp[3] = checkCornerStatus(corner, "se");
-        return cornerTmp;
-    }
-
-    private Corner checkCornerStatus(JsonObject corner, String field) {
-        if (corner.getAsJsonArray(field).get(1).isJsonNull()) {
-            return new Corner(CornerStatus.valueOf(corner.getAsJsonArray(field).get(0).getAsString()), null);
-        }
-        return new Corner(CornerStatus.valueOf(corner.getAsJsonArray(field).get(0).getAsString()), Resource.valueOf(corner.getAsJsonArray(field).get(1).getAsString()));
-    }
-
-    private List<Resource> fixedValueFromJsonArray(JsonArray centerBack) {
-        List<Resource> fixedResources = new ArrayList<>();
-        for (int i = 0; i < centerBack.size(); i++)
-            fixedResources.add(Resource.valueOf(centerBack.get(i).getAsString()));
-
-        return fixedResources;
-    }
 
     @Override
     public boolean equals(Object obj) {
