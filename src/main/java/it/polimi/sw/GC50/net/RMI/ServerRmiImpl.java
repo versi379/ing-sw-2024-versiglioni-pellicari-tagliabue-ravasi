@@ -47,6 +47,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     @Override
     public void createGame(int numOfPl, String gameName, ClientInterface clientInterface, View view) throws RemoteException {
         server.createMatch(clientInterface, numOfPl, gameName, view);
+
     }
 
     @Override

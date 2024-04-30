@@ -1,4 +1,6 @@
-package it.polimi.sw.GC50.net.util;
+package it.polimi.sw.GC50.net.observ;
+
+import it.polimi.sw.GC50.net.observ.Observer;
 
 import java.util.Vector;
 
@@ -93,8 +95,8 @@ public class Observable {
              *   wrongly notified when it doesn't care
              */
 
-            //if (!changed)
-                //return;
+            if (!changed)
+                return;
             arrLocal = obs.toArray();
             clearChanged();
         }

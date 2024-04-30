@@ -7,4 +7,5 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.net;
     exports it.polimi.sw.GC50.app;
     exports it.polimi.sw.GC50.net.util;
+    exports it.polimi.sw.GC50.net.observ;
 }

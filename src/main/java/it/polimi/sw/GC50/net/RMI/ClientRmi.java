@@ -8,20 +8,21 @@ import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 
 public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface {
     private ServerRmi serverRmi;
     private String name;
+    private String nickName;
     private TypeOfView typeOfView;
     private View view;
     private int id;
     private int codeMatch;
-    private String nickName;
+
 
 
     public ClientRmi(String name) throws RemoteException {
         this.name = name;
+        nickName="Luca";
         connect();
     }
 
@@ -38,7 +39,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     public void lobby() {
         try {
-            serverRmi.createGame(2,"dio",this,view);
+            serverRmi.createGame(2, "dio", this, view);
 
 
         } catch (RemoteException e) {
@@ -48,7 +49,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     public void joinGame(String gameName) {
-       // this.serverRmi.
+        // this.serverRmi.
 
     }
 
@@ -81,5 +82,20 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     @Override
     public void ping() throws RemoteException {
 
+    }
+
+    @Override
+    public void message(String message) throws RemoteException {
+        System.out.println(message);
+    }
+
+    @Override
+    public String getNickName() throws RemoteException {
+        return nickName;
+    }
+
+    @Override
+    public void message(Object o) throws RemoteException {
+        System.out.println(o.toString());
     }
 }

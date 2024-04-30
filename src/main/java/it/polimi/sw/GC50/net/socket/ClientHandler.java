@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 
 public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
+    private String nickName;
     private final ServerSCK serverSCK;
     private final ObjectOutputStream output;
     private final ObjectInputStream input;
@@ -35,6 +36,22 @@ public class ClientHandler implements Runnable, ClientInterface {
 
     @Override
     public void ping() throws RemoteException {
+
+    }
+
+    @Override
+    public void message(String message) throws RemoteException {
+
+    }
+
+    @Override
+    public String getNickName() throws RemoteException {
+
+        return null;
+    }
+
+    @Override
+    public void message(Object o) throws RemoteException {
 
     }
 

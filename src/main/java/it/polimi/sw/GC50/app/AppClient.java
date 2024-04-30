@@ -13,6 +13,7 @@ import it.polimi.sw.GC50.view.View;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
+import java.util.Observer;
 import java.util.Scanner;
 
 public class AppClient {

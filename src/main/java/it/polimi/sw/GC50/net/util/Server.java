@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.net.util.Match;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.View;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class Server {
@@ -29,14 +30,19 @@ public class Server {
     public int connect(ClientInterface client) {
         freeClient.add(client);
         System.out.println("Client connected to Server");
+        try {
+            System.out.println(client.getNickName());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         this.generatorId++;
         return this.generatorId;
     }
 
     public int createMatch(ClientInterface client, int numOfPlayer, String gameName, View view) {
         matches.add(new Match(matches.size(), client, numOfPlayer, gameName));
-        matches.get(matches.size()-1).addObserver(view);
         System.out.println(gameName + " Match created");
+        matches.get(matches.size()-1).test2();
         return matches.size() - 1;
     }
 
@@ -44,7 +50,6 @@ public class Server {
         for (int i = 0; i < matches.size(); i++) {
             if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
                 matches.get(i).addPlayer(player);
-                matches.get(i).addObserver(view);
             }
         }
     }
