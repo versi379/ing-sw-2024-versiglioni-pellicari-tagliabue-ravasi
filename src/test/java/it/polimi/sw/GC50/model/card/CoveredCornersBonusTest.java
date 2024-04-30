@@ -22,4 +22,17 @@ public class CoveredCornersBonusTest {
         CoveredCornersBonus coveredCornersBonus = new CoveredCornersBonus();
         assertEquals(0,coveredCornersBonus.checkBonus(card,playerData, 1,2));
     }
+
+    @Test
+    //da riguardare
+    void checkBonusOne() {
+        CoveredCornersBonus bonus = new CoveredCornersBonus();
+        PlayerData playerData = new PlayerData(40);
+        Corner[] corners = new Corner[]
+                {CornerTest.animalCorner, CornerTest.animalCorner, CornerTest.emptyCorner, CornerTest.emptyCorner};
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
+        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+        CoveredCornersBonus coveredCornersBonus = new CoveredCornersBonus();
+        assertEquals(1,coveredCornersBonus.checkBonus(card,playerData, 1,2));
+    }
 }
