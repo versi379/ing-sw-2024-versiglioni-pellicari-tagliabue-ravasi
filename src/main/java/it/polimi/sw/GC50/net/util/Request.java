@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.net.util;
 
 public enum Request {
     JOINGAME,
@@ -10,6 +10,7 @@ public enum Request {
     GETSTARTERCARD,
     GETCOMMONOBJECTIVE,
     GETSECRETOBJECTIVE,
+    SELECTOBJECTIVE,
     PLACECARD,
     DRAWCARDGOLD0,
     DRAWCARDGOLD1,
@@ -17,5 +18,8 @@ public enum Request {
     DRAWRESOURCE0,
     DRAWRESOURCE1,
     DRAWRESOURCE2,
+    MEXCHAT,
+    STARTERFACE,
     GETTURN,
+    GAMENOTFOUND,
 }

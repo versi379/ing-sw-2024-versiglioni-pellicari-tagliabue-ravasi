@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.util.Match;
 
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class GameController implements ViewObserver {
 
     public GameController(Game game) {
         this.game = game;
+    }
+
+    public GameController() {
+        game = new Game("test", 2, 2, new Player("s"));
     }
 
     public void addPlayer(Player player) {
@@ -133,5 +138,8 @@ public class GameController implements ViewObserver {
     // TEST METHODS ____________________________________________________________________________________________________
     public Game getGame() {
         return game;
+    }
+
+    public void addObserver(Match match) {
     }
 }

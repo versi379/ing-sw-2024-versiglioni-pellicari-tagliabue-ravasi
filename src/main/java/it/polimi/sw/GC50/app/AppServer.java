@@ -1,12 +1,11 @@
-package it.polimi.sw.GC50.net;
+package it.polimi.sw.GC50.app;
 
 import it.polimi.sw.GC50.net.RMI.ServerRmi;
 import it.polimi.sw.GC50.net.RMI.ServerRmiImpl;
+import it.polimi.sw.GC50.net.util.Server;
 import it.polimi.sw.GC50.net.socket.ServerSCK;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class AppServer {
     public static void main(String[] args) throws IOException {

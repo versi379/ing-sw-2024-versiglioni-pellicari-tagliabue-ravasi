@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.net.observ.Observable;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,7 +21,7 @@ import java.util.*;
 /**
  *
  */
-public class Game {
+public class Game extends Observable {
 
     private final String id;
     private final int numPlayers;
@@ -121,6 +122,7 @@ public class Game {
                 currentIndex = 0;
             }
         }
+
     }
 
     public List<Player> getPlayerList() {
