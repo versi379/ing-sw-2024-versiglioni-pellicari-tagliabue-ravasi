@@ -34,7 +34,9 @@ public class ResourcesBonus implements Bonus {
     public int checkBonus(PlayableCard card, PlayerData playerData, int x, int y) {
         return playerData.numOfResource(targetResource)
                 - (int) Arrays.stream(playerData.getTargetCorners(x, y))
+                .filter(CornerPointer::isPresent)
                 .map(CornerPointer::getCorner)
+                .filter(Corner::isFull)
                 .map(Corner::getResource)
                 .filter(targetResource::equals)
                 .count()
