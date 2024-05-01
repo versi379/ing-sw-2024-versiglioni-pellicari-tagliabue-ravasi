@@ -1,56 +1,47 @@
 package it.polimi.sw.GC50.net.util;
 
-import com.google.gson.Gson;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
     private final Request request;
-    private final Gson gson;
+    private final Object object;
 
 
-    public Message(Request request, Gson gson) {
+    public Message(Request request, Object object) {
         this.request = request;
-        this.gson = gson;
+        this.object = object;
     }
 
     public Message(Request request, String string) {
         this.request = request;
-        this.gson = new Gson();
-        this.gson.toJson(string);
+        this.object = string;
     }
 
     public Request getRequest() {
         return request;
     }
 
-    public Gson getGson() {
-        return gson;
+    public Object getObject() {
+        return object;
     }
 
-    public String getGsonToString() {
-        return gson.toString();
-    }
 
     public static class MessageSCK extends Message {
-        private final int matchCode, clientCode;
+        private final String matchName, nickName;
 
-        public MessageSCK(Request request, Gson gson, int matchCode, int clientCode) {
-            super(request, gson);
-            this.matchCode = matchCode;
-            this.clientCode = clientCode;
+        public MessageSCK(Request request, Object ob, String matchName, String nickName) {
+            super(request, ob);
+            this.matchName = matchName;
+            this.nickName = nickName;
         }
 
-        public MessageSCK(Request request, String string, int matchCode, int clientCode) {
-            super(request, string);
-            this.matchCode = matchCode;
-            this.clientCode = clientCode;
+        public String getMatchName() {
+            return matchName;
         }
 
-        public int getMatchCode() {
-            return matchCode;
-        }
-
-        public int getClientCode() {
-            return clientCode;
+        public String getNickName() {
+            return nickName;
         }
     }
 }

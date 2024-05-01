@@ -29,9 +29,11 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
         try {
             registry = LocateRegistry.createRegistry(this.port);
             registry.rebind("server", serverRmi);
+            System.out.println("Server RMI ready");
         } catch (Exception e) {
-            System.err.println("");
+            System.err.println("error in binding to RMI registry");
         }
+
     }
 
     @Override
@@ -72,15 +74,15 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
 
     @Override
     public Request message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
-        if(match.getName().equals(gameName)){
-            match.update(nickName,clientInterface,request,object);
+        if (match.getName().equals(gameName)) {
+            match.update(nickName, clientInterface, request, object);
         }
         return null;
     }
 
     @Override
     public Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
-        return match.getModel(clientInterface,request,object);
+        return match.getModel(clientInterface, request, object);
     }
 
 

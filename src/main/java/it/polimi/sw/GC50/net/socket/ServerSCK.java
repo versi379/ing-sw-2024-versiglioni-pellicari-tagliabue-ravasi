@@ -14,38 +14,36 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
     private final int port;
     private List<ClientHandler> client;
 
-    public ServerSCK(Server server, int port) throws IOException{
+    public ServerSCK(Server server, int port) throws IOException {
         this.server = server;
         this.port = port;
-        this.client=new ArrayList<>();
+        this.client = new ArrayList<>();
     }
 
     @Override
     public void run() {
         ServerSocket serverSocket;
-        try{
+        try {
             serverSocket = new ServerSocket(port);
-
-        } catch (IOException e){
+            System.out.println("server socket started");
+        } catch (IOException e) {
             return;
         }
-        while(true){
-            try{
+
+        while (true) {
+            try {
                 Socket socketClient = serverSocket.accept();
                 socketClient.setSoTimeout(0);
-                ClientHandler clientHandler = new ClientHandler(socketClient,this);
+                ClientHandler clientHandler = new ClientHandler(socketClient, this, server);
                 client.add(clientHandler);
                 server.connect(clientHandler);
                 Thread clientThread = new Thread(clientHandler);
                 clientThread.start();
                 System.out.println("client connected");
-            } catch (IOException e){
+            } catch (IOException e) {
             }
         }
 
     }
-    public synchronized Object getListOpenGame(){
 
-        return null;
-    }
 }

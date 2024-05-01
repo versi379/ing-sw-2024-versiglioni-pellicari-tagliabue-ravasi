@@ -13,6 +13,7 @@ public interface ServerRmi extends Remote {
     void start(ServerRmi serverRmi) throws RemoteException;
 
     int addClient(ClientInterface client) throws RemoteException;
+
     //////////////////////////////////////////
     //LOBBY
     ///////////////////////////////////////////

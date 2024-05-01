@@ -54,6 +54,9 @@ public class Server {
 
 
     public ArrayList<String> getFreeMatchesNames() {
+        if(matches.isEmpty()){
+            return null;
+        }
         ArrayList<String> freeMatch = new ArrayList<>();
         for (int i = 0; i < matches.size(); i++) {
             if (matches.get(i).isFree()) {

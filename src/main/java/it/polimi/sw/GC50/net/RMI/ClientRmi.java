@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.view.TypeOfView;
@@ -11,9 +12,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface {
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, Observer {
     private ServerRmi serverRmi;
-    private String name;
+    private String servername;
     private String nickName;
     private TypeOfView typeOfView;
     private View view;
@@ -22,25 +23,27 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
 
     public ClientRmi(String name) throws RemoteException {
-        this.name = name;
-        nickName = "Luca";
-        connect();
+
+        this.servername = name;
+        this.connection();
     }
 
-    public void connect() throws RemoteException {
+    public void connection() throws RemoteException {
         try {
-            this.serverRmi = (ServerRmi) Naming.lookup(name);
+            this.serverRmi = (ServerRmi) Naming.lookup(servername);
             this.id = this.serverRmi.addClient(this);
-            Thread ckConnection = new Thread(ckConnection(), "ckConnection");
-            ckConnection.start();
+            System.out.println("Connected to server");
+
         } catch (Exception e) {
+            System.out.println("Error in connection");
         }
+
     }
 
     public void lobby() {
         try {
-            setNickName();
-            // serverRmi.createGame(2, "test1", this, view);
+            //setNickName();
+             serverRmi.createGame(2, "test1", this, view);
 
             for (String freeMatch : serverRmi.getFreeMatch()) {
                 System.out.println(freeMatch);
@@ -88,7 +91,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public void addView(View view, TypeOfView typeOfView) {
         this.view = view;
         this.typeOfView = typeOfView;
-
     }
 
     public void myTurn() {
@@ -100,22 +102,14 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     }
 
-    public void waiting() throws InterruptedException {
-    }
 
-    public Runnable ckConnection() {
-        return null;
-    }
+
 
     @Override
     public void ping() throws RemoteException {
 
     }
 
-    @Override
-    public String getNickName() throws RemoteException {
-        return null;
-    }
 
     //////////////////////////////////////////
     //OBSERVER

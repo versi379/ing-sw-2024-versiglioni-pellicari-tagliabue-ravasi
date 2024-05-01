@@ -16,6 +16,7 @@ import java.util.InputMismatchException;
 import java.util.Observer;
 import java.util.Scanner;
 
+
 public class AppClient {
     public static void main(String[] args) {
 
@@ -27,7 +28,7 @@ public class AppClient {
         int read;
 
         do {
-            System.out.println("1 for Tui connection, 2 for Gui");
+            System.out.println("1 for Tui , 2 for Gui");
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -62,6 +63,8 @@ public class AppClient {
             ClientSCK clientSCK = null;
             try {
                 clientSCK = new ClientSCK(2012, "localhost");
+                Thread thread = new Thread(clientSCK);
+                thread.start();
                 clientSCK.setView(view, typeview);
                 clientSCK.lobby();
 
@@ -72,12 +75,15 @@ public class AppClient {
         } else if (read == 2) {
             connection = TypeOfConnection.RMI;
             try {
-                ClientInterface client = new ClientRmi("server");
-                ((ClientRmi) client).addView(view, typeview);
-                ((ClientRmi) client).lobby();
+                System.out.println("Connecting to server...");
+
+                ClientRmi client = new ClientRmi("server");
+                client.addView(view, typeview);
+                client.lobby();
+
 
             } catch (RemoteException e) {
-
+                System.out.println("Error in connection");
             }
         }
 
