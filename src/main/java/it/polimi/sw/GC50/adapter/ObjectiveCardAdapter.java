@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.model.adapter;
+package it.polimi.sw.GC50.adapter;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;

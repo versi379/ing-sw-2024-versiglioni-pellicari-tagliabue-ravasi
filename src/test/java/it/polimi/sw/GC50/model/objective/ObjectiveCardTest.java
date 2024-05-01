@@ -18,6 +18,7 @@ public class ObjectiveCardTest {
 
     @Test
     void checkObjective() {
+        //da riguardare
         PlayerData playerData = new PlayerData(5);
         CaveObjective caveObjective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.UPRIGHTL);
         ObjectiveCard objectiveCard = new ObjectiveCard(2, caveObjective);
