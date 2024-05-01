@@ -10,7 +10,7 @@ import static it.polimi.sw.GC50.model.card.CornerTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayableCardTest {
-    static final Corner[] corners = new Corner[]
+    public static final Corner[] corners = new Corner[]
             {CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner};
     public static final PlayableCard whitePlayableCard = new PlayableCard(Color.WHITE, 0, corners);
     public static final PlayableCard greenPlayableCard = new PlayableCard(Color.GREEN, 1, corners);

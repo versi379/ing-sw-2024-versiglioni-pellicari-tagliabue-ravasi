@@ -53,6 +53,7 @@ public class Game extends Observable {
     private final Stack<PhysicalCard> starterDeck;
     private final Stack<ObjectiveCard> objectiveDeck;
     private final List<ObjectiveCard> commonObjectives;
+    private final List<Player> winnerList;
 
     private final Chat chat;
 
@@ -71,6 +72,7 @@ public class Game extends Observable {
         starterDeck = new Stack<>();
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
+        winnerList = new ArrayList<>();
         chat = new Chat();
 
         currentIndex = 0;
@@ -247,6 +249,10 @@ public class Game extends Observable {
         commonObjectives.addAll(pickObjectivesList(quantity));
     }
 
+    public List<ObjectiveCard> getCommonObjectives() {
+        return new ArrayList<>(commonObjectives);
+    }
+
     public void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
     }
@@ -313,12 +319,16 @@ public class Game extends Observable {
     }
 
     private void nextPlayer() {
-        if (lastTurn && currentIndex == playerList.size()) {
+        if (lastTurn && currentIndex == playerList.size() - 1) {
             end();
         } else {
             currentIndex = (currentIndex + 1) % playerList.size();
             currentPhase = PlayingPhase.PLACING;
         }
+    }
+
+    public boolean isLastTurn() {
+        return lastTurn;
     }
 
     private void setLastTurn() {
@@ -426,27 +436,30 @@ public class Game extends Observable {
         status = GameStatus.ENDED;
         playerList.stream()
                 .map(this::getPlayerData)
-                .forEach(x -> x.setFinalScore(commonObjectives));
+                .forEach(x -> x.setFinalScore(getCommonObjectives()));
 
-        List<Player> winnerList = new ArrayList<>(playerList);
-        int maxScore = winnerList.stream()
+        int maxScore = playerList.stream()
                 .map(this::getTotalScore)
                 .max(Integer::compareTo)
                 .orElse(0);
-        winnerList.removeIf(player -> getTotalScore(player) < maxScore);
+        playerList.stream()
+                .filter(x -> getTotalScore(x) == maxScore)
+                .forEach(winnerList::add);
         if (winnerList.size() == 1) {
             System.err.println("Vincitore: " + winnerList.getFirst());
             System.err.println("Punteggio: " + maxScore);
+
         } else {
-            int maxObjectivesScore = winnerList.stream()
+            int maxObjectivesScore = playerList.stream()
                     .map(this::getObjectivesScore)
                     .max(Integer::compareTo)
                     .orElse(0);
-            winnerList.removeIf(player -> getObjectivesScore(player) < maxObjectivesScore);
+            winnerList.removeIf(x -> getObjectivesScore(x) < maxObjectivesScore);
             if (winnerList.size() == 1) {
                 System.err.println("Vincitore: " + winnerList.getFirst());
                 System.err.println("Punteggio: " + maxScore);
                 System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
+
             } else {
                 System.err.println("Pareggio");
                 System.err.print("Vincitori:");
@@ -461,6 +474,10 @@ public class Game extends Observable {
         }
     }
 
+    public List<Player> getWinnerList() {
+        return new ArrayList<>(winnerList);
+    }
+
     public int getTotalScore(Player player) {
         return getPlayerData(player).getTotalScore();
     }
@@ -470,8 +487,6 @@ public class Game extends Observable {
     }
 
     // OTHER METHODS ___________________________________________________________________________________________________
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

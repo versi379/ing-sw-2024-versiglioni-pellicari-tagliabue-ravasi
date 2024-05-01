@@ -1,8 +1,6 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.CardType;
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.Resource;
+import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.IdenticalResourcesObjective;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
@@ -10,11 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static it.polimi.sw.GC50.model.card.PlayableCardTest.redPlayableCard;
-import static it.polimi.sw.GC50.model.card.PlayableCardTest.whitePlayableCard;
+import static it.polimi.sw.GC50.model.card.CornerTest.fungiCorner;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
@@ -32,6 +31,7 @@ public class GameTest {
         assertEquals(GameStatus.WAITING, game.getStatus());
         assertEquals(1, game.getPlayerList().size());
         assertEquals(player, game.getPlayerList().getFirst());
+        assertFalse(game.isLastTurn());
     }
 
     // PLAYERS MANAGEMENT ______________________________________________________________________________________________
@@ -231,7 +231,7 @@ public class GameTest {
     }
 
     @Test
-    void testPickCardEmptyDecks() {
+    void testPickCardEmptyDecks1() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
 
@@ -240,12 +240,46 @@ public class GameTest {
                 .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
                 .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
+        assertFalse(game.isLastTurn());
 
 
         IntStream.range(0, game.goldDeckSize())
                 .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
                 .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
+        assertTrue(game.isLastTurn());
+
+
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE1));
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE2));
+
+
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
+        assertNull(game.pickCard(DrawingPosition.GOLD1));
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.GOLD2));
+    }
+
+    @Test
+    void testPickCardEmptyDecks2() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+
+
+        IntStream.range(0, game.goldDeckSize())
+                .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
+                .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
+        assertNull(game.pickCard(DrawingPosition.GOLDDECK));
+        assertFalse(game.isLastTurn());
+
+
+        IntStream.range(0, game.resourceDeckSize())
+                .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
+                .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
+        assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
+        assertTrue(game.isLastTurn());
 
 
         assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
@@ -289,99 +323,169 @@ public class GameTest {
     }
 
     @Test
-    void placeCard() {
-        Player pl1 = new Player("TEST1");
-        Player pl2 = new Player("TEST2");
-        Player pl3 = new Player("TEST3");
-        Game a = new Game("TEST GAME", 3, 20, pl1);
-        a.addPlayer(pl2);
-        a.addPlayer(pl3);
-        PhysicalCard card1;
+    void testPlaceCard() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        game.setStarterCard(player, whitePlayableCard);
+        game.setSecretObjective(player,
+                new ObjectiveCard(2, new IdenticalResourcesObjective(Resource.ANIMAL, 3)));
+        PlayableCard card = new PlayableCard(Color.RED, 20, corners);
+        game.placeCard(player, card, 41, 41);
 
-        card1 = a.pickCard(DrawingPosition.RESOURCE2);
-        a.placeCard(pl1, card1.getFront(), 1, 1);
-        assertEquals(card1.getFront(), a.getPlayerData(pl1).getCard(1, 1));
-
-        card1 = a.pickCard(DrawingPosition.RESOURCE1);
-        a.placeCard(pl1, card1.getFront(), 10, 10);
-        assertEquals(card1.getFront(), a.getPlayerData(pl1).getCard(10, 10));
-
-        card1 = a.pickCard(DrawingPosition.RESOURCE2);
-        a.placeCard(pl1, card1.getBack(), 1, 1);
-        assertEquals(card1.getBack(), a.getPlayerData(pl1).getCard(1, 1));
-
-        card1 = a.pickCard(DrawingPosition.RESOURCE1);
-        a.placeCard(pl1, card1.getBack(), 10, 10);
-        assertEquals(card1.getBack(), a.getPlayerData(pl1).getCard(10, 10));
+        assertEquals(card, game.getPlayerData(player).getCard(41, 41));
+        assertEquals(PlayingPhase.DRAWING, game.getCurrentPhase());
+        assertTrue(game.isLastTurn());
     }
 
     @Test
-    void addCard() {
-        Player pl1 = new Player("TEST1");
-        Player pl2 = new Player("TEST2");
-        Player pl3 = new Player("TEST3");
-        Game a = new Game("TEST GAME", 3, 20, pl1);
-        a.addPlayer(pl2);
-        a.addPlayer(pl3);
-        PhysicalCard card1 = a.pickCard(DrawingPosition.GOLD2);
-        a.addCard(pl1, card1);
-        List<PhysicalCard> cards = a.getHand(pl1);
+    void testAddCard() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 20, player1);
+        game.addPlayer(player2);
+        game.setStarterCard(player1, whitePlayableCard);
+        game.setSecretObjective(player1,
+                new ObjectiveCard(2, new IdenticalResourcesObjective(Resource.ANIMAL, 3)));
+        game.setStarterCard(player2, whitePlayableCard);
+        game.setSecretObjective(player2,
+                new ObjectiveCard(2, new IdenticalResourcesObjective(Resource.ANIMAL, 3)));
+        PhysicalCard card = game.pickCard(DrawingPosition.RESOURCEDECK);
+        game.addCard(player1, card);
 
-        assertEquals(card1, cards.get(3));
+        assertEquals(4, game.getHand(player1).size());
+        assertEquals(card, game.getHand(player1).getLast());
+        assertEquals(player2, game.getCurrentPlayer());
+
+
+        game.addCard(player2, card);
+
+        assertEquals(4, game.getHand(player2).size());
+        assertEquals(card, game.getHand(player2).getLast());
+        assertEquals(player1, game.getCurrentPlayer());
     }
 
     @Test
-    void removeCard() {
-        Player pl1 = new Player("TEST1");
-        Player pl2 = new Player("TEST2");
-        Player pl3 = new Player("TEST3");
-        Game a = new Game("TEST GAME", 3, 20, pl1);
-        a.addPlayer(pl2);
-        a.addPlayer(pl3);
-        PhysicalCard card1, card2;
-        card1 = a.pickCard(DrawingPosition.GOLD2);
-        card2 = a.pickCard(DrawingPosition.RESOURCE1);
+    void testRemoveCard() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+        PhysicalCard card = game.pickCard(DrawingPosition.RESOURCEDECK);
+        game.addCard(player, card);
+        game.removeCard(player, 0);
 
-        a.addCard(pl1, card1);
-        a.addCard(pl1, card2);
-
-        a.removeCard(pl1, 0);
-        List<PhysicalCard> cards = a.getHand(pl1);
-
-        assertEquals(4, cards.size());
-        assertEquals(card2, cards.get(3));
-
-
-        a.removeCard(pl1, 0);
-        a.removeCard(pl1, 0);
-        a.removeCard(pl1, 0);
-        a.removeCard(pl1, 0);
-
-        assertEquals(new ArrayList<>(), a.getHand(pl1));
-    }
-
-    @Test
-    void getHand() {
-        Player pl1 = new Player("TEST1");
-        Player pl2 = new Player("TEST2");
-        Player pl3 = new Player("TEST3");
-        Game a = new Game("TEST GAME", 3, 20, pl1);
-        a.addPlayer(pl2);
-        a.addPlayer(pl3);
-        PhysicalCard card1, card2;
-        card1 = a.pickCard(DrawingPosition.GOLD2);
-        card2 = a.pickCard(DrawingPosition.RESOURCE1);
-
-        a.addCard(pl1, card1);
-        a.addCard(pl1, card2);
-        List<PhysicalCard> cards = a.getHand(pl1);
-
-        assertEquals(card1, cards.get(3));
-        assertEquals(card2, cards.get(4));
+        assertEquals(3, game.getHand(player).size());
+        assertEquals(card, game.getHand(player).getLast());
     }
 
     // END PHASE _______________________________________________________________________________________________________
     @Test
-    void forceEnd() {
+    void testEndTotalWinner() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 5, player1);
+        game.addPlayer(player2);
+        game.setStarterCard(player1, whitePlayableCard);
+        game.setSecretObjective(player1,
+                new ObjectiveCard(2, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+        game.setStarterCard(player2, whitePlayableCard);
+        game.setSecretObjective(player2,
+                new ObjectiveCard(2, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+
+        game.placeCard(player1, new PlayableCard(Color.RED, 10, corners), 41, 41);
+        game.addCard(player1, game.pickCard(DrawingPosition.RESOURCEDECK));
+        game.placeCard(player2, new PlayableCard(Color.RED, 4, corners), 41, 41);
+        game.addCard(player2, game.pickCard(DrawingPosition.RESOURCEDECK));
+
+        assertEquals(GameStatus.ENDED, game.getStatus());
+        assertEquals(1, game.getWinnerList().size());
+        assertEquals(player1, game.getWinnerList().getFirst());
+    }
+
+    @Test
+    void testEndObjectivesWinner() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 5, player1);
+        game.addPlayer(player2);
+        game.setStarterCard(player1, whitePlayableCard);
+        game.setSecretObjective(player1,
+                new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+        game.setStarterCard(player2, whitePlayableCard);
+        game.setSecretObjective(player2,
+                new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+
+        game.placeCard(player1,
+                new PlayableCard(Color.RED, 10, Arrays.asList(Resource.ANIMAL, Resource.ANIMAL),
+                        corners), 41, 41);
+        game.addCard(player1, game.pickCard(DrawingPosition.RESOURCEDECK));
+        game.placeCard(player2,
+                new PlayableCard(Color.RED, 11, List.of(Resource.ANIMAL),
+                        corners), 41, 41);
+        game.addCard(player2, game.pickCard(DrawingPosition.RESOURCEDECK));
+
+        assertEquals(GameStatus.ENDED, game.getStatus());
+        assertEquals(1, game.getWinnerList().size());
+        assertEquals(player1, game.getWinnerList().getFirst());
+    }
+
+    @Test
+    void testEndDraw() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game = new Game("Partita", 2, 5, player1);
+        game.addPlayer(player2);
+        game.setStarterCard(player1, whitePlayableCard);
+        game.setSecretObjective(player1,
+                new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+        game.setStarterCard(player2, whitePlayableCard);
+        game.setSecretObjective(player2,
+                new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1)));
+
+        game.placeCard(player1,
+                new PlayableCard(Color.RED, 10, Arrays.asList(Resource.ANIMAL, Resource.ANIMAL),
+                        corners), 41, 41);
+        game.addCard(player1, game.pickCard(DrawingPosition.RESOURCEDECK));
+        game.placeCard(player2,
+                new PlayableCard(Color.RED, 10, Arrays.asList(Resource.ANIMAL, Resource.ANIMAL),
+                        corners), 41, 41);
+        game.addCard(player2, game.pickCard(DrawingPosition.RESOURCEDECK));
+
+        assertEquals(GameStatus.ENDED, game.getStatus());
+        assertEquals(2, game.getWinnerList().size());
+        assertEquals(player1, game.getWinnerList().getFirst());
+        assertEquals(player2, game.getWinnerList().get(1));
+    }
+
+    // OTHER METHODS ___________________________________________________________________________________________________
+    @Test
+    void testEqualsFalse() {
+        Player player = new Player("Player");
+        Game game1 = new Game("Partita1", 1, 20, player);
+        Game game2 = new Game("Partita2", 1, 20, player);
+
+        assertFalse(game1.equals(game2));
+        assertNotEquals(game1.hashCode(), game2.hashCode());
+    }
+
+    @Test
+    void testEqualsTrue() {
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Game game1 = new Game("Partita", 1, 20, player1);
+        Game game2 = new Game("Partita", 3, 15, player1);
+        Game game3 = new Game("Partita", 1, 20, player2);
+
+        assertTrue(game1.equals(game2));
+        assertEquals(game1.hashCode(), game2.hashCode());
+        assertTrue(game1.equals(game3));
+        assertEquals(game1.hashCode(), game3.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        Player player = new Player("Player");
+        String gameId = "Partita";
+        Game game = new Game(gameId, 1, 20, player);
+
+        assertEquals(gameId, game.toString());
     }
 }

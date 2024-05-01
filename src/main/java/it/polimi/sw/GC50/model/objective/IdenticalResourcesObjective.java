@@ -28,5 +28,4 @@ public class IdenticalResourcesObjective implements Objective {
 
         return playerData.numOfResource(targetResource) / count;
     }
-
 }
