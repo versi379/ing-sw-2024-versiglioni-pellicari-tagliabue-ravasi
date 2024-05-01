@@ -231,7 +231,7 @@ public class GameTest {
     }
 
     @Test
-    void testPickCardEmptyDecks() {
+    void testPickCardEmptyDecks1() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
 
@@ -247,6 +247,38 @@ public class GameTest {
                 .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
                 .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
+        assertTrue(game.isLastTurn());
+
+
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE1));
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE2));
+
+
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
+        assertNull(game.pickCard(DrawingPosition.GOLD1));
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.GOLD2));
+    }
+
+    @Test
+    void testPickCardEmptyDecks2() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+
+
+        IntStream.range(0, game.goldDeckSize())
+                .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
+                .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
+        assertNull(game.pickCard(DrawingPosition.GOLDDECK));
+        assertFalse(game.isLastTurn());
+
+
+        IntStream.range(0, game.resourceDeckSize())
+                .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
+                .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
+        assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
         assertTrue(game.isLastTurn());
 
 

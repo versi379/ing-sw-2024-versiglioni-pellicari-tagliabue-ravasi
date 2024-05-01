@@ -7,19 +7,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.redPlayableCard;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.whitePlayableCard;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlankBonusTest {
 
     @Test
-    void checkBonus() {
-        BlankBonus bonus = new BlankBonus();
-        PlayerData playerData = new PlayerData(40);
-        Corner[] corners = new Corner[]
-                {CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner};
-        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
-        assertEquals(1,bonus.checkBonus(card,playerData,1,2));
+    void testCheckBonus() {
+        PlayerData playerData = new PlayerData(2);
+        BlankBonus blankBonus = new BlankBonus();
 
+        assertEquals(1, blankBonus.checkBonus(redPlayableCard, playerData, 2, 2));
+    }
+
+    @Test
+    void testEquals() {
+        BlankBonus blankBonus1 = new BlankBonus();
+        Bonus blankBonus2 = new BlankBonus();
+
+        assertTrue(blankBonus1.equals(blankBonus2));
+        assertEquals(blankBonus1.hashCode(), blankBonus2.hashCode());
     }
 }

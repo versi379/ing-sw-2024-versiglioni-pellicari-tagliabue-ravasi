@@ -20,8 +20,4 @@ public class ResourcesBonusTest {
     void checkBonus() {
 
     }
-
-
-
-
 }
