@@ -84,7 +84,7 @@ public class ClientSCK implements Runnable {
 
     public void lobby() {
         messageout = new Message.MessageSCK(Request.CREATE_GAME, "ciao", "ciao", "ciao");
-        //send = true;
+        send = true;
         System.out.println("mando?");
 
     }
@@ -111,8 +111,14 @@ public class ClientSCK implements Runnable {
 
     @Override
     public void run() {
-        inputThread();
-        outputThread();
+        Thread thread1 = new Thread(() -> {
+            inputThread();
+        });
+        thread1.start();
+        Thread thread2 = new Thread(() -> {
+            outputThread();
+        });
+        thread2.start();
     }
 
 

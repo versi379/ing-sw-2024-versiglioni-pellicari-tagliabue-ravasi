@@ -44,7 +44,9 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
 
     }
 
+
     private void inputThread() {
+        System.out.println("server socket listener client");
         while (alive) {
             try {
                 Object object = input.readObject();
@@ -57,6 +59,7 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
     }
 
     private void outputThread() {
+        System.out.println("server out started");
         while (alive) {
             while (send) {
                 try {
@@ -144,8 +147,14 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
 
     @Override
     public void run() {
-       // inputThread();
-       // outputThread();
+        Thread thread1 = new Thread(() -> {
+            inputThread();
+        });
+        thread1.start();
+        Thread thread2 = new Thread(() -> {
+            outputThread();
+        });
+          thread2.start();
     }
 
     //////////////////////////////////////////
