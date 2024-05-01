@@ -103,7 +103,8 @@ public class PlayerDataTest {
         playerData.setStartingChoices(starterCard, secretObjectivesList);
 
 
-        ObjectiveCard secretObjective = new ObjectiveCard(1, new IdenticalResourcesObjective(Resource.ANIMAL, 1));
+        ObjectiveCard secretObjective = new ObjectiveCard(1,
+                new IdenticalResourcesObjective(Resource.ANIMAL, 1));
         playerData.setSecretObjective(secretObjective);
         playerData.checkPreparation();
 
@@ -301,18 +302,6 @@ public class PlayerDataTest {
         playerData.setFinalScore(commonObjectives);
 
         assertEquals(9 + greenPlayableCard.getPoints(), playerData.getTotalScore());
-    }
-
-    @Test
-    void testSetObjectivesScore() {
-        PlayerData playerData = new PlayerData(CaveObjectiveTest.uprightLMatrix());
-        playerData.placeCard(greenPlayableCard, 0, 0);
-        ObjectiveCard objective = new ObjectiveCard(3,
-                new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL));
-        playerData.setSecretObjective(objective);
-        List<ObjectiveCard> commonObjectives = new ArrayList<>(Arrays.asList(objective, objective));
-        playerData.setFinalScore(commonObjectives);
-
         assertEquals(9, playerData.getObjectivesScore());
     }
 }
