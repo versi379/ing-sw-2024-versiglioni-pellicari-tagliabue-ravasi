@@ -7,32 +7,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CoveredCornersBonusTest {
 
     @Test
-    void checkBonus() {
-        CoveredCornersBonus bonus = new CoveredCornersBonus();
-        PlayerData playerData = new PlayerData(40);
-        Corner[] corners = new Corner[]
-                {CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner, CornerTest.emptyCorner};
-        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+    void checkBonusZero() {
+        PlayerData playerData = new PlayerData(2);
         CoveredCornersBonus coveredCornersBonus = new CoveredCornersBonus();
-        assertEquals(0,coveredCornersBonus.checkBonus(card,playerData, 1,2));
+
+        assertEquals(0, coveredCornersBonus.checkBonus(redPlayableCard, playerData, 2, 2));
     }
 
     @Test
-    //da riguardare
     void checkBonusOne() {
-        CoveredCornersBonus bonus = new CoveredCornersBonus();
-        PlayerData playerData = new PlayerData(40);
-        Corner[] corners = new Corner[]
-                {CornerTest.animalCorner, CornerTest.animalCorner, CornerTest.emptyCorner, CornerTest.emptyCorner};
-        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
-        PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
+        PlayerData playerData = new PlayerData(2);
+        playerData.placeCard(whitePlayableCard, 2, 2);
         CoveredCornersBonus coveredCornersBonus = new CoveredCornersBonus();
-        assertEquals(1,coveredCornersBonus.checkBonus(card,playerData, 1,2));
+
+        assertEquals(1, coveredCornersBonus.checkBonus(redPlayableCard, playerData, 3, 3));
     }
 }

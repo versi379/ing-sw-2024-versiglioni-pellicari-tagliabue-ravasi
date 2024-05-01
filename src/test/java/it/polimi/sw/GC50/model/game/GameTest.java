@@ -231,7 +231,7 @@ public class GameTest {
     }
 
     @Test
-    void testPickCardEmptyResourceDeck() {
+    void testPickCardEmptyDecks() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
 
@@ -242,18 +242,36 @@ public class GameTest {
         assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
 
 
-        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
-        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
-
-
         IntStream.range(0, game.goldDeckSize())
                 .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
                 .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
 
 
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE1));
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.RESOURCE2));
+
+
         assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
         assertNull(game.pickCard(DrawingPosition.GOLD1));
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
+        assertNull(game.pickCard(DrawingPosition.GOLD2));
+    }
+
+    @Test
+    void testPickCardEmptyResourceDeck() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+
+        while (game.resourceDeckSize() > 0) {
+            assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        }
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
     }
 
     @Test
@@ -261,86 +279,13 @@ public class GameTest {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
 
-
-        IntStream.range(0, game.goldDeckSize())
-                .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
-                .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
-        assertNull(game.pickCard(DrawingPosition.GOLDDECK));
-
-
+        while (game.goldDeckSize() > 0) {
+            assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
+        }
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
         assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.GOLD1).getCardType());
         assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.GOLD2).getCardType());
-
-
-        IntStream.range(0, game.resourceDeckSize())
-                .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
-                .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
-        assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
-
-
-        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
-        assertNull(game.pickCard(DrawingPosition.RESOURCE2));
-    }
-
-    @Test
-    void testPickCard() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        PhysicalCard card1c;
-
-        for (
-                int i = 0;
-                i < 36; i++) {
-            card1c = game.pickCard(DrawingPosition.GOLD1);
-            assertEquals(CardType.GOLD, card1c.getCardType());
-        }
-
-        card1c = game.pickCard(DrawingPosition.GOLD2);
-
-        assertEquals(CardType.GOLD, card1c.getCardType());
-
-        card1c = game.pickCard(DrawingPosition.GOLD2);
-
-        assertEquals(CardType.RESOURCE, card1c.getCardType());
-
-        card1c = game.pickCard(DrawingPosition.GOLD1);
-
-        assertEquals(CardType.RESOURCE, card1c.getCardType());
-
-        for (
-                int i = 0;
-                i < 29; i++) {
-            card1c = game.pickCard(DrawingPosition.RESOURCE1);
-            assertEquals(CardType.RESOURCE, card1c.getCardType());
-        }
-
-        card1c = game.pickCard(DrawingPosition.RESOURCE1);
-
-        assertEquals(null, card1c);
-
-        card1c = game.pickCard(DrawingPosition.RESOURCE2);
-
-        assertEquals(CardType.RESOURCE, card1c.getCardType());
-
-        card1c = game.pickCard(DrawingPosition.RESOURCE2);
-
-        assertEquals(null, card1c);
-
-        card1c = game.pickCard(DrawingPosition.GOLD2);
-
-        assertEquals(CardType.RESOURCE, card1c.getCardType());
-
-        card1c = game.pickCard(DrawingPosition.GOLD1);
-
-        assertEquals(CardType.RESOURCE, card1c.getCardType());
-
-        card1c = game.pickCard(DrawingPosition.GOLD1);
-
-        assertEquals(null, card1c);
-
-        card1c = game.pickCard(DrawingPosition.GOLD2);
-
-        assertEquals(null, card1c);
     }
 
     @Test
