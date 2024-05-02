@@ -25,9 +25,12 @@ public class ClientSCK implements Runnable {
     private int codeMatch;
     private int id;
     private String nickName;
+    ///////////////////////////////////////////
+    private boolean notify;
     private boolean alive;
     private boolean send;
     private Message.MessageSCK messageout;
+    private int test=0;
 
 
     public ClientSCK(int port, String address) throws IOException {
@@ -40,19 +43,22 @@ public class ClientSCK implements Runnable {
         view = null;
         this.alive = true;
         this.send = false;
-
+        this.notify = false;
 
     }
 
     private void inputThread() {
         while (alive) {
-
             try {
                 Object object = input.readObject();
-                Message.MessageSCK message = (Message.MessageSCK) object;
-                switchmex(message);
+                Message message = (Message) object;
+                Thread thread = new Thread(() -> {
+                    switchmex(message);
+                });
+                thread.start();
+
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("error");
+
             }
         }
     }
@@ -60,7 +66,12 @@ public class ClientSCK implements Runnable {
 
     private void outputThread() {
         while (alive) {
-            while (send) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+
+            }
+            if (send) {
                 System.out.println("send");
                 try {
                     output.writeObject(messageout);
@@ -74,7 +85,38 @@ public class ClientSCK implements Runnable {
         }
     }
 
-    private void switchmex(Message.MessageSCK message) {
+    private synchronized void setMessageout(Message.MessageSCK messageout) {
+        while (send) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+
+            }
+        }
+        this.messageout = messageout;
+        send = true;
+    }
+
+    private synchronized void switchmex(Message mex) {
+        switch (mex.getRequest()) {
+            case SET_NAME_RESPONSE: {
+                notify = false;
+                System.out.println(test);
+                test++;
+                System.out.println("Recived responce from the server");
+                boolean response = (boolean) mex.getObject();
+                if (!response) {
+                    nickName = null;
+                } else {
+                    System.out.println("name set");
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
     }
 
     public void setView(View view, TypeOfView typeOfView) {
@@ -83,10 +125,35 @@ public class ClientSCK implements Runnable {
     }
 
     public void lobby() {
-        messageout = new Message.MessageSCK(Request.CREATE_GAME, "ciao", "ciao", "ciao");
-        send = true;
-        System.out.println("mando?");
+        //messageout = new Message.MessageSCK(Request.CREATE_GAME, "ciao", "ciao", "ciao");
+        //send = true;
+        for (int i = 0; i < 100; i++) {
+            setName("luca");
+        }
 
+    }
+    private void waitNoifyfromServer() {
+        {
+            notify=true;
+            while (notify) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+
+                }
+            }
+
+        }
+    }
+
+
+    private synchronized void setSend(boolean send) {
+        this.send = send;
+    }
+
+    public void setName(String name) {
+        setMessageout(new Message.MessageSCK(Request.SET_NAME, null, null, name));
+        waitNoifyfromServer();
     }
 
     public void myTurn() {

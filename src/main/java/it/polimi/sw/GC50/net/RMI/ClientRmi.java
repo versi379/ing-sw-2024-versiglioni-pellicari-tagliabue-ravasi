@@ -12,14 +12,13 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, Observer {
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface{
     private ServerRmi serverRmi;
     private String servername;
     private String nickName;
     private TypeOfView typeOfView;
     private View view;
-    private int id;
-    private int codeMatch;
+    private String gameName;
 
 
     public ClientRmi(String name) throws RemoteException {
@@ -31,7 +30,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public void connection() throws RemoteException {
         try {
             this.serverRmi = (ServerRmi) Naming.lookup(servername);
-            this.id = this.serverRmi.addClient(this);
+            this.serverRmi.addClient(this);
             System.out.println("Connected to server");
 
         } catch (Exception e) {
@@ -43,7 +42,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public void lobby() {
         try {
             //setNickName();
-             serverRmi.createGame(2, "test1", this, view);
+             serverRmi.createGame(2, "test1", this, "luca");
 
             for (String freeMatch : serverRmi.getFreeMatch()) {
                 System.out.println(freeMatch);
@@ -81,7 +80,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         } while (gameName == null);
         int numOfPlayer = view.askNumberOfPlayer();
         try {
-            serverRmi.createGame(numOfPlayer, gameName, this, null);
+            serverRmi.createGame(numOfPlayer, gameName, this,nickName);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

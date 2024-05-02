@@ -8,20 +8,22 @@ import it.polimi.sw.GC50.view.View;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
-
+    private Map<ClientInterface, String> freePlayer;
     private ArrayList<ClientInterface> freeClient;
     private ArrayList<Match> matches;
     private ArrayList<String> nicknames;
-    private int generatorId;
-    private int test;
+
 
     public Server() {
         this.matches = new ArrayList<>();
+        this.freePlayer = new HashMap<>();
         this.freeClient = new ArrayList<>();
         this.nicknames = new ArrayList<>();
-        this.generatorId = 1;
+
         System.out.println("Server Ready!");
     }
 
@@ -29,32 +31,53 @@ public class Server {
     ///LOBBY
     ///////////////////////////////////////////////////////////
 
-    public int connect(ClientInterface client) {
+    public synchronized void connect(ClientInterface client) {
         freeClient.add(client);
+        freePlayer.put(client, null);
         System.out.println("Client connected to Server");
-        return this.generatorId;
+
     }
 
-    public Match createMatch(ClientInterface client, int numOfPlayer, String gameName, View view) {
+    public synchronized Match createMatch(ClientInterface client, int numOfPlayer, String gameName, String nickname) {
+        if (checkUser(client, nickname)){
+            matches.add(new Match(matches.size(), client, numOfPlayer, gameName, nickname));
+            System.out.println(gameName + " Match created");
+            freePlayer.remove(client);
+            return matches.get(matches.size() - 1);
 
-        matches.add(new Match(matches.size(), client, numOfPlayer, gameName));
-        System.out.println(gameName + " Match created");
-        return matches.get(matches.size()-1);
+        }else{
+            return null;
+        }
+
     }
 
-    public Match enterMatch(String code, ClientInterface player, String nickname) {
-        for (int i = 0; i < matches.size(); i++) {
-            if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
-                matches.get(i).addPlayer(player, nickname);
-                return matches.get(i);
+    private synchronized boolean checkUser(ClientInterface client, String nickname) {
+        if (freePlayer.containsKey(client)) {
+            if (freePlayer.get(client) == null) {
+                return false;
+            }
+            if (freePlayer.get(client) == nickname) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public synchronized Match enterMatch(String code, ClientInterface player, String nickname) {
+        if(checkUser(player,nickname)){
+            for (int i = 0; i < matches.size(); i++) {
+                if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
+                    matches.get(i).addPlayer(player, nickname);
+                    freePlayer.remove(player);
+                    return matches.get(i);
+                }
             }
         }
         return null;
     }
 
-
-    public ArrayList<String> getFreeMatchesNames() {
-        if(matches.isEmpty()){
+    public synchronized ArrayList<String> getFreeMatchesNames() {
+        if (matches.isEmpty()) {
             return null;
         }
         ArrayList<String> freeMatch = new ArrayList<>();
@@ -66,7 +89,17 @@ public class Server {
         return freeMatch;
     }
 
-    public boolean addName(String name) {
+    public synchronized boolean addName(String name) {
+        if (name == null) {
+            return false;
+        }
+        if (name.equals("")) {
+            return false;
+        }
+        if (nicknames.isEmpty()) {
+            nicknames.add(name);
+            return true;
+        }
 
         for (int i = 0; i < nicknames.size(); i++)
             if (name.equals(nicknames.get(i))) {
@@ -75,5 +108,4 @@ public class Server {
         nicknames.add(name);
         return true;
     }
-
 }

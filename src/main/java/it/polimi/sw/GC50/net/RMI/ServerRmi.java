@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface ServerRmi extends Remote {
     void start(ServerRmi serverRmi) throws RemoteException;
 
-    int addClient(ClientInterface client) throws RemoteException;
+    void addClient(ClientInterface client) throws RemoteException;
 
     //////////////////////////////////////////
     //LOBBY
@@ -20,7 +20,7 @@ public interface ServerRmi extends Remote {
 
     ArrayList<String> getFreeMatch() throws RemoteException;
 
-    void createGame(int numOfPl, String gameName, ClientInterface clientInterface, View view) throws RemoteException;
+    void createGame(int numOfPl, String gameName, ClientInterface clientInterface,String nickname) throws RemoteException;
 
     void enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException;
 

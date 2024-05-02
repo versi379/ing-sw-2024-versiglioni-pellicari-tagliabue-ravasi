@@ -37,10 +37,10 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public int addClient(ClientInterface client) {
-        System.out.println("client connected");
-        int id = server.connect(client);
-        return id;
+    public void addClient(ClientInterface client) {
+         System.out.println("client connected");
+         server.connect(client);
+
     }
     //////////////////////////////////////////
     //LOBBY
@@ -57,8 +57,8 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public void createGame(int numOfPl, String gameName, ClientInterface clientInterface, View view) throws RemoteException {
-        this.match = server.createMatch(clientInterface, numOfPl, gameName, view);
+    public void createGame(int numOfPl, String gameName, ClientInterface clientInterface,String nickName) throws RemoteException {
+        this.match = server.createMatch(clientInterface, numOfPl, gameName,nickName);
 
     }
 

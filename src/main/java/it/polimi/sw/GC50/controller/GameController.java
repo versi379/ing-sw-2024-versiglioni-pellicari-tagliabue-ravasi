@@ -5,9 +5,11 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Match;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -140,6 +142,11 @@ public class GameController implements ViewObserver {
         return game;
     }
 
-    public void addObserver(Match match) {
+    public void addObserver(ClientInterface clientInterface) {
+        game.addObserver(clientInterface);
+    }
+
+    public void startGame(Map<ClientInterface, String> playerMap){
+
     }
 }

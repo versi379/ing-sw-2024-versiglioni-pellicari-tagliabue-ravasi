@@ -13,20 +13,31 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class ClientHandler implements Runnable, ClientInterface , Observer {
+public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
     private final ServerSCK serverSCK;
+    //////////////////////////////////////////
     private final ObjectOutputStream output;
     private final ObjectInputStream input;
+    //////////////////////////////////////////
     private boolean alive;
     private boolean send;
-    private Message.MessageSCK messageout;
+    private Message messageout;
+    //////////////////////////////////////////
+    private final Semaphore semaphore;
+    private final Semaphore semaphore2;
+    //////////////////////////////////////////
     private final Server server;
     private Match match;
     private String nickName;
+    //////////////////////////////////////////
     private Object lock;
     private Object lock2;
+    //////////////////////////////////////////
+    private int test=0;
 
 
     public ClientHandler(Socket socketClient, ServerSCK serverSCK, Server server) {
@@ -34,6 +45,9 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
         this.serverSCK = serverSCK;
         this.alive = true;
         this.send = false;
+        this.lock = new ReentrantLock();
+        semaphore = new Semaphore(1);
+        semaphore2 = new Semaphore(1);
         this.server = server;
         try {
             this.output = new ObjectOutputStream(socketClient.getOutputStream());
@@ -44,6 +58,14 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
 
     }
 
+    public void acuireSemaphore(Semaphore semaphore) {
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            System.out.println("error");
+        }
+    }
+
 
     private void inputThread() {
         System.out.println("server socket listener client");
@@ -51,7 +73,11 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
             try {
                 Object object = input.readObject();
                 Message.MessageSCK message = (Message.MessageSCK) object;
-                switchmex(message);
+                Thread thread = new Thread(() -> {
+                    switchmex(message);
+                });
+               thread.start();
+
             } catch (IOException | ClassNotFoundException e) {
 
             }
@@ -59,28 +85,41 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
     }
 
     private void outputThread() {
-        System.out.println("server out started");
-        while (alive) {
-            while (send) {
+        System.out.println("server socket out ");
+        while (this.alive) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+
+            }
+            if (send) {
+                System.out.println("send");
                 try {
-                    output.writeObject(messageout);
-                    output.flush();
-                    output.reset();
-                    send = false;
+                    if (messageout != null) {
+                        output.writeObject(messageout);
+                        output.flush();
+                        output.reset();
+                    }
+
                 } catch (IOException e) {
-                    send = false;
+                    System.out.println("error");
+
                 }
+                messageout = null;
+                send = false;
             }
         }
     }
 
-    private void switchmex(Message.MessageSCK message) {
+    private synchronized void switchmex(Message.MessageSCK message) {
         System.out.println(message.getRequest());
+        System.out.println(test);
+        test++;
         switch (message.getRequest()) {
-
             case JOINGAME:
                 break;
             case CREATEGAME:
+                this.server.createMatch(this, (int)message.getObject(),message.getMatchName(),message.getNickName());
                 break;
             case QUITGAME:
                 break;
@@ -130,17 +169,39 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
                 //getFreeMatch();
                 break;
             case Request.SET_NAME:
-                //setName(message.getNickName());
+                boolean resp = server.addName(message.getNickName());
+                messageout = new Message(Request.SET_NAME_RESPONSE, resp);
+                setSend(true);
+
+
                 break;
             case null:
                 //test();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + message.getRequest());
         }
     }
 
+    private synchronized void setSend(boolean send) {
+        this.send = send;
+    }
+
+    private synchronized void setMessageout(Message messageout) {
+        while(send){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+
+            }
+        }
+        this.messageout = messageout;
+        send=true;
+    }
 
     @Override
     public void ping() throws RemoteException {
+
 
     }
 
@@ -154,7 +215,7 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
         Thread thread2 = new Thread(() -> {
             outputThread();
         });
-          thread2.start();
+        thread2.start();
     }
 
     //////////////////////////////////////////
@@ -162,6 +223,7 @@ public class ClientHandler implements Runnable, ClientInterface , Observer {
     ///////////////////////////////////////////
     @Override
     public void update(Observable o, Object arg) {
+
 
     }
 
