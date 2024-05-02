@@ -59,7 +59,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         String name2;
         do {
             name2 = view.askName();
-        } while (!serverRmi.setName(name2));
+        } while (!serverRmi.setName(this,name2));
 
         nickName = name2;
     }

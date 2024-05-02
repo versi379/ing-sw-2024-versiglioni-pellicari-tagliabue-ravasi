@@ -18,45 +18,14 @@ public class UpdateController {
 
     }
 
-     public Request update(GameController gameController, String nickName, ClientInterface clientInterface, Request request, Object object) {
-        switch (request) {
-
-            case Request.DRAWCARDGOLD0: {
-
-            }
-            case Request.DRAWCARDGOLD1: {
-
-            }
-            case Request.DRAWCARDGOLD2: {
-
-            }
-            case Request.DRAWRESOURCE0: {
-
-            }
-            case Request.DRAWRESOURCE1: {
-
-            }
-            case Request.DRAWRESOURCE2: {
-
-            }
-            case Request.SELECTOBJECTIVE: {
-
-            }
-            case Request.PLACECARD: {
-
-            }
-            case Request.MEXCHAT: {
-
-            }
-            case Request.STARTERFACE:{
-
-            }
-        }
-
+    public Request update(GameController gameController, String nickName, ClientInterface clientInterface, Request request, Object object) {
         return null;
     }
     public Object getModel(GameController controller){
 
         return null;
+    }
+
+    public void updateChat(GameController controller, String nickName, ClientInterface clientInterface, Request request, Object object) {
     }
 }

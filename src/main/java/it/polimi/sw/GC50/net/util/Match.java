@@ -61,8 +61,6 @@ public class Match {
 
     }
 
-
-
     public String getName() {
         return gameName;
     }
@@ -72,12 +70,15 @@ public class Match {
     ///////////////////////////////////////////
 
 
-    public Request update(String nickName, ClientInterface clientInterface, Request request, Object object) {
+    public synchronized Request update(String nickName, ClientInterface clientInterface, Request request, Object object) {
         Request rq = updateController.update(controller, nickName, clientInterface, request, object);
         return rq;
     }
+    public synchronized void updateChat(String nickName, ClientInterface clientInterface, Request request, Object object) {
+        updateController.updateChat(controller, nickName, clientInterface, request, object);
+    }
 
-    public Object getModel(ClientInterface clientInterface, Request request, Object object) {
+    public synchronized Object getModel(ClientInterface clientInterface, Request request, Object object) {
         return updateController.getModel(controller);
     }
 

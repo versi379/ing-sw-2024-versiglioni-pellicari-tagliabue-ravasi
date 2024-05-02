@@ -1,18 +1,14 @@
 package it.polimi.sw.GC50.net.socket;
 
+
 import it.polimi.sw.GC50.net.observ.Observable;
-import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.*;
-import it.polimi.sw.GC50.view.View;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -34,10 +30,8 @@ public class ClientHandler implements Runnable, ClientInterface {
     private Match match;
     private String nickName;
     //////////////////////////////////////////
-    private Object lock;
-    private Object lock2;
+
     //////////////////////////////////////////
-    private int test=0;
 
 
     public ClientHandler(Socket socketClient, ServerSCK serverSCK, Server server) {
@@ -45,7 +39,6 @@ public class ClientHandler implements Runnable, ClientInterface {
         this.serverSCK = serverSCK;
         this.alive = true;
         this.send = false;
-        this.lock = new ReentrantLock();
         semaphore = new Semaphore(1);
         semaphore2 = new Semaphore(1);
         this.server = server;
@@ -72,11 +65,11 @@ public class ClientHandler implements Runnable, ClientInterface {
         while (alive) {
             try {
                 Object object = input.readObject();
-                Message.MessageSCK message = (Message.MessageSCK) object;
+                Message.MessageClientToServer message = (Message.MessageClientToServer) object;
                 Thread thread = new Thread(() -> {
                     switchmex(message);
                 });
-               thread.start();
+                thread.start();
 
             } catch (IOException | ClassNotFoundException e) {
 
@@ -111,15 +104,11 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
-    private synchronized void switchmex(Message.MessageSCK message) {
+    private synchronized void switchmex(Message.MessageClientToServer message) {
         System.out.println(message.getRequest());
-        System.out.println(test);
-        test++;
+
         switch (message.getRequest()) {
             case JOINGAME:
-                break;
-            case CREATEGAME:
-                this.server.createMatch(this, (int)message.getObject(),message.getMatchName(),message.getNickName());
                 break;
             case QUITGAME:
                 break;
@@ -157,22 +146,30 @@ public class ClientHandler implements Runnable, ClientInterface {
                 break;
             case GETTURN:
                 break;
-            case GAMENOTFOUND:
-                break;
             case Request.CREATE_GAME:
-                //this.match = server.createMatch(this, message.getNumOfPl(), message.getGameName(), new View());
+                System.out.println(message.getMatchName());
+                System.out.println(message.getNickName());
+                this.match = server.createMatch(this, (int) message.getObject(), message.getMatchName(), message.getNickName());
+                if (match != null) {
+                    setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
+                } else {
+                    setMessageout(new Message(Request.CREATE_GAME_RESPONSE, false));
+                }
                 break;
             case Request.ENTER_GAME:
-                //enterGame(message.getGameName(), this, message.getNickName());
+                this.match = server.enterMatch(message.getMatchName(), this, message.getNickName());
+                if (match != null) {
+                    setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
+                } else {
+                    setMessageout(new Message(Request.ENTER_GAME_RESPONSE, false));
+                }
                 break;
             case Request.GET_FREE_MATCH:
-                //getFreeMatch();
+                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, server.getFreeMatchesNames()));
                 break;
             case Request.SET_NAME:
-                boolean resp = server.addName(message.getNickName());
-                messageout = new Message(Request.SET_NAME_RESPONSE, resp);
-                setSend(true);
-
+                boolean resp = server.addName(this, message.getNickName());
+                setMessageout(new Message(Request.SET_NAME_RESPONSE, resp));
 
                 break;
             case null:
@@ -183,12 +180,9 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
-    private synchronized void setSend(boolean send) {
-        this.send = send;
-    }
 
     private synchronized void setMessageout(Message messageout) {
-        while(send){
+        while (send) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -196,7 +190,8 @@ public class ClientHandler implements Runnable, ClientInterface {
             }
         }
         this.messageout = messageout;
-        send=true;
+        send = true;
+
     }
 
     @Override

@@ -24,7 +24,7 @@ public interface ServerRmi extends Remote {
 
     void enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException;
 
-    boolean setName(String name) throws RemoteException;
+    boolean setName(ClientInterface clientInterface,String name) throws RemoteException;
 
     //////////////////////////////////////////
     //ACTIVE GAME

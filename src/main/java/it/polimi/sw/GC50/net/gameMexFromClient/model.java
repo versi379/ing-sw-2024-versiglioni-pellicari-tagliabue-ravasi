@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.serMex;
+package it.polimi.sw.GC50.net.gameMexFromClient;
 
 import java.io.Serializable;
 

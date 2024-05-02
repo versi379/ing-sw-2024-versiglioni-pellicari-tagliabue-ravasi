@@ -47,8 +47,8 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     ///////////////////////////////////////////
 
     @Override
-    public boolean setName(String name) {
-        return server.addName(name);
+    public boolean setName(ClientInterface clientInterface,String name) {
+        return server.addName(clientInterface,name);
     }
 
     @Override

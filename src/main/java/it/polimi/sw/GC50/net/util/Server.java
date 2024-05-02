@@ -31,6 +31,11 @@ public class Server {
     ///LOBBY
     ///////////////////////////////////////////////////////////
 
+    /**
+     * @param client this method is called when a client connects to the server
+     */
+
+
     public synchronized void connect(ClientInterface client) {
         freeClient.add(client);
         freePlayer.put(client, null);
@@ -38,14 +43,26 @@ public class Server {
 
     }
 
+    /**
+     * @param client
+     * @param numOfPlayer
+     * @param gameName
+     * @param nickname
+     * @return Match
+     * the return value is the match created by the client
+     * if is it null the Match is not created
+     * this method is called when a client wants to create a match
+     * @
+     */
+
     public synchronized Match createMatch(ClientInterface client, int numOfPlayer, String gameName, String nickname) {
-        if (checkUser(client, nickname)){
+        if (checkUser(client, nickname)) {
             matches.add(new Match(matches.size(), client, numOfPlayer, gameName, nickname));
             System.out.println(gameName + " Match created");
             freePlayer.remove(client);
             return matches.get(matches.size() - 1);
 
-        }else{
+        } else {
             return null;
         }
 
@@ -56,7 +73,7 @@ public class Server {
             if (freePlayer.get(client) == null) {
                 return false;
             }
-            if (freePlayer.get(client) == nickname) {
+            if (freePlayer.get(client).equals(nickname)) {
                 return true;
             }
         }
@@ -64,7 +81,7 @@ public class Server {
     }
 
     public synchronized Match enterMatch(String code, ClientInterface player, String nickname) {
-        if(checkUser(player,nickname)){
+        if (checkUser(player, nickname)) {
             for (int i = 0; i < matches.size(); i++) {
                 if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
                     matches.get(i).addPlayer(player, nickname);
@@ -89,7 +106,7 @@ public class Server {
         return freeMatch;
     }
 
-    public synchronized boolean addName(String name) {
+    public synchronized boolean addName(ClientInterface clientInterface, String name) {
         if (name == null) {
             return false;
         }
@@ -98,6 +115,7 @@ public class Server {
         }
         if (nicknames.isEmpty()) {
             nicknames.add(name);
+            freePlayer.put(clientInterface, name);
             return true;
         }
 
@@ -106,6 +124,7 @@ public class Server {
                 return false;
             }
         nicknames.add(name);
+        freePlayer.put(clientInterface, name);
         return true;
     }
 }

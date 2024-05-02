@@ -27,10 +27,10 @@ public class Message implements Serializable {
     }
 
 
-    public static class MessageSCK extends Message {
+    public static class MessageClientToServer extends Message {
         private final String matchName, nickName;
 
-        public MessageSCK(Request request, Object ob, String matchName, String nickName) {
+        public MessageClientToServer(Request request, Object ob, String matchName, String nickName) {
             super(request, ob);
             this.matchName = matchName;
             this.nickName = nickName;
