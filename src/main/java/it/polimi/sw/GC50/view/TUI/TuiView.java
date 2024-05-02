@@ -15,7 +15,7 @@ public class TuiView implements View {
 
     @Override
     public String askName() {
-        String name=null;
+        String name = null;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert ur nickName");
         try {
@@ -29,7 +29,7 @@ public class TuiView implements View {
 
     @Override
     public String askGameName() {
-        String name=null;
+        String name = null;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert the game name");
         try {
@@ -51,11 +51,11 @@ public class TuiView implements View {
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
+                System.out.println("Invalid input. Please enter min2 or max4.");
                 read = 0;
                 scanner.nextLine();
             }
-        } while (read < 1 && read >4);
+        } while (read <= 2 && read >= 4);
         return read;
     }
 
@@ -63,4 +63,25 @@ public class TuiView implements View {
     public void waitPlayer() {
 
     }
+
+    @Override
+    public int joinorcreate() {
+        Scanner scanner = new Scanner(System.in);
+        int read;
+        do {
+
+            System.out.println("Do you want to join or create a game?");
+            System.out.println("1) to join a game");
+            System.out.println("2) to create a game");
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                read = 0;
+                scanner.nextLine();
+            }
+        } while (read < 1 && read >= 2);
+        return read;
+    }
+
 }

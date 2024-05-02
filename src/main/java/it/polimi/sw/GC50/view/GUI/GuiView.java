@@ -25,4 +25,9 @@ public class GuiView implements View {
     public void waitPlayer() {
 
     }
+
+    @Override
+    public int joinorcreate() {
+        return 0;
+    }
 }

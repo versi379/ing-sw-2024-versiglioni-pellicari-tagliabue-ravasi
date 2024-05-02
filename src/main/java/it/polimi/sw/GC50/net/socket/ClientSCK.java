@@ -72,7 +72,6 @@ public class ClientSCK implements Runnable {
 
             }
             if (send) {
-                System.out.println("send");
                 try {
                     output.writeObject(messageout);
                     output.flush();
@@ -101,8 +100,6 @@ public class ClientSCK implements Runnable {
         switch (mex.getRequest()) {
             case SET_NAME_RESPONSE: {
 
-
-                System.out.println("Recived responce from the server");
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
                     System.out.println("cannot use this name");
@@ -115,8 +112,6 @@ public class ClientSCK implements Runnable {
             }
             case CREATE_GAME_RESPONSE: {
 
-
-                System.out.println("Recived responce from the server");
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
                     System.out.println("cannot create the game");
@@ -130,8 +125,6 @@ public class ClientSCK implements Runnable {
             }
             case ENTER_GAME_RESPONSE: {
 
-
-                System.out.println("Recived responce from the server");
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
                     System.out.println("cannot enter the game");
@@ -144,8 +137,6 @@ public class ClientSCK implements Runnable {
             }
             case GET_FREE_MATCH_RESPONSE: {
 
-
-                System.out.println("Recived responce from the server");
                 freeMatch = (ArrayList<String>) mex.getObject();
                 System.out.println(mex.getObject());
                 notify = false;
@@ -164,7 +155,7 @@ public class ClientSCK implements Runnable {
     }
 
     public void lobby() {
-        setName("luca123");
+       /* setName("luca123");
         createGame(2, "test223");
         setName("luca232");
         createGame(2, "test22s3");
@@ -172,9 +163,34 @@ public class ClientSCK implements Runnable {
         createGame(2, "test32s3");
         setName("luca432");
         enterGame("test32s3");
-        getFreeMatch();
+        getFreeMatch();*/
+
+        if (TypeOfView.TUI.equals(typeOfView)) {
+            if (nickName == null) {
+                setName(view.askName());
+            }
+            if (matchName == null) {
+
+                int opzione = view.joinorcreate();
+                if (opzione == 2) {
+                    createGame(view.askGameName(), view.askNumberOfPlayer());
+                } else if (opzione == 1) {
+                    getFreeMatch();
+                    if (freeMatch.size() >= 1) {
+                        String gameName = view.askGameName();
+                        enterGame(gameName);
+                    } else {
+                        System.out.println("no free match");
+                        System.out.println("Create a new game");
+                        createGame(view.askGameName(), view.askNumberOfPlayer());
+                    }
+                }
+            }
+
+        }
 
     }
+
 
     private void waitNoifyfromServer() {
         {
@@ -195,15 +211,13 @@ public class ClientSCK implements Runnable {
         this.send = send;
     }
 
-    public void createGame(int numberOfPlayer, String matchName) {
+    public void createGame(String matchName, int numberOfPlayer) {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
         waitNoifyfromServer();
         if (this.matchName != null) {
-            System.out.println("game created");
             view.waitPlayer();
         } else {
-            System.out.println("game not created");
             lobby();
         }
 
@@ -213,12 +227,18 @@ public class ClientSCK implements Runnable {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.ENTER_GAME, null, matchName, nickName));
         waitNoifyfromServer();
+        if (this.matchName != null) {
+            view.waitPlayer();
+        } else {
+            lobby();
+        }
     }
 
     public void setName(String name) {
         this.nickName = name;
         setMessageout(new Message.MessageClientToServer(Request.SET_NAME, null, null, name));
         waitNoifyfromServer();
+        lobby();
     }
 
     public void getFreeMatch() {

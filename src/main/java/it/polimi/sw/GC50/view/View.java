@@ -10,4 +10,5 @@ public interface View extends Serializable {
     String askGameName();
     int askNumberOfPlayer();
     void waitPlayer();
+    int joinorcreate();
 }
