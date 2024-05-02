@@ -20,4 +20,9 @@ public class GuiView implements View {
     public int askNumberOfPlayer() {
         return 0;
     }
+
+    @Override
+    public void waitPlayer() {
+
+    }
 }

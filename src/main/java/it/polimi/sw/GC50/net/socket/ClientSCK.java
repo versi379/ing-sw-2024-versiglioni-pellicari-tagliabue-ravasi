@@ -31,7 +31,6 @@ public class ClientSCK implements Runnable {
     private Message.MessageClientToServer messageout;
 
 
-
     public ClientSCK(int port, String address) throws IOException {
         this.port = port;
         this.address = address;
@@ -165,13 +164,13 @@ public class ClientSCK implements Runnable {
     }
 
     public void lobby() {
-        setName("luca12");
+        setName("luca123");
         createGame(2, "test223");
-        setName("luca22");
+        setName("luca232");
         createGame(2, "test22s3");
-        setName("luca32");
-        createGame(2, "test3s23");
-        setName("luca42");
+        setName("luca332");
+        createGame(2, "test32s3");
+        setName("luca432");
         enterGame("test32s3");
         getFreeMatch();
 
@@ -197,13 +196,21 @@ public class ClientSCK implements Runnable {
     }
 
     public void createGame(int numberOfPlayer, String matchName) {
-        this.matchName=matchName;
+        this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
         waitNoifyfromServer();
+        if (this.matchName != null) {
+            System.out.println("game created");
+            view.waitPlayer();
+        } else {
+            System.out.println("game not created");
+            lobby();
+        }
+
     }
 
     private void enterGame(String matchName) {
-        this.matchName=matchName;
+        this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.ENTER_GAME, null, matchName, nickName));
         waitNoifyfromServer();
     }

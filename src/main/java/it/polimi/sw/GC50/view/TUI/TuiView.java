@@ -58,4 +58,9 @@ public class TuiView implements View {
         } while (read < 1 && read >4);
         return read;
     }
+
+    @Override
+    public void waitPlayer() {
+
+    }
 }
