@@ -7,6 +7,7 @@ import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Match;
+import it.polimi.sw.GC50.net.util.Request;
 
 import java.util.List;
 import java.util.Map;
@@ -25,11 +26,13 @@ public class GameController implements ViewObserver {
         game = new Game("test", 2, 2, new Player("s"));
     }
 
+
     public void addPlayer(Player player) {
         if (isWaiting()) {
             game.addPlayer(player);
         } else {
             sendError(player, "Partita già iniziata");
+
         }
     }
 
@@ -47,6 +50,7 @@ public class GameController implements ViewObserver {
             game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
         } else {
             sendError(player, "Operazione non disponibile");
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
         }
     }
 
@@ -61,9 +65,11 @@ public class GameController implements ViewObserver {
                 game.setSecretObjective(player, secretObjectivesList.get(index));
             } else {
                 sendError(player, "Indice non valido");
+                game.error(Request.NOTIFY_INVALID_INDEX);
             }
         } else {
             sendError(player, "Operazione non disponibile");
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
         }
     }
 
@@ -84,12 +90,15 @@ public class GameController implements ViewObserver {
                     game.removeCard(player, index);
                 } else {
                     sendError(player, "Carta non piazzabile");
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE);
                 }
             } else {
                 sendError(player, "Indice non valido");
+                game.error(Request.NOTIFY_CARD_NOT_FOUND);
             }
         } else {
             sendError(player, "Operazione non disponibile");
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
         }
     }
 
@@ -104,9 +113,11 @@ public class GameController implements ViewObserver {
                 game.addCard(player, card);
             } else {
                 sendError(player, "Posizione non disponibile");
+                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE);
             }
         } else {
             sendError(player, "Operazione non disponibile");
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
         }
     }
 
@@ -136,6 +147,18 @@ public class GameController implements ViewObserver {
         return isPlayerTurn(player) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING);
     }
+    //////////////////////////////////////////
+    //
+    ///////////////////////////////////////////
+    public Player getPlayer(String nickname) {
+
+        for(Player p : game.getPlayerList()){
+            if(p.getNickname().equals(nickname)){
+               return p;
+            }
+        }
+        return null;
+    }
 
     // TEST METHODS ____________________________________________________________________________________________________
     public Game getGame() {
@@ -143,10 +166,8 @@ public class GameController implements ViewObserver {
     }
 
     public void addObserver(ClientInterface clientInterface) {
-        //game.addObserver(clientInterface);
+        game.addObserver(clientInterface);
     }
 
-    public void startGame(Map<ClientInterface, String> playerMap){
 
-    }
 }

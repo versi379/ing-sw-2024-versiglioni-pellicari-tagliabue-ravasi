@@ -131,8 +131,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     @Override
-    public Object waitNotifyFromServer() {
-        return null;
+    public void waitNotifyModelChangedFromServer() {
+
     }
 
 

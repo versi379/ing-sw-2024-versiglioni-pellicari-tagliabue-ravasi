@@ -6,6 +6,8 @@ package it.polimi.sw.GC50.model.card;
  */
 public class PhysicalCard {
 
+    //code is a unique identifier for the card
+    private String code;
     private final CardType cardType;
     private final PlayableCard front;
     private final PlayableCard back;
@@ -14,6 +16,16 @@ public class PhysicalCard {
         this.cardType = cardType;
         this.front = front;
         this.back = back;
+    }
+
+    public PhysicalCard(String code, CardType cardType, PlayableCard front, PlayableCard back) {
+        this.code = code;
+        this.cardType = cardType;
+        this.front = front;
+        this.back = back;
+    }
+    public String getCode() {
+        return code;
     }
 
     public CardType getCardType() {

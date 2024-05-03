@@ -26,7 +26,7 @@ public interface RequestFromClietToServer {
     public void selectObjectiveCard();
     public void drawCard();
     public Object getModel();
-    public Object waitNotifyFromServer();
+    public void waitNotifyModelChangedFromServer();
 
 
 }

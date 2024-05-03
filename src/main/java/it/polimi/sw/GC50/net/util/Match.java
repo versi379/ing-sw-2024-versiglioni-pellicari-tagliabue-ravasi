@@ -1,16 +1,9 @@
 package it.polimi.sw.GC50.net.util;
 
-import com.google.gson.Gson;
-
 import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.net.UpdateController;
-import it.polimi.sw.GC50.net.observ.Observable;
-import it.polimi.sw.GC50.net.observ.Observer;
+import it.polimi.sw.GC50.controller.UpdateController;
 
-import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Match {

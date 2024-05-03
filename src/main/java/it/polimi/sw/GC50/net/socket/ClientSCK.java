@@ -138,17 +138,15 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
 
 
     private void waitNoifyfromServer() {
-        {
-            notify = true;
-            while (notify) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
+        notify = true;
+        while (notify) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
 
-                }
             }
-
         }
+
     }
 
 
@@ -190,14 +188,17 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
         waitNoifyfromServer();
         return this.freeMatch;
     }
+
+
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
 
-
+    @Override
     public void placeCard() {
 
     }
+
 
     @Override
     public void sendMessage(String message) {
@@ -225,8 +226,23 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
     }
 
     @Override
-    public Object waitNotifyFromServer() {
-        return null;
+    public void waitNotifyModelChangedFromServer() {
+        while (alive) {
+            this.notyfyUpdateModel = true;
+            while (this.notyfyUpdateModel) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+
+                }
+            }
+            updateView();
+
+        }
+
+    }
+
+    private void updateView() {
     }
 
     public void sendMessage() {

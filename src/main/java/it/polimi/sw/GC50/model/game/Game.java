@@ -11,6 +11,7 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.util.Request;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -109,6 +110,8 @@ public class Game extends Observable {
         player.setCurrentGame(this);
 
         if (playerList.size() >= getNumPlayers()) {
+            setChanged();
+            notifyObservers(Request.NOTIFY_ALL_PLAYERS_JOINED_GAME);
             setup();
         }
     }
@@ -166,6 +169,8 @@ public class Game extends Observable {
             addCard(player, pickCard(DrawingPosition.GOLDDECK));
             setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
         }
+        setChanged();
+        notifyObservers(Request.NOTIFY_SETUP);
     }
 
     /**
@@ -405,6 +410,45 @@ public class Game extends Observable {
         }
         return card;
     }
+    public void placeCard(String nickname, String code, int x, int y, boolean face) {
+        if(getCurrentPlayer().getNickname().equals(nickname)) {
+            if (this.getCurrentPhase().equals(PlayingPhase.PLACING)) {
+                List<PhysicalCard> playerHand = getHand(getCurrentPlayer());
+                for (PhysicalCard card : playerHand) {
+                    if (card.getCode().equals(code)) {
+                        PlayableCard cardToPlace = face ? card.getFront() : card.getBack();
+                        if (cardToPlace.isPlaceable(getPlayerData(getCurrentPlayer()), x, y)) {
+                            placeCard(getCurrentPlayer(), cardToPlace, x, y);
+                            removeCard(getCurrentPlayer(), playerHand.indexOf(card));
+                            setChanged();
+                            notifyObservers(Request.NOTIFY_CARD_PLACED);
+                            if (getTotalScore(getCurrentPlayer()) >= endScore) {
+                                setLastTurn();
+                            }
+                            if (status.equals(GameStatus.PLAYING)) {
+                                drawingPhase();
+                            }
+                            return;
+                        } else {
+                            setChanged();
+                            notifyObservers(Request.NOTIFY_CARD_NOT_PLACEABLE);
+                            return;
+                        }
+                    }
+                }
+                setChanged();
+                notifyObservers(Request.NOTIFY_CARD_NOT_FOUND);
+            } else {
+                setChanged();
+                notifyObservers(Request.NOTIFY_NOT_YOUR_PLACING_PHASE);
+            }
+
+        }else{
+            setChanged();
+            notifyObservers(Request.NOTIFY_NOT_YOUR_TURN);
+        }
+
+    }
 
     public void placeCard(Player player, PlayableCard card, int x, int y) {
         getPlayerData(player).placeCard(card, x, y);
@@ -473,6 +517,10 @@ public class Game extends Observable {
             }
         }
     }
+    public void error(Request request) {
+        setChanged();
+        notifyObservers(request);
+    }
 
     public List<Player> getWinnerList() {
         return new ArrayList<>(winnerList);
@@ -524,4 +572,6 @@ public class Game extends Observable {
     public void forceEnd() {
         end();
     }
+
+
 }
