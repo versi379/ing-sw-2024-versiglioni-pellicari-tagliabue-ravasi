@@ -20,11 +20,11 @@ public interface ServerRmi extends Remote {
 
     ArrayList<String> getFreeMatch() throws RemoteException;
 
-    void createGame(int numOfPl, String gameName, ClientInterface clientInterface,String nickname) throws RemoteException;
+    String createGame(int numOfPl, String gameName, ClientInterface clientInterface,String nickname) throws RemoteException;
 
-    void enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException;
+    String enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException;
 
-    boolean setName(ClientInterface clientInterface,String name) throws RemoteException;
+    String setName(ClientInterface clientInterface,String name) throws RemoteException;
 
     //////////////////////////////////////////
     //ACTIVE GAME
@@ -33,6 +33,5 @@ public interface ServerRmi extends Remote {
     Request message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
 
     Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
-
 
 }

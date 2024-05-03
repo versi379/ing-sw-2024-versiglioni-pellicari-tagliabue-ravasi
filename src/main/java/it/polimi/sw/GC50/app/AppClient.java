@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 
+import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.TypeOfView;
@@ -24,6 +25,7 @@ public class AppClient {
         TypeOfConnection connection;
         View view = null;
         TypeOfView typeview = null;
+        RequestFromClietToServer requestFromClietToServer = null;
 
         int read;
 
@@ -60,13 +62,18 @@ public class AppClient {
 
         if (read == 1) {
             connection = TypeOfConnection.SOCKET;
-            ClientSCK clientSCK = null;
+
             try {
-                clientSCK = new ClientSCK(2012, "localhost");
-                Thread thread = new Thread(clientSCK);
+
+                requestFromClietToServer = new ClientSCK(2012, "localhost");
+                Thread thread = new Thread((ClientSCK) requestFromClietToServer);
                 thread.start();
-                clientSCK.setView(view, typeview);
-                clientSCK.lobby();
+                requestFromClietToServer.addView(view, typeview);
+                System.out.println(requestFromClietToServer.setName("luca"));
+                System.out.println(requestFromClietToServer.createGame("game3", 2));
+                System.out.println(requestFromClietToServer.setName("luca2"));
+                System.out.println(requestFromClietToServer.createGame("game4", 2));
+
 
             } catch (IOException e) {
                 System.err.println(e.getMessage());
@@ -76,10 +83,15 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
+                ClientRmi clientRmi = new ClientRmi("rmi://localhost:1099//server");
 
-                ClientRmi client = new ClientRmi("server");
-                client.addView(view, typeview);
-                client.lobby();
+                //requestFromClietToServer = new ClientRmi("default");
+
+                requestFromClietToServer.addView(view, typeview);
+                System.out.println(requestFromClietToServer.setName("luca3"));
+                System.out.println(requestFromClietToServer.createGame("game1", 3));
+                System.out.println(requestFromClietToServer.setName("luca4"));
+                System.out.println(requestFromClietToServer.createGame("game2", 3));
 
 
             } catch (RemoteException e) {

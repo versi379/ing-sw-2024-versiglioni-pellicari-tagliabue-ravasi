@@ -12,7 +12,7 @@ public class AppServer {
 
         Server server = new Server();
         //SERVER RMI
-        System.setProperty("java.rmi.server.hostname", "localhost");
+        System.setProperty("server", "localhost");
         ServerRmi serverR = new ServerRmiImpl(server, 1099);
         serverR.start(serverR);
 

@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
+import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
 
@@ -11,21 +12,28 @@ import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface{
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, RequestFromClietToServer {
     private ServerRmi serverRmi;
     private String servername;
+    //////////////////////////////////////////
     private String nickName;
     private TypeOfView typeOfView;
     private View view;
     private String gameName;
+    private ArrayList<String> freeMatch;
+    ///////////////////////////////////////////
 
 
     public ClientRmi(String name) throws RemoteException {
-
         this.servername = name;
         this.connection();
+        this.freeMatch =new ArrayList<>();
     }
+    //////////////////////////////////////////
+    //COMUNICATION WITH SERVER
+    ///////////////////////////////////////////
 
     public void connection() throws RemoteException {
         try {
@@ -39,69 +47,91 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     }
 
-    public void lobby() {
-        try {
-            //setNickName();
-             serverRmi.createGame(2, "test1", this, "luca");
-
-            for (String freeMatch : serverRmi.getFreeMatch()) {
-                System.out.println(freeMatch);
-            }
-
-
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void setNickName() throws RemoteException {
-        String name2;
-        do {
-            name2 = view.askName();
-        } while (!serverRmi.setName(this,name2));
-
-        nickName = name2;
-    }
-
-    public void joinGame(String gameName) {
-        try {
-            serverRmi.enterGame("gameName", this, nickName);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void createGame() {
-        String gameName;
-        do {
-            gameName = view.askGameName();
-        } while (gameName == null);
-        int numOfPlayer = view.askNumberOfPlayer();
-        try {
-            serverRmi.createGame(numOfPlayer, gameName, this,nickName);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
     public void addView(View view, TypeOfView typeOfView) {
         this.view = view;
         this.typeOfView = typeOfView;
     }
 
-    public void myTurn() {
+    //////////////////////////////////////////
+    //LOBBY
+    ///////////////////////////////////////////
 
-
+    @Override
+    public String createGame(String matchName, int numberOfPlayer) {
+        try {
+            this.gameName=this.serverRmi.createGame(numberOfPlayer, matchName, this, this.nickName);
+        } catch (RemoteException e) {
+            return null;
+        }
+        return this.gameName;
     }
+
+    @Override
+    public String enterGame(String matchName) {
+        try {
+            this.gameName=this.serverRmi.enterGame(matchName, this, this.nickName);
+        } catch (RemoteException e) {
+            return null;
+        }
+        return this.gameName;
+    }
+
+    @Override
+    public String setName(String name) {
+        try {
+            this.nickName=this.serverRmi.setName(this, name);
+        } catch (RemoteException e) {
+            return null;
+        }
+        return this.nickName;
+    }
+
+    @Override
+    public ArrayList<String> getFreeMatch() {
+        try {
+            this.freeMatch=this.serverRmi.getFreeMatch();
+        } catch (RemoteException e) {
+           return  null;
+        }
+        return this.freeMatch;
+    }
+    //////////////////////////////////////////
+    //ACTIVE GAME
+    ///////////////////////////////////////////
 
     public void placeCard() {
 
     }
 
+    @Override
+    public void sendMessage(String message) {
 
+    }
+
+    @Override
+    public void selectStarterFace() {
+
+    }
+
+    @Override
+    public void selectObjectiveCard() {
+
+    }
+
+    @Override
+    public void drawCard() {
+
+    }
+
+    @Override
+    public Object getModel() {
+        return null;
+    }
+
+    @Override
+    public Object waitNotifyFromServer() {
+        return null;
+    }
 
 
     @Override

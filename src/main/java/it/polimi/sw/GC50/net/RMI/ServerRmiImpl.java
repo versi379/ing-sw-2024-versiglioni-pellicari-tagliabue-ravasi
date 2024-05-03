@@ -38,8 +38,8 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
 
     @Override
     public void addClient(ClientInterface client) {
-         System.out.println("client connected");
-         server.connect(client);
+        System.out.println("client connected");
+        server.connect(client);
 
     }
     //////////////////////////////////////////
@@ -47,8 +47,12 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     ///////////////////////////////////////////
 
     @Override
-    public boolean setName(ClientInterface clientInterface,String name) {
-        return server.addName(clientInterface,name);
+    public String setName(ClientInterface clientInterface, String name) {
+        if (server.addName(clientInterface, name)) {
+            return name;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -57,14 +61,22 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public void createGame(int numOfPl, String gameName, ClientInterface clientInterface,String nickName) throws RemoteException {
-        this.match = server.createMatch(clientInterface, numOfPl, gameName,nickName);
+    public String createGame(int numOfPl, String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
+        this.match = server.createMatch(clientInterface, numOfPl, gameName, nickName);
+        if (this.match == null) {
+            return null;
+        }
+        return this.match.getName();
 
     }
 
     @Override
-    public void enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
+    public String enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
         this.match = server.enterMatch(gameName, clientInterface, nickName);
+        if (this.match == null) {
+            return null;
+        }
+        return this.match.getName();
     }
 
 
