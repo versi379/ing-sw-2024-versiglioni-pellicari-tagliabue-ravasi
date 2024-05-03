@@ -1,9 +1,11 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
 import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
+import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
@@ -97,16 +99,39 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
         return this.freeMatch;
     }
+
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-
-    public void placeCard() {
+    @Override
+    public void placeCard(boolean face, int index, int x, int y) {
+        if (this.gameName == null) {
+            return;
+        }
+        if (this.nickName == null) {
+            return;
+        }
+        try {
+            this.serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(face,index,x,y), this.gameName, this.nickName,this));
+        } catch (RemoteException e) {
+            return;
+        }
 
     }
 
     @Override
     public void sendMessage(String message) {
+        if (this.gameName == null) {
+            return;
+        }
+        if (this.nickName == null) {
+            return;
+        }
+        try {
+            this.serverRmi.message(Request.MEXCHAT, message, this.gameName, this.nickName, this);
+        } catch (RemoteException e) {
+            return;
+        }
 
     }
 

@@ -85,7 +85,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     ///////////////////////////////////////////
 
     @Override
-    public void message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
+    public void message(Request request, Object object,String gameName, String nickName, ClientInterface clientInterface ) throws RemoteException {
         if (match.getName().equals(gameName)) {
             if (request.equals(Request.MEXCHAT)) {
                 match.updateChat(clientInterface, nickName, (String) object);

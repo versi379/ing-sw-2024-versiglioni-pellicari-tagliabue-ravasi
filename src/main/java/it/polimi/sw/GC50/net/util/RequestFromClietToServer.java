@@ -20,7 +20,7 @@ public interface RequestFromClietToServer {
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-    public void placeCard() ;
+    public void placeCard(boolean face, int index, int x, int y) ;
     public void sendMessage(String message);
     public void selectStarterFace();
     public void selectObjectiveCard();

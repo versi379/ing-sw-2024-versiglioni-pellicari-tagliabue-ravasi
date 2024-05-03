@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.net.socket;
 
+import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
@@ -195,14 +196,26 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
     ///////////////////////////////////////////
 
     @Override
-    public void placeCard() {
-
+    public void placeCard(boolean face, int index, int x, int y) {
+        if (this.matchName == null) {
+            return;
+        }
+        if (this.nickName == null) {
+            return;
+        }
+        setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, new PlaceCardMex(face, index, x, y), this.matchName, this.nickName));
     }
 
 
     @Override
     public void sendMessage(String message) {
-
+        if (this.matchName == null) {
+            return;
+        }
+        if (this.nickName == null) {
+            return;
+        }
+        setMessageout(new Message.MessageClientToServer(Request.MEXCHAT, message, this.matchName, this.nickName));
     }
 
     @Override

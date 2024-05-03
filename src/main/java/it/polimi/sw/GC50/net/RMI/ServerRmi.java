@@ -30,7 +30,7 @@ public interface ServerRmi extends Remote {
     //ACTIVE GAME
     ///////////////////////////////////////////
 
-    void message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
+    void message(Request request, Object object,String gameName, String nickName, ClientInterface clientInterface ) throws RemoteException;
 
     Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException;
 
