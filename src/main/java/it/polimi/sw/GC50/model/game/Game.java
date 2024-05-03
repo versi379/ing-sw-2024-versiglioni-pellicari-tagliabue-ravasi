@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.GC50.adapter.*;
 import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.model.chat.Message;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.observ.Observable;
@@ -17,6 +18,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -410,45 +412,7 @@ public class Game extends Observable {
         }
         return card;
     }
-    public void placeCard(String nickname, String code, int x, int y, boolean face) {
-        if(getCurrentPlayer().getNickname().equals(nickname)) {
-            if (this.getCurrentPhase().equals(PlayingPhase.PLACING)) {
-                List<PhysicalCard> playerHand = getHand(getCurrentPlayer());
-                for (PhysicalCard card : playerHand) {
-                    if (card.getCode().equals(code)) {
-                        PlayableCard cardToPlace = face ? card.getFront() : card.getBack();
-                        if (cardToPlace.isPlaceable(getPlayerData(getCurrentPlayer()), x, y)) {
-                            placeCard(getCurrentPlayer(), cardToPlace, x, y);
-                            removeCard(getCurrentPlayer(), playerHand.indexOf(card));
-                            setChanged();
-                            notifyObservers(Request.NOTIFY_CARD_PLACED);
-                            if (getTotalScore(getCurrentPlayer()) >= endScore) {
-                                setLastTurn();
-                            }
-                            if (status.equals(GameStatus.PLAYING)) {
-                                drawingPhase();
-                            }
-                            return;
-                        } else {
-                            setChanged();
-                            notifyObservers(Request.NOTIFY_CARD_NOT_PLACEABLE);
-                            return;
-                        }
-                    }
-                }
-                setChanged();
-                notifyObservers(Request.NOTIFY_CARD_NOT_FOUND);
-            } else {
-                setChanged();
-                notifyObservers(Request.NOTIFY_NOT_YOUR_PLACING_PHASE);
-            }
 
-        }else{
-            setChanged();
-            notifyObservers(Request.NOTIFY_NOT_YOUR_TURN);
-        }
-
-    }
 
     public void placeCard(Player player, PlayableCard card, int x, int y) {
         getPlayerData(player).placeCard(card, x, y);
@@ -473,6 +437,12 @@ public class Game extends Observable {
 
     public List<PhysicalCard> getHand(Player player) {
         return getPlayerData(player).getHand();
+    }
+
+    public void sendMessageInChat(Player player, String message) {
+        chat.addMessage(new Message(player,message,LocalTime.now()));
+        setChanged();
+        notifyObservers(Request.NOTIFY_CHAT_MESSAGE);
     }
 
     // END PHASE _______________________________________________________________________________________________________

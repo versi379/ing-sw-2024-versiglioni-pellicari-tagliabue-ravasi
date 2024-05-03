@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Chat {
 
+
     private final List<Message> messages;
 
     public Chat() {
@@ -19,9 +20,8 @@ public class Chat {
     /**
      * This method stores every message sent in an ArrayList
      */
-    public void addMessage(Message message/*,VirtualView... virtualViews*/){
+    public void addMessage(Message message){
         this.messages.add(message);
-        // update view through a Model-View event
     }
 
     /**

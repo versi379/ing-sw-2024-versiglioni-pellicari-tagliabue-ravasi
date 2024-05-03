@@ -1,7 +1,10 @@
 package it.polimi.sw.GC50.net.util;
 
 import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.controller.UpdateController;
+import it.polimi.sw.GC50.model.game.DrawingPosition;
+import it.polimi.sw.GC50.model.lobby.Player;
+import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +18,6 @@ public class Match {
     private Map<ClientInterface, String> playerMap;
     private final GameController controller;
 
-    private final UpdateController updateController;
 
     //////////////////////////////////////////
     //PRE GAME
@@ -27,7 +29,6 @@ public class Match {
         this.numOfPlayer = numOfPlayer;
         this.gameName = gameName;
         controller.addObserver(player);
-        this.updateController = new UpdateController();
         this.isFree = true;
         this.playerMap = new HashMap<>();
         this.playerMap.put(player, nickName);
@@ -42,13 +43,12 @@ public class Match {
     public Boolean addPlayer(ClientInterface player, String nickName) {
         Boolean add = false;
         if (this.playerMap.size() < numOfPlayer) {
-            this.playerMap.put( player,nickName);
+            this.playerMap.put(player, nickName);
             controller.addObserver(player);
             add = true;
         }
         if (numOfPlayer == playerMap.size()) {
             this.isFree = false;
-            controller.startGame(playerMap);
         }
         return add;
 
@@ -62,19 +62,41 @@ public class Match {
     //ACTIVE GAME
     ///////////////////////////////////////////
 
-
-    public synchronized Request update(String nickName, ClientInterface clientInterface, Request request, Object object) {
-        Request rq = updateController.update(controller, nickName, clientInterface, request, object);
-        return rq;
+    synchronized public void updateController(Request request, ClientInterface clientInterface, Object update, String nickName) {
+        if (!playerMap.get(clientInterface).equals(nickName)) {
+            return;
+        }
+        Player player = controller.getPlayer(nickName);
+        if (player == null) {
+            return;
+        }
+        switch (request) {
+            case PLACE_CARD:
+                controller.placeCard(player,(PlaceCardMex)update);
+                break;
+            case SELECT_STARTER_FACE:
+                controller.chooseStarterFace(player, (Boolean) update);
+                break;
+            case SELECT_OBJECTIVE_CARD:
+                controller.chooseObjective(player, (Integer) update);
+                break;
+            case DRAW_CARD:
+                controller.drawCard(player,(DrawingPosition) update);
+                break;
+            default:
+                break;
+        }
     }
-    public synchronized void updateChat(String nickName, ClientInterface clientInterface, Request request, Object object) {
-        updateController.updateChat(controller, nickName, clientInterface, request, object);
+    synchronized public void updateChat(ClientInterface clientInterface,String nickName, String message) {
+        if (!playerMap.get(clientInterface).equals(nickName)) {
+            return;
+        }
+        Player player = controller.getPlayer(nickName);
+        if (player == null) {
+            return;
+        }
+        controller.updateChat(player, message);
     }
-
-    public synchronized Object getModel(ClientInterface clientInterface, Request request, Object object) {
-        return updateController.getModel(controller);
-    }
-
 
 
 }

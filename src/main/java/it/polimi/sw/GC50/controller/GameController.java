@@ -5,17 +5,16 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Match;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  *
  */
-public class GameController implements ViewObserver {
+public class GameController {
     private final Game game;
 
     public GameController(Game game) {
@@ -73,6 +72,34 @@ public class GameController implements ViewObserver {
         }
     }
 
+
+    public void placeCard(Player player, PlaceCardMex placeCardMex) {
+        int index = placeCardMex.getIndexinhand();
+        int x = placeCardMex.getX();
+        int y = placeCardMex.getY();
+        boolean face = placeCardMex.isFace();
+
+        if (isPlacingPhase(player)) {
+            List<PhysicalCard> playerHand = game.getHand(player);
+            if (index >= 0 && index < playerHand.size()) {
+                PlayableCard card = face ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
+                if (card.isPlaceable(game.getPlayerData(player), x, y)) {
+                    game.placeCard(player, card, x, y);
+                    game.removeCard(player, index);
+                } else {
+                    sendError(player, "Carta non piazzabile");
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE);
+                }
+            } else {
+                sendError(player, "Indice non valido");
+                game.error(Request.NOTIFY_CARD_NOT_FOUND);
+            }
+        } else {
+            sendError(player, "Operazione non disponibile");
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+        }
+    }
+
     /**
      * @param player
      * @param index
@@ -80,6 +107,7 @@ public class GameController implements ViewObserver {
      * @param x
      * @param y
      */
+
     public void placeCard(Player player, int index, boolean face, int x, int y) {
         if (isPlacingPhase(player)) {
             List<PhysicalCard> playerHand = game.getHand(player);
@@ -147,17 +175,26 @@ public class GameController implements ViewObserver {
         return isPlayerTurn(player) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING);
     }
+
     //////////////////////////////////////////
     //
     ///////////////////////////////////////////
     public Player getPlayer(String nickname) {
 
-        for(Player p : game.getPlayerList()){
-            if(p.getNickname().equals(nickname)){
-               return p;
+        for (Player p : game.getPlayerList()) {
+            if (p.getNickname().equals(nickname)) {
+                return p;
             }
         }
         return null;
+    }
+
+    synchronized public Object getGameModel(String nickname) {
+        return null;
+    }
+
+    public void updateChat(Player player, String message) {
+
     }
 
     // TEST METHODS ____________________________________________________________________________________________________
