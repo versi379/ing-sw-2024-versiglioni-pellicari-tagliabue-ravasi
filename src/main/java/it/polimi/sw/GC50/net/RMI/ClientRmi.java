@@ -112,7 +112,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             return;
         }
         try {
-            this.serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(face,index,x,y), this.gameName, this.nickName,this));
+            this.serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(face,index,x,y), this.gameName, this.nickName,this);
         } catch (RemoteException e) {
             return;
         }
