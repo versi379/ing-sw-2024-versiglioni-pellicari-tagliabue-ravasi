@@ -73,6 +73,8 @@ public class AppClient {
                 System.out.println(requestFromClietToServer.createGame("game3", 2));
                 System.out.println(requestFromClietToServer.setName("luca2"));
                 System.out.println(requestFromClietToServer.createGame("game4", 2));
+                System.out.println(requestFromClietToServer.getFreeMatch());
+                System.out.println(requestFromClietToServer.enterGame("game3"));
 
 
             } catch (IOException e) {
@@ -84,15 +86,16 @@ public class AppClient {
             try {
                 System.out.println("Connecting to server...");
                 ClientRmi clientRmi = new ClientRmi("server");
+                requestFromClietToServer = clientRmi;
 
-                //requestFromClietToServer = new ClientRmi("default");
 
                 requestFromClietToServer.addView(view, typeview);
                 System.out.println(requestFromClietToServer.setName("luca3"));
                 System.out.println(requestFromClietToServer.createGame("game1", 3));
                 System.out.println(requestFromClietToServer.setName("luca4"));
                 System.out.println(requestFromClietToServer.createGame("game2", 3));
-
+                System.out.println(requestFromClietToServer.getFreeMatch());
+                System.out.println(requestFromClietToServer.enterGame("game3"));
 
             } catch (RemoteException e) {
                 System.out.println("Error in connection");

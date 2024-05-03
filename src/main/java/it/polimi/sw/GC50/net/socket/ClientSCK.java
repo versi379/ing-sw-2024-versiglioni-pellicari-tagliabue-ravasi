@@ -109,39 +109,23 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
             case SET_NAME_RESPONSE: {
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
-                    System.out.println("cannot use this name");
+
                     nickName = null;
-                } else {
-                    System.out.println("name set");
                 }
                 notify = false;
                 break;
             }
-            case CREATE_GAME_RESPONSE: {
+            case CREATE_GAME_RESPONSE, ENTER_GAME_RESPONSE: {
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
-                    System.out.println("cannot create the game");
-                    matchName = null;
-                } else {
-                    System.out.println("game created");
-                }
-                notify = false;
-                break;
-            }
-            case ENTER_GAME_RESPONSE: {
-                boolean response = (boolean) mex.getObject();
-                if (!response) {
-                    System.out.println("cannot enter the game");
-                    matchName = null;
-                } else {
-                    System.out.println("game joined");
+                    this.matchName = null;
                 }
                 notify = false;
                 break;
             }
             case GET_FREE_MATCH_RESPONSE: {
                 freeMatch = (ArrayList<String>) mex.getObject();
-                System.out.println(mex.getObject());
+
                 notify = false;
                 break;
             }
@@ -171,34 +155,6 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
     //////////////////////////////////////////
     //LOBBY
     ///////////////////////////////////////////
-   /* public void lobby() {
-
-
-        if (TypeOfView.TUI.equals(typeOfView)) {
-            if (nickName == null) {
-                setName(view.askName());
-            }
-            if (matchName == null) {
-
-                int opzione = view.joinorcreate();
-                if (opzione == 2) {
-                    createGame(view.askGameName(), view.askNumberOfPlayer());
-                } else if (opzione == 1) {
-                    getFreeMatch();
-                    if (freeMatch.size() >= 1) {
-                        String gameName = view.askGameName();
-                        enterGame(gameName);
-                    } else {
-                        System.out.println("no free match");
-                        System.out.println("Create a new game");
-                        createGame(view.askGameName(), view.askNumberOfPlayer());
-                    }
-                }
-            }
-
-        }
-
-    }*/
 
 
     @Override
@@ -211,7 +167,7 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
         waitNoifyfromServer();
-        return matchName;
+        return this.matchName;
 
     }
 
@@ -219,20 +175,20 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.ENTER_GAME, null, matchName, nickName));
         waitNoifyfromServer();
-        return matchName;
+        return this.matchName;
     }
 
     public String setName(String name) {
         this.nickName = name;
         setMessageout(new Message.MessageClientToServer(Request.SET_NAME, null, null, name));
         waitNoifyfromServer();
-        return nickName;
+        return this.nickName;
     }
 
     public ArrayList<String> getFreeMatch() {
         setMessageout(new Message.MessageClientToServer(Request.GET_FREE_MATCH, null, null, null));
         waitNoifyfromServer();
-        return freeMatch;
+        return this.freeMatch;
     }
     //////////////////////////////////////////
     //ACTIVE GAME
@@ -276,7 +232,6 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
     public void sendMessage() {
 
     }
-
 
 
     @Override

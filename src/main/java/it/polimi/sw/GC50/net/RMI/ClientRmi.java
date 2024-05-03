@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface,RequestFromClietToServer {
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, RequestFromClietToServer {
     private ServerRmi serverRmi;
     private String servername;
     //////////////////////////////////////////
@@ -29,6 +29,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public ClientRmi(String name) throws RemoteException {
         this.servername = name;
         this.connection();
+        this.freeMatch = new ArrayList<>();
 
     }
     //////////////////////////////////////////
@@ -42,25 +43,25 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             System.out.println("Connected to server");
 
         } catch (Exception e) {
-            System.out.println(e);
+
             System.out.println("Error in connection");
         }
 
     }
 
+
+    //////////////////////////////////////////
+    //LOBBY
+    ///////////////////////////////////////////
     public void addView(View view, TypeOfView typeOfView) {
         this.view = view;
         this.typeOfView = typeOfView;
     }
 
-    //////////////////////////////////////////
-    //LOBBY
-    ///////////////////////////////////////////
-
     @Override
     public String createGame(String matchName, int numberOfPlayer) {
         try {
-            this.gameName=this.serverRmi.createGame(numberOfPlayer, matchName, this, this.nickName);
+            this.gameName = this.serverRmi.createGame(numberOfPlayer, matchName, this, this.nickName);
         } catch (RemoteException e) {
             return null;
         }
@@ -70,7 +71,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     @Override
     public String enterGame(String matchName) {
         try {
-            this.gameName=this.serverRmi.enterGame(matchName, this, this.nickName);
+            this.gameName = this.serverRmi.enterGame(matchName, this, this.nickName);
         } catch (RemoteException e) {
             return null;
         }
@@ -80,7 +81,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     @Override
     public String setName(String name) {
         try {
-            this.nickName=this.serverRmi.setName(this, name);
+            this.nickName = this.serverRmi.setName(this, name);
         } catch (RemoteException e) {
             return null;
         }
@@ -90,9 +91,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     @Override
     public ArrayList<String> getFreeMatch() {
         try {
-            this.freeMatch=this.serverRmi.getFreeMatch();
+            this.freeMatch = this.serverRmi.getFreeMatch();
         } catch (RemoteException e) {
-           return  null;
+            return null;
         }
         return this.freeMatch;
     }
