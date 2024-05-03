@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.net.observ;
 
-import it.polimi.sw.GC50.net.observ.Observer;
+import it.polimi.sw.GC50.net.util.Message;
+import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
 import java.util.Vector;
@@ -56,7 +57,7 @@ public class Observable {
      * @see     java.util.Observable#hasChanged()
      * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    public void notifyObservers() {
+    public void notifyObservers(Object o) {
         notifyObservers(null);
     }
 
@@ -74,7 +75,7 @@ public class Observable {
      * @see     java.util.Observable#hasChanged()
      * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    public void notifyObservers(Object arg) {
+    public void notifyObservers(Request request,Object arg) {
         /*
          * a temporary array buffer, used as a snapshot of the state of
          * current Observers.
@@ -104,7 +105,8 @@ public class Observable {
 
         for (int i = arrLocal.length-1; i>=0; i--) {
             try {
-                ((Observer)arrLocal[i]).update(this, arg);
+              //  ((Observer)arrLocal[i]).update(this, arg);
+                ((Observer)arrLocal[i]).onUpdate(new Message(request,arg));
             } catch (RemoteException e) {
               System.out.println("Error in notifyObservers");
             }

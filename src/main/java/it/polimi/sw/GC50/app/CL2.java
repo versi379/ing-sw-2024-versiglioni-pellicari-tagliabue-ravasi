@@ -1,10 +1,8 @@
 package it.polimi.sw.GC50.app;
 
-import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
-
 import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
@@ -14,11 +12,9 @@ import it.polimi.sw.GC50.view.View;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
-import java.util.Observer;
 import java.util.Scanner;
 
-
-public class AppClient {
+public class CL2 {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -68,13 +64,15 @@ public class AppClient {
                 requestFromClietToServer = new ClientSCK(2012, "localhost");
                 Thread thread = new Thread((ClientSCK) requestFromClietToServer);
                 thread.start();
-                requestFromClietToServer.addView(view, typeview);
+               /* requestFromClietToServer.addView(view, typeview);
                 System.out.println(requestFromClietToServer.setName("luca"));
                 System.out.println(requestFromClietToServer.createGame("game3", 2));
                 System.out.println(requestFromClietToServer.setName("luca2"));
                 System.out.println(requestFromClietToServer.createGame("game4", 2));
                 System.out.println(requestFromClietToServer.getFreeMatch());
-                System.out.println(requestFromClietToServer.enterGame("game3"));
+                System.out.println(requestFromClietToServer.enterGame("game3"));*/
+                requestFromClietToServer.setName("luca3");
+                requestFromClietToServer.createGame("game1", 2);
 
 
             } catch (IOException e) {
@@ -90,15 +88,15 @@ public class AppClient {
 
 
                 requestFromClietToServer.addView(view, typeview);
-               /* System.out.println(requestFromClietToServer.setName("luca3"));
+                /*System.out.println(requestFromClietToServer.setName("luca3"));
                 System.out.println(requestFromClietToServer.createGame("game1", 3));
                 System.out.println(requestFromClietToServer.setName("luca4"));
                 System.out.println(requestFromClietToServer.createGame("game2", 3));
                 System.out.println(requestFromClietToServer.getFreeMatch());
-                System.out.println(requestFromClietToServer.enterGame("game3"));*/
-                requestFromClietToServer.setName("luca2");
-                requestFromClietToServer.enterGame("game1");
-                requestFromClietToServer.sendMessage("cane");
+                System.out.println(requestFromClietToServer.enterGame("game3"));
+*/
+                requestFromClietToServer.setName("luca3");
+                requestFromClietToServer.createGame("game1", 2);
 
             } catch (RemoteException e) {
                 System.out.println("Error in connection");
@@ -107,6 +105,4 @@ public class AppClient {
 
 
     }
-
-
 }

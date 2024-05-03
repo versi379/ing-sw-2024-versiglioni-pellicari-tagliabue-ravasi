@@ -113,7 +113,7 @@ public class Game extends Observable {
 
         if (playerList.size() >= getNumPlayers()) {
             setChanged();
-            notifyObservers(Request.NOTIFY_ALL_PLAYERS_JOINED_GAME);
+            notifyObservers(Request.NOTIFY_ALL_PLAYERS_JOINED_GAME,null);
             setup();
         }
     }
@@ -127,8 +127,8 @@ public class Game extends Observable {
                 currentIndex = 0;
             }
         }
-
     }
+
 
     public List<Player> getPlayerList() {
         return new ArrayList<>(playerList);
@@ -172,7 +172,7 @@ public class Game extends Observable {
             setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
         }
         setChanged();
-        notifyObservers(Request.NOTIFY_SETUP);
+        notifyObservers(Request.NOTIFY_SETUP,null);
     }
 
     /**
@@ -442,7 +442,7 @@ public class Game extends Observable {
     public void sendMessageInChat(Player player, String message) {
         chat.addMessage(new Message(player,message,LocalTime.now()));
         setChanged();
-        notifyObservers(Request.NOTIFY_CHAT_MESSAGE);
+        notifyObservers(Request.NOTIFY_CHAT_MESSAGE,null);
     }
 
     // END PHASE _______________________________________________________________________________________________________
@@ -487,9 +487,9 @@ public class Game extends Observable {
             }
         }
     }
-    public void error(Request request) {
+    public void error(Request request,Object arg) {
         setChanged();
-        notifyObservers(request);
+        notifyObservers(request,arg);
     }
 
     public List<Player> getWinnerList() {

@@ -112,7 +112,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             return;
         }
         try {
-            this.serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(face,index,x,y), this.gameName, this.nickName,this);
+            this.serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(face, index, x, y), this.gameName, this.nickName, this);
         } catch (RemoteException e) {
             return;
         }
@@ -173,11 +173,13 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     @Override
     public void update(Observable o, Object arg) {
-
+        System.out.println("Update from server");
     }
 
     @Override
-    public void onUpdate(Message message) {
-
+    public void onUpdate(Message message) throws RemoteException {
+        System.out.println("Update from server2");
     }
+
+
 }

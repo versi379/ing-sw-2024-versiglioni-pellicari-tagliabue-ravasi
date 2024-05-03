@@ -157,7 +157,7 @@ public class ClientHandler implements Runnable, ClientInterface {
 
                 break;
             default:
-                setMessageout(new Message(Request.REQUEST_NOT_AVAILABLE,null));
+                setMessageout(new Message(Request.REQUEST_NOT_AVAILABLE, null));
         }
     }
 
@@ -200,11 +200,12 @@ public class ClientHandler implements Runnable, ClientInterface {
     @Override
     public void update(Observable o, Object arg) {
 
-
     }
 
     @Override
-    public void onUpdate(Message message) {
-
+    public void onUpdate(Message message) throws RemoteException {
+        setMessageout(message);
     }
+
+
 }

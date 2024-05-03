@@ -44,7 +44,8 @@ public class Match {
         Boolean add = false;
         if (this.playerMap.size() < numOfPlayer) {
             this.playerMap.put(player, nickName);
-            controller.addObserver(player);
+            this.controller.addObserver(player);
+            this.controller.addPlayer(new Player(nickName));
             add = true;
         }
         if (numOfPlayer == playerMap.size()) {
@@ -96,6 +97,7 @@ public class Match {
         if (player == null) {
             return;
         }
+        System.out.println("chat updated");
         controller.updateChat(player, message);
     }
     synchronized public Object getModel(String nickName, ClientInterface clientInterface) {

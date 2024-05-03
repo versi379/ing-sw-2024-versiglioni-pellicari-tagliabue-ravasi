@@ -50,7 +50,7 @@ public class GameController {
             game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
         }
     }
 
@@ -65,11 +65,11 @@ public class GameController {
                 game.setSecretObjective(player, secretObjectivesList.get(index));
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_INVALID_INDEX);
+                game.error(Request.NOTIFY_INVALID_INDEX,player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
         }
     }
 
@@ -89,15 +89,15 @@ public class GameController {
                     game.removeCard(player, index);
                 } else {
                     sendError(player, "Carta non piazzabile");
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE);
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE,player.getNickname());
                 }
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_CARD_NOT_FOUND);
+                game.error(Request.NOTIFY_CARD_NOT_FOUND,player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
         }
     }
 
@@ -119,15 +119,15 @@ public class GameController {
                     game.removeCard(player, index);
                 } else {
                     sendError(player, "Carta non piazzabile");
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE);
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE,player.getNickname());
                 }
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_CARD_NOT_FOUND);
+                game.error(Request.NOTIFY_CARD_NOT_FOUND,player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
         }
     }
 
@@ -142,11 +142,11 @@ public class GameController {
                 game.addCard(player, card);
             } else {
                 sendError(player, "Posizione non disponibile");
-                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE);
+                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE,player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE);
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
         }
     }
 

@@ -89,6 +89,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
         if (match.getName().equals(gameName)) {
             if (request.equals(Request.MEXCHAT)) {
                 match.updateChat(clientInterface, nickName, (String) object);
+                System.out.println("chat updated");
             }
             switch (request) {
                 case PLACE_CARD:
