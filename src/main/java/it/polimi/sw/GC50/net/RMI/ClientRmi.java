@@ -14,7 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, RequestFromClietToServer {
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface,RequestFromClietToServer {
     private ServerRmi serverRmi;
     private String servername;
     //////////////////////////////////////////
@@ -29,7 +29,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public ClientRmi(String name) throws RemoteException {
         this.servername = name;
         this.connection();
-        this.freeMatch =new ArrayList<>();
+
     }
     //////////////////////////////////////////
     //COMUNICATION WITH SERVER
@@ -42,6 +42,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             System.out.println("Connected to server");
 
         } catch (Exception e) {
+            System.out.println(e);
             System.out.println("Error in connection");
         }
 

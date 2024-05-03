@@ -2,6 +2,7 @@ package it.polimi.sw.GC50.net.socket;
 
 
 import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.*;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ClientHandler implements Runnable, ClientInterface {
+public class ClientHandler implements Runnable, ClientInterface{
     private final Socket socketClient;
     private final ServerSCK serverSCK;
     //////////////////////////////////////////

@@ -83,7 +83,7 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
-                ClientRmi clientRmi = new ClientRmi("rmi://localhost:1099//server");
+                ClientRmi clientRmi = new ClientRmi("server");
 
                 //requestFromClietToServer = new ClientRmi("default");
 

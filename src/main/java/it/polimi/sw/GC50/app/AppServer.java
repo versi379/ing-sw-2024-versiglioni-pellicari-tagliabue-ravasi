@@ -12,6 +12,7 @@ public class AppServer {
 
         Server server = new Server();
         //SERVER RMI
+        System.out.println("Server RMI");
         System.setProperty("server", "localhost");
         ServerRmi serverR = new ServerRmiImpl(server, 1099);
         serverR.start(serverR);

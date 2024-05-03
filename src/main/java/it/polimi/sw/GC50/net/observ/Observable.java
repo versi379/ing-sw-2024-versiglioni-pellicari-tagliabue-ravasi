@@ -2,6 +2,7 @@ package it.polimi.sw.GC50.net.observ;
 
 import it.polimi.sw.GC50.net.observ.Observer;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
 public class Observable {
@@ -101,8 +102,13 @@ public class Observable {
             clearChanged();
         }
 
-        for (int i = arrLocal.length-1; i>=0; i--)
-            ((Observer)arrLocal[i]).update(this, arg);
+        for (int i = arrLocal.length-1; i>=0; i--) {
+            try {
+                ((Observer)arrLocal[i]).update(this, arg);
+            } catch (RemoteException e) {
+              System.out.println("Error in notifyObservers");
+            }
+        }
     }
 
     /**

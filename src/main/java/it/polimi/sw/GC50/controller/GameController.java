@@ -143,7 +143,7 @@ public class GameController implements ViewObserver {
     }
 
     public void addObserver(ClientInterface clientInterface) {
-        game.addObserver(clientInterface);
+        //game.addObserver(clientInterface);
     }
 
     public void startGame(Map<ClientInterface, String> playerMap){
