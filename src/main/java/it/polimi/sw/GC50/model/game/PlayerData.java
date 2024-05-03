@@ -253,4 +253,16 @@ public class PlayerData {
             this.numOfResources.put(resource, numOfResources.get(resource));
         }
     }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public CornerPointer[][] getCornersArea() {
+        return cornersArea;
+    }
+
+    public Map<Resource, Integer> getNumOfResources() {
+        return numOfResources;
+    }
 }

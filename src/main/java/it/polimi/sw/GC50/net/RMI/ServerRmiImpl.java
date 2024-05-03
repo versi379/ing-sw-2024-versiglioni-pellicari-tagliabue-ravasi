@@ -85,16 +85,39 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     ///////////////////////////////////////////
 
     @Override
-    public Request message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
+    public void message(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
         if (match.getName().equals(gameName)) {
-            match.update(nickName, clientInterface, request, object);
+            if (request.equals(Request.MEXCHAT)) {
+                match.updateChat(clientInterface, nickName, (String) object);
+            }
+            switch (request) {
+                case PLACE_CARD:
+                    match.updateController(request, clientInterface, object, nickName);
+                    break;
+                case SELECT_STARTER_FACE:
+                    match.updateController(request, clientInterface, object, nickName);
+                    break;
+                case SELECT_OBJECTIVE_CARD:
+                    match.updateController(request, clientInterface, object, nickName);
+                    break;
+                case DRAW_CARD:
+                    match.updateController(request, clientInterface, object, nickName);
+                    break;
+                default:
+                    break;
+
+            }
         }
-        return null;
+
     }
 
     @Override
     public Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
-        return match.getModel(clientInterface, request, object);
+        if (!match.getName().equals(gameName)) {
+            return null;
+        }
+        return match.getModel(nickName, clientInterface);
+
     }
 
 

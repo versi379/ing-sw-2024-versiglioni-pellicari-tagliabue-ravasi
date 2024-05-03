@@ -72,7 +72,7 @@ public class Match {
         }
         switch (request) {
             case PLACE_CARD:
-                controller.placeCard(player,(PlaceCardMex)update);
+                controller.placeCard(player, (PlaceCardMex) update);
                 break;
             case SELECT_STARTER_FACE:
                 controller.chooseStarterFace(player, (Boolean) update);
@@ -81,13 +81,14 @@ public class Match {
                 controller.chooseObjective(player, (Integer) update);
                 break;
             case DRAW_CARD:
-                controller.drawCard(player,(DrawingPosition) update);
+                controller.drawCard(player, (DrawingPosition) update);
                 break;
             default:
                 break;
         }
     }
-    synchronized public void updateChat(ClientInterface clientInterface,String nickName, String message) {
+
+    synchronized public void updateChat(ClientInterface clientInterface, String nickName, String message) {
         if (!playerMap.get(clientInterface).equals(nickName)) {
             return;
         }
@@ -96,6 +97,16 @@ public class Match {
             return;
         }
         controller.updateChat(player, message);
+    }
+    synchronized public Object getModel(String nickName, ClientInterface clientInterface) {
+        if (!playerMap.get(clientInterface).equals(nickName)) {
+            return null;
+        }
+        Player player = controller.getPlayer(nickName);
+        if (player == null) {
+            return null;
+        }
+        return controller.getGameModel(nickName);
     }
 
 

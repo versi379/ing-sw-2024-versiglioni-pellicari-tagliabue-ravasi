@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.gameMexFromClient.ModelMex;
 import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
@@ -190,7 +191,12 @@ public class GameController {
     }
 
     synchronized public Object getGameModel(String nickname) {
-        return null;
+        if (!game.getPlayerList().contains(getPlayer(nickname))) {
+            return null;
+        }
+        PlayerData pd= game.getPlayerData(getPlayer(nickname));
+
+        return new ModelMex(pd.getBoardSize(), pd.getCornersArea(), pd.getCardsArea(), pd.getHand(), pd.getNumOfResources(), pd.getSecretObjective(), pd.getTotalScore(), pd.getObjectivesScore(), pd.getStarterCard(), pd.getSecretObjectivesList());
     }
 
     public void updateChat(Player player, String message) {

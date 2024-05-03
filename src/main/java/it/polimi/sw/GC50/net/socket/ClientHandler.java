@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ClientHandler implements Runnable, ClientInterface{
+public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
     private final ServerSCK serverSCK;
     //////////////////////////////////////////
@@ -109,43 +109,24 @@ public class ClientHandler implements Runnable, ClientInterface{
         System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
-            case JOINGAME:
+            case Request.MEXCHAT:
+                match.updateChat(this, message.getNickName(), (String) message.getObject());
                 break;
-            case QUITGAME:
+            case Request.GET_MODEL: {
+                Object object = match.getModel(message.getNickName(), this);
+                setMessageout(new Message(Request.GET_MODEL_RESPONSE, object));
+            }
+            case Request.PLACE_CARD:
+                match.updateController(Request.PLACE_CARD, this, message.getObject(), message.getNickName());
                 break;
-            case GETGAME:
+            case Request.SELECT_STARTER_FACE:
+                match.updateController(Request.SELECT_STARTER_FACE, this, message.getObject(), message.getNickName());
                 break;
-            case GETNUMBEROFPLAYER:
+            case Request.SELECT_OBJECTIVE_CARD:
+                match.updateController(Request.SELECT_OBJECTIVE_CARD, this, message.getObject(), message.getNickName());
                 break;
-            case GETMODEL:
-                break;
-            case GETSTARTERCARD:
-                break;
-            case GETCOMMONOBJECTIVE:
-                break;
-            case GETSECRETOBJECTIVE:
-                break;
-            case SELECTOBJECTIVE:
-                break;
-            case PLACECARD:
-                break;
-            case DRAWCARDGOLD0:
-                break;
-            case DRAWCARDGOLD1:
-                break;
-            case DRAWCARDGOLD2:
-                break;
-            case DRAWRESOURCE0:
-                break;
-            case DRAWRESOURCE1:
-                break;
-            case DRAWRESOURCE2:
-                break;
-            case MEXCHAT:
-                break;
-            case STARTERFACE:
-                break;
-            case GETTURN:
+            case Request.DRAW_CARD:
+                match.updateController(Request.DRAW_CARD, this, message.getObject(), message.getNickName());
                 break;
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
@@ -171,13 +152,12 @@ public class ClientHandler implements Runnable, ClientInterface{
             case Request.SET_NAME:
                 boolean resp = server.addName(this, message.getNickName());
                 setMessageout(new Message(Request.SET_NAME_RESPONSE, resp));
-
                 break;
             case null:
-                //test();
+
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + message.getRequest());
+                setMessageout(new Message(Request.REQUEST_NOT_AVAILABLE,null));
         }
     }
 
