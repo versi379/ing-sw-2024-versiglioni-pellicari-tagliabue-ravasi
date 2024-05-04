@@ -2,11 +2,13 @@ package it.polimi.sw.GC50.model.card;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
+
 /**
  * Interface for different bonus management
  */
 @FunctionalInterface
-public interface Bonus {
+public interface Bonus extends Serializable {
 
     /**
      * Abstract method to compute bonus points

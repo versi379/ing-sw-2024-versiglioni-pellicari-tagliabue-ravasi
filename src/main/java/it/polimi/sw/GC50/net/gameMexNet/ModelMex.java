@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.gameMexFromClient;
+package it.polimi.sw.GC50.net.gameMexNet;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.Resource;

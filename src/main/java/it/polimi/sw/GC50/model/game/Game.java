@@ -14,11 +14,12 @@ import it.polimi.sw.GC50.net.util.Request;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Game extends Observable {
+public class Game extends Observable implements Serializable {
 
     /**
      * Game's unique identifier
@@ -168,7 +169,7 @@ public class Game extends Observable {
         playerAreas.put(player, new PlayerData(deckSize));
         player.setCurrentGame(this);
         setChanged();
-        notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, player);
+        notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, player.getNickname());
 
         if (playerList.size() >= getNumPlayers()) {
             setChanged();
@@ -352,6 +353,8 @@ public class Game extends Observable {
     public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
         getPlayerData(player).setSecretObjective(secretObjective);
         checkPreparation(player);
+        setChanged();
+        notifyObservers(Request.NOTIFY_CHOOSE_OBJECTIVE, player.getNickname());
         if (isReady(player)) {
             setChanged();
             notifyObservers(Request.NOTIFY_PLAYER_READY, player);

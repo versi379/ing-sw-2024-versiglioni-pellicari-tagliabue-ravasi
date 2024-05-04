@@ -1,12 +1,13 @@
 package it.polimi.sw.GC50.model.card;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Class to represent a corner of the board,
  * comprising its status and its associated resource
  */
-public class Corner {
+public class Corner implements Serializable {
 
     private final CornerStatus status;
 

@@ -1,13 +1,16 @@
 package it.polimi.sw.GC50.view.TUI;
 
-import it.polimi.sw.GC50.net.util.Message;
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.view.View;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class TuiView implements View {
+    ModelMex modelmex;
+
     public void start() {
 
 
@@ -72,8 +75,9 @@ public class TuiView implements View {
         do {
 
             System.out.println("Do you want to join or create a game?");
-            System.out.println("1) to join a game");
-            System.out.println("2) to create a game");
+            System.out.println("1) to create a game");
+            System.out.println("2) to join a game");
+
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -81,13 +85,68 @@ public class TuiView implements View {
                 read = 0;
                 scanner.nextLine();
             }
-        } while (read < 1 && read >= 2);
+        } while (read != 1 && read != 2);
         return read;
     }
 
     @Override
     public void allPlayerReady() {
         System.out.println("All players are ready , the game is starting");
+    }
+
+    @Override
+    public void addModel(ModelMex modelmex) {
+        this.modelmex = modelmex;
+    }
+
+    @Override
+    public int SelectObjectiveCard() {
+        System.out.println("Select the objective card you want to play with");
+        printlistObjectiveCard();
+        Scanner scanner = new Scanner(System.in);
+        int read;
+        do {
+            System.out.println("Insert the number of the objective card you want to play with");
+            try {
+
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                read=0;
+            }
+        } while (read != 1 && read != 2);
+        return read - 1;
+    }
+
+    private void printlistObjectiveCard() {
+        List<ObjectiveCard> objectiveCards = modelmex.getSecretObjectivesList();
+        for (int i = 0; i < objectiveCards.size(); i++) {
+            System.out.println(i + 1 + ") " + objectiveCards.get(i).getPointsPerCompletion() + " points for completing ");
+            switch (objectiveCards.get(i).getObjective().getClass().getSimpleName()) {
+                case "CaveObjective": {
+                    System.out.println("Cave Objective");
+                    System.out.println(((CaveObjective) objectiveCards.get(i).getObjective()).getOrientation().toString());
+                    break;
+                }
+                case "DifferentResourcesObjective": {
+                    System.out.println("Different Resources Objective");
+                    // System.out.println(((DifferentResourcesObjective) objectiveCards.get(i).getObjective().));
+                    break;
+                }
+                case "IdenticalResourcesObjective": {
+                    System.out.println("Identical Resources Objective");
+                    System.out.println(((IdenticalResourcesObjective) objectiveCards.get(i).getObjective()).getTargetResource().toString());
+                    break;
+                }
+                case "MonolithObjective": {
+                    System.out.println("Monolith Objective");
+                    System.out.println(((MonolithObjective) objectiveCards.get(i).getObjective()).getOrientation().toString());
+                    break;
+                }
+
+            }
+
+        }
     }
 
 }

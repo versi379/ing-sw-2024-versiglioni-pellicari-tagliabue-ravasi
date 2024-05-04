@@ -3,10 +3,12 @@ package it.polimi.sw.GC50.model.objective;
 import it.polimi.sw.GC50.model.card.Resource;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class IdenticalResourcesObjective implements Objective {
+public class IdenticalResourcesObjective implements Objective , Serializable {
     private final Resource targetResource;
     private final int count;
 

@@ -1,9 +1,9 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
+import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
+import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
 
@@ -13,7 +13,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class ClientSCK implements Runnable {
     private View view;
@@ -27,6 +26,7 @@ public class ClientSCK implements Runnable {
     //match
     private String matchName;
     private String nickName;
+    private ModelMex modelMex;
     ///////////////////////////////////////////
     private boolean notyfyUpdateModel;
     private boolean notifyUpdateChat;
@@ -115,7 +115,7 @@ public class ClientSCK implements Runnable {
                 if (!response) {
                     nickName = null;
                 }
-                notify = false;
+                notify = true;
                 break;
             }
             case CREATE_GAME_RESPONSE, ENTER_GAME_RESPONSE: {
@@ -123,13 +123,13 @@ public class ClientSCK implements Runnable {
                 if (!response) {
                     this.matchName = null;
                 }
-                notify = false;
+                notify = true;
                 break;
             }
             case GET_FREE_MATCH_RESPONSE: {
                 freeMatch = (ArrayList<String>) mex.getObject();
 
-                notify = false;
+                notify = true;
                 break;
             }
             case NOTIFY_GAME_SETUP: {
@@ -178,6 +178,8 @@ public class ClientSCK implements Runnable {
                 break;
             }
             case GET_MODEL_RESPONSE: {
+                modelMex = (ModelMex) mex.getObject();
+                notyfyUpdateModel = true;
                 break;
             }
             case GET_CHAT_MODEL_RESPONSE: {
@@ -195,8 +197,8 @@ public class ClientSCK implements Runnable {
 
 
     private void waitNoifyfromServer() {
-        notify = true;
-        while (notify) {
+        notify = false;
+        while (!notify) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -278,7 +280,8 @@ public class ClientSCK implements Runnable {
     }
 
 
-    private void selectObjectiveCard() {
+    private void selectObjectiveCard(int index) {
+        setMessageout(new Message.MessageClientToServer(Request.SELECT_OBJECTIVE_CARD, index, this.matchName, this.nickName));
 
     }
 
@@ -289,21 +292,21 @@ public class ClientSCK implements Runnable {
 
 
     private Object getModel() {
-        return null;
+        setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
+        waitNotifyModelChangedFromServer();
+        return this.modelMex;
     }
 
 
     private void waitNotifyModelChangedFromServer() {
-        while (alive) {
-            this.notyfyUpdateModel = true;
-            while (this.notyfyUpdateModel) {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
 
-                }
+        this.notyfyUpdateModel = false;
+        while (!this.notyfyUpdateModel) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+
             }
-            updateView();
 
         }
 
@@ -329,7 +332,7 @@ public class ClientSCK implements Runnable {
                     break;
                 }
                 case 2: {
-                    if (this.getFreeMatch().size() == 0) {
+                    if (this.getFreeMatch() == null) {
                         System.out.println("no free match");
                         break;
                     }
@@ -370,7 +373,7 @@ public class ClientSCK implements Runnable {
         if (this.allPlayerReady) {
             view.allPlayerReady();
             firstPhase();
-        }else{
+        } else {
             this.lobby();
         }
 
@@ -381,6 +384,10 @@ public class ClientSCK implements Runnable {
     //ACTIVE_GAME_CONTROLLER
     ///////////////////////////////////////////
     private void firstPhase() {
+        this.getModel();
+        view.addModel(this.modelMex);
+
+        this.selectObjectiveCard(view.SelectObjectiveCard());
     }
 
     //////////////////////////////////////////

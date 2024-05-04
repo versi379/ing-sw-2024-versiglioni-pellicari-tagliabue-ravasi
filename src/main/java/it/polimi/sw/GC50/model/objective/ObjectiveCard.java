@@ -2,10 +2,12 @@ package it.polimi.sw.GC50.model.objective;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class ObjectiveCard {
+public class ObjectiveCard implements Serializable {
     private final int pointsPerCompletion;
     private final Objective objective;
 

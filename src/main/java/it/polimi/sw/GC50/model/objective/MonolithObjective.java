@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Optional;
  * whose condition consists of the number of cards of a certain color
  * arranged in a specific diagonal pattern
  */
-public class MonolithObjective implements Objective {
+public class MonolithObjective implements Objective , Serializable {
     private final Color targetColor;
     private final MonolithOrientation orientation;
 

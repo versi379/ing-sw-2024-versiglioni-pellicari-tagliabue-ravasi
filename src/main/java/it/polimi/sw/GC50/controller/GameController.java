@@ -5,8 +5,8 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.gameMexFromClient.ModelMex;
-import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
+import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
+import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
 

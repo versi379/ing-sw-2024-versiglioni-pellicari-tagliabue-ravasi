@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.card.Resource;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * Comprises game info with respect to a player, e.g. board, hand, score
  */
-public class PlayerData {
+public class PlayerData implements Serializable {
 
     private final int boardSize;
     private final CornerPointer[][] cornersArea;

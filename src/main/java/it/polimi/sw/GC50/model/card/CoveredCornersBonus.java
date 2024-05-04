@@ -2,13 +2,14 @@ package it.polimi.sw.GC50.model.card;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
 /**
  * Utilized for cards whose score depends on the amount of corners covered by them
  */
-public class CoveredCornersBonus implements Bonus {
+public class CoveredCornersBonus implements Bonus , Serializable {
 
     /**
      * @param card

@@ -1,10 +1,11 @@
 package it.polimi.sw.GC50.view.GUI;
 
-import it.polimi.sw.GC50.net.util.Message;
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.view.View;
 
 public class GuiView implements View {
+    ModelMex modelmex;
+
     //grafica che chiede il nome
     @Override
     public String askName() {
@@ -34,5 +35,15 @@ public class GuiView implements View {
     @Override
     public void allPlayerReady() {
 
+    }
+
+    @Override
+    public void addModel(ModelMex modelmex) {
+        this.modelmex = modelmex;
+    }
+
+    @Override
+    public int SelectObjectiveCard() {
+        return 0;
     }
 }

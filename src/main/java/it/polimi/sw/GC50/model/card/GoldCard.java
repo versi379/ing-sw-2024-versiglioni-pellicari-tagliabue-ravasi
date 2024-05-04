@@ -2,12 +2,13 @@ package it.polimi.sw.GC50.model.card;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Specific type of playable card, characterized by specific rules
  */
-public class GoldCard extends PlayableCard {
+public class GoldCard extends PlayableCard implements Serializable {
 
     /**
      * Represents the constraint regarding the amount of resources

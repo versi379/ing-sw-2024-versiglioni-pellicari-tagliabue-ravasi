@@ -50,13 +50,6 @@ public class ClientHandler implements Runnable, ClientInterface {
 
     }
 
-    public void acuireSemaphore(Semaphore semaphore) {
-        try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {
-            System.out.println("error");
-        }
-    }
 
 
     private void inputThread() {
@@ -113,6 +106,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.GET_MODEL: {
                 Object object = match.getModel(message.getNickName(), this);
                 setMessageout(new Message(Request.GET_MODEL_RESPONSE, object));
+                break;
             }
             case Request.PLACE_CARD:
                 match.updateController(Request.PLACE_CARD, this, message.getObject(), message.getNickName());

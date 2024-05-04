@@ -3,6 +3,7 @@ package it.polimi.sw.GC50.model.lobby;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.PlayerStatus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +11,7 @@ import java.util.Objects;
 /**
  *
  */
-public class Player {
+public class Player implements Serializable {
 
     /**
      * Player's unique nickname

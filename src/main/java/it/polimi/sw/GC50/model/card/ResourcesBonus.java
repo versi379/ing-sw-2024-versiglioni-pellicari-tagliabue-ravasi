@@ -3,6 +3,7 @@ package it.polimi.sw.GC50.model.card;
 import it.polimi.sw.GC50.model.game.CornerPointer;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
  * of a certain resource present in the player's area
  * in the instant immediately after the placement
  */
-public class ResourcesBonus implements Bonus {
+public class ResourcesBonus implements Bonus , Serializable {
 
     private final Resource targetResource;
 

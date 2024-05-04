@@ -2,10 +2,12 @@ package it.polimi.sw.GC50.model.card;
 
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
+
 /**
  * Utilized for cards without a specific bonus
  */
-public class BlankBonus implements Bonus {
+public class BlankBonus implements Bonus, Serializable {
 
     public BlankBonus() {
     }

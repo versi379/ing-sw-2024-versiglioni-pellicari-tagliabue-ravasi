@@ -3,12 +3,13 @@ package it.polimi.sw.GC50.model.objective;
 import it.polimi.sw.GC50.model.card.Resource;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  *
  */
-public class DifferentResourcesObjective implements Objective {
+public class DifferentResourcesObjective implements Objective , Serializable {
     private final Set<Resource> targetResources;
 
     public DifferentResourcesObjective(Set<Resource> targetResources) {

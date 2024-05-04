@@ -2,10 +2,12 @@ package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.PlayableCard;
 
+import java.io.Serializable;
+
 /**
  * Represents a square matrix of PlayableCards
  */
-public class CardsMatrix {
+public class CardsMatrix implements Serializable {
 
     private final PlayableCard[][] matrix;
 
