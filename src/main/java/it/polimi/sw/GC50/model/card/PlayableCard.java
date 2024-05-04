@@ -141,4 +141,171 @@ public class PlayableCard implements Serializable {
     public int hashCode() {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners());
     }
+
+    public String[] toStringTui() {
+
+        ArrayList<StringBuilder> sb = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            sb.add(new StringBuilder());
+        }
+        String colorstart = "";
+        String colorend = "";
+
+        if (this.color.equals(Color.GREEN)) {
+            colorstart = "\033[32m";
+            colorend = "\033[0m";
+
+        }
+        if (this.color.equals(Color.BLUE)) {
+            colorstart = "\033[34m";
+            colorend = "\033[0m";
+        }
+        if (this.color.equals(Color.RED)) {
+            colorstart = "\033[31m";
+            colorend = "\033[0m";
+        }
+        if (this.color.equals(Color.PURPLE)) {
+            colorstart = "\033[35m";
+            colorend = "\033[0m";
+
+        }
+        sb.get(0).append(colorstart);
+        sb.get(1).append(colorstart);
+        sb.get(2).append(colorstart);
+        sb.get(3).append(colorstart);
+        sb.get(4).append(colorstart);
+        sb.get(5).append(colorstart);
+        sb.get(6).append(colorstart);
+
+        if (this.getNwCorner().isVisible()) {
+            String x = " ";
+            if (this.getNwCorner().isFull()) {
+                x = colorend + getResString(this.getNwCorner().getResource()) + colorstart;
+            }
+            sb.get(0).append(("╔═════╗════════"));
+            sb.get(1).append(("║  " + x + "  ║"));
+            sb.get(2).append(("║═════╝        "));
+        } else {
+            sb.get(0).append(("╔══════════════"));
+            sb.get(1).append(("║     ."));
+            sb.get(2).append(("║     ."));
+        }
+        sb.get(1).append("   ");
+        if (this.points > 0) {
+            sb.get(1).append(this.points);
+        } else {
+            sb.get(1).append(" ");
+        }
+        sb.get(1).append(" ");
+        if (this.bonus.getClass().getSimpleName().equals("BlankBonus")) {
+            sb.get(1).append(" ");
+        } else if (this.bonus.getClass().getSimpleName().equals("CoveredCornersBonus")) {
+            sb.get(1).append("C");
+
+        } else if (this.bonus.getClass().getSimpleName().equals("ResourcesBonus")) {
+            ResourcesBonus bonustmp = (ResourcesBonus) this.bonus;
+            sb.get(1).append(colorend);
+            sb.get(1).append(getResString((bonustmp.getTargetResource())));
+            sb.get(1).append(colorstart);
+        }
+        sb.get(1).append("  ");
+        if (this.getNeCorner().isVisible()) {
+            String x = " ";
+            if (this.getNeCorner().isFull()) {
+                x = colorend + getResString(this.getNeCorner().getResource()) + colorstart;
+            }
+            sb.get(0).append(("╔═════╗"));
+            sb.get(1).append(("║  " + x + "  ║"));
+            sb.get(2).append(("╚═════╝"));
+
+        } else {
+
+            sb.get(0).append(("══════╗"));
+            sb.get(1).append(("      ║"));
+            sb.get(2).append(("      ║"));
+        }
+        sb.get(0).append(colorend);
+        sb.get(1).append(colorend);
+        sb.get(2).append(colorend);
+        if (this.fixedResources.isEmpty()) {
+            sb.get(3).append("║                    ║");
+        } else {
+            sb.get(3).append("║     ");
+            sb.get(3).append(colorend);
+            for (Resource res : this.fixedResources) {
+                sb.get(3).append(getResString(res));
+            }
+            sb.get(3).append(colorstart);
+            for (int i = 0; i < 15 - this.fixedResources.size(); i++) {
+                sb.get(3).append(" ");
+            }
+            sb.get(3).append("║");
+
+        }
+///sud
+        if (this.getSwCorner().isVisible()) {
+            String x = " ";
+            if (this.getNwCorner().isFull()) {
+                x = colorend + getResString(this.getNwCorner().getResource()) + colorstart;
+            }
+            sb.get(4).append(("╔═════╗        "));
+            sb.get(5).append(("║  " + x + "  ║        "));
+            sb.get(6).append(("╚═════╝════════"));
+        } else {
+
+            sb.get(4).append(("║      "));
+            sb.get(5).append(("║      "));
+            sb.get(6).append(("╚══════════════"));
+        }
+
+
+        if (this.getSeCorner().isVisible()) {
+            String x = " ";
+            if (this.getNeCorner().isFull()) {
+                x = colorend + getResString(this.getNeCorner().getResource()) + colorstart;
+            }
+            sb.get(4).append("╔═════╗");
+            sb.get(5).append("║  " + x + "  ║");
+            sb.get(6).append("╚═════╝");
+
+        } else {
+            sb.get(4).append(("      ║"));
+            sb.get(5).append(("      ║"));
+            sb.get(6).append(("══════╝"));
+
+
+        }
+        sb.get(4).append(colorend);
+        sb.get(5).append(colorend);
+        sb.get(6).append(colorend);
+        for (int i = 0; i < 7; i++) {
+            System.out.println(sb.get(i).toString());
+        }
+
+        return null;
+    }
+
+    private String getResString(Resource res) {
+        switch (res) {
+
+            case ANIMAL:
+                return new String("\033[34m A\033[0m");
+            case INK:
+
+                return new String("\033[31 II\033[0m");
+            case FUNGI:
+                return new String("\033[31 F\033[0m");
+            case INSECT:
+                return new String("\033[35 II\033[0m");
+            case PLANT:
+                return new String("\033[32 P\033[0m");
+            case QUILL:
+                return new String("\033[37 Q\033[0m");
+            case SCROLL:
+                return new String("\033[37 S\033[0m");
+
+
+        }
+        return null;
+    }
 }

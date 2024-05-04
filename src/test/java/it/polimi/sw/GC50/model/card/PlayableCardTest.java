@@ -158,4 +158,13 @@ public class PlayableCardTest {
         assertTrue(card1.equals(card2));
         assertEquals(card1.hashCode(), card2.hashCode());
     }
+
+    @Test
+    void toStringTui() {
+        new PlayableCard(Color.RED, 1, new BlankBonus(), new ArrayList<>(), corners).toStringTui();
+
+         new PlayableCard(Color.BLUE, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), corners).toStringTui();
+        ;
+
+    }
 }

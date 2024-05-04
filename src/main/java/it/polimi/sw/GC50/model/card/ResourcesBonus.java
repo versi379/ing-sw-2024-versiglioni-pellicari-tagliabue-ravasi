@@ -55,6 +55,7 @@ public class ResourcesBonus implements Bonus , Serializable {
         return getTargetResource().equals(resourcesBonus.getTargetResource());
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(getTargetResource());
