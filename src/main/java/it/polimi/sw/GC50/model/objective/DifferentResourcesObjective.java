@@ -26,7 +26,4 @@ public class DifferentResourcesObjective implements Objective {
                 .min(Integer::compareTo)
                 .orElse(0);
     }
-
-
-
 }

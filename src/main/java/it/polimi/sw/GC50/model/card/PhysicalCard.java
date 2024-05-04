@@ -39,5 +39,4 @@ public class PhysicalCard {
     public PlayableCard getBack() {
         return back;
     }
-
 }

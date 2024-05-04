@@ -11,7 +11,10 @@ import java.util.Objects;
  *
  */
 public class Player {
-    //name of the player and is also used like an id, no double name during all the game
+
+    /**
+     * Player's unique nickname
+     */
     private final String nickname;
     private Game currentGame;
     private final List<String> errorLog;

@@ -4,16 +4,18 @@ public enum Request {
     //////////////////////////////////////////
     //Client to Server
     ///////////////////////////////////////////
-    //LOBBY
 
+    //LOBBY
     CREATE_GAME,
     ENTER_GAME,
     GET_FREE_MATCH,
     SET_NAME,
+
     //ACTIVE GAME
     MEXCHAT,
     GET_MODEL,
     DRAW_CARD,
+
     //////////////////////////////////////////
     //Server to Client
     ///////////////////////////////////////////
@@ -24,11 +26,15 @@ public enum Request {
     PLACE_CARD,
     SELECT_STARTER_FACE,
     SELECT_OBJECTIVE_CARD,
+
     /////////////////////////////////////////
     ///ACTIVE GAME NOTIFY FROM MODEL
     /////////////////////////////////////////
-    NOTIFY_ALL_PLAYERS_JOINED_GAME,
-    NOTIFY_SETUP,
+    NOTIFY_PLAYER_JOINED_GAME,
+    NOTIFY_PLAYER_LEFT_GAME,
+    NOTIFY_GAME_SETUP,
+    NOTIFY_PLAYER_READY,
+    NOTIFY_GAME_STARTED,
     NOTIFY_CARD_NOT_FOUND,
     NOTIFY_CARD_NOT_PLACEABLE,
     NOTIFY_NOT_YOUR_PLACING_PHASE,

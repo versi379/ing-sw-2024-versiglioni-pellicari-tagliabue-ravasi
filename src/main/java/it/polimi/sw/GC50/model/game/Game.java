@@ -2,8 +2,6 @@ package it.polimi.sw.GC50.model.game;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.GC50.adapter.*;
 import it.polimi.sw.GC50.model.card.*;
@@ -15,49 +13,102 @@ import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-/**
- *
- */
 public class Game extends Observable {
 
+    /**
+     * Game's unique identifier
+     */
     private final String id;
-    private final int numPlayers;
-    private final int endScore;
-    private final int deckSize;
-    private GameStatus status;
-    private boolean lastTurn;
 
     /**
-     * List of player of a given game, with the first player of the list being the black one
+     * Declared number of players
+     */
+    private final int numPlayers;
+
+    /**
+     * Declared minimum score for triggering game's ending
+     */
+    private final int endScore;
+
+    /**
+     * Initial size of Resource and Gold decks
+     */
+    private final int deckSize;
+
+    /**
+     * Game's current status
+     */
+    private GameStatus status;
+
+
+    /**
+     * Game's current phase
+     */
+    private PlayingPhase currentPhase;
+
+    /**
+     * Indication that game's termination condition has been met
+     */
+    private boolean lastRound;
+
+    /**
+     * List of game's players
      */
     private final List<Player> playerList;
 
     /**
-     * Index of currently playing player
+     * Mappings between each player and their game's area (PlayerData instances)
+     */
+    private final Map<Player, PlayerData> playerAreas;
+
+    /**
+     * PlayerList's index of currently playing player
      */
     private int currentIndex;
 
     /**
-     * Store mappings between each player and its game area (PlayerData instance)
+     * List of winner players (empty until game's ending)
      */
-    private final Map<Player, PlayerData> playerAreas;
-
-    private PlayingPhase currentPhase;
-
-    private final Stack<PhysicalCard> resourceDeck;
-    private final Stack<PhysicalCard> goldDeck;
-    private final PhysicalCard[] revealedCards;
-    private final Stack<PhysicalCard> starterDeck;
-    private final Stack<ObjectiveCard> objectiveDeck;
-    private final List<ObjectiveCard> commonObjectives;
     private final List<Player> winnerList;
 
+    /**
+     * Deck of resource (physical) cards
+     */
+    private final Stack<PhysicalCard> resourceDeck;
+
+    /**
+     * Deck of gold (physical) cards
+     */
+    private final Stack<PhysicalCard> goldDeck;
+
+    /**
+     * Revealed (physical) cards in the middle of the table
+     */
+    private final PhysicalCard[] revealedCards;
+
+    /**
+     * Deck of starter (physical) cards
+     */
+    private final Stack<PhysicalCard> starterDeck;
+
+    /**
+     * Deck of objective cards
+     */
+    private final Stack<ObjectiveCard> objectiveDeck;
+
+    /**
+     * List of game's common objective cards
+     */
+    private final List<ObjectiveCard> commonObjectives;
+
+    /**
+     * Game's chat
+     */
     private final Chat chat;
 
     public Game(String id, int numPlayers, int endScore, Player creator) {
@@ -67,54 +118,62 @@ public class Game extends Observable {
         deckSize = 40;
 
         status = GameStatus.WAITING;
+        currentPhase = PlayingPhase.PLACING;
+        lastRound = false;
+
         playerList = new ArrayList<>();
         playerAreas = new HashMap<>();
+        currentIndex = 0;
+        winnerList = new ArrayList<>();
+
         resourceDeck = new Stack<>();
         goldDeck = new Stack<>();
         revealedCards = new PhysicalCard[4];
         starterDeck = new Stack<>();
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
-        winnerList = new ArrayList<>();
-        chat = new Chat();
 
-        currentIndex = 0;
-        currentPhase = PlayingPhase.PLACING;
-        lastTurn = false;
+        chat = new Chat();
 
         addPlayer(creator);
     }
 
-    // GAME'S GENERAL INFOS ____________________________________________________________________________________________
+    // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
     public String getId() {
         return id;
+    }
+    
+    public int getNumPlayers() {
+        return numPlayers;
     }
 
     public GameStatus getStatus() {
         return status;
     }
 
-    public int getNumPlayers() {
-        return numPlayers;
+    // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
+    public boolean containsPlayer(Player player) {
+        return playerList.stream()
+                .anyMatch(player::equals);
     }
 
-    // PLAYERS MANAGEMENT ______________________________________________________________________________________________
-    public boolean containsPlayer(Player player) {
-        String playerNickname = player.getNickname();
+    public boolean containsPlayer(String nickname) {
         return playerList.stream()
                 .map(Player::getNickname)
-                .anyMatch(playerNickname::equals);
+                .anyMatch(nickname::equals);
     }
 
     public void addPlayer(Player player) {
         playerList.add(player);
         playerAreas.put(player, new PlayerData(deckSize));
         player.setCurrentGame(this);
+        setChanged();
+        notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, player);
 
         if (playerList.size() >= getNumPlayers()) {
-            setChanged();
-            notifyObservers(Request.NOTIFY_ALL_PLAYERS_JOINED_GAME,null);
             setup();
+            setChanged();
+            notifyObservers(Request.NOTIFY_GAME_SETUP, null);
         }
     }
 
@@ -122,13 +181,13 @@ public class Game extends Observable {
         if (playerList.contains(player)) {
             playerList.remove(player);
             playerAreas.remove(player);
-
             if (currentIndex >= playerList.size()) {
                 currentIndex = 0;
             }
+            setChanged();
+            notifyObservers(Request.NOTIFY_PLAYER_LEFT_GAME, player);
         }
     }
-
 
     public List<Player> getPlayerList() {
         return new ArrayList<>(playerList);
@@ -138,24 +197,20 @@ public class Game extends Observable {
         return playerList.get(currentIndex);
     }
 
-    public PlayingPhase getCurrentPhase() {
-        return currentPhase;
-    }
-
     public PlayerData getPlayerData(Player player) {
         return playerAreas.get(player);
     }
 
-    public PlayerData getPlayerData(String nickName) {
+    public PlayerData getPlayerData(String nickname) {
         for (Player player : playerList) {
-            if (player.equals(new Player(nickName))) {
+            if (player.equals(new Player(nickname))) {
                 return getPlayerData(player);
             }
         }
         return null;
     }
 
-    // SETUP PHASE _____________________________________________________________________________________________________
+    // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
     private void setup() {
         status = GameStatus.SETUP;
         initDecks();
@@ -171,8 +226,6 @@ public class Game extends Observable {
             addCard(player, pickCard(DrawingPosition.GOLDDECK));
             setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
         }
-        setChanged();
-        notifyObservers(Request.NOTIFY_SETUP,null);
     }
 
     /**
@@ -288,6 +341,8 @@ public class Game extends Observable {
         placeCard(player, starterCard, deckSize, deckSize);
         checkPreparation(player);
         if (isReady(player)) {
+            setChanged();
+            notifyObservers(Request.NOTIFY_PLAYER_READY, player);
             checkSetupStatus();
         }
     }
@@ -296,6 +351,8 @@ public class Game extends Observable {
         getPlayerData(player).setSecretObjective(secretObjective);
         checkPreparation(player);
         if (isReady(player)) {
+            setChanged();
+            notifyObservers(Request.NOTIFY_PLAYER_READY, player);
             checkSetupStatus();
         }
     }
@@ -312,13 +369,19 @@ public class Game extends Observable {
         if (playerList.stream()
                 .allMatch(this::isReady)) {
             start();
+            setChanged();
+            notifyObservers(Request.NOTIFY_GAME_STARTED, null);
         }
     }
 
-    // PLAYING PHASE ___________________________________________________________________________________________________
+    // PLAYING PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////
     private void start() {
         status = GameStatus.PLAYING;
         System.err.println("Game \"" + id + "\" has started");
+    }
+
+    public PlayingPhase getCurrentPhase() {
+        return currentPhase;
     }
 
     private void drawingPhase() {
@@ -326,7 +389,7 @@ public class Game extends Observable {
     }
 
     private void nextPlayer() {
-        if (lastTurn && currentIndex == playerList.size() - 1) {
+        if (lastRound && currentIndex == playerList.size() - 1) {
             end();
         } else {
             currentIndex = (currentIndex + 1) % playerList.size();
@@ -334,12 +397,12 @@ public class Game extends Observable {
         }
     }
 
-    public boolean isLastTurn() {
-        return lastTurn;
+    public boolean isLastRound() {
+        return lastRound;
     }
 
     private void setLastTurn() {
-        lastTurn = true;
+        lastRound = true;
     }
 
     public PhysicalCard pickCard(DrawingPosition position) {
@@ -440,12 +503,12 @@ public class Game extends Observable {
     }
 
     public void sendMessageInChat(Player player, String message) {
-        chat.addMessage(new Message(player,message,LocalTime.now()));
+        chat.addMessage(new Message(player, message, LocalTime.now()));
         setChanged();
-        notifyObservers(Request.NOTIFY_CHAT_MESSAGE,null);
+        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, null);
     }
 
-    // END PHASE _______________________________________________________________________________________________________
+    // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
     private void end() {
         status = GameStatus.ENDED;
         playerList.stream()
@@ -487,10 +550,6 @@ public class Game extends Observable {
             }
         }
     }
-    public void error(Request request,Object arg) {
-        setChanged();
-        notifyObservers(request,arg);
-    }
 
     public List<Player> getWinnerList() {
         return new ArrayList<>(winnerList);
@@ -504,7 +563,12 @@ public class Game extends Observable {
         return getPlayerData(player).getObjectivesScore();
     }
 
-    // OTHER METHODS ___________________________________________________________________________________________________
+    // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
+    public void error(Request request, Object arg) {
+        setChanged();
+        notifyObservers(request, arg);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -526,7 +590,7 @@ public class Game extends Observable {
         return getId();
     }
 
-    // TEST METHODS ____________________________________________________________________________________________________
+    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
     public List<ObjectiveCard> getObjectives(int quantity) {
         return pickObjectivesList(quantity);
     }
@@ -542,6 +606,4 @@ public class Game extends Observable {
     public void forceEnd() {
         end();
     }
-
-
 }

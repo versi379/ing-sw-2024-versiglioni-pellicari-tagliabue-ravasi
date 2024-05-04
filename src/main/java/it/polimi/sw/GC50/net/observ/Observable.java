@@ -10,7 +10,9 @@ public class Observable {
     private boolean changed = false;
     private Vector<Observer> obs;
 
-    /** Construct an Observable with zero Observers. */
+    /**
+     * Construct an Observable with zero Observers.
+     */
 
     public Observable() {
         obs = new Vector<>();
@@ -35,7 +37,8 @@ public class Observable {
     /**
      * Deletes an observer from the set of observers of this object.
      * Passing {@code null} to this method will have no effect.
-     * @param   o   the observer to be deleted.
+     *
+     * @param o the observer to be deleted.
      */
     public synchronized void deleteObserver(Observer o) {
         obs.removeElement(o);
@@ -53,9 +56,9 @@ public class Observable {
      * <blockquote>{@code
      * notifyObservers(null)}</blockquote>
      *
-     * @see     java.util.Observable#clearChanged()
-     * @see     java.util.Observable#hasChanged()
-     * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
+     * @see java.util.Observable#clearChanged()
+     * @see java.util.Observable#hasChanged()
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void notifyObservers(Object o) {
         notifyObservers(null);
@@ -70,12 +73,12 @@ public class Observable {
      * Each observer has its {@code update} method called with two
      * arguments: this observable object and the {@code arg} argument.
      *
-     * @param   arg   any object.
-     * @see     java.util.Observable#clearChanged()
-     * @see     java.util.Observable#hasChanged()
-     * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
+     * @param arg any object.
+     * @see java.util.Observable#clearChanged()
+     * @see java.util.Observable#hasChanged()
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    public void notifyObservers(Request request,Object arg) {
+    public void notifyObservers(Request request, Object arg) {
         /*
          * a temporary array buffer, used as a snapshot of the state of
          * current Observers.
@@ -103,12 +106,12 @@ public class Observable {
             clearChanged();
         }
 
-        for (int i = arrLocal.length-1; i>=0; i--) {
+        for (int i = arrLocal.length - 1; i >= 0; i--) {
             try {
-              //  ((Observer)arrLocal[i]).update(this, arg);
-                ((Observer)arrLocal[i]).onUpdate(new Message(request,arg));
+                //  ((Observer)arrLocal[i]).update(this, arg);
+                ((Observer) arrLocal[i]).onUpdate(new Message(request, arg));
             } catch (RemoteException e) {
-              System.out.println("Error in notifyObservers");
+                System.out.println("Error in notifyObservers");
             }
         }
     }
@@ -135,8 +138,8 @@ public class Observable {
      * This method is called automatically by the
      * {@code notifyObservers} methods.
      *
-     * @see     java.util.Observable#notifyObservers()
-     * @see     java.util.Observable#notifyObservers(java.lang.Object)
+     * @see java.util.Observable#notifyObservers()
+     * @see java.util.Observable#notifyObservers(java.lang.Object)
      */
     protected synchronized void clearChanged() {
         changed = false;
@@ -145,12 +148,12 @@ public class Observable {
     /**
      * Tests if this object has changed.
      *
-     * @return  {@code true} if and only if the {@code setChanged}
-     *          method has been called more recently than the
-     *          {@code clearChanged} method on this object;
-     *          {@code false} otherwise.
-     * @see     java.util.Observable#clearChanged()
-     * @see     java.util.Observable#setChanged()
+     * @return {@code true} if and only if the {@code setChanged}
+     * method has been called more recently than the
+     * {@code clearChanged} method on this object;
+     * {@code false} otherwise.
+     * @see java.util.Observable#clearChanged()
+     * @see java.util.Observable#setChanged()
      */
     public synchronized boolean hasChanged() {
         return changed;
@@ -159,7 +162,7 @@ public class Observable {
     /**
      * Returns the number of observers of this {@code Observable} object.
      *
-     * @return  the number of observers of this object.
+     * @return the number of observers of this object.
      */
     public synchronized int countObservers() {
         return obs.size();

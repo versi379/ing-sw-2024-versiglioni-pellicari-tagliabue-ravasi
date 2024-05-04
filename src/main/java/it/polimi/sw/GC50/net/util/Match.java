@@ -11,75 +11,69 @@ import java.util.Map;
 
 public class Match {
     private boolean isFree;
-    private int numOfPlayer;
-    private final int code;
-    private final String gameName;
-
-    private Map<ClientInterface, String> playerMap;
+    private final int code; ///used if there are more than one match with the same name
+    private final String gameId;
+    private final int numOfPlayer;
+    private final Map<ClientInterface, Player> playerMap;
     private final GameController controller;
 
 
     //////////////////////////////////////////
     //PRE GAME
     ///////////////////////////////////////////
-
-    public Match(int code, ClientInterface player, int numOfPlayer, String gameName, String nickName) {
-        this.code = code; ///used if there are more than one match with the same name
-        this.controller = new GameController();
-        this.numOfPlayer = numOfPlayer;
-        this.gameName = gameName;
-        controller.addObserver(player);
+    public Match(int code, ClientInterface client, String gameId, int numOfPlayer, String nickname) {
         this.isFree = true;
+        this.code = code;
+
+        this.gameId = gameId;
+        this.numOfPlayer = numOfPlayer;
+        Player player = new Player(nickname);
         this.playerMap = new HashMap<>();
-        this.playerMap.put(player, nickName);
-
+        this.controller = new GameController(gameId, numOfPlayer, 20, player);
+        this.playerMap.put(client, player);
+        controller.addObserver(client);
     }
-
 
     public boolean isFree() {
         return isFree;
     }
 
-    public Boolean addPlayer(ClientInterface player, String nickName) {
-        Boolean add = false;
+    public boolean addPlayer(ClientInterface client, String nickname) {
+        boolean add = false;
         if (this.playerMap.size() < numOfPlayer) {
-            this.playerMap.put(player, nickName);
-            this.controller.addObserver(player);
-            this.controller.addPlayer(new Player(nickName));
+            Player player = new Player(nickname);
+            this.playerMap.put(client, player);
+            this.controller.addObserver(client);
+            this.controller.addPlayer(player);
             add = true;
         }
         if (numOfPlayer == playerMap.size()) {
             this.isFree = false;
         }
         return add;
-
     }
 
-    public String getName() {
-        return gameName;
+    public String getGameId() {
+        return gameId;
     }
 
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-
-    synchronized public void updateController(Request request, ClientInterface clientInterface, Object update, String nickName) {
-        if (!playerMap.get(clientInterface).equals(nickName)) {
+    synchronized public void updateController(Request request, ClientInterface clientInterface, Object update, String nickname) {
+        if (!playerMap.containsKey(clientInterface)) {
             return;
         }
-        Player player = controller.getPlayer(nickName);
-        if (player == null) {
-            return;
-        }
+        Player player = playerMap.get(clientInterface);
         switch (request) {
-            case PLACE_CARD:
-                controller.placeCard(player, (PlaceCardMex) update);
-                break;
             case SELECT_STARTER_FACE:
                 controller.chooseStarterFace(player, (Boolean) update);
                 break;
             case SELECT_OBJECTIVE_CARD:
                 controller.chooseObjective(player, (Integer) update);
+                break;
+            case PLACE_CARD:
+                controller.placeCard(player, (PlaceCardMex) update);
                 break;
             case DRAW_CARD:
                 controller.drawCard(player, (DrawingPosition) update);
@@ -89,27 +83,20 @@ public class Match {
         }
     }
 
-    synchronized public void updateChat(ClientInterface clientInterface, String nickName, String message) {
-        if (!playerMap.get(clientInterface).equals(nickName)) {
+    synchronized public void updateChat(ClientInterface clientInterface, String nickname, String message) {
+        if (!playerMap.containsKey(clientInterface)) {
             return;
         }
-        Player player = controller.getPlayer(nickName);
-        if (player == null) {
-            return;
-        }
+        Player player = playerMap.get(clientInterface);
         System.out.println("chat updated");
         controller.updateChat(player, message);
     }
-    synchronized public Object getModel(String nickName, ClientInterface clientInterface) {
-        if (!playerMap.get(clientInterface).equals(nickName)) {
+
+    synchronized public Object getModel(String nickname, ClientInterface clientInterface) {
+        if (!playerMap.containsKey(clientInterface)) {
             return null;
         }
-        Player player = controller.getPlayer(nickName);
-        if (player == null) {
-            return null;
-        }
-        return controller.getGameModel(nickName);
+        Player player = playerMap.get(clientInterface);
+        return controller.getGameModel(player);
     }
-
-
 }

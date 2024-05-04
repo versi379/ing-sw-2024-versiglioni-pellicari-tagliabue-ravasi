@@ -1,12 +1,5 @@
 package it.polimi.sw.GC50.net.util;
 
-import com.google.gson.Gson;
-import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Match;
-import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.View;
-
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +39,7 @@ public class Server {
     /**
      * @param client
      * @param numOfPlayer
-     * @param gameName
+     * @param gameId
      * @param nickname
      * @return Match
      * the return value is the match created by the client
@@ -55,10 +48,10 @@ public class Server {
      * @
      */
 
-    public synchronized Match createMatch(ClientInterface client, int numOfPlayer, String gameName, String nickname) {
+    public synchronized Match createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) {
         if (checkUser(client, nickname)) {
-            matches.add(new Match(matches.size(), client, numOfPlayer, gameName, nickname));
-            System.out.println(gameName + " Match created");
+            matches.add(new Match(matches.size(), client, gameId, numOfPlayer, nickname));
+            System.out.println(gameId + " Match created");
             freePlayer.remove(client);
             return matches.get(matches.size() - 1);
 
@@ -83,7 +76,7 @@ public class Server {
     public synchronized Match enterMatch(String code, ClientInterface player, String nickname) {
         if (checkUser(player, nickname)) {
             for (int i = 0; i < matches.size(); i++) {
-                if (matches.get(i).getName().equals(code) && matches.get(i).isFree()) {
+                if (matches.get(i).getGameId().equals(code) && matches.get(i).isFree()) {
                     matches.get(i).addPlayer(player, nickname);
                     freePlayer.remove(player);
                     return matches.get(i);
@@ -100,7 +93,7 @@ public class Server {
         ArrayList<String> freeMatch = new ArrayList<>();
         for (int i = 0; i < matches.size(); i++) {
             if (matches.get(i).isFree()) {
-                freeMatch.add(matches.get(i).getName());
+                freeMatch.add(matches.get(i).getGameId());
             }
         }
         return freeMatch;

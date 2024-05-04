@@ -130,7 +130,7 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
                 notify = false;
                 break;
             }
-            case Request.NOTIFY_ALL_PLAYERS_JOINED_GAME: {
+            case Request.NOTIFY_GAME_SETUP: {
                 System.out.println("all players joined");
             }
             default: {

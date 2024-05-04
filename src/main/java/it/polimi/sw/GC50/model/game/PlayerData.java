@@ -34,7 +34,6 @@ public class PlayerData {
 
     /**
      * Constructor to build player area
-     *
      * @param deckSize
      */
     public PlayerData(int deckSize) {
@@ -58,7 +57,7 @@ public class PlayerData {
         objectivesScore = 0;
     }
 
-    // SETUP PHASE _____________________________________________________________________________________________________
+    // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
     public void setStartingChoices(PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         ready = false;
         this.starterCard = starterCard;
@@ -87,7 +86,7 @@ public class PlayerData {
         return ready;
     }
 
-    // BOARD MANAGEMENT ________________________________________________________________________________________________
+    // BOARD MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
     public int boardSize() {
         return boardSize;
     }
@@ -157,7 +156,7 @@ public class PlayerData {
         numOfResources.replace(resource, numOfResources.get(resource) - 1);
     }
 
-    // HAND MANAGEMENT _________________________________________________________________________________________________
+    // HAND MANAGEMENT /////////////////////////////////////////////////////////////////////////////////////////////////
     public void addCard(PhysicalCard card) {
         hand.add(card);
     }
@@ -170,7 +169,7 @@ public class PlayerData {
         return hand;
     }
 
-    // SCORE MANAGEMENT ________________________________________________________________________________________________
+    // SCORE MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
     public int getTotalScore() {
         return totalScore;
     }
@@ -201,7 +200,7 @@ public class PlayerData {
         }
     }
 
-    // TEST METHODS ____________________________________________________________________________________________________
+    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void printCornersArea() {
         System.out.println("_____________________________________________________________________________________________");
         for (int j = 47; j > 35; j--) {

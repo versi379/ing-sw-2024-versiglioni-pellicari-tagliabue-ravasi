@@ -131,7 +131,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
                 System.out.println(message.getNickName());
-                this.match = server.createMatch(this, (int) message.getObject(), message.getMatchName(), message.getNickName());
+                this.match = server.createMatch(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
                 } else {

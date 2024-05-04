@@ -1,11 +1,9 @@
 package it.polimi.sw.GC50.net.RMI;
 
-import com.google.gson.Gson;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Match;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.net.util.Server;
-import it.polimi.sw.GC50.view.View;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -62,12 +60,11 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
 
     @Override
     public String createGame(int numOfPl, String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
-        this.match = server.createMatch(clientInterface, numOfPl, gameName, nickName);
+        this.match = server.createMatch(clientInterface, gameName, numOfPl, nickName);
         if (this.match == null) {
             return null;
         }
-        return this.match.getName();
-
+        return this.match.getGameId();
     }
 
     @Override
@@ -76,7 +73,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
         if (this.match == null) {
             return null;
         }
-        return this.match.getName();
+        return this.match.getGameId();
     }
 
 
@@ -85,8 +82,8 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     ///////////////////////////////////////////
 
     @Override
-    public void message(Request request, Object object,String gameName, String nickName, ClientInterface clientInterface ) throws RemoteException {
-        if (match.getName().equals(gameName)) {
+    public void message(Request request, Object object, String gameName, String nickName, ClientInterface clientInterface) throws RemoteException {
+        if (match.getGameId().equals(gameName)) {
             if (request.equals(Request.MEXCHAT)) {
                 match.updateChat(clientInterface, nickName, (String) object);
                 System.out.println("chat updated");
@@ -109,17 +106,13 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
 
             }
         }
-
     }
 
     @Override
     public Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
-        if (!match.getName().equals(gameName)) {
+        if (!match.getGameId().equals(gameName)) {
             return null;
         }
         return match.getModel(nickName, clientInterface);
-
     }
-
-
 }

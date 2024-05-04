@@ -8,11 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static it.polimi.sw.GC50.model.card.CornerTest.fungiCorner;
 import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +29,7 @@ public class GameTest {
         assertEquals(GameStatus.WAITING, game.getStatus());
         assertEquals(1, game.getPlayerList().size());
         assertEquals(player, game.getPlayerList().getFirst());
-        assertFalse(game.isLastTurn());
+        assertFalse(game.isLastRound());
     }
 
     // PLAYERS MANAGEMENT ______________________________________________________________________________________________
@@ -240,14 +238,14 @@ public class GameTest {
                 .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
                 .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
-        assertFalse(game.isLastTurn());
+        assertFalse(game.isLastRound());
 
 
         IntStream.range(0, game.goldDeckSize())
                 .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
                 .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
-        assertTrue(game.isLastTurn());
+        assertTrue(game.isLastRound());
 
 
         assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
@@ -272,14 +270,14 @@ public class GameTest {
                 .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
                 .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
-        assertFalse(game.isLastTurn());
+        assertFalse(game.isLastRound());
 
 
         IntStream.range(0, game.resourceDeckSize())
                 .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
                 .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
-        assertTrue(game.isLastTurn());
+        assertTrue(game.isLastRound());
 
 
         assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
@@ -334,7 +332,7 @@ public class GameTest {
 
         assertEquals(card, game.getPlayerData(player).getCard(41, 41));
         assertEquals(PlayingPhase.DRAWING, game.getCurrentPhase());
-        assertTrue(game.isLastTurn());
+        assertTrue(game.isLastRound());
     }
 
     @Test

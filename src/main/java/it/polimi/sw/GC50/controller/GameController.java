@@ -22,10 +22,9 @@ public class GameController {
         this.game = game;
     }
 
-    public GameController() {
-        game = new Game("test", 2, 2, new Player("s"));
+    public GameController(String gameId, int numPlayers, int endScore, Player creator) {
+        game = new Game(gameId, numPlayers, endScore, creator);
     }
-
 
     public void addPlayer(Player player) {
         if (isWaiting()) {
@@ -50,7 +49,7 @@ public class GameController {
             game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
@@ -65,11 +64,11 @@ public class GameController {
                 game.setSecretObjective(player, secretObjectivesList.get(index));
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_INVALID_INDEX,player.getNickname());
+                game.error(Request.NOTIFY_INVALID_INDEX, player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
@@ -89,15 +88,15 @@ public class GameController {
                     game.removeCard(player, index);
                 } else {
                     sendError(player, "Carta non piazzabile");
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE,player.getNickname());
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
                 }
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_CARD_NOT_FOUND,player.getNickname());
+                game.error(Request.NOTIFY_CARD_NOT_FOUND, player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
@@ -108,7 +107,6 @@ public class GameController {
      * @param x
      * @param y
      */
-
     public void placeCard(Player player, int index, boolean face, int x, int y) {
         if (isPlacingPhase(player)) {
             List<PhysicalCard> playerHand = game.getHand(player);
@@ -119,15 +117,15 @@ public class GameController {
                     game.removeCard(player, index);
                 } else {
                     sendError(player, "Carta non piazzabile");
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE,player.getNickname());
+                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
                 }
             } else {
                 sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_CARD_NOT_FOUND,player.getNickname());
+                game.error(Request.NOTIFY_CARD_NOT_FOUND, player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
@@ -142,11 +140,11 @@ public class GameController {
                 game.addCard(player, card);
             } else {
                 sendError(player, "Posizione non disponibile");
-                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE,player.getNickname());
+                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, player.getNickname());
             }
         } else {
             sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE,player.getNickname());
+            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
@@ -190,20 +188,18 @@ public class GameController {
         return null;
     }
 
-    synchronized public Object getGameModel(String nickname) {
-        if (!game.getPlayerList().contains(getPlayer(nickname))) {
-            return null;
-        }
-        PlayerData pd= game.getPlayerData(getPlayer(nickname));
-
-        return new ModelMex(pd.getBoardSize(), pd.getCornersArea(), pd.getCardsArea(), pd.getHand(), pd.getNumOfResources(), pd.getSecretObjective(), pd.getTotalScore(), pd.getObjectivesScore(), pd.getStarterCard(), pd.getSecretObjectivesList());
+    synchronized public Object getGameModel(Player player) {
+        PlayerData pd = game.getPlayerData(player);
+        return new ModelMex(pd.getBoardSize(), pd.getCornersArea(), pd.getCardsArea(),
+                pd.getHand(), pd.getNumOfResources(), pd.getSecretObjective(), pd.getTotalScore(),
+                pd.getObjectivesScore(), pd.getStarterCard(), pd.getSecretObjectivesList());
     }
 
     public void updateChat(Player player, String message) {
 
     }
 
-    // TEST METHODS ____________________________________________________________________________________________________
+    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
     public Game getGame() {
         return game;
     }
@@ -211,6 +207,4 @@ public class GameController {
     public void addObserver(ClientInterface clientInterface) {
         game.addObserver(clientInterface);
     }
-
-
 }

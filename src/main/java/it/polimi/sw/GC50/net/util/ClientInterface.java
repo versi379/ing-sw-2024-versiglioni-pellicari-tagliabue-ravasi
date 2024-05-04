@@ -8,11 +8,10 @@ import java.rmi.RemoteException;
 
 public interface ClientInterface extends Remote,Observer{
     public void ping() throws RemoteException;
+
     @Override
     public void update(Observable o, Object arg) throws RemoteException;
 
     @Override
     public void onUpdate(Message message) throws RemoteException;
-
-
 }
