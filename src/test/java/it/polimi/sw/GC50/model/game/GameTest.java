@@ -258,6 +258,17 @@ public class GameTest {
         assertNull(game.pickCard(DrawingPosition.GOLD1));
         assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
         assertNull(game.pickCard(DrawingPosition.GOLD2));
+
+        player = new Player("Player");
+        Game game2 = new Game("Partita", 1, 20, player);
+        {
+            PhysicalCard card;
+            for (int i = 0; i < game2.resourceDeckSize(); i++) {
+                card = game2.pickCard(DrawingPosition.RESOURCEDECK);
+                card.getFront().toStringTui();
+                card.getBack().toStringTui();
+            }
+        }
     }
 
     @Test

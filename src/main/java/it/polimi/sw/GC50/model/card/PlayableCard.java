@@ -180,15 +180,21 @@ public class PlayableCard implements Serializable {
         if (this.getNwCorner().isVisible()) {
             String x = " ";
             if (this.getNwCorner().isFull()) {
-                x = colorend + getResString(this.getNwCorner().getResource()) + colorstart;
+                x = getResString(this.getNwCorner().getResource());
             }
             sb.get(0).append(("╔═════╗════════"));
-            sb.get(1).append(("║  " + x + "  ║"));
+            sb.get(1).append(("║  "));
+             sb.get(1).append(colorend);
+            sb.get(1).append("");
+            sb.get(1).append(x);
+            sb.get(1).append("");
+            sb.get(1).append(colorstart);
+            sb.get(1).append("  ║");
             sb.get(2).append(("║═════╝        "));
         } else {
             sb.get(0).append(("╔══════════════"));
-            sb.get(1).append(("║     ."));
-            sb.get(2).append(("║     ."));
+            sb.get(1).append(("║      "));
+            sb.get(2).append(("║              "));
         }
         sb.get(1).append("   ");
         if (this.points > 0) {
@@ -212,10 +218,14 @@ public class PlayableCard implements Serializable {
         if (this.getNeCorner().isVisible()) {
             String x = " ";
             if (this.getNeCorner().isFull()) {
-                x = colorend + getResString(this.getNeCorner().getResource()) + colorstart;
+                x = getResString(this.getNeCorner().getResource());
             }
-            sb.get(0).append(("╔═════╗"));
-            sb.get(1).append(("║  " + x + "  ║"));
+            sb.get(0).append("╔═════╗");
+            sb.get(1).append("║  ");
+            //sb.get(1).append(colorend);
+            sb.get(1).append(x);
+            // sb.get(1).append(colorstart);
+            sb.get(1).append("  ║");
             sb.get(2).append(("╚═════╝"));
 
         } else {
@@ -227,6 +237,9 @@ public class PlayableCard implements Serializable {
         sb.get(0).append(colorend);
         sb.get(1).append(colorend);
         sb.get(2).append(colorend);
+
+        ///CENTER
+
         if (this.fixedResources.isEmpty()) {
             sb.get(3).append("║                    ║");
         } else {
@@ -246,15 +259,17 @@ public class PlayableCard implements Serializable {
         if (this.getSwCorner().isVisible()) {
             String x = " ";
             if (this.getNwCorner().isFull()) {
-                x = colorend + getResString(this.getNwCorner().getResource()) + colorstart;
+                x = getResString(this.getNwCorner().getResource());
             }
             sb.get(4).append(("╔═════╗        "));
-            sb.get(5).append(("║  " + x + "  ║        "));
+            sb.get(5).append(("║  "));
+            sb.get(5).append(x);
+            sb.get(5).append("  ║        ");
             sb.get(6).append(("╚═════╝════════"));
         } else {
 
-            sb.get(4).append(("║      "));
-            sb.get(5).append(("║      "));
+            sb.get(4).append(("║              "));
+            sb.get(5).append(("║              "));
             sb.get(6).append(("╚══════════════"));
         }
 
@@ -262,10 +277,14 @@ public class PlayableCard implements Serializable {
         if (this.getSeCorner().isVisible()) {
             String x = " ";
             if (this.getNeCorner().isFull()) {
-                x = colorend + getResString(this.getNeCorner().getResource()) + colorstart;
+
+                x = getResString(this.getNeCorner().getResource());
+
             }
             sb.get(4).append("╔═════╗");
-            sb.get(5).append("║  " + x + "  ║");
+            sb.get(5).append("║  ");
+            sb.get(5).append(x);
+            sb.get(5).append("  ║");
             sb.get(6).append("╚═════╝");
 
         } else {
@@ -289,20 +308,20 @@ public class PlayableCard implements Serializable {
         switch (res) {
 
             case ANIMAL:
-                return new String("\033[34m A\033[0m");
+                return new String("A");
             case INK:
 
-                return new String("\033[31 II\033[0m");
+                return new String("I");
             case FUNGI:
-                return new String("\033[31 F\033[0m");
+                return new String("F");
             case INSECT:
-                return new String("\033[35 II\033[0m");
+                return new String("I");
             case PLANT:
-                return new String("\033[32 P\033[0m");
+                return new String("P");
             case QUILL:
-                return new String("\033[37 Q\033[0m");
+                return new String("Q");
             case SCROLL:
-                return new String("\033[37 S\033[0m");
+                return new String("Q");
 
 
         }
