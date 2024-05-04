@@ -61,6 +61,7 @@ public class TuiView implements View {
 
     @Override
     public void waitPlayer() {
+        System.out.println("Waiting for other players to join the game");
 
     }
 
@@ -82,6 +83,11 @@ public class TuiView implements View {
             }
         } while (read < 1 && read >= 2);
         return read;
+    }
+
+    @Override
+    public void allPlayerReady() {
+        System.out.println("All players are ready , the game is starting");
     }
 
 }

@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface, RequestFromClietToServer {
+public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface {
     private ServerRmi serverRmi;
     private String servername;
     //////////////////////////////////////////
@@ -59,7 +59,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         this.typeOfView = typeOfView;
     }
 
-    @Override
+
     public String createGame(String matchName, int numberOfPlayer) {
         try {
             this.gameName = this.serverRmi.createGame(numberOfPlayer, matchName, this, this.nickName);
@@ -69,7 +69,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return this.gameName;
     }
 
-    @Override
+
     public String enterGame(String matchName) {
         try {
             this.gameName = this.serverRmi.enterGame(matchName, this, this.nickName);
@@ -79,7 +79,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return this.gameName;
     }
 
-    @Override
+
     public String setName(String name) {
         try {
             this.nickName = this.serverRmi.setName(this, name);
@@ -89,7 +89,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return this.nickName;
     }
 
-    @Override
+
     public ArrayList<String> getFreeMatch() {
         try {
             this.freeMatch = this.serverRmi.getFreeMatch();
@@ -102,7 +102,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-    @Override
+
     public void placeCard(boolean face, int index, int x, int y) {
         if (this.gameName == null) {
             return;
@@ -118,7 +118,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     }
 
-    @Override
+
     public void sendMessage(String message) {
         if (this.gameName == null) {
             return;
@@ -134,27 +134,27 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     }
 
-    @Override
+
     public void selectStarterFace() {
 
     }
 
-    @Override
+
     public void selectObjectiveCard() {
 
     }
 
-    @Override
+
     public void drawCard() {
 
     }
 
-    @Override
+
     public Object getModel() {
         return null;
     }
 
-    @Override
+
     public void waitNotifyModelChangedFromServer() {
 
     }
@@ -177,8 +177,63 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     @Override
     public void onUpdate(Message message) throws RemoteException {
-        System.out.println("Update from server2");
+        switch (message.getRequest()) {
+            case NOTIFY_GAME_SETUP: {
+                System.out.println("all players joined");
+                break;
+            }
+            case NOTIFY_CARD_PLACED: {
+                break;
+
+            }
+            case NOTIFY_PLAYER_JOINED_GAME: {
+                break;
+            }
+            case NOTIFY_PLAYER_LEFT_GAME: {
+                break;
+            }
+            case NOTIFY_PLAYER_READY: {
+                break;
+            }
+            case NOTIFY_GAME_STARTED: {
+                break;
+            }
+            case NOTIFY_CHAT_MESSAGE: {
+                break;
+            }
+            case NOTIFY_ALL_PLAYER_JOINED_THE_GAME: {
+                break;
+            }
+            case NOTIFY_CARD_NOT_FOUND: {
+                break;
+            }
+            case NOTIFY_CARD_NOT_PLACEABLE: {
+                break;
+            }
+            case NOTIFY_NOT_YOUR_PLACING_PHASE: {
+                break;
+            }
+            case NOTIFY_OPERATION_NOT_AVAILABLE: {
+                break;
+            }
+            case NOTIFY_INVALID_INDEX: {
+                break;
+            }
+            case NOTIFY_POSITION_DRAWING_NOT_AVAILABLE: {
+                break;
+            }
+            case GET_MODEL_RESPONSE: {
+                break;
+            }
+            case GET_CHAT_MODEL_RESPONSE: {
+                System.out.println("chat");
+                break;
+            }
+
+        }
+        System.out.println("Update from server");
     }
 
-
+    public void lobby() {
+    }
 }

@@ -11,4 +11,5 @@ public interface View extends Serializable {
     int askNumberOfPlayer();
     void waitPlayer();
     int joinorcreate();
+    void allPlayerReady();
 }

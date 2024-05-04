@@ -30,4 +30,9 @@ public class GuiView implements View {
     public int joinorcreate() {
         return 0;
     }
+
+    @Override
+    public void allPlayerReady() {
+
+    }
 }

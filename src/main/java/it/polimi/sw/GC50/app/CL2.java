@@ -21,7 +21,7 @@ public class CL2 {
         TypeOfConnection connection;
         View view = null;
         TypeOfView typeview = null;
-        RequestFromClietToServer requestFromClietToServer = null;
+
 
         int read;
 
@@ -61,18 +61,20 @@ public class CL2 {
 
             try {
 
-                requestFromClietToServer = new ClientSCK(2012, "localhost");
-                Thread thread = new Thread((ClientSCK) requestFromClietToServer);
+                ClientSCK client = new ClientSCK(2012, "localhost");
+                Thread thread = new Thread(client);
                 thread.start();
-               /* requestFromClietToServer.addView(view, typeview);
-                System.out.println(requestFromClietToServer.setName("luca"));
+                client.addView(view, typeview);
+                client.lobby();
+
+               /* System.out.println(requestFromClietToServer.setName("luca"));
                 System.out.println(requestFromClietToServer.createGame("game3", 2));
                 System.out.println(requestFromClietToServer.setName("luca2"));
                 System.out.println(requestFromClietToServer.createGame("game4", 2));
                 System.out.println(requestFromClietToServer.getFreeMatch());
                 System.out.println(requestFromClietToServer.enterGame("game3"));*/
-                requestFromClietToServer.setName("luca3");
-                requestFromClietToServer.createGame("game1", 2);
+                //client.setName("luca3");
+                //client.createGame("game1", 2);
 
 
             } catch (IOException e) {
@@ -84,10 +86,10 @@ public class CL2 {
             try {
                 System.out.println("Connecting to server...");
                 ClientRmi clientRmi = new ClientRmi("server");
-                requestFromClietToServer = clientRmi;
 
 
-                requestFromClietToServer.addView(view, typeview);
+                clientRmi.addView(view, typeview);
+                clientRmi.lobby();
                 /*System.out.println(requestFromClietToServer.setName("luca3"));
                 System.out.println(requestFromClietToServer.createGame("game1", 3));
                 System.out.println(requestFromClietToServer.setName("luca4"));
@@ -95,8 +97,8 @@ public class CL2 {
                 System.out.println(requestFromClietToServer.getFreeMatch());
                 System.out.println(requestFromClietToServer.enterGame("game3"));
 */
-                requestFromClietToServer.setName("luca3");
-                requestFromClietToServer.createGame("game1", 2);
+                //clientRmi.setName("luca3");
+                //clientRmi.createGame("game1", 2);
 
             } catch (RemoteException e) {
                 System.out.println("Error in connection");
