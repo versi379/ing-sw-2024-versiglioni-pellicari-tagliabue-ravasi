@@ -171,6 +171,8 @@ public class Game extends Observable {
         notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, player);
 
         if (playerList.size() >= getNumPlayers()) {
+            setChanged();
+            notifyObservers(Request.NOTIFY_ALL_PLAYER_JOINED_THE_GAME, null);
             setup();
             setChanged();
             notifyObservers(Request.NOTIFY_GAME_SETUP, null);

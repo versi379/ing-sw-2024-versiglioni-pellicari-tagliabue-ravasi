@@ -2,7 +2,6 @@ package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.net.gameMexFromClient.PlaceCardMex;
 import it.polimi.sw.GC50.net.observ.Observable;
-import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
@@ -128,7 +127,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             return;
         }
         try {
-            this.serverRmi.message(Request.MEXCHAT, message, this.gameName, this.nickName, this);
+            this.serverRmi.message(Request.MEX_CHAT, message, this.gameName, this.nickName, this);
         } catch (RemoteException e) {
             return;
         }

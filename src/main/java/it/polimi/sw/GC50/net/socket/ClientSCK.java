@@ -218,7 +218,7 @@ public class ClientSCK implements Runnable, RequestFromClietToServer {
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.MEXCHAT, message, this.matchName, this.nickName));
+        setMessageout(new Message.MessageClientToServer(Request.MEX_CHAT, message, this.matchName, this.nickName));
     }
 
     @Override

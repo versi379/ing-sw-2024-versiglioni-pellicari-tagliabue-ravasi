@@ -2,7 +2,6 @@ package it.polimi.sw.GC50.net.socket;
 
 
 import it.polimi.sw.GC50.net.observ.Observable;
-import it.polimi.sw.GC50.net.observ.Observer;
 import it.polimi.sw.GC50.net.util.*;
 
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
@@ -109,7 +107,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
-            case Request.MEXCHAT:
+            case Request.MEX_CHAT:
                 match.updateChat(this, message.getNickName(), (String) message.getObject());
                 break;
             case Request.GET_MODEL: {
