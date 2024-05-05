@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.model.objective;
 
+import it.polimi.sw.GC50.model.card.CardType;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
 import java.io.Serializable;
@@ -26,5 +27,9 @@ public class ObjectiveCard implements Serializable {
 
     public int checkObjective(PlayerData playerData) {
         return pointsPerCompletion * objective.checkCondition(playerData);
+    }
+
+    public CardType getCardType() {
+        return CardType.OBJECTIVE;
     }
 }

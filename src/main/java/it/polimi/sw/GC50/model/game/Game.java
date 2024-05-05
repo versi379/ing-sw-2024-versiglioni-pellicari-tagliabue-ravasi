@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Game extends Observable implements Serializable {
+public class Game extends Observable implements Serializable, GameInterface {
 
     /**
      * Game's unique identifier
@@ -308,6 +308,14 @@ public class Game extends Observable implements Serializable {
         }
     }
 
+    private List<ObjectiveCard> pickObjectivesList(int quantity) {
+        List<ObjectiveCard> objectives = new ArrayList<>();
+        for (int i = 0; i < quantity && !objectiveDeck.isEmpty(); i++) {
+            objectives.add(objectiveDeck.pop());
+        }
+        return objectives;
+    }
+
     private void setCommonObjectives(int quantity) {
         commonObjectives.addAll(pickObjectivesList(quantity));
     }
@@ -316,20 +324,12 @@ public class Game extends Observable implements Serializable {
         return new ArrayList<>(commonObjectives);
     }
 
-    public void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
-        getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
-    }
-
     private PhysicalCard pickStarterCard() {
         return starterDeck.pop();
     }
 
-    private List<ObjectiveCard> pickObjectivesList(int quantity) {
-        List<ObjectiveCard> objectives = new ArrayList<>();
-        for (int i = 0; i < quantity && !objectiveDeck.isEmpty(); i++) {
-            objectives.add(objectiveDeck.pop());
-        }
-        return objectives;
+    private void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
+        getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
     }
 
     public PhysicalCard getStarterCard(Player player) {

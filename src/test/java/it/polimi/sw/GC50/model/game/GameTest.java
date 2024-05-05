@@ -32,7 +32,7 @@ public class GameTest {
         assertFalse(game.isLastRound());
     }
 
-    // PLAYERS MANAGEMENT ______________________________________________________________________________________________
+    // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testAddPlayer() {
         Player player1 = new Player("Player1");
@@ -121,19 +121,16 @@ public class GameTest {
         assertEquals(game.getPlayerData(player2), game.getPlayerData("Player2"));
     }
 
-    // SETUP PHASE _____________________________________________________________________________________________________
+    // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
-    void testStartingChoices() {
+    void testGetStartingChoices() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
-        PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, whitePlayableCard, whitePlayableCard);
-        ObjectiveCard objective = new ObjectiveCard(2,
-                new IdenticalResourcesObjective(Resource.ANIMAL, 3));
-        List<ObjectiveCard> objectiveCardList = new ArrayList<>(Arrays.asList(objective, objective));
-        game.setStartingChoices(player, starterCard, objectiveCardList);
 
-        assertEquals(starterCard, game.getStarterCard(player));
-        assertEquals(objectiveCardList, game.getSecretObjectivesList(player));
+        assertEquals(CardType.STARTER, game.getStarterCard(player).getCardType());
+        assertEquals(2, game.getSecretObjectivesList(player).size());
+        game.getSecretObjectivesList(player).stream()
+                        .forEach(x -> assertEquals(CardType.OBJECTIVE, x.getCardType()));
     }
 
     @Test
@@ -183,7 +180,7 @@ public class GameTest {
         assertEquals(GameStatus.PLAYING, game.getStatus());
     }
 
-    // PLAYING PHASE ___________________________________________________________________________________________________
+    // PLAYING PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testPickCardPositions() {
         Player player = new Player("Player");
@@ -385,7 +382,7 @@ public class GameTest {
         assertEquals(card, game.getHand(player).getLast());
     }
 
-    // END PHASE _______________________________________________________________________________________________________
+    // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testEndTotalWinner() {
         Player player1 = new Player("Player1");
@@ -464,7 +461,7 @@ public class GameTest {
         assertEquals(player2, game.getWinnerList().get(1));
     }
 
-    // OTHER METHODS ___________________________________________________________________________________________________
+    // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testEqualsFalse() {
         Player player = new Player("Player");

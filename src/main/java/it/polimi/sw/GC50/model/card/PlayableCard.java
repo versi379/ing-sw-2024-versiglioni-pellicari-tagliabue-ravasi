@@ -306,11 +306,9 @@ public class PlayableCard implements Serializable {
 
     private String getResString(Resource res) {
         switch (res) {
-
             case ANIMAL:
                 return new String("A");
             case INK:
-
                 return new String("I");
             case FUNGI:
                 return new String("F");
@@ -321,9 +319,7 @@ public class PlayableCard implements Serializable {
             case QUILL:
                 return new String("Q");
             case SCROLL:
-                return new String("Q");
-
-
+                return new String("S");
         }
         return null;
     }
