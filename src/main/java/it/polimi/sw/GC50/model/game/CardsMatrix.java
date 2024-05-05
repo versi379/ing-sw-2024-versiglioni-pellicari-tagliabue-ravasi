@@ -178,8 +178,8 @@ public class CardsMatrix implements Serializable {
 
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result.cardsMatrix[i][j] = cardsMatrix[length() - 1 - j][length() - 1 - j];
-                result.orderMatrix[i][j] = orderMatrix[length() - 1 - j][length() - 1 - j];
+                result.cardsMatrix[i][j] = cardsMatrix[length() - 1 - j][length() - 1 - i];
+                result.orderMatrix[i][j] = orderMatrix[length() - 1 - j][length() - 1 - i];
             }
         }
         result.currentCards = currentCards;
