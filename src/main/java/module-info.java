@@ -10,4 +10,5 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.net.util;
     exports it.polimi.sw.GC50.net.observ;
     exports it.polimi.sw.GC50.controller;
+    exports it.polimi.sw.GC50.trash;
 }

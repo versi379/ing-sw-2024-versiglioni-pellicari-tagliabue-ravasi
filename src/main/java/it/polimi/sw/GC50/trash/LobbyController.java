@@ -1,5 +1,6 @@
-package it.polimi.sw.GC50.controller;
+package it.polimi.sw.GC50.trash;
 
+import it.polimi.sw.GC50.controller.GameController;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.lobby.Lobby;

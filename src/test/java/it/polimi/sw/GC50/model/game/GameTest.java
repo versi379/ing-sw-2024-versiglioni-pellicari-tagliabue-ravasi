@@ -313,6 +313,19 @@ public class GameTest {
     }
 
     @Test
+    void testrandom() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+
+        List<Resource> resources = new ArrayList<>();
+        PlayableCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+
+        PhysicalCard card = new PhysicalCard(CardType.GOLD, goldCard, goldCard);
+        card.getFront().toStringTui();
+        card.getBack().toStringTui();
+    }
+
+    @Test
     void testPickCardEmptyDecks2() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);

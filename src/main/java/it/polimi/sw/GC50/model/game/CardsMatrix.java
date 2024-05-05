@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.model.game;
 
 import it.polimi.sw.GC50.model.card.PlayableCard;
+import javafx.util.Pair;
 
 import java.io.Serializable;
 
@@ -8,15 +9,18 @@ import java.io.Serializable;
  * Represents a square matrix of PlayableCards
  */
 public class CardsMatrix implements Serializable {
-
-    private final PlayableCard[][] matrix;
+    private final PlayableCard[][] cardsMatrix;
+    private final Integer[][] orderMatrix;
+    private int currentCards;
 
     public CardsMatrix(int length) {
-        matrix = new PlayableCard[length][length];
+        cardsMatrix = new PlayableCard[length][length];
+        orderMatrix = new Integer[length][length];
+        currentCards = 0;
     }
 
     public int length() {
-        return matrix.length;
+        return cardsMatrix.length;
     }
 
     /**
@@ -27,9 +31,11 @@ public class CardsMatrix implements Serializable {
 
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result.insert(get(i, j), i, j);
+                result.cardsMatrix[i][j] = cardsMatrix[i][j];
+                result.orderMatrix[i][j] = orderMatrix[i][j];
             }
         }
+        result.currentCards = currentCards;
         return result;
     }
 
@@ -65,7 +71,9 @@ public class CardsMatrix implements Serializable {
      * @param y
      */
     public void insert(PlayableCard card, int x, int y) {
-        matrix[x][y] = card;
+        cardsMatrix[x][y] = card;
+        orderMatrix[x][y] = currentCards;
+        currentCards++;
     }
 
     /**
@@ -88,7 +96,7 @@ public class CardsMatrix implements Serializable {
      * @return
      */
     public PlayableCard get(int x, int y) {
-        return matrix[x][y];
+        return cardsMatrix[x][y];
     }
 
     /**
@@ -122,6 +130,26 @@ public class CardsMatrix implements Serializable {
         return result;
     }
 
+    // GETS CARD AT CORNER COORDINATES!!
+    public int getCardOrder(int x, int y) {
+        if (getAtCornersCoordinates(x, y) != null) {
+            return orderMatrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)];
+        }
+        return -1;
+    }
+
+    // TELLS IF THE CORNER IN POSITION corner (0->SW, 1->NW, 2->NE, 3->SE)
+    // OF THE CARD AT (x, y) (CORNERS COORDINATES!) IS VISIBLE FROM THE PLAYER'S PERSPECTIVE
+    public boolean isCornerVisible(int x, int y, int corner) {
+        switch(corner) {
+            case 0 -> {return getCardOrder(x, y) > getCardOrder(x - 1, y - 1);}
+            case 1 -> {return getCardOrder(x, y) > getCardOrder(x - 1, y + 1);}
+            case 2 -> {return getCardOrder(x, y) > getCardOrder(x + 1, y + 1);}
+            case 3 -> {return getCardOrder(x, y) > getCardOrder(x + 1, y - 1);}
+            default -> {return false;}
+        }
+    }
+
     /**
      * Flips matrix over its primary diagonal
      *
@@ -132,9 +160,11 @@ public class CardsMatrix implements Serializable {
 
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result.insert(get(j, i), i, j);
+                result.cardsMatrix[i][j] = cardsMatrix[j][i];
+                result.orderMatrix[i][j] = orderMatrix[j][i];
             }
         }
+        result.currentCards = currentCards;
         return result;
     }
 
@@ -148,9 +178,11 @@ public class CardsMatrix implements Serializable {
 
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result.insert(get(length() - 1 - j, length() - 1 - i), i, j);
+                result.cardsMatrix[i][j] = cardsMatrix[length() - 1 - j][length() - 1 - j];
+                result.orderMatrix[i][j] = orderMatrix[length() - 1 - j][length() - 1 - j];
             }
         }
+        result.currentCards = currentCards;
         return result;
     }
 

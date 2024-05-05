@@ -329,7 +329,6 @@ public class GoldCard extends PlayableCard implements Serializable {
 
             System.out.print("\n");
         }
-
         return card;
     }
 
