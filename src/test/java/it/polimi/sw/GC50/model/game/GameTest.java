@@ -32,7 +32,7 @@ public class GameTest {
         assertFalse(game.isLastRound());
     }
 
-    // PLAYERS MANAGEMENT ______________________________________________________________________________________________
+    // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testAddPlayer() {
         Player player1 = new Player("Player1");
@@ -121,7 +121,7 @@ public class GameTest {
         assertEquals(game.getPlayerData(player2), game.getPlayerData("Player2"));
     }
 
-    // SETUP PHASE _____________________________________________________________________________________________________
+    // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testStartingChoices() {
         Player player = new Player("Player");
@@ -183,7 +183,7 @@ public class GameTest {
         assertEquals(GameStatus.PLAYING, game.getStatus());
     }
 
-    // PLAYING PHASE ___________________________________________________________________________________________________
+    // PLAYING PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testPickCardPositions() {
         Player player = new Player("Player");
@@ -235,94 +235,29 @@ public class GameTest {
 
 
         IntStream.range(0, game.resourceDeckSize())
-                        .
-
-                mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
-                        .
-
-                forEach(x ->
-
-                        assertEquals(CardType.RESOURCE, x.getCardType()));
-
+                .mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
+                .forEach(x -> assertEquals(CardType.RESOURCE, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
-
         assertFalse(game.isLastRound());
 
 
         IntStream.range(0, game.goldDeckSize())
-                        .
-
-                mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
-                        .
-
-                forEach(x ->
-
-                        assertEquals(CardType.GOLD, x.getCardType()));
-
+                .mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
+                .forEach(x -> assertEquals(CardType.GOLD, x.getCardType()));
         assertNull(game.pickCard(DrawingPosition.GOLDDECK));
-
         assertTrue(game.isLastRound());
 
 
-        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).
-
-                getCardType());
-
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).getCardType());
         assertNull(game.pickCard(DrawingPosition.RESOURCE1));
-
-        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).
-
-                getCardType());
-
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).getCardType());
         assertNull(game.pickCard(DrawingPosition.RESOURCE2));
 
 
-        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).
-
-                getCardType());
-
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).getCardType());
         assertNull(game.pickCard(DrawingPosition.GOLD1));
-
-        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).
-
-                getCardType());
-
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).getCardType());
         assertNull(game.pickCard(DrawingPosition.GOLD2));
-
-        player = new
-
-                Player("Player");
-
-        Game game2 = new Game("Partita", 1, 20, player);
-
-        {
-            PhysicalCard card;
-            for (int i = 0; i < game2.resourceDeckSize(); i++) {
-                card = game2.pickCard(DrawingPosition.RESOURCEDECK);
-                card.getFront().toStringTui();
-                card.getBack().toStringTui();
-                card = game2.pickCard(DrawingPosition.GOLDDECK);
-                if (card.getCardType().equals(CardType.GOLD)) {
-                   // GoldCard goldCard1 = (GoldCard) card.getFront();
-                    //goldCard1.toStringTui();
-                    card.getFront().toStringTui();
-                    card.getBack().toStringTui();
-                }
-            }
-        }
-    }
-
-    @Test
-    void testrandom() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-
-        List<Resource> resources = new ArrayList<>();
-        PlayableCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
-
-        PhysicalCard card = new PhysicalCard(CardType.GOLD, goldCard, goldCard);
-        card.getFront().toStringTui();
-        card.getBack().toStringTui();
     }
 
     @Test
@@ -439,7 +374,7 @@ public class GameTest {
         assertEquals(card, game.getHand(player).getLast());
     }
 
-    // END PHASE _______________________________________________________________________________________________________
+    // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testEndTotalWinner() {
         Player player1 = new Player("Player1");
@@ -518,7 +453,7 @@ public class GameTest {
         assertEquals(player2, game.getWinnerList().get(1));
     }
 
-    // OTHER METHODS ___________________________________________________________________________________________________
+    // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testEqualsFalse() {
         Player player = new Player("Player");
@@ -550,5 +485,89 @@ public class GameTest {
         Game game = new Game(gameId, 1, 20, player);
 
         assertEquals(gameId, game.toString());
+    }
+
+    @Test
+    void testRandom1() {
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
+
+
+        IntStream.range(0, game.resourceDeckSize())
+                        .
+
+                mapToObj(i -> game.pickCard(DrawingPosition.RESOURCEDECK))
+                        .
+
+                forEach(x ->
+
+                        assertEquals(CardType.RESOURCE, x.getCardType()));
+
+        assertNull(game.pickCard(DrawingPosition.RESOURCEDECK));
+
+        assertFalse(game.isLastRound());
+
+
+        IntStream.range(0, game.goldDeckSize())
+                        .
+
+                mapToObj(i -> game.pickCard(DrawingPosition.GOLDDECK))
+                        .
+
+                forEach(x ->
+
+                        assertEquals(CardType.GOLD, x.getCardType()));
+
+        assertNull(game.pickCard(DrawingPosition.GOLDDECK));
+
+        assertTrue(game.isLastRound());
+
+
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE1).
+
+                getCardType());
+
+        assertNull(game.pickCard(DrawingPosition.RESOURCE1));
+
+        assertEquals(CardType.RESOURCE, game.pickCard(DrawingPosition.RESOURCE2).
+
+                getCardType());
+
+        assertNull(game.pickCard(DrawingPosition.RESOURCE2));
+
+
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD1).
+
+                getCardType());
+
+        assertNull(game.pickCard(DrawingPosition.GOLD1));
+
+        assertEquals(CardType.GOLD, game.pickCard(DrawingPosition.GOLD2).
+
+                getCardType());
+
+        assertNull(game.pickCard(DrawingPosition.GOLD2));
+
+        player = new
+
+                Player("Player");
+
+        Game game2 = new Game("Partita", 1, 20, player);
+
+        {
+            PhysicalCard card;
+            for (int i = 0; i < game2.resourceDeckSize(); i++) {
+                card = game2.pickCard(DrawingPosition.RESOURCEDECK);
+                card.getFront().toStringTui();
+                card.getBack().toStringTui();
+                card = game2.pickCard(DrawingPosition.GOLDDECK);
+                if (card.getCardType().equals(CardType.GOLD)) {
+                    // GoldCard goldCard1 = (GoldCard) card.getFront();
+                    //goldCard1.toStringTui();
+                    card.getFront().toStringTui();
+                    card.getBack().toStringTui();
+                }
+            }
+        }
     }
 }
