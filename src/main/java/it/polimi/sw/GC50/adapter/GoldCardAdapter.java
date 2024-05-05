@@ -46,7 +46,7 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
         in.beginObject();
         Color color = null;
         int points = 0;
-        Bonus bonus = new BlankBonus();
+        Bonus bonus = null;
         List<Resource> fixedResources = new ArrayList<>();
         List<Resource> constraint = new ArrayList<>();
         Corner[] corners = new Corner[4];
@@ -59,7 +59,7 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
                     points = in.nextInt();
                     break;
                 case "bonus":
-                    new BonusAdapter().read(in);
+                    bonus=new BonusAdapter().read(in);
                     break;
                 case "fixedResources":
                     in.beginArray();

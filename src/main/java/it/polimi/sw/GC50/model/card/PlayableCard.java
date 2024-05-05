@@ -151,22 +151,25 @@ public class PlayableCard implements Serializable {
         String colorstart = "";
         String colorend = "";
 
+
+        colorend = ("\u001B[0m");
+
         if (this.color.equals(Color.GREEN)) {
-            colorstart = "\033[32m";
-            colorend = "\033[0m";
+            colorstart = ("\u001B[32m");
+
 
         }
         if (this.color.equals(Color.BLUE)) {
-            colorstart = "\033[34m";
-            colorend = "\033[0m";
+            colorstart = ("\u001B[34m");
+
         }
         if (this.color.equals(Color.RED)) {
-            colorstart = "\033[31m";
-            colorend = "\033[0m";
+            colorstart = ("\u001B[31m");
+
         }
         if (this.color.equals(Color.PURPLE)) {
-            colorstart = "\033[35m";
-            colorend = "\033[0m";
+            colorstart = ("\u001B[35m");
+
 
         }
         sb.get(0).append(colorstart);
@@ -182,32 +185,42 @@ public class PlayableCard implements Serializable {
             if (this.getNwCorner().isFull()) {
                 x = getResString(this.getNwCorner().getResource());
             }
-            sb.get(0).append(("╔═════╗════════"));
-            sb.get(1).append(("║  "));
-             sb.get(1).append(colorend);
+            sb.get(0).append("╔═════╗════════");
+            sb.get(1).append("║  ");
+            sb.get(1).append(colorend);
             sb.get(1).append("");
             sb.get(1).append(x);
             sb.get(1).append("");
             sb.get(1).append(colorstart);
             sb.get(1).append("  ║");
-            sb.get(2).append(("║═════╝        "));
+            sb.get(2).append("╠═════╝        ");
         } else {
-            sb.get(0).append(("╔══════════════"));
-            sb.get(1).append(("║      "));
-            sb.get(2).append(("║              "));
+            sb.get(0).append("╔══════════════");
+            sb.get(1).append("║      ");
+            sb.get(2).append("║              ");
         }
+
+
+        //////////point
+
         sb.get(1).append("   ");
         if (this.points > 0) {
+            sb.get(1).append(colorend);
+            sb.get(1).append("\u001B[37m");
             sb.get(1).append(this.points);
+            sb.get(1).append(colorend);
+            sb.get(1).append(colorstart);
         } else {
             sb.get(1).append(" ");
         }
         sb.get(1).append(" ");
+
+        /////////bonus
+        System.out.println(this.bonus.getClass().getSimpleName());
         if (this.bonus.getClass().getSimpleName().equals("BlankBonus")) {
             sb.get(1).append(" ");
         } else if (this.bonus.getClass().getSimpleName().equals("CoveredCornersBonus")) {
             sb.get(1).append("C");
-
         } else if (this.bonus.getClass().getSimpleName().equals("ResourcesBonus")) {
             ResourcesBonus bonustmp = (ResourcesBonus) this.bonus;
             sb.get(1).append(colorend);
@@ -222,17 +235,17 @@ public class PlayableCard implements Serializable {
             }
             sb.get(0).append("╔═════╗");
             sb.get(1).append("║  ");
-            //sb.get(1).append(colorend);
+            sb.get(1).append(colorend);
             sb.get(1).append(x);
-            // sb.get(1).append(colorstart);
+            sb.get(1).append(colorstart);
             sb.get(1).append("  ║");
-            sb.get(2).append(("╚═════╝"));
+            sb.get(2).append("╚═════╣");
 
         } else {
 
-            sb.get(0).append(("══════╗"));
-            sb.get(1).append(("      ║"));
-            sb.get(2).append(("      ║"));
+            sb.get(0).append("══════╗");
+            sb.get(1).append("      ║");
+            sb.get(2).append("      ║");
         }
         sb.get(0).append(colorend);
         sb.get(1).append(colorend);
@@ -243,13 +256,13 @@ public class PlayableCard implements Serializable {
         if (this.fixedResources.isEmpty()) {
             sb.get(3).append("║                    ║");
         } else {
-            sb.get(3).append("║     ");
+            sb.get(3).append("║        ");
             sb.get(3).append(colorend);
             for (Resource res : this.fixedResources) {
                 sb.get(3).append(getResString(res));
             }
             sb.get(3).append(colorstart);
-            for (int i = 0; i < 15 - this.fixedResources.size(); i++) {
+            for (int i = 0; i < 12 - this.fixedResources.size(); i++) {
                 sb.get(3).append(" ");
             }
             sb.get(3).append("║");
@@ -261,16 +274,18 @@ public class PlayableCard implements Serializable {
             if (this.getNwCorner().isFull()) {
                 x = getResString(this.getNwCorner().getResource());
             }
-            sb.get(4).append(("╔═════╗        "));
-            sb.get(5).append(("║  "));
+            sb.get(4).append("╠═════╗        ");
+            sb.get(5).append("║  ");
+            sb.get(5).append(colorend);
             sb.get(5).append(x);
+            sb.get(5).append(colorstart);
             sb.get(5).append("  ║        ");
-            sb.get(6).append(("╚═════╝════════"));
+            sb.get(6).append("╚═════╝════════");
         } else {
 
-            sb.get(4).append(("║              "));
-            sb.get(5).append(("║              "));
-            sb.get(6).append(("╚══════════════"));
+            sb.get(4).append("║              ");
+            sb.get(5).append("║              ");
+            sb.get(6).append("╚══════════════");
         }
 
 
@@ -281,16 +296,18 @@ public class PlayableCard implements Serializable {
                 x = getResString(this.getNeCorner().getResource());
 
             }
-            sb.get(4).append("╔═════╗");
+            sb.get(4).append("╔═════╣");
             sb.get(5).append("║  ");
+            sb.get(5).append(colorend);
             sb.get(5).append(x);
+            sb.get(5).append(colorstart);
             sb.get(5).append("  ║");
             sb.get(6).append("╚═════╝");
 
         } else {
-            sb.get(4).append(("      ║"));
-            sb.get(5).append(("      ║"));
-            sb.get(6).append(("══════╝"));
+            sb.get(4).append("      ║");
+            sb.get(5).append("      ║");
+            sb.get(6).append("══════╝");
 
 
         }
@@ -307,21 +324,21 @@ public class PlayableCard implements Serializable {
     private String getResString(Resource res) {
         switch (res) {
 
-            case ANIMAL:
-                return new String("A");
-            case INK:
 
-                return new String("I");
+            case ANIMAL:
+                return new String("\u001B[34mA\u001B[0m");
+            case INK:
+                return new String("\u001B[33mI\u001B[0m");
             case FUNGI:
-                return new String("F");
+                return new String("\u001B[31mF\u001B[0m");
             case INSECT:
-                return new String("I");
+                return new String("\u001B[35mI\u001B[0m");
             case PLANT:
-                return new String("P");
+                return new String("\u001B[32mP\u001B[0m");
             case QUILL:
-                return new String("Q");
+                return new String("\u001B[33mQ\u001B[0m");
             case SCROLL:
-                return new String("Q");
+                return new String("\u001B[33mQ\u001B[0m");
 
 
         }
