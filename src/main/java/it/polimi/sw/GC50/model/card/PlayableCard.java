@@ -142,11 +142,16 @@ public class PlayableCard implements Serializable {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners());
     }
 
-    public String[] toStringTui() {
+    public String[][] toStringTui() {
+        String[][] card = new String[7][3];
+        //7 righe e 3 colonne;
+        StringBuilder[][] cardtmp = new StringBuilder[7][3];
 
         ArrayList<StringBuilder> sb = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            sb.add(new StringBuilder());
+            for (int j = 0; j < 3; j++) {
+                cardtmp[i][j] = new StringBuilder();
+            }
         }
         String colorstart = "";
         String colorend = "";
@@ -172,122 +177,176 @@ public class PlayableCard implements Serializable {
 
 
         }
-        sb.get(0).append(colorstart);
-        sb.get(1).append(colorstart);
-        sb.get(2).append(colorstart);
-        sb.get(3).append(colorstart);
-        sb.get(4).append(colorstart);
-        sb.get(5).append(colorstart);
-        sb.get(6).append(colorstart);
 
+
+        //corner nw
         if (this.getNwCorner().isVisible()) {
             String x = " ";
             if (this.getNwCorner().isFull()) {
                 x = getResString(this.getNwCorner().getResource());
             }
-            sb.get(0).append("╔═════╗════════");
-            sb.get(1).append("║  ");
-            sb.get(1).append(colorend);
-            sb.get(1).append("");
-            sb.get(1).append(x);
-            sb.get(1).append("");
-            sb.get(1).append(colorstart);
-            sb.get(1).append("  ║");
-            sb.get(2).append("╠═════╝        ");
+            cardtmp[0][0].append(colorstart);
+            cardtmp[0][0].append("╔═════╗");
+            cardtmp[0][0].append(colorend);
+
+            cardtmp[1][0].append(colorstart);
+            cardtmp[1][0].append("║  ");
+            cardtmp[1][0].append(colorend);
+            cardtmp[1][0].append(x);
+            cardtmp[1][0].append(colorstart);
+            cardtmp[1][0].append("  ║");
+            cardtmp[1][0].append(colorend);
+
+            cardtmp[2][0].append(colorstart);
+            cardtmp[2][0].append("╠═════╝");
+            cardtmp[2][0].append(colorend);
+
         } else {
-            sb.get(0).append("╔══════════════");
-            sb.get(1).append("║      ");
-            sb.get(2).append("║              ");
+            cardtmp[0][0].append(colorstart);
+            cardtmp[1][0].append(colorstart);
+            cardtmp[2][0].append(colorstart);
+            cardtmp[0][0].append("╔══════");
+            cardtmp[1][0].append("║      ");
+            cardtmp[2][0].append("║      ");
+            cardtmp[0][0].append(colorend);
+            cardtmp[1][0].append(colorend);
+            cardtmp[2][0].append(colorend);
+
         }
+        ////up center
+        cardtmp[0][1].append(colorstart);
+        cardtmp[1][1].append(colorstart);
+        cardtmp[2][1].append(colorstart);
+        cardtmp[0][1].append("════════");
+        cardtmp[1][1].append("   ");
+        cardtmp[2][1].append("        ");
 
-
-        //////////point
-
-        sb.get(1).append("   ");
         if (this.points > 0) {
-            sb.get(1).append(colorend);
-            sb.get(1).append("\u001B[37m");
-            sb.get(1).append(this.points);
-            sb.get(1).append(colorend);
-            sb.get(1).append(colorstart);
+            cardtmp[1][1].append(colorend);
+            cardtmp[1][1].append("\u001B[37m");
+            cardtmp[1][1].append(this.points);
+
+
         } else {
-            sb.get(1).append(" ");
+            cardtmp[1][1].append(" ");
         }
-        sb.get(1).append(" ");
+        cardtmp[1][1].append(" ");
 
         /////////bonus
-        System.out.println(this.bonus.getClass().getSimpleName());
+
         if (this.bonus.getClass().getSimpleName().equals("BlankBonus")) {
-            sb.get(1).append(" ");
+            cardtmp[1][1].append(" ");
+
         } else if (this.bonus.getClass().getSimpleName().equals("CoveredCornersBonus")) {
-            sb.get(1).append("C");
+            cardtmp[1][1].append("C");
         } else if (this.bonus.getClass().getSimpleName().equals("ResourcesBonus")) {
             ResourcesBonus bonustmp = (ResourcesBonus) this.bonus;
-            sb.get(1).append(colorend);
-            sb.get(1).append(getResString((bonustmp.getTargetResource())));
-            sb.get(1).append(colorstart);
+            cardtmp[1][1].append(colorend);
+            cardtmp[1][1].append(getResString((bonustmp.getTargetResource())));
+            cardtmp[1][1].append(colorstart);
         }
-        sb.get(1).append("  ");
+        cardtmp[1][1].append("  ");
+        cardtmp[1][1].append(colorend);
+
+        cardtmp[0][2].append(colorstart);
+        cardtmp[1][2].append(colorstart);
+        cardtmp[2][2].append(colorstart);
+
         if (this.getNeCorner().isVisible()) {
             String x = " ";
             if (this.getNeCorner().isFull()) {
                 x = getResString(this.getNeCorner().getResource());
             }
-            sb.get(0).append("╔═════╗");
-            sb.get(1).append("║  ");
-            sb.get(1).append(colorend);
-            sb.get(1).append(x);
-            sb.get(1).append(colorstart);
-            sb.get(1).append("  ║");
-            sb.get(2).append("╚═════╣");
+            cardtmp[0][2].append("╔═════╗");
+            cardtmp[1][2].append("║  ");
+            cardtmp[1][2].append(colorend);
+            cardtmp[1][2].append(x);
+            cardtmp[1][2].append(colorstart);
+            cardtmp[1][2].append("  ║");
+            cardtmp[2][2].append("╚═════╣");
 
         } else {
+            cardtmp[0][2].append("══════╗");
+            cardtmp[1][2].append("      ║");
+            cardtmp[2][2].append("      ║");
 
-            sb.get(0).append("══════╗");
-            sb.get(1).append("      ║");
-            sb.get(2).append("      ║");
         }
-        sb.get(0).append(colorend);
-        sb.get(1).append(colorend);
-        sb.get(2).append(colorend);
+        cardtmp[0][2].append(colorend);
+        cardtmp[1][2].append(colorend);
+        cardtmp[2][2].append(colorend);
+
 
         ///CENTER
+        cardtmp[3][0].append(colorstart);
 
         if (this.fixedResources.isEmpty()) {
-            sb.get(3).append("║                    ║");
+            cardtmp[3][0].append("║                    ║");
         } else {
-            sb.get(3).append("║        ");
-            sb.get(3).append(colorend);
+            cardtmp[3][0].append("║        ");
+            cardtmp[3][0].append(colorend);
             for (Resource res : this.fixedResources) {
-                sb.get(3).append(getResString(res));
+                cardtmp[3][0].append(getResString(res));
             }
-            sb.get(3).append(colorstart);
+            cardtmp[3][0].append(colorstart);
             for (int i = 0; i < 12 - this.fixedResources.size(); i++) {
-                sb.get(3).append(" ");
+                cardtmp[3][0].append(" ");
             }
-            sb.get(3).append("║");
+            cardtmp[3][0].append("║");
+
 
         }
+        cardtmp[3][0].append(colorend);
+        cardtmp[3][1].append("");
+        cardtmp[3][2].append("");
+
 ///sud
+        cardtmp[4][0].append(colorstart);
+        cardtmp[5][0].append(colorstart);
+        cardtmp[6][0].append(colorstart);
+
         if (this.getSwCorner().isVisible()) {
             String x = " ";
             if (this.getNwCorner().isFull()) {
                 x = getResString(this.getNwCorner().getResource());
             }
-            sb.get(4).append("╠═════╗        ");
-            sb.get(5).append("║  ");
-            sb.get(5).append(colorend);
-            sb.get(5).append(x);
-            sb.get(5).append(colorstart);
-            sb.get(5).append("  ║        ");
-            sb.get(6).append("╚═════╝════════");
+
+            cardtmp[4][0].append("╠═════╗");
+            cardtmp[5][0].append("║  ");
+            cardtmp[5][0].append(colorend);
+            cardtmp[5][0].append(x);
+            cardtmp[5][0].append(colorstart);
+            cardtmp[5][0].append("  ║");
+            cardtmp[6][0].append("╚═════╝");
         } else {
 
-            sb.get(4).append("║              ");
-            sb.get(5).append("║              ");
-            sb.get(6).append("╚══════════════");
+            cardtmp[4][0].append("║      ");
+            cardtmp[5][0].append("║      ");
+            cardtmp[6][0].append("╚══════");
         }
+        cardtmp[4][0].append(colorend);
+        cardtmp[5][0].append(colorend);
+        cardtmp[6][0].append(colorend);
 
+        ////////down center
+        cardtmp[4][1].append(colorstart);
+        cardtmp[5][1].append(colorstart);
+        cardtmp[6][1].append(colorstart);
+        cardtmp[4][1].append("        ");
+
+
+        cardtmp[5][1].append(" ");
+
+
+        cardtmp[6][1].append("════════");
+        cardtmp[4][1].append(colorend);
+        cardtmp[5][1].append(colorend);
+        cardtmp[6][1].append(colorend);
+
+
+        //////
+        cardtmp[4][2].append(colorstart);
+        cardtmp[5][2].append(colorstart);
+        cardtmp[6][2].append(colorstart);
 
         if (this.getSeCorner().isVisible()) {
             String x = " ";
@@ -296,29 +355,35 @@ public class PlayableCard implements Serializable {
                 x = getResString(this.getNeCorner().getResource());
 
             }
-            sb.get(4).append("╔═════╣");
-            sb.get(5).append("║  ");
-            sb.get(5).append(colorend);
-            sb.get(5).append(x);
-            sb.get(5).append(colorstart);
-            sb.get(5).append("  ║");
-            sb.get(6).append("╚═════╝");
+            cardtmp[4][2].append("╔═════╣");
+            cardtmp[5][2].append("║  ");
+            cardtmp[5][2].append(colorend);
+            cardtmp[5][2].append(x);
+            cardtmp[5][2].append(colorstart);
+            cardtmp[5][2].append("  ║");
+            cardtmp[6][2].append("╚═════╝");
 
         } else {
-            sb.get(4).append("      ║");
-            sb.get(5).append("      ║");
-            sb.get(6).append("══════╝");
+            cardtmp[4][2].append("      ║");
+            cardtmp[5][2].append("      ║");
+            cardtmp[6][2].append("══════╝");
 
 
         }
-        sb.get(4).append(colorend);
-        sb.get(5).append(colorend);
-        sb.get(6).append(colorend);
+        cardtmp[4][2].append(colorend);
+        cardtmp[5][2].append(colorend);
+        cardtmp[6][2].append(colorend);
+
         for (int i = 0; i < 7; i++) {
-            System.out.println(sb.get(i).toString());
+            for (int j = 0; j < 3; j++) {
+                card[i][j] = cardtmp[i][j].toString();
+                System.out.print(card[i][j]);
+            }
+
+            System.out.print("\n");
         }
 
-        return null;
+        return card;
     }
 
     private String getResString(Resource res) {
