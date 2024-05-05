@@ -35,7 +35,7 @@ public class PlayerDataTest {
         assertEquals(0, playerData.getObjectivesScore());
     }
 
-    // SETUP PHASE _____________________________________________________________________________________________________
+    // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testSetStartingChoices() {
         PlayerData playerData = new PlayerData(40);
@@ -117,7 +117,7 @@ public class PlayerDataTest {
         assertTrue(playerData.isReady());
     }
 
-    // BOARD MANAGEMENT ________________________________________________________________________________________________
+    // BOARD MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testBoardSize() {
         PlayerData playerData = new PlayerData(2);
@@ -249,7 +249,7 @@ public class PlayerDataTest {
         assertEquals(0, playerData.numOfResource(Resource.INSECT));
     }
 
-    // HAND MANAGEMENT _________________________________________________________________________________________________
+    // HAND MANAGEMENT /////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testAddCard() {
         PlayerData playerData = new PlayerData(2);
@@ -281,7 +281,7 @@ public class PlayerDataTest {
         assertEquals(new ArrayList<>(Arrays.asList(redCard, greenCard)), playerData.getHand());
     }
 
-    // SCORE MANAGEMENT ________________________________________________________________________________________________
+    // SCORE MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testObjectiveIncrement() {
         PlayerData playerData = new PlayerData(CaveObjectiveTest.uprightLMatrix());
