@@ -150,6 +150,27 @@ public class CardsMatrix implements Serializable {
         }
     }
 
+    // SELF EXPLANATORY
+    public Pair<PlayableCard, Integer>[][] getAsCornerMatrixWithOrder() {
+        Pair[][] result = new Pair[length()][length()];
+        for (int i = 0; i < length(); i++) {
+            for (int j = 0; j < length(); j++) {
+                result[i][j] = new Pair(getAtCornersCoordinates(i, j), getCardOrder(i, j));
+            }
+        }
+        return result;
+    }
+
+    public PlayableCard[][] getAsCornerMatrixWithoutOrder() {
+        PlayableCard[][] result = new PlayableCard[length()][length()];
+        for (int i = 0; i < length(); i++) {
+            for (int j = 0; j < length(); j++) {
+                result[i][j] = getAtCornersCoordinates(i, j);
+            }
+        }
+        return result;
+    }
+
     /**
      * Flips matrix over its primary diagonal
      *
