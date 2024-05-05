@@ -334,7 +334,7 @@ public class PlayableCard implements Serializable {
         cardtmp[4][1].append("        ");
 
 
-        cardtmp[5][1].append(" ");
+        cardtmp[5][1].append("        ");
 
 
         cardtmp[6][1].append("════════");
