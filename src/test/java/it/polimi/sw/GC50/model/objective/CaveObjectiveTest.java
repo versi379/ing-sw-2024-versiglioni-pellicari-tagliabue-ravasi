@@ -20,11 +20,6 @@ public class CaveObjectiveTest {
     }
 
     @Test
-    void testAdjustOrientation() {
-
-    }
-
-    @Test
     void testUprightLCondition() {
         PlayerData testPlayerData = new PlayerData(uprightLMatrix());
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL);

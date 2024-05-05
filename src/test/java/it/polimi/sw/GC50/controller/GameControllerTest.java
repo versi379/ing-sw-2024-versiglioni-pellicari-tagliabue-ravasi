@@ -256,7 +256,7 @@ public class GameControllerTest {
         assertEquals(CardType.RESOURCE, game.getHand(player).getLast().getCardType());
     }
 
-    // OTHER ___________________________________________________________________________________________________________
+    // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
     void testCardsVisualization() {
         Player player = new Player("Francesco");
