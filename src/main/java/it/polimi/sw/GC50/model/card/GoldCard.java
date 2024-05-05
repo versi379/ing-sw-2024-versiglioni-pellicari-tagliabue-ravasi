@@ -275,7 +275,10 @@ public class GoldCard extends PlayableCard implements Serializable {
                 for (Resource res : ConstraintList) {
                     cardtmp[5][1].append(getResString(res));
                 }
-                cardtmp[5][1].append(" ");
+                for (int i = 0; i < 7 - ConstraintList.size(); i++) {
+                    cardtmp[5][1].append(" ");
+                }
+
 
             }
 

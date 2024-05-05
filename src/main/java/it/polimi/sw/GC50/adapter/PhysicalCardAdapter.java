@@ -34,9 +34,15 @@ public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
                     cardType = CardType.valueOf(in.nextString());
                     break;
                 case "front":
+                    if (cardType.equals(CardType.GOLD)){
+                    front = new GoldCardAdapter().read(in);
+                }else{
                     front = new PlayableCardAdapter().read(in);
-                    break;
+                }
+
+                break;
                 case "back":
+
                     back = new PlayableCardAdapter().read(in);
                     break;
                 default:

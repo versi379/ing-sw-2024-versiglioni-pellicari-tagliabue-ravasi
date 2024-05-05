@@ -247,7 +247,7 @@ public class Game extends Observable implements Serializable, GameInterface {
             Gson gson = gsonBuilder.create();
 
             FileReader reader = new FileReader
-                    ("src/main/resources/it/polimi/sw/GC50/cardJson/physicalCardGenerated.json");
+                    ("src/main/resources/it/polimi/sw/GC50/cardJson/physicalCardGenerated2.json");
             Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
             }.getType();
 
