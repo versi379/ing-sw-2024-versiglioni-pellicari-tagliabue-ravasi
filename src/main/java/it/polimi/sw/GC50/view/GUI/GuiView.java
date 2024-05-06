@@ -46,4 +46,9 @@ public class GuiView implements View {
     public int SelectObjectiveCard() {
         return 0;
     }
+
+    @Override
+    public Boolean selectStarterFace() {
+        return null;
+    }
 }

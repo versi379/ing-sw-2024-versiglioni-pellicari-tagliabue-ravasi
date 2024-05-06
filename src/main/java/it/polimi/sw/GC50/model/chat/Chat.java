@@ -2,13 +2,14 @@ package it.polimi.sw.GC50.model.chat;
 
 import it.polimi.sw.GC50.model.lobby.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is for the player chat so that the players can send each other messages while playing
  */
-public class Chat {
+public class Chat implements Serializable {
 
 
     private final List<Message> messages;

@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -189,14 +190,19 @@ public class GameController {
     }
 
     synchronized public Object getGameModel(Player player) {
-        PlayerData pd = game.getPlayerData(player);
-        return new ModelMex(pd.getBoardSize(), pd.getCornersArea(), pd.getCardsArea(),
-                pd.getHand(), pd.getNumOfResources(), pd.getSecretObjective(), pd.getTotalScore(),
-                pd.getObjectivesScore(), pd.getStarterCard(), pd.getSecretObjectivesList());
+       ArrayList<CardsMatrix> board=new ArrayList<>();
+        for(Player p : game.getPlayerList()){
+            if(!p.getNickname().equals(player.getNickname())){
+                board.add(game.getPlayerData(p).getCardsArea());
+            }
+        }
+
+
+        return new ModelMex(game.getPlayerData(player),game.getChat(),game.getCurrentPlayer().getNickname(),board);
     }
 
     public void updateChat(Player player, String message) {
-
+        game.sendMessageInChat(player, message);
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////

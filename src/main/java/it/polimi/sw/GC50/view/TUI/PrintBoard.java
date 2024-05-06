@@ -29,8 +29,10 @@ public class PrintBoard {
         for (int i = 0; i < cardsMatrix.length(); i++) {
             index2 = 0;
             for (int j = 0; j < cardsMatrix.length(); j++) {
-                if (mat[i][j] != null) {
-                    tmpString = mat[i][j].toStringTui();
+               // if (mat[i][j] != null) {
+                if(cardsMatrix.getAtCornersCoordinates(i,j) != null){
+                   // tmpString = mat[i][j].toStringTui();
+                    tmpString=cardsMatrix.getAtCornersCoordinates(i,j).toStringTui();
                     for (int k = 0; k < 7; k++) {
                         switch (k) {
                             case 0, 1, 2: {
@@ -45,7 +47,6 @@ public class PrintBoard {
                                 if (cardsMatrix.isCornerUncovered(2, i, j)) {
                                     mat2[index + k][index2 + 2] = new String();
                                     mat2[index + k][index2 + 2] = tmpString[k][2];
-
                                 }
                                 break;
                             }
@@ -80,9 +81,7 @@ public class PrintBoard {
                 index2 = index2 + 2;
             }
             index = index + 4;
-
         }
-
         int ck = 0;
         for (int i = 0; i < d; i++) {
             if (!ck(1, i, mat2)) {
@@ -96,9 +95,7 @@ public class PrintBoard {
 
                             System.out.print("       ");
                         }
-
                     }
-
                 }
                 System.out.println();
             }
@@ -106,7 +103,6 @@ public class PrintBoard {
     }
 
     private Boolean ck(int x, int h, String[][] mat2) {
-
         if (x == 1) {
             for (int i = 0; i < d2; i++) {
                 if (mat2[h][i] != null) {
@@ -121,7 +117,6 @@ public class PrintBoard {
                 }
             }
             return true;
-
         }
         return false;
     }

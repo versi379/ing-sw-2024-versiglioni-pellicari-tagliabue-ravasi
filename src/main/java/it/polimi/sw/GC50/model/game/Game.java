@@ -143,7 +143,11 @@ public class Game extends Observable implements Serializable, GameInterface {
     public String getId() {
         return id;
     }
-    
+
+    public Chat getChat() {
+        return chat;
+    }
+
     public int getNumPlayers() {
         return numPlayers;
     }

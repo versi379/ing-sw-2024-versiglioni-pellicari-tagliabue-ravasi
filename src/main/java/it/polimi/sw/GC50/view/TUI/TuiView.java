@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.view.TUI;
 
+import it.polimi.sw.GC50.model.card.PhysicalCard;
+import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.view.View;
@@ -112,14 +114,60 @@ public class TuiView implements View {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter 1 or 2.");
-                read=0;
+                read = 0;
             }
         } while (read != 1 && read != 2);
         return read - 1;
     }
 
+    @Override
+    public Boolean selectStarterFace() {
+        System.out.println("Select the face of the Starter card");
+        printface(modelmex.getPlayerdata().getStarterCard());
+        Scanner scanner = new Scanner(System.in);
+        int read;
+        do {
+            System.out.println("Insert the number of the face you want to play with");
+            try {
+
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                read = 0;
+            }
+        } while (read != 1 && read != 2);
+
+        if (read == 1)
+            return true;
+        else
+            return false;
+
+
+    }
+
+    private void printface(PhysicalCard card) {
+        String[][] tmpString;
+        System.out.println("Face 1");
+        tmpString = card.getFront().toStringTui();
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(tmpString[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("Face 2");
+        tmpString = card.getBack().toStringTui();
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(tmpString[i][j]);
+            }
+            System.out.println();
+        }
+
+    }
+
     private void printlistObjectiveCard() {
-        List<ObjectiveCard> objectiveCards = modelmex.getSecretObjectivesList();
+        List<ObjectiveCard> objectiveCards = modelmex.getPlayerdata().getSecretObjectivesList();
         for (int i = 0; i < objectiveCards.size(); i++) {
             System.out.println(i + 1 + ") " + objectiveCards.get(i).getPointsPerCompletion() + " points for completing ");
             switch (objectiveCards.get(i).getObjective().getClass().getSimpleName()) {

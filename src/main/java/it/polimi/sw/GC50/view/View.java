@@ -15,4 +15,6 @@ public interface View extends Serializable {
     void addModel(ModelMex modelmex);
 
     int SelectObjectiveCard();
+
+    Boolean selectStarterFace();
 }

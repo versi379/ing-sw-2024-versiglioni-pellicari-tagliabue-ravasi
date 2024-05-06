@@ -275,8 +275,8 @@ public class ClientSCK implements Runnable {
     }
 
 
-    private void selectStarterFace() {
-
+    private void selectStarterFace(Boolean index) {
+        setMessageout(new Message.MessageClientToServer(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName));
     }
 
 
@@ -386,8 +386,8 @@ public class ClientSCK implements Runnable {
     private void firstPhase() {
         this.getModel();
         view.addModel(this.modelMex);
-
         this.selectObjectiveCard(view.SelectObjectiveCard());
+        this.selectStarterFace(view.selectStarterFace());
     }
 
     //////////////////////////////////////////

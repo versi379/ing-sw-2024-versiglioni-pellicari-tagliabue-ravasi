@@ -2,77 +2,44 @@ package it.polimi.sw.GC50.net.gameMexNet;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.Resource;
+import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.CornerPointer;
+import it.polimi.sw.GC50.model.game.PlayerData;
+import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ModelMex implements Serializable {
-    private final int boardSize;
-    private final CornerPointer[][] cornersArea;
-    private final CardsMatrix cardsArea;
-    private final List<PhysicalCard> hand;
-    private final Map<Resource, Integer> numOfResources;
-    private ObjectiveCard secretObjective;
-    private int totalScore;
-    private int objectivesScore;
-    private PhysicalCard starterCard;
-    private List<ObjectiveCard> secretObjectivesList;
+    private final PlayerData Playerdata;
+    private final Chat chat;
+    private final String currentPlayer;
+    private final ArrayList<CardsMatrix> cardsMatrixAvengers;
 
-    public ModelMex(int boardSize, CornerPointer[][] cornersArea, CardsMatrix cardsArea, List<PhysicalCard> hand, Map<Resource, Integer> numOfResources, ObjectiveCard secretObjective, int totalScore, int objectivesScore, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
-        this.boardSize = boardSize;
-        this.cornersArea = cornersArea;
-        this.cardsArea = cardsArea;
-        this.hand = hand;
-        this.numOfResources = numOfResources;
-        this.secretObjective = secretObjective;
-        this.totalScore = totalScore;
-        this.objectivesScore = objectivesScore;
-        this.starterCard = starterCard;
-        this.secretObjectivesList = secretObjectivesList;
+    public ModelMex(PlayerData playerdata, Chat chat, String currentPlayer, ArrayList<CardsMatrix> cardsMatrixAvengers) {
+        Playerdata = playerdata;
+        this.chat = chat;
+        this.currentPlayer = currentPlayer;
+        this.cardsMatrixAvengers = cardsMatrixAvengers;
     }
 
-
-    public int getBoardSize() {
-        return boardSize;
+    public PlayerData getPlayerdata() {
+        return Playerdata;
     }
 
-    public CornerPointer[][] getCornersArea() {
-        return cornersArea;
+    public Chat getChat() {
+        return chat;
     }
 
-    public CardsMatrix getCardsArea() {
-        return cardsArea;
+    public String getCurrentPlayer() {
+        return currentPlayer;
     }
 
-    public List<PhysicalCard> getHand() {
-        return hand;
-    }
-
-    public Map<Resource, Integer> getNumOfResources() {
-        return numOfResources;
-    }
-
-    public ObjectiveCard getSecretObjective() {
-        return secretObjective;
-    }
-
-    public int getTotalScore() {
-        return totalScore;
-    }
-
-    public int getObjectivesScore() {
-        return objectivesScore;
-    }
-
-    public PhysicalCard getStarterCard() {
-        return starterCard;
-    }
-
-    public List<ObjectiveCard> getSecretObjectivesList() {
-        return secretObjectivesList;
+    public ArrayList<CardsMatrix> getCardsMatrixAvengers() {
+        return cardsMatrixAvengers;
     }
 }
