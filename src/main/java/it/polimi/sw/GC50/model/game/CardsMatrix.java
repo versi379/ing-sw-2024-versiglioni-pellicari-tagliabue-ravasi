@@ -10,12 +10,12 @@ import java.io.Serializable;
  */
 public class CardsMatrix implements Serializable {
     private final PlayableCard[][] cardsMatrix;
-    private final Integer[][] orderMatrix;
+    private final int[][] orderMatrix;
     private int currentCards;
 
     public CardsMatrix(int length) {
         cardsMatrix = new PlayableCard[length][length];
-        orderMatrix = new Integer[length][length];
+        orderMatrix = new int[length][length];
         currentCards = 0;
     }
 
@@ -81,11 +81,11 @@ public class CardsMatrix implements Serializable {
      * and inserts an element at such position
      *
      * @param card
-     * @param x
-     * @param y
+     * @param cornersX
+     * @param cornersY
      */
-    public void insertAtCornersCoordinates(PlayableCard card, int x, int y) {
-        insert(card, cornersToCardsX(x, y), cornersToCardsY(x, y));
+    public void insertAtCornersCoordinates(PlayableCard card, int cornersX, int cornersY) {
+        insert(card, cornersToCardsX(cornersX, cornersY), cornersToCardsY(cornersX, cornersY));
     }
 
     /**
@@ -103,49 +103,56 @@ public class CardsMatrix implements Serializable {
      * Converts the received cornersArea's coordinates to the corresponding ones in cardsArea
      * and gets the element present at such position
      *
-     * @param x
-     * @param y
+     * @param cornersX
+     * @param cornersY
      * @return
      */
-    public PlayableCard getAtCornersCoordinates(int x, int y) {
-        return get(cornersToCardsX(x, y), cornersToCardsY(x, y));
+    public PlayableCard getAtCornersCoordinates(int cornersX, int cornersY) {
+        return get(cornersToCardsX(cornersX, cornersY), cornersToCardsY(cornersX, cornersY));
     }
 
     /**
-     * Returns all adjacent cards to the one present at the position (a, b)
+     * Returns all adjacent cards to the one present at the position (x, y)
      *
-     * @param x
-     * @param y
+     * @param cornersX
+     * @param cornersY
      * @return
      */
-    public PlayableCard[] getNearCards(int x, int y) {
+    public PlayableCard[] getNearCards(int cornersX, int cornersY) {
         PlayableCard[] result = new PlayableCard[4];
-        int a = cornersToCardsX(x, y);
-        int b = cornersToCardsY(x, y);
+        int x = cornersToCardsX(cornersX, cornersY);
+        int y = cornersToCardsY(cornersX, cornersY);
 
-        result[0] = (a > 0) ? get(a - 1, b) : null;
-        result[1] = (b < length() - 1) ? get(a, b + 1) : null;
-        result[2] = (a < length() - 1) ? get(a + 1, b) : null;
-        result[3] = (b > 0) ? get(a, b - 1) : null;
+        result[0] = (x > 0) ? get(x - 1, y) : null;
+        result[1] = (y < length() - 1) ? get(x, y + 1) : null;
+        result[2] = (x < length() - 1) ? get(x + 1, y) : null;
+        result[3] = (y > 0) ? get(x, y - 1) : null;
         return result;
     }
 
-    // GETS CARD AT CORNER COORDINATES!!
-    public int getCardOrder(int x, int y) {
-        if (getAtCornersCoordinates(x, y) != null) {
-            return orderMatrix[cornersToCardsX(x, y)][cornersToCardsY(x, y)];
+    public int getOrder(int x, int y) {
+        if (get(x, y) != null) {
+            return orderMatrix[x][y];
         }
         return -1;
     }
 
-    // TELLS IF THE CORNER IN POSITION corner (0->SW, 1->NW, 2->NE, 3->SE)
-    // OF THE CARD AT (x, y) (CORNERS COORDINATES!) IS VISIBLE FROM THE PLAYER'S PERSPECTIVE
-    public boolean isCornerVisible(int x, int y, int corner) {
-        switch(corner) {
-            case 0 -> {return getCardOrder(x, y) > getCardOrder(x - 1, y - 1);}
-            case 1 -> {return getCardOrder(x, y) > getCardOrder(x - 1, y + 1);}
-            case 2 -> {return getCardOrder(x, y) > getCardOrder(x + 1, y + 1);}
-            case 3 -> {return getCardOrder(x, y) > getCardOrder(x + 1, y - 1);}
+    // GETS CARD AT CORNER COORDINATES!!
+    public int getOrderAtCornerCoordinates(int cornersX, int cornersY) {
+        return getOrder(cornersToCardsX(cornersX, cornersY), cornersToCardsY(cornersX, cornersY));
+    }
+
+    // TELLS IF THE CORNER IN POSITION position (0->SW, 1->NW, 2->NE, 3->SE)
+    // OF THE CARD AT (cornersX, cornersY) (CORNERS COORDINATES!) IS VISIBLE FROM THE PLAYER'S PERSPECTIVE
+    public boolean isCornerUncovered(int cornersX, int cornersY, int position) {
+        int x = cornersToCardsX(cornersX, cornersY);
+        int y = cornersToCardsY(cornersX, cornersY);
+
+        switch(position) {
+            case 0 -> {return x <= 0 || getOrder(x, y) > getOrder(x - 1, y);}
+            case 1 -> {return y >= length() - 1 || getOrder(x, y) > getOrder(x, y + 1);}
+            case 2 -> {return x >= length() - 1 || getOrder(x, y) > getOrder(x + 1, y);}
+            case 3 -> {return y <= 0 || getOrder(x, y) > getOrder(x, y - 1);}
             default -> {return false;}
         }
     }
@@ -155,7 +162,7 @@ public class CardsMatrix implements Serializable {
         Pair[][] result = new Pair[length()][length()];
         for (int i = 0; i < length(); i++) {
             for (int j = 0; j < length(); j++) {
-                result[i][j] = new Pair(getAtCornersCoordinates(i, j), getCardOrder(i, j));
+                result[i][j] = new Pair(getAtCornersCoordinates(i, j), getOrderAtCornerCoordinates(i, j));
             }
         }
         return result;

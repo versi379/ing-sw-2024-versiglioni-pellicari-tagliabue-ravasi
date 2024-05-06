@@ -4,8 +4,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CardsMatrixTest {
 
@@ -17,6 +16,17 @@ public class CardsMatrixTest {
         for (int i = 0; i < cardsMatrix.length(); i++) {
             for (int j = 0; j < cardsMatrix.length(); j++) {
                 assertNull(cardsMatrix.get(i, j));
+                assertEquals(-1, cardsMatrix.getOrderAtCornerCoordinates(i, j));
+            }
+        }
+
+
+        cardsMatrix = testCardsMatrix();
+        PlayableCard[][] testMatrix = testMatrix();
+
+        for (int i = 0; i < cardsMatrix.length(); i++) {
+            for (int j = 0; j < cardsMatrix.length(); j++) {
+                assertEquals(testMatrix[i][j], cardsMatrix.get(i, j));
             }
         }
     }
@@ -24,12 +34,12 @@ public class CardsMatrixTest {
     @Test
     void testCopy() {
         CardsMatrix cardsMatrix1 = testCardsMatrix();
-        PlayableCard[][] testMatrix = testMatrix();
         CardsMatrix cardsMatrix2 = cardsMatrix1.copy();
 
         for (int i = 0; i < cardsMatrix2.length(); i++) {
             for (int j = 0; j < cardsMatrix2.length(); j++) {
-                assertEquals(testMatrix[i][j], cardsMatrix2.get(i, j));
+                assertEquals(cardsMatrix1.get(i, j), cardsMatrix2.get(i, j));
+                assertEquals(cardsMatrix1.getOrderAtCornerCoordinates(i, j), cardsMatrix2.getOrderAtCornerCoordinates(i, j));
             }
         }
     }
@@ -99,6 +109,42 @@ public class CardsMatrixTest {
         assertNull(nearCards[1]);
         assertNull(nearCards[2]);
         assertEquals(greenPlayableCard, nearCards[3]);
+    }
+
+    @Test
+    void testGetCardOrder() {
+        CardsMatrix cardsMatrix = new CardsMatrix(5);
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 0, 0);
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 1, 1);
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 2, 2);
+
+        assertEquals(0, cardsMatrix.getOrderAtCornerCoordinates(0, 0));
+        assertEquals(1, cardsMatrix.getOrderAtCornerCoordinates(1, 1));
+        assertEquals(2, cardsMatrix.getOrderAtCornerCoordinates(2, 2));
+    }
+
+    @Test
+    void testisCornerUncovered() {
+        CardsMatrix cardsMatrix = new CardsMatrix(5);
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 2, 2);
+
+        for (int i = 0; i < 4; i++){
+            assertTrue(cardsMatrix.isCornerUncovered(2, 2, i));
+        }
+        assertFalse(cardsMatrix.isCornerUncovered(2, 2, 4));
+
+
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 0, 0);
+
+        for (int i = 0; i < 4; i++){
+            assertTrue(cardsMatrix.isCornerUncovered(0, 0, i));
+        }
+
+
+        cardsMatrix.insertAtCornersCoordinates(purplePlayableCard, 1, 1);
+
+        assertFalse(cardsMatrix.isCornerUncovered(0, 0, 2));
+        assertFalse(cardsMatrix.isCornerUncovered(2, 2, 0));
     }
 
     @Test
