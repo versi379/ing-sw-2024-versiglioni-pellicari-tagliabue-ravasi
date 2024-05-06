@@ -217,9 +217,9 @@ public class PlayableCard implements Serializable {
         cardtmp[0][1].append(colorstart);
         cardtmp[1][1].append(colorstart);
         cardtmp[2][1].append(colorstart);
-        cardtmp[0][1].append("════════");
-        cardtmp[1][1].append("   ");
-        cardtmp[2][1].append("        ");
+        cardtmp[0][1].append("═══════");
+        cardtmp[1][1].append("  ");
+        cardtmp[2][1].append("       ");
 
         if (this.points > 0) {
             cardtmp[1][1].append(colorend);
@@ -280,9 +280,9 @@ public class PlayableCard implements Serializable {
         cardtmp[3][0].append(colorstart);
 
         if (this.fixedResources.isEmpty()) {
-            cardtmp[3][0].append("║                    ║");
+            cardtmp[3][0].append("║                   ║");
         } else {
-            cardtmp[3][0].append("║        ");
+            cardtmp[3][0].append("║       ");
             cardtmp[3][0].append(colorend);
             for (Resource res : this.fixedResources) {
                 cardtmp[3][0].append(getResString(res));
@@ -331,13 +331,13 @@ public class PlayableCard implements Serializable {
         cardtmp[4][1].append(colorstart);
         cardtmp[5][1].append(colorstart);
         cardtmp[6][1].append(colorstart);
-        cardtmp[4][1].append("        ");
+        cardtmp[4][1].append("       ");
 
 
-        cardtmp[5][1].append("        ");
+        cardtmp[5][1].append("       ");
 
 
-        cardtmp[6][1].append("════════");
+        cardtmp[6][1].append("═══════");
         cardtmp[4][1].append(colorend);
         cardtmp[5][1].append(colorend);
         cardtmp[6][1].append(colorend);
@@ -377,10 +377,10 @@ public class PlayableCard implements Serializable {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
                 card[i][j] = cardtmp[i][j].toString();
-                System.out.print(card[i][j]);
+
             }
 
-            System.out.print("\n");
+
         }
 
         return card;

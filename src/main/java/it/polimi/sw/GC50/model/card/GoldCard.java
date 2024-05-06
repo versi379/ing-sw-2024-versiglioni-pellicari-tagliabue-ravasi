@@ -149,9 +149,9 @@ public class GoldCard extends PlayableCard implements Serializable {
         cardtmp[0][1].append(colorstart);
         cardtmp[1][1].append(colorstart);
         cardtmp[2][1].append(colorstart);
-        cardtmp[0][1].append("════════");
-        cardtmp[1][1].append("   ");
-        cardtmp[2][1].append("        ");
+        cardtmp[0][1].append("═══════");
+        cardtmp[1][1].append("  ");
+        cardtmp[2][1].append("       ");
 
         if (super.getPoints() > 0) {
             cardtmp[1][1].append(colorend);
@@ -212,9 +212,9 @@ public class GoldCard extends PlayableCard implements Serializable {
         cardtmp[3][0].append(colorstart);
 
         if (super.getFixedResources().isEmpty()) {
-            cardtmp[3][0].append("║                    ║");
+            cardtmp[3][0].append("║                   ║");
         } else {
-            cardtmp[3][0].append("║        ");
+            cardtmp[3][0].append("║       ");
             cardtmp[3][0].append(colorend);
             for (Resource res : super.getFixedResources()) {
                 cardtmp[3][0].append(getResString(res));
@@ -263,19 +263,19 @@ public class GoldCard extends PlayableCard implements Serializable {
         cardtmp[4][1].append(colorstart);
         cardtmp[5][1].append(colorstart);
         cardtmp[6][1].append(colorstart);
-        cardtmp[4][1].append("        ");
+        cardtmp[4][1].append("       ");
 
 
 
             List<Resource> ConstraintList =getConstraintList();
             if (ConstraintList == null) {
-                cardtmp[5][1].append("        ");
+                cardtmp[5][1].append("       ");
             } else {
                 cardtmp[5][1].append(" ");
                 for (Resource res : ConstraintList) {
                     cardtmp[5][1].append(getResString(res));
                 }
-                for (int i = 0; i < 7 - ConstraintList.size(); i++) {
+                for (int i = 0; i < 6 - ConstraintList.size(); i++) {
                     cardtmp[5][1].append(" ");
                 }
 
@@ -284,7 +284,7 @@ public class GoldCard extends PlayableCard implements Serializable {
 
 
 
-        cardtmp[6][1].append("════════");
+        cardtmp[6][1].append("═══════");
         cardtmp[4][1].append(colorend);
         cardtmp[5][1].append(colorend);
         cardtmp[6][1].append(colorend);
@@ -324,17 +324,16 @@ public class GoldCard extends PlayableCard implements Serializable {
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
                 card[i][j] = cardtmp[i][j].toString();
-                System.out.print(card[i][j]);
+
             }
 
-            System.out.print("\n");
+
         }
         return card;
     }
 
     private String getResString(Resource res) {
         switch (res) {
-
 
             case ANIMAL:
                 return new String("\u001B[34mA\u001B[0m");
