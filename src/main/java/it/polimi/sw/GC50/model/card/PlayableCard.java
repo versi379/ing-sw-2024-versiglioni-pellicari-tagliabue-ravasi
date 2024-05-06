@@ -186,7 +186,7 @@ public class PlayableCard implements Serializable {
                 x = getResString(this.getNwCorner().getResource());
             }
             cardtmp[0][0].append(colorstart);
-            cardtmp[0][0].append("╔═════╗");
+            cardtmp[0][0].append("╔═════╦");
             cardtmp[0][0].append(colorend);
 
             cardtmp[1][0].append(colorstart);
@@ -257,7 +257,7 @@ public class PlayableCard implements Serializable {
             if (this.getNeCorner().isFull()) {
                 x = getResString(this.getNeCorner().getResource());
             }
-            cardtmp[0][2].append("╔═════╗");
+            cardtmp[0][2].append("╦═════╗");
             cardtmp[1][2].append("║  ");
             cardtmp[1][2].append(colorend);
             cardtmp[1][2].append(x);
@@ -316,7 +316,7 @@ public class PlayableCard implements Serializable {
             cardtmp[5][0].append(x);
             cardtmp[5][0].append(colorstart);
             cardtmp[5][0].append("  ║");
-            cardtmp[6][0].append("╚═════╝");
+            cardtmp[6][0].append("╚═════╩");
         } else {
 
             cardtmp[4][0].append("║      ");
@@ -361,7 +361,7 @@ public class PlayableCard implements Serializable {
             cardtmp[5][2].append(x);
             cardtmp[5][2].append(colorstart);
             cardtmp[5][2].append("  ║");
-            cardtmp[6][2].append("╚═════╝");
+            cardtmp[6][2].append("╩═════╝");
 
         } else {
             cardtmp[4][2].append("      ║");

@@ -34,6 +34,7 @@ public class ClientSCK implements Runnable {
     private boolean alive;
     private boolean send;
     private boolean allPlayerReady;
+    private boolean myTurn;
     private Message.MessageClientToServer messageout;
 
 
@@ -69,6 +70,7 @@ public class ClientSCK implements Runnable {
                     switchmex(message);
                 });
                 thread.start();
+
 
             } catch (IOException | ClassNotFoundException e) {
 
@@ -139,7 +141,6 @@ public class ClientSCK implements Runnable {
 
             case NOTIFY_CARD_PLACED: {
                 break;
-
             }
             case NOTIFY_PLAYER_JOINED_GAME: {
                 break;
@@ -151,6 +152,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
             case NOTIFY_GAME_STARTED: {
+
                 break;
             }
             case NOTIFY_CHAT_MESSAGE: {
@@ -192,6 +194,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
         }
+
 
     }
 
