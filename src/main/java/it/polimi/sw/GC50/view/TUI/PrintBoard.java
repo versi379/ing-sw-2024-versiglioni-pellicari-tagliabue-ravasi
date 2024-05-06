@@ -13,7 +13,7 @@ public class PrintBoard {
     private int d2 = (84 * 2) - 7;
     String[][] mat2;
 
-    PrintBoard(CardsMatrix cardsMatrix) {
+    public PrintBoard(CardsMatrix cardsMatrix) {
         PlayableCard[][] mat = new PlayableCard[84][84];
         mat = cardsMatrix.getAsCornerMatrixWithoutOrder();
         mat2 = new String[d][d2];
@@ -105,9 +105,8 @@ public class PrintBoard {
         }
     }
 
-    private static Boolean ck(int x, int h, String[][] mat2) {
-        int d = (84 * 4);
-        int d2 = (84 * 2);
+    private Boolean ck(int x, int h, String[][] mat2) {
+
         if (x == 1) {
             for (int i = 0; i < d2; i++) {
                 if (mat2[h][i] != null) {
