@@ -20,35 +20,60 @@ public class PrintBoard {
         int index = 0;
         int index2 = 0;
         String[][] tmpString = new String[7][3];
-    /*
-        for (int i = 0; i < 82; i = i + 2) {
-            for (int j = 1; j < 82; j = j + 2) {
-                Game game2 = new Game("Partita", 1, 20, new Player("Gianpaolo"));
-                PhysicalCard card;
-                card = game2.pickCard(DrawingPosition.GOLDDECK);
-                mat[i][j] = card.getFront();
+        for(int i = 0; i<mat2.length; i++){
+            for(int j = 0; j<mat2[0].length; j++){
+                mat2[i][j] = null;
             }
         }
-        for (int i = 1; i < 82; i = i + 2) {
-            for (int j = 0; j < 82; j = j + 2) {
-                Game game2 = new Game("Partita", 1, 20, new Player("Gianpaolo"));
-                PhysicalCard card;
-                card = game2.pickCard(DrawingPosition.GOLDDECK);
-                mat[i][j] = card.getFront();
-            }
-        }*/
 
-        for (int i = 0; i < 84; i++) {
+        for (int i = 0; i < cardsMatrix.length(); i++) {
             index2 = 0;
-            for (int j = 0; j < 84; j++) {
-
+            for (int j = 0; j < cardsMatrix.length(); j++) {
                 if (mat[i][j] != null) {
                     tmpString = mat[i][j].toStringTui();
                     for (int k = 0; k < 7; k++) {
-                        for (int z = 0; z < 3; z++) {
-                            mat2[index + k][index2 + z] = new String();
-                            mat2[index + k][index2 + z] = tmpString[k][z];
+                        switch (k) {
+                            case 0, 1, 2: {
+                                //nw
+                                if (cardsMatrix.isCornerUncovered(1, i, j)) {
+                                    mat2[index + k][index2] = new String();
+                                    mat2[index + k][index2] = tmpString[k][0];
+                                }
+                                mat2[index + k][index2 + 1] = new String();
+                                mat2[index + k][index2 + 1] = tmpString[k][1];
+                                //ne
+                                if (cardsMatrix.isCornerUncovered(2, i, j)) {
+                                    mat2[index + k][index2 + 2] = new String();
+                                    mat2[index + k][index2 + 2] = tmpString[k][2];
 
+                                }
+                                break;
+                            }
+                            case 3: {
+                                //center
+                                mat2[index + k][index2] = new String();
+                                mat2[index + k][index2] = tmpString[k][0];
+                                mat2[index + k][index2 + 1] = new String();
+                                mat2[index + k][index2 + 1] = tmpString[k][1];
+                                mat2[index + k][index2 + 2] = new String();
+                                mat2[index + k][index2 + 2] = tmpString[k][2];
+                                break;
+                            }
+                            case 4, 5, 6: {
+                                //sw
+                                if (cardsMatrix.isCornerUncovered(0, i, j)) {
+                                    mat2[index + k][index2] = new String();
+                                    mat2[index + k][index2] = tmpString[k][0];
+                                }
+                                mat2[index + k][index2 + 1] = new String();
+                                mat2[index + k][index2 + 1] = tmpString[k][1];
+                                //se
+                                if (cardsMatrix.isCornerUncovered(3, i, j)) {
+                                    mat2[index + k][index2 + 2] = new String();
+                                    mat2[index + k][index2 + 2] = tmpString[k][2];
+                                }
+                                break;
+                            }
                         }
                     }
                 }
