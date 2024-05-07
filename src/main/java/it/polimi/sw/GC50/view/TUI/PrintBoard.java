@@ -1,11 +1,7 @@
 package it.polimi.sw.GC50.view.TUI;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.Game;
-import it.polimi.sw.GC50.model.lobby.Player;
 
 public class PrintBoard {
     private CardsMatrix cardsMatrix;
@@ -14,63 +10,49 @@ public class PrintBoard {
     String[][] mat2;
 
     public PrintBoard(CardsMatrix cardsMatrix) {
-        PlayableCard[][] mat = new PlayableCard[84][84];
-        mat = cardsMatrix.getAsCornerMatrixWithoutOrder();
+        PlayableCard[][] mat = cardsMatrix.getAsCornerMatrixWithoutOrder();
         mat2 = new String[d][d2];
         int index = 0;
-        int index2 = 0;
-        String[][] tmpString = new String[7][3];
-        for(int i = 0; i<mat2.length; i++){
-            for(int j = 0; j<mat2[0].length; j++){
+        for (int i = 0; i < mat2.length; i++) {
+            for (int j = 0; j < mat2[0].length; j++) {
                 mat2[i][j] = null;
             }
         }
 
         for (int i = 0; i < cardsMatrix.length(); i++) {
-            index2 = 0;
+            int index2 = 0;
             for (int j = 0; j < cardsMatrix.length(); j++) {
-               // if (mat[i][j] != null) {
-                if(cardsMatrix.getAtCornersCoordinates(i,j) != null){
-                   // tmpString = mat[i][j].toStringTui();
-                    tmpString=cardsMatrix.getAtCornersCoordinates(i,j).toStringTui();
+                if (mat[i][j] != null) {
+                    String[][] tmpString = mat[i][j].toStringTUI();
                     for (int k = 0; k < 7; k++) {
                         switch (k) {
                             case 0, 1, 2: {
                                 //nw
-                                if (cardsMatrix.isCornerUncovered(1, i, j)) {
-                                    mat2[index + k][index2] = new String();
+                                if (cardsMatrix.isCornerUncovered(i, j, 1)) {
                                     mat2[index + k][index2] = tmpString[k][0];
                                 }
-                                mat2[index + k][index2 + 1] = new String();
                                 mat2[index + k][index2 + 1] = tmpString[k][1];
                                 //ne
-                                if (cardsMatrix.isCornerUncovered(2, i, j)) {
-                                    mat2[index + k][index2 + 2] = new String();
+                                if (cardsMatrix.isCornerUncovered(i, j, 2)) {
                                     mat2[index + k][index2 + 2] = tmpString[k][2];
                                 }
                                 break;
                             }
                             case 3: {
                                 //center
-                                mat2[index + k][index2] = new String();
                                 mat2[index + k][index2] = tmpString[k][0];
-                                mat2[index + k][index2 + 1] = new String();
                                 mat2[index + k][index2 + 1] = tmpString[k][1];
-                                mat2[index + k][index2 + 2] = new String();
                                 mat2[index + k][index2 + 2] = tmpString[k][2];
                                 break;
                             }
                             case 4, 5, 6: {
                                 //sw
-                                if (cardsMatrix.isCornerUncovered(0, i, j)) {
-                                    mat2[index + k][index2] = new String();
+                                if (cardsMatrix.isCornerUncovered(i, j, 0)) {
                                     mat2[index + k][index2] = tmpString[k][0];
                                 }
-                                mat2[index + k][index2 + 1] = new String();
                                 mat2[index + k][index2 + 1] = tmpString[k][1];
                                 //se
-                                if (cardsMatrix.isCornerUncovered(3, i, j)) {
-                                    mat2[index + k][index2 + 2] = new String();
+                                if (cardsMatrix.isCornerUncovered(i, j, 3)) {
                                     mat2[index + k][index2 + 2] = tmpString[k][2];
                                 }
                                 break;

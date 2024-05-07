@@ -328,7 +328,7 @@ public class Game extends Observable implements Serializable, GameInterface {
         return new ArrayList<>(commonObjectives);
     }
 
-    private PhysicalCard pickStarterCard() {
+    public PhysicalCard pickStarterCard() {
         return starterDeck.pop();
     }
 

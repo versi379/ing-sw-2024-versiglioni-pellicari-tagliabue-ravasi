@@ -26,6 +26,11 @@ public class CoveredCornersBonus implements Bonus , Serializable {
     }
 
     @Override
+    public String toStringTUI() {
+        return "C";
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof CoveredCornersBonus;
     }

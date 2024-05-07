@@ -7,7 +7,6 @@ import java.io.Serializable;
 /**
  * Interface for different bonus management
  */
-@FunctionalInterface
 public interface Bonus extends Serializable {
 
     /**
@@ -20,4 +19,6 @@ public interface Bonus extends Serializable {
      * @return
      */
     int checkBonus(PlayableCard card, PlayerData playerData, int x, int y);
+
+    String toStringTUI();
 }

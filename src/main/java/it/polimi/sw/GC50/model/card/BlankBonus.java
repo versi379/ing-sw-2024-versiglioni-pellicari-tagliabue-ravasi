@@ -27,6 +27,11 @@ public class BlankBonus implements Bonus, Serializable {
     }
 
     @Override
+    public String toStringTUI() {
+        return " ";
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof BlankBonus;
     }

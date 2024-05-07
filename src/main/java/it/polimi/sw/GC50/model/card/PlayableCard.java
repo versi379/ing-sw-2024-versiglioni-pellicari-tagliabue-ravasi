@@ -3,7 +3,6 @@ package it.polimi.sw.GC50.model.card;
 import it.polimi.sw.GC50.model.game.PlayerData;
 
 import java.io.Serializable;
-import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -142,271 +141,114 @@ public class PlayableCard implements Serializable {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners());
     }
 
-    public String[][] toStringTui() {
-        String[][] card = new String[7][3];
-        //7 righe e 3 colonne;
-        StringBuilder[][] cardtmp = new StringBuilder[7][3];
+    public String[][] toStringTUI() {
+        String[][] card = new String[3][7];
+        // 7 colonne e 3 righe;
 
-        ArrayList<StringBuilder> sb = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 3; j++) {
-                cardtmp[i][j] = new StringBuilder();
-            }
-        }
-        String colorstart = "";
-        String colorend = "";
-
-
-        colorend = ("\u001B[0m");
-
-        if (this.color.equals(Color.GREEN)) {
-            colorstart = ("\u001B[32m");
+        String colorStart = switch (getColor()) {
+            case WHITE -> "\u001B[37m";
+            case GREEN -> "\u001B[32m";
+            case BLUE -> "\u001B[34m";
+            case RED -> "\u001B[31m";
+            case PURPLE -> "\u001B[35m";
+        };
+        String colorEnd = "\u001B[0m";
 
 
-        }
-        if (this.color.equals(Color.BLUE)) {
-            colorstart = ("\u001B[34m");
-
-        }
-        if (this.color.equals(Color.RED)) {
-            colorstart = ("\u001B[31m");
-
-        }
-        if (this.color.equals(Color.PURPLE)) {
-            colorstart = ("\u001B[35m");
-
-
-        }
-
-
-        //corner nw
-        if (this.getNwCorner().isVisible()) {
-            String x = " ";
-            if (this.getNwCorner().isFull()) {
-                x = getResString(this.getNwCorner().getResource());
-            }
-            cardtmp[0][0].append(colorstart);
-            cardtmp[0][0].append("╔═════╗");
-            cardtmp[0][0].append(colorend);
-
-            cardtmp[1][0].append(colorstart);
-            cardtmp[1][0].append("║  ");
-            cardtmp[1][0].append(colorend);
-            cardtmp[1][0].append(x);
-            cardtmp[1][0].append(colorstart);
-            cardtmp[1][0].append("  ║");
-            cardtmp[1][0].append(colorend);
-
-            cardtmp[2][0].append(colorstart);
-            cardtmp[2][0].append("╠═════╝");
-            cardtmp[2][0].append(colorend);
-
+        // SW corner
+        if (getSwCorner().isVisible()) {
+            String x = (getSwCorner().isFull())
+                    ? colorEnd + getSwCorner().getResource().toStringTUI() + colorStart : " ";
+            card[0][2] = "╠═════╗";
+            card[0][1] = "║  " + x + "  ║";
+            card[0][0] = "╚═════╝";
         } else {
-            cardtmp[0][0].append(colorstart);
-            cardtmp[1][0].append(colorstart);
-            cardtmp[2][0].append(colorstart);
-            cardtmp[0][0].append("╔══════");
-            cardtmp[1][0].append("║      ");
-            cardtmp[2][0].append("║      ");
-            cardtmp[0][0].append(colorend);
-            cardtmp[1][0].append(colorend);
-            cardtmp[2][0].append(colorend);
-
+            card[0][2] = "║      ";
+            card[0][1] = "║      ";
+            card[0][0] = "╚══════";
         }
-        ////up center
-        cardtmp[0][1].append(colorstart);
-        cardtmp[1][1].append(colorstart);
-        cardtmp[2][1].append(colorstart);
-        cardtmp[0][1].append("═══════");
-        cardtmp[1][1].append("  ");
-        cardtmp[2][1].append("       ");
 
-        if (this.points > 0) {
-            cardtmp[1][1].append(colorend);
-            cardtmp[1][1].append("\u001B[37m");
-            cardtmp[1][1].append(this.points);
-
-
+        // NW corner
+        if (getNwCorner().isVisible()) {
+            String x = (getNwCorner().isFull())
+                    ? colorEnd + getNwCorner().getResource().toStringTUI() + colorStart : " ";
+            card[0][6] = "╔═════╗";
+            card[0][5] = "║  " + x + "  ║";
+            card[0][4] = "╠═════╝";
         } else {
-            cardtmp[1][1].append(" ");
+            card[0][6] = "╔══════";
+            card[0][5] = "║      ";
+            card[0][4] = "║      ";
         }
-        cardtmp[1][1].append(" ");
 
-        /////////bonus
-
-        if (this.bonus.getClass().getSimpleName().equals("BlankBonus")) {
-            cardtmp[1][1].append(" ");
-
-        } else if (this.bonus.getClass().getSimpleName().equals("CoveredCornersBonus")) {
-            cardtmp[1][1].append("C");
-        } else if (this.bonus.getClass().getSimpleName().equals("ResourcesBonus")) {
-            ResourcesBonus bonustmp = (ResourcesBonus) this.bonus;
-            cardtmp[1][1].append(colorend);
-            cardtmp[1][1].append(getResString((bonustmp.getTargetResource())));
-            cardtmp[1][1].append(colorstart);
-        }
-        cardtmp[1][1].append("  ");
-        cardtmp[1][1].append(colorend);
-
-        cardtmp[0][2].append(colorstart);
-        cardtmp[1][2].append(colorstart);
-        cardtmp[2][2].append(colorstart);
-
-        if (this.getNeCorner().isVisible()) {
-            String x = " ";
-            if (this.getNeCorner().isFull()) {
-                x = getResString(this.getNeCorner().getResource());
-            }
-            cardtmp[0][2].append("╔═════╗");
-            cardtmp[1][2].append("║  ");
-            cardtmp[1][2].append(colorend);
-            cardtmp[1][2].append(x);
-            cardtmp[1][2].append(colorstart);
-            cardtmp[1][2].append("  ║");
-            cardtmp[2][2].append("╚═════╣");
-
+        // NE corner
+        if (getNeCorner().isVisible()) {
+            String x = (getNeCorner().isFull())
+                    ? colorEnd + getNeCorner().getResource().toStringTUI() + colorStart : " ";
+            card[2][6] = "╔═════╗";
+            card[2][5] = "║  " + x + "  ║";
+            card[2][4] = "╚═════╣";
         } else {
-            cardtmp[0][2].append("══════╗");
-            cardtmp[1][2].append("      ║");
-            cardtmp[2][2].append("      ║");
-
+            card[2][6] = "══════╗";
+            card[2][5] = "      ║";
+            card[2][4] = "      ║";
         }
-        cardtmp[0][2].append(colorend);
-        cardtmp[1][2].append(colorend);
-        cardtmp[2][2].append(colorend);
 
-
-        ///CENTER
-        cardtmp[3][0].append(colorstart);
-
-        if (this.fixedResources.isEmpty()) {
-            cardtmp[3][0].append("║                   ║");
+        // SE corner
+        if (getSeCorner().isVisible()) {
+            String x = (getSeCorner().isFull())
+                    ? colorEnd + getSeCorner().getResource().toStringTUI() + colorStart : " ";
+            card[2][2] = "╔═════╣";
+            card[2][1] = "║  " + x + "  ║";
+            card[2][0] = "╚═════╝";
         } else {
-            cardtmp[3][0].append("║       ");
-            cardtmp[3][0].append(colorend);
-            for (Resource res : this.fixedResources) {
-                cardtmp[3][0].append(getResString(res));
-            }
-            cardtmp[3][0].append(colorstart);
-            for (int i = 0; i < 12 - this.fixedResources.size(); i++) {
-                cardtmp[3][0].append(" ");
-            }
-            cardtmp[3][0].append("║");
-
-
-        }
-        cardtmp[3][0].append(colorend);
-        cardtmp[3][1].append("");
-        cardtmp[3][2].append("");
-
-///sud
-        cardtmp[4][0].append(colorstart);
-        cardtmp[5][0].append(colorstart);
-        cardtmp[6][0].append(colorstart);
-
-        if (this.getSwCorner().isVisible()) {
-            String x = " ";
-            if (this.getNwCorner().isFull()) {
-                x = getResString(this.getNwCorner().getResource());
-            }
-
-            cardtmp[4][0].append("╠═════╗");
-            cardtmp[5][0].append("║  ");
-            cardtmp[5][0].append(colorend);
-            cardtmp[5][0].append(x);
-            cardtmp[5][0].append(colorstart);
-            cardtmp[5][0].append("  ║");
-            cardtmp[6][0].append("╚═════╝");
-        } else {
-
-            cardtmp[4][0].append("║      ");
-            cardtmp[5][0].append("║      ");
-            cardtmp[6][0].append("╚══════");
-        }
-        cardtmp[4][0].append(colorend);
-        cardtmp[5][0].append(colorend);
-        cardtmp[6][0].append(colorend);
-
-        ////////down center
-        cardtmp[4][1].append(colorstart);
-        cardtmp[5][1].append(colorstart);
-        cardtmp[6][1].append(colorstart);
-        cardtmp[4][1].append("       ");
-
-
-        cardtmp[5][1].append("       ");
-
-
-        cardtmp[6][1].append("═══════");
-        cardtmp[4][1].append(colorend);
-        cardtmp[5][1].append(colorend);
-        cardtmp[6][1].append(colorend);
-
-
-        //////
-        cardtmp[4][2].append(colorstart);
-        cardtmp[5][2].append(colorstart);
-        cardtmp[6][2].append(colorstart);
-
-        if (this.getSeCorner().isVisible()) {
-            String x = " ";
-            if (this.getNeCorner().isFull()) {
-
-                x = getResString(this.getNeCorner().getResource());
-
-            }
-            cardtmp[4][2].append("╔═════╣");
-            cardtmp[5][2].append("║  ");
-            cardtmp[5][2].append(colorend);
-            cardtmp[5][2].append(x);
-            cardtmp[5][2].append(colorstart);
-            cardtmp[5][2].append("  ║");
-            cardtmp[6][2].append("╚═════╝");
-
-        } else {
-            cardtmp[4][2].append("      ║");
-            cardtmp[5][2].append("      ║");
-            cardtmp[6][2].append("══════╝");
-
-
-        }
-        cardtmp[4][2].append(colorend);
-        cardtmp[5][2].append(colorend);
-        cardtmp[6][2].append(colorend);
-
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 3; j++) {
-                card[i][j] = cardtmp[i][j].toString();
-
-            }
-
-
+            card[2][2] = "      ║";
+            card[2][1] = "      ║";
+            card[2][0] = "══════╝";
         }
 
+        // TOP
+        String points = (getPoints() > 0) ? colorEnd + getPoints() + colorStart : " ";
+        String bonus = getBonus().toStringTUI();
+        card[1][6] = "═══════";
+        card[1][5] = "  " + points + " " + bonus + "  ";
+        card[1][4] = "       ";
+
+        // LEFT
+        card[0][3] = "║      ";
+
+        // RIGHT
+        card[2][3] = "      ║";
+
+        // BOTTOM
+        card[1][2] = "       ";
+        card[1][1] = "       ";
+        card[1][0] = "═══════";
+
+        // CENTER
+        String fixedResourcesString = "";
+        int emptySpaces = 7;
+        for (Resource resource : getFixedResources()) {
+            fixedResourcesString += resource.toStringTUI();
+            emptySpaces--;
+        }
+        String leftPadding = "";
+        String rightPadding = "";
+        for (int i = 0; i < emptySpaces; i++) {
+            if (i % 2 == 0) {
+                rightPadding += " ";
+            } else {
+                leftPadding += " ";
+            }
+        }
+        card[1][3] = leftPadding + fixedResourcesString + rightPadding;
+
+
+        for (int i = 0; i < card.length; i++) {
+            for (int j = 0; j < card[i].length; j++) {
+                card[i][j] = colorStart + card[i][j] + colorEnd;
+            }
+        }
         return card;
-    }
-
-    private String getResString(Resource res) {
-        switch (res) {
-
-
-            case ANIMAL:
-                return new String("\u001B[34mA\u001B[0m");
-            case INK:
-                return new String("\u001B[33mI\u001B[0m");
-            case FUNGI:
-                return new String("\u001B[31mF\u001B[0m");
-            case INSECT:
-                return new String("\u001B[35mI\u001B[0m");
-            case PLANT:
-                return new String("\u001B[32mP\u001B[0m");
-            case QUILL:
-                return new String("\u001B[33mQ\u001B[0m");
-            case SCROLL:
-                return new String("\u001B[33mQ\u001B[0m");
-
-
-        }
-        return null;
     }
 }

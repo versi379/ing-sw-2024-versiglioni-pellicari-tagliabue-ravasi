@@ -45,6 +45,11 @@ public class ResourcesBonus implements Bonus , Serializable {
     }
 
     @Override
+    public String toStringTUI() {
+        return getTargetResource().toStringTUI();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -54,7 +59,6 @@ public class ResourcesBonus implements Bonus , Serializable {
         }
         return getTargetResource().equals(resourcesBonus.getTargetResource());
     }
-
 
     @Override
     public int hashCode() {

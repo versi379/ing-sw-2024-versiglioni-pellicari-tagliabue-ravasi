@@ -161,8 +161,8 @@ public class PlayableCardTest {
 
     @Test
     void toStringTui() {
-        new PlayableCard(Color.RED, 1, new BlankBonus(), new ArrayList<>(), corners).toStringTui();
+        new PlayableCard(Color.RED, 1, new BlankBonus(), new ArrayList<>(), corners).toStringTUI();
 
-         new PlayableCard(Color.BLUE, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), corners).toStringTui();
+         new PlayableCard(Color.BLUE, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), corners).toStringTUI();
     }
 }

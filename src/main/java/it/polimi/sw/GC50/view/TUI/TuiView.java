@@ -1,7 +1,6 @@
 package it.polimi.sw.GC50.view.TUI;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.view.View;
@@ -148,7 +147,7 @@ public class TuiView implements View {
     private void printface(PhysicalCard card) {
         String[][] tmpString;
         System.out.println("Face 1");
-        tmpString = card.getFront().toStringTui();
+        tmpString = card.getFront().toStringTUI();
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(tmpString[i][j]);
@@ -156,7 +155,7 @@ public class TuiView implements View {
             System.out.println();
         }
         System.out.println("Face 2");
-        tmpString = card.getBack().toStringTui();
+        tmpString = card.getBack().toStringTUI();
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(tmpString[i][j]);

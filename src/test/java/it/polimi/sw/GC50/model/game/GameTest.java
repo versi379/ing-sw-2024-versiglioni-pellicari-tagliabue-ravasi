@@ -555,14 +555,14 @@ public class GameTest {
             PhysicalCard card;
             for (int i = 0; i < game2.resourceDeckSize(); i++) {
                 card = game2.pickCard(DrawingPosition.RESOURCEDECK);
-                card.getFront().toStringTui();
-                card.getBack().toStringTui();
+                card.getFront().toStringTUI();
+                card.getBack().toStringTUI();
                 card = game2.pickCard(DrawingPosition.GOLDDECK);
                 if (card.getCardType().equals(CardType.GOLD)) {
                     // GoldCard goldCard1 = (GoldCard) card.getFront();
                     //goldCard1.toStringTui();
-                    card.getFront().toStringTui();
-                    card.getBack().toStringTui();
+                    card.getFront().toStringTUI();
+                    card.getBack().toStringTUI();
                 }
             }
         }
