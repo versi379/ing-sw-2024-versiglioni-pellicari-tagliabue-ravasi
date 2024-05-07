@@ -148,12 +148,22 @@ public class CardsMatrix implements Serializable {
         int x = cornersToCardsX(cornersX, cornersY);
         int y = cornersToCardsY(cornersX, cornersY);
 
-        switch(position) {
-            case 0 -> {return x <= 0 || getOrder(x, y) > getOrder(x - 1, y);}
-            case 1 -> {return y >= length() - 1 || getOrder(x, y) > getOrder(x, y + 1);}
-            case 2 -> {return x >= length() - 1 || getOrder(x, y) > getOrder(x + 1, y);}
-            case 3 -> {return y <= 0 || getOrder(x, y) > getOrder(x, y - 1);}
-            default -> {return false;}
+        switch (position) {
+            case 0 -> {
+                return x <= 0 || getOrder(x, y) > getOrder(x - 1, y);
+            }
+            case 1 -> {
+                return y >= length() - 1 || getOrder(x, y) > getOrder(x, y + 1);
+            }
+            case 2 -> {
+                return x >= length() - 1 || getOrder(x, y) > getOrder(x + 1, y);
+            }
+            case 3 -> {
+                return y <= 0 || getOrder(x, y) > getOrder(x, y - 1);
+            }
+            default -> {
+                return false;
+            }
         }
     }
 
@@ -212,6 +222,37 @@ public class CardsMatrix implements Serializable {
         }
         result.currentCards = currentCards;
         return result;
+    }
+
+    public void printBoard(int cornersX, int cornersY) {
+        String[][] board = new String[11][23];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = "       ";
+            }
+        }
+
+        for (int x = cornersX - 2; x < cornersX + 3; x++) {
+            for (int y = cornersY - 2; y < cornersX + 3; y++) {
+                if ((x + y) % 2 == 0 && x >= 0 && y >= 0) {
+                    PlayableCard card = getAtCornersCoordinates(x, y);
+                    if (card != null) {
+                        String[][] cardTUI = card.toStringTUI();
+                        for (int i = 0; i < cardTUI.length; i++) {
+                            for (int j = 0; j < cardTUI[i].length; j++) {
+                                board[i + 2 * x][j + 4 * y] = cardTUI[i][j];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 22; i >= 0; i--) {
+            for (int j = 0; j < 11; j++) {
+                System.out.print(board[j][i]);
+            }
+            System.out.println();
+        }
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
