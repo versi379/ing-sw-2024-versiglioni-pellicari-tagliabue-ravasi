@@ -30,6 +30,8 @@ public class PrintTUITest {
         }
         CardsMatrix mat3 = pl.getCardsArea();
         PrintBoard ob = new PrintBoard(mat3);
+
+        ob.print();
     }
 
     @Test

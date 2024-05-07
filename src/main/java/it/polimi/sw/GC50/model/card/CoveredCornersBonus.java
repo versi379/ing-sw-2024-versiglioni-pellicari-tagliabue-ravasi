@@ -27,7 +27,7 @@ public class CoveredCornersBonus implements Bonus , Serializable {
 
     @Override
     public String toStringTUI() {
-        return "C";
+        return "\u001B[0mC";
     }
 
     @Override

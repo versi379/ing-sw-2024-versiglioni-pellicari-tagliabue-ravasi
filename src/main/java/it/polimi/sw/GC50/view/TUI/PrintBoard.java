@@ -4,108 +4,69 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 
 public class PrintBoard {
-    private CardsMatrix cardsMatrix;
-    private int d = (84 * 4) - 13;
-    private int d2 = (84 * 2) - 7;
-    String[][] mat2;
+    String[][] board;
 
     public PrintBoard(CardsMatrix cardsMatrix) {
-        PlayableCard[][] mat = cardsMatrix.getAsCornerMatrixWithoutOrder();
-        mat2 = new String[d][d2];
-        int index = 0;
-        for (int i = 0; i < mat2.length; i++) {
-            for (int j = 0; j < mat2[0].length; j++) {
-                mat2[i][j] = null;
+        board = new String[cardsMatrix.length() * 2 + 1][cardsMatrix.length() * 4 + 3];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = "       ";
             }
         }
 
-        for (int i = 0; i < cardsMatrix.length(); i++) {
-            int index2 = 0;
-            for (int j = 0; j < cardsMatrix.length(); j++) {
-                if (mat[i][j] != null) {
-                    String[][] tmpString = mat[i][j].toStringTUI();
-                    for (int k = 0; k < 7; k++) {
-                        switch (k) {
-                            case 0, 1, 2: {
-                                //nw
-                                if (cardsMatrix.isCornerUncovered(i, j, 1)) {
-                                    mat2[index + k][index2] = tmpString[k][0];
-                                }
-                                mat2[index + k][index2 + 1] = tmpString[k][1];
-                                //ne
-                                if (cardsMatrix.isCornerUncovered(i, j, 2)) {
-                                    mat2[index + k][index2 + 2] = tmpString[k][2];
-                                }
-                                break;
-                            }
-                            case 3: {
-                                //center
-                                mat2[index + k][index2] = tmpString[k][0];
-                                mat2[index + k][index2 + 1] = tmpString[k][1];
-                                mat2[index + k][index2 + 2] = tmpString[k][2];
-                                break;
-                            }
-                            case 4, 5, 6: {
-                                //sw
-                                if (cardsMatrix.isCornerUncovered(i, j, 0)) {
-                                    mat2[index + k][index2] = tmpString[k][0];
-                                }
-                                mat2[index + k][index2 + 1] = tmpString[k][1];
-                                //se
-                                if (cardsMatrix.isCornerUncovered(i, j, 3)) {
-                                    mat2[index + k][index2 + 2] = tmpString[k][2];
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-                index2 = index2 + 2;
-            }
-            index = index + 4;
-        }
-        int ck = 0;
-        for (int i = 0; i < d; i++) {
-            if (!ck(1, i, mat2)) {
-                for (int j = 0; j < d2; j++) {
-                    if (!ck(2, j, mat2)) {
-                        if (ck(i, ck, mat2)) {
-                        }
-                        if (mat2[i][j] != null) {
-                            System.out.print(mat2[i][j]);
-                        } else {
+        for (int x = 0; x < cardsMatrix.length(); x++) {
+            for (int y = 0; y < cardsMatrix.length(); y++) {
+                if ((x + y) % 2 == 0) {
+                    PlayableCard card = cardsMatrix.getAtCornersCoordinates(x, y);
+                    if (card != null) {
+                        String[][] cardTUI = card.toStringTUI();
 
-                            System.out.print("       ");
+                        for (int i = 0; i < cardTUI.length; i++) {
+                            for (int j = 0; j < cardTUI[i].length; j++) {
+                                board[i + 2 * x][j + 4 * y] = cardTUI[i][j];
+                            }
+                        }
+
+                        // SW corner
+                        if (!cardsMatrix.isCornerUncovered(x, y, 0)) {
+                            String[][] cardTUItmp = cardsMatrix.getAtCornersCoordinates(x - 1, y - 1).toStringTUI();
+                            board[2 * x][4 * y] = cardTUItmp[2][4];
+                            board[2 * x][4 * y + 1] = cardTUItmp[2][5];
+                            board[2 * x][4 * y + 2] = cardTUItmp[2][6];
+                        }
+                        // NW corner
+                        if (!cardsMatrix.isCornerUncovered(x, y, 1)) {
+                            String[][] cardTUItmp = cardsMatrix.getAtCornersCoordinates(x - 1, y + 1).toStringTUI();
+                            board[2 * x][4 * y + 4] = cardTUItmp[2][0];
+                            board[2 * x][4 * y + 5] = cardTUItmp[2][1];
+                            board[2 * x][4 * y + 6] = cardTUItmp[2][2];
+                        }
+                        // NE corner
+                        if (!cardsMatrix.isCornerUncovered(x, y, 2)) {
+                            String[][] cardTUItmp = cardsMatrix.getAtCornersCoordinates(x + 1, y + 1).toStringTUI();
+                            board[2 * x + 2][4 * y + 4] = cardTUItmp[0][0];
+                            board[2 * x + 2][4 * y + 5] = cardTUItmp[0][1];
+                            board[2 * x + 2][4 * y + 6] = cardTUItmp[0][2];
+                        }
+                        // SE corner
+                        if (!cardsMatrix.isCornerUncovered(x, y, 3)) {
+                            String[][] cardTUItmp = cardsMatrix.getAtCornersCoordinates(x + 1, y - 1).toStringTUI();
+                            board[2 * x + 2][4 * y] = cardTUItmp[0][4];
+                            board[2 * x + 2][4 * y + 1] = cardTUItmp[0][5];
+                            board[2 * x + 2][4 * y + 2] = cardTUItmp[0][6];
                         }
                     }
                 }
-                System.out.println();
             }
         }
     }
 
-    private Boolean ck(int x, int h, String[][] mat2) {
-        if (x == 1) {
-            for (int i = 0; i < d2; i++) {
-                if (mat2[h][i] != null) {
-                    return false;
-                }
+    public void print() {
+        for (int i = board[1].length - 1; i >= 0; i--) {
+            for (int j = 0; j < board.length; j++) {
+                System.out.print(board[j][i]);
             }
-            return true;
-        } else if (x == 2) {
-            for (int i = 0; i < d; i++) {
-                if (mat2[i][h] != null) {
-                    return false;
-                }
-            }
-            return true;
+            System.out.println();
         }
-        return false;
     }
-
 }
-
-
-
-
-
