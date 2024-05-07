@@ -234,14 +234,44 @@ public class CardsMatrix implements Serializable {
 
         for (int x = cornersX - 2; x < cornersX + 3; x++) {
             for (int y = cornersY - 2; y < cornersX + 3; y++) {
-                if ((x + y) % 2 == 0 && x >= 0 && y >= 0) {
+                if (x >= 0 && y >= 0 && (x + y) % 2 == 0) {
                     PlayableCard card = getAtCornersCoordinates(x, y);
                     if (card != null) {
                         String[][] cardTUI = card.toStringTUI();
+
                         for (int i = 0; i < cardTUI.length; i++) {
                             for (int j = 0; j < cardTUI[i].length; j++) {
                                 board[i + 2 * x][j + 4 * y] = cardTUI[i][j];
                             }
+                        }
+
+                        // SW corner
+                        if (!isCornerUncovered(x, y, 0)) {
+                            String[][] cardTUItmp = getAtCornersCoordinates(x - 1, y - 1).toStringTUI();
+                            board[2 * x][4 * y] = cardTUItmp[2][4];
+                            board[2 * x][4 * y + 1] = cardTUItmp[2][5];
+                            board[2 * x][4 * y + 2] = cardTUItmp[2][6];
+                        }
+                        // NW corner
+                        if (!isCornerUncovered(x, y, 1)) {
+                            String[][] cardTUItmp = getAtCornersCoordinates(x - 1, y + 1).toStringTUI();
+                            board[2 * x][4 * y + 4] = cardTUItmp[2][0];
+                            board[2 * x][4 * y + 5] = cardTUItmp[2][1];
+                            board[2 * x][4 * y + 6] = cardTUItmp[2][2];
+                        }
+                        // NE corner
+                        if (!isCornerUncovered(x, y, 2)) {
+                            String[][] cardTUItmp = getAtCornersCoordinates(x + 1, y + 1).toStringTUI();
+                            board[2 * x + 2][4 * y + 4] = cardTUItmp[0][0];
+                            board[2 * x + 2][4 * y + 5] = cardTUItmp[0][1];
+                            board[2 * x + 2][4 * y + 6] = cardTUItmp[0][2];
+                        }
+                        // SE corner
+                        if (!isCornerUncovered(x, y, 3)) {
+                            String[][] cardTUItmp = getAtCornersCoordinates(x + 1, y - 1).toStringTUI();
+                            board[2 * x + 2][4 * y] = cardTUItmp[0][4];
+                            board[2 * x + 2][4 * y + 1] = cardTUItmp[0][5];
+                            board[2 * x + 2][4 * y + 2] = cardTUItmp[0][6];
                         }
                     }
                 }
