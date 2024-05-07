@@ -143,7 +143,7 @@ public class PlayableCard implements Serializable {
 
     public String[][] toStringTUI() {
         String[][] card = new String[3][7];
-        // 7 colonne e 3 righe;
+        // 7 righe e 3 colonne;
 
         String colorStart = switch (getColor()) {
             case WHITE -> "\u001B[37m";

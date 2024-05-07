@@ -176,7 +176,7 @@ public class CardsMatrixTest {
     @Test
     void testPrintBoard() {
         CardsMatrix cardsMatrix = testCardsMatrix();
-        cardsMatrix.printBoard(2, 2);
+        cardsMatrix.printBoard(10, 10);
     }
 
 

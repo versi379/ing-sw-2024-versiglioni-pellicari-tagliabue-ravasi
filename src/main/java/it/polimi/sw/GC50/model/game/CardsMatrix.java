@@ -234,7 +234,9 @@ public class CardsMatrix implements Serializable {
 
         for (int x = cornersX - 2; x < cornersX + 3; x++) {
             for (int y = cornersY - 2; y < cornersX + 3; y++) {
-                if (x >= 0 && y >= 0 && (x + y) % 2 == 0) {
+                if (x >= 0 && x < length() &&
+                        y >= 0 && y < length() &&
+                        (x + y) % 2 == 0) {
                     PlayableCard card = getAtCornersCoordinates(x, y);
                     if (card != null) {
                         String[][] cardTUI = card.toStringTUI();
