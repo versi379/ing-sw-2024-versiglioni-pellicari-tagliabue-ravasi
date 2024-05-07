@@ -102,11 +102,13 @@ public class TuiView implements View {
 
     @Override
     public int SelectObjectiveCard() {
+        System.out.println();
         System.out.println("Select the objective card you want to play with");
         printlistObjectiveCard();
         Scanner scanner = new Scanner(System.in);
         int read;
         do {
+            System.out.println();
             System.out.println("Insert the number of the objective card you want to play with");
             try {
 
@@ -121,6 +123,8 @@ public class TuiView implements View {
 
     @Override
     public Boolean selectStarterFace() {
+        System.out.println("\n");
+
         System.out.println("Select the face of the Starter card");
         printface(modelmex.getPlayerdata().getStarterCard());
         Scanner scanner = new Scanner(System.in);
@@ -168,6 +172,7 @@ public class TuiView implements View {
     private void printlistObjectiveCard() {
         List<ObjectiveCard> objectiveCards = modelmex.getPlayerdata().getSecretObjectivesList();
         for (int i = 0; i < objectiveCards.size(); i++) {
+            System.out.println();
             System.out.println(i + 1 + ") " + objectiveCards.get(i).getPointsPerCompletion() + " points for completing ");
             switch (objectiveCards.get(i).getObjective().getClass().getSimpleName()) {
                 case "CaveObjective": {
