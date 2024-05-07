@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.view.TUI.PrintBoard;
 import org.junit.jupiter.api.Test;
@@ -9,27 +8,16 @@ public class PrintTUITest {
 
     @Test
     void testPrintBoard() {
-        PlayerData pl = new PlayerData(40);
-        Game game2 = new Game("Partita", 1, 20, new Player("Gianpaolo"));
+        Player player = new Player("Player");
+        Game game = new Game("Partita", 1, 20, player);
 
-        for (int i = 0; i < 2; i = i + 2) {
-            for (int j = 0; j < 2; j = j + 2) {
-                PhysicalCard card;
-                card = game2.pickCard(DrawingPosition.GOLDDECK);
-                pl.placeCard(card.getFront(), i, j);
-            }
-        }
-        //mat = mat3.getAsCornerMatrixWithoutOrder();
-        for (int i = 1; i < 2; i = i + 2) {
-            for (int j = 1; j < 4; j = j + 2) {
+        game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 40);
+        game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 41, 41);
+        game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 42);
+        game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 41);
+        game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
-                PhysicalCard card;
-                card = game2.pickCard(DrawingPosition.GOLDDECK);
-                pl.placeCard(card.getFront(), i, j);
-            }
-        }
-        CardsMatrix mat3 = pl.getCardsArea();
-        PrintBoard ob = new PrintBoard(mat3);
+        PrintBoard ob = new PrintBoard(game.getPlayerData(player).getCardsArea());
 
         ob.print();
     }
