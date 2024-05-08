@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.view.TUI.PrintBoardTUI2;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -240,6 +241,11 @@ public class GameControllerTest {
         controller.drawCard(player, DrawingPosition.RESOURCEDECK);
 
         assertEquals("Posizione non disponibile", player.getLatestError());
+
+        /*
+        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob.print();
+        */
     }
 
     @Test
