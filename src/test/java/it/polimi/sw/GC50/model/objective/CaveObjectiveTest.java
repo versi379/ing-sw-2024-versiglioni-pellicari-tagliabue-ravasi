@@ -54,15 +54,17 @@ public class CaveObjectiveTest {
     public static CardsMatrix uprightLMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
-                {null, redPlayableCard, bluePlayableCard, null, null},
-                {null, null, null, bluePlayableCard, null},
                 {null, null, null, null, null},
+                {null, null, bluePlayableCard, null, bluePlayableCard},
+                {null, redPlayableCard, null, null, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;
@@ -71,15 +73,17 @@ public class CaveObjectiveTest {
     public static CardsMatrix uprightJMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
-                {null, null, redPlayableCard, null, null},
-                {null, null, bluePlayableCard, null, null},
-                {null, null, null, bluePlayableCard, null},
+                {null, redPlayableCard, null, null, null},
+                {null, null, bluePlayableCard, null, bluePlayableCard},
+                {null, null, null, null, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;
@@ -88,15 +92,17 @@ public class CaveObjectiveTest {
     public static CardsMatrix invertedLMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
-                {null, bluePlayableCard, null, null, null},
-                {null, null, bluePlayableCard, null, null},
-                {null, null, redPlayableCard, null, null},
+                {null, null, null, null, null},
+                {bluePlayableCard, null, bluePlayableCard, null, null},
+                {null, null, null, redPlayableCard, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;
@@ -105,15 +111,17 @@ public class CaveObjectiveTest {
     public static CardsMatrix invertedJMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
-                {null, bluePlayableCard, null, null, null},
-                {null, null, bluePlayableCard, redPlayableCard, null},
+                {null, null, null, redPlayableCard, null},
+                {bluePlayableCard, null, bluePlayableCard, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;

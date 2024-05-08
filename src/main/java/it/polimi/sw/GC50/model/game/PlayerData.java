@@ -97,7 +97,7 @@ public class PlayerData implements Serializable {
     }
 
     public PlayableCard getCard(int x, int y) {
-        return cardsArea.getAtCornersCoordinates(x, y);
+        return cardsArea.get(x, y);
     }
 
     public CornerPointer[] getTargetCorners(int x, int y) {
@@ -143,7 +143,7 @@ public class PlayerData implements Serializable {
         targetCorners[1].setCorner(card.getNwCorner());
         targetCorners[2].setCorner(card.getNeCorner());
         targetCorners[3].setCorner(card.getSeCorner());
-        cardsArea.insertAtCornersCoordinates(card, x, y);
+        cardsArea.insert(card, x, y);
         for (Resource resource : Resource.values()) {
             numOfResources.replace(resource, numOfResources.get(resource) + card.resourceCount(resource));
         }

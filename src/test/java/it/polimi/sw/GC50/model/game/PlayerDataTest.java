@@ -145,7 +145,7 @@ public class PlayerDataTest {
 
         for (int i = 0; i < playerData.getCardsArea().length(); i++) {
             for (int j = 0; j < playerData.getCardsArea().length(); j++) {
-                assertEquals(cardsArea.getAtCornersCoordinates(i, j), playerData.getCard(i, j));
+                assertEquals(cardsArea.get(i, j), playerData.getCard(i, j));
             }
         }
     }

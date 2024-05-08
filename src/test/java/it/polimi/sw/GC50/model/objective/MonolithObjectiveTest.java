@@ -38,15 +38,17 @@ public class MonolithObjectiveTest {
     public static CardsMatrix rightDiagonalMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, redPlayableCard, redPlayableCard, redPlayableCard, null},
-                {null, null, null, null, null},
+                {null, null, null, redPlayableCard, null},
+                {null, null, redPlayableCard, null, null},
+                {null, redPlayableCard, null, null, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;
@@ -55,15 +57,17 @@ public class MonolithObjectiveTest {
     public static CardsMatrix leftDiagonalMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{
                 {null, null, null, null, null},
+                {null, redPlayableCard, null, null, null},
                 {null, null, redPlayableCard, null, null},
-                {null, null, redPlayableCard, null, null},
-                {null, null, redPlayableCard, null, null},
+                {null, null, null, redPlayableCard, null},
                 {null, null, null, null, null}
         };
         CardsMatrix testMatrix = new CardsMatrix(playableCardsMatrix.length);
         for (int i = 0; i < playableCardsMatrix.length; i++) {
             for (int j = 0; j < playableCardsMatrix[i].length; j++) {
-                testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                if (playableCardsMatrix[i][j] != null) {
+                    testMatrix.insert(playableCardsMatrix[i][j], i, j);
+                }
             }
         }
         return testMatrix;
