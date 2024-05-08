@@ -17,6 +17,7 @@ public class PrintTUITest {
         ob.print();
 
 
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 40);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 41, 41);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 42);
@@ -27,9 +28,15 @@ public class PrintTUITest {
         ob.print();
 
 
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         game.placeCard(player, game.pickCard(DrawingPosition.RESOURCEDECK).getFront(), 0, 0);
 
         ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob.print();
+
+
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 1);
         ob.print();
     }
 
