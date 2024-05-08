@@ -12,7 +12,6 @@ public class CardsMatrix implements Serializable {
     private final PlayableCard[][] cardsMatrix;
     private final int[][] orderMatrix;
     private int currentCards;
-    private int minX, maxX, minY, maxY;
 
     public CardsMatrix(int length) {
         cardsMatrix = new PlayableCard[length][length];

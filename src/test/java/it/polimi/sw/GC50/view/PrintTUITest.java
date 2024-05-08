@@ -1,15 +1,21 @@
-package it.polimi.sw.GC50.model.game;
+package it.polimi.sw.GC50.view;
 
+import it.polimi.sw.GC50.model.game.DrawingPosition;
+import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.view.TUI.PrintBoard;
+import it.polimi.sw.GC50.view.TUI.PrintBoardTUI2;
 import org.junit.jupiter.api.Test;
 
 public class PrintTUITest {
 
     @Test
-    void testPrintBoard() {
+    void testPrintBoard2() {
         Player player = new Player("Player");
         Game game = new Game("Partita", 1, 20, player);
+
+        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob.print();
+
 
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 40);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 41, 41);
@@ -17,8 +23,13 @@ public class PrintTUITest {
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 41);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
-        PrintBoard ob = new PrintBoard(game.getPlayerData(player).getCardsArea());
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob.print();
 
+
+        game.placeCard(player, game.pickCard(DrawingPosition.RESOURCEDECK).getFront(), 0, 0);
+
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
         ob.print();
     }
 
