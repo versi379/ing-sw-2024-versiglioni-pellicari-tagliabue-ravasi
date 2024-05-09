@@ -4,7 +4,15 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.view.View;
 
 public class GuiView implements View {
+
     ModelMex modelmex;
+
+    private GUIApplication guiApplication;
+
+    public GuiView(ModelMex modelmex, GUIApplication guiApplication) {
+        this.modelmex = modelmex;
+        this.guiApplication = guiApplication;
+    }
 
     //grafica che chiede il nome
     @Override
