@@ -1,6 +1,9 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.view.GUI.controllers.GUIController;
+import it.polimi.sw.GC50.view.GUI.controllers.GameController;
+import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.application.Application;
@@ -51,13 +54,34 @@ public class GUIApplication extends Application {
     public GUIController getController(ScenePath scenePath) {
         int index = getSceneIndex(scenePath);
         if (index != -1) {
-            return scenes.get(getSceneIndex(scenePath)).getGenericController();
+            return scenes.get(getSceneIndex(scenePath)).getController();
         }
         return null;
     }
 
     public void setActiveScene(ScenePath scenePath) {
+        this.primaryStage.setTitle("Codex Naturalis" + scenePath.name());
 
+        int index = getSceneIndex(scenePath);
+        if (index != -1) {
+            SceneInfo sceneInfo = scenes.get(getSceneIndex(scenePath));
+            switch (scenePath) {
+                case MENU -> {
+                    this.primaryStage.centerOnScreen();
+                    this.primaryStage.setAlwaysOnTop(false);
+                    MenuController controller = (MenuController) sceneInfo.getController();
+                }
+                case GAME -> {
+                    GameController controller = (GameController) sceneInfo.getController();
+                }
+                default -> {
+                    this.primaryStage.setAlwaysOnTop(false);
+                }
+            }
+
+            this.primaryStage.setScene(sceneInfo.getScene());
+            this.primaryStage.show();
+        }
     }
 
     private int getSceneIndex(ScenePath scenePath) {
