@@ -27,16 +27,21 @@ public class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        loadScenes();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Codex Naturalis");
         root = new StackPane();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**
      * This method uses the FXMLLoader to load the scenes of the game,
      * and their respective controllers.
      */
-    private void loadScene() {
+    private void loadScenes() {
         FXMLLoader loader;
         GUIController controller;
         for (int i = 0; i < ScenePath.values().length; i++) {
