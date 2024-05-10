@@ -44,7 +44,7 @@ public class AppClient {
             view = new TuiView();
             typeview = TypeOfView.TUI;
         } else if (read == 2) {
-            view = new GuiView();
+            // view = new GuiView();
             typeview = TypeOfView.GUI;
         }
 
