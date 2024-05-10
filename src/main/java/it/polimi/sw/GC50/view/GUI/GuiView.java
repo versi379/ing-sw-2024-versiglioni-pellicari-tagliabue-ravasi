@@ -14,7 +14,7 @@ public class GuiView implements View {
         this.guiApplication = guiApplication;
     }
 
-    //grafica che chiede il nome
+    // grafica che chiede il nome
     @Override
     public String askName() {
         return null;
