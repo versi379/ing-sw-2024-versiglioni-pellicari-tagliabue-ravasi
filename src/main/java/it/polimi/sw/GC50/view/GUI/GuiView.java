@@ -51,4 +51,9 @@ public class GuiView implements View {
     public Boolean selectStarterFace() {
         return null;
     }
+
+    @Override
+    public int game() {
+        return 0;
+    }
 }

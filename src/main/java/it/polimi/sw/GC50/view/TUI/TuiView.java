@@ -11,6 +11,11 @@ import java.util.Scanner;
 
 public class TuiView implements View {
     ModelMex modelmex;
+    PrintGameArea printGameArea;
+
+    public TuiView() {
+        printGameArea = new PrintGameArea();
+    }
 
     public void start() {
 
@@ -98,7 +103,9 @@ public class TuiView implements View {
     @Override
     public void addModel(ModelMex modelmex) {
         this.modelmex = modelmex;
+        this.printGameArea.update(modelmex.getOtherPlayersInfo(),modelmex.getDrawingCard(),modelmex.getPlayerdata().getHand());
     }
+
 
     @Override
     public int SelectObjectiveCard() {
@@ -132,7 +139,6 @@ public class TuiView implements View {
         do {
             System.out.println("Insert the number of the face you want to play with");
             try {
-
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter 1 or 2.");
@@ -148,11 +154,16 @@ public class TuiView implements View {
 
     }
 
+    @Override
+    public int game() {
+        return 0;
+    }
+
     private void printface(PhysicalCard card) {
         String[][] tmpString;
         System.out.println("Face 1");
         tmpString = card.getFront().toStringTUI();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 6; i >=0; i--) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(tmpString[i][j]);
             }
@@ -160,7 +171,7 @@ public class TuiView implements View {
         }
         System.out.println("Face 2");
         tmpString = card.getBack().toStringTUI();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 6; i >=0; i--) {
             for (int j = 0; j < 3; j++) {
                 System.out.print(tmpString[i][j]);
             }

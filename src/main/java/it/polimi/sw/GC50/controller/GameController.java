@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.controller;
 
+import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
@@ -190,15 +191,19 @@ public class GameController {
     }
 
     synchronized public Object getGameModel(Player player) {
-       ArrayList<CardsMatrix> board=new ArrayList<>();
-        for(Player p : game.getPlayerList()){
-            if(!p.getNickname().equals(player.getNickname())){
+        ArrayList<CardsMatrix> board = new ArrayList<>();
+        ArrayList<Color> color = new ArrayList<>();
+        ArrayList<Integer> point = new ArrayList<>();
+        ArrayList<String> name = new ArrayList<>();
+        for (Player p : game.getPlayerList()) {
+            //if (!p.getNickname().equals(player.getNickname())) {
                 board.add(game.getPlayerData(p).getCardsArea());
-            }
+                color.add(Color.BLUE);
+                point.add(game.getPlayerData(p).getTotalScore());
+                name.add(p.getNickname());
+            //}
         }
-
-
-        return new ModelMex(game.getPlayerData(player),game.getChat(),game.getCurrentPlayer().getNickname(),board);
+        return new ModelMex(game.getPlayerData(player), game.getChat(), game.getCurrentPlayer().getNickname(),name, board, color, point,game.getDrawingCard());
     }
 
     public void updateChat(Player player, String message) {

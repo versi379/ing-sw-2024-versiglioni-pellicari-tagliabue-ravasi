@@ -143,7 +143,18 @@ public class Game extends Observable implements Serializable, GameInterface {
     public String getId() {
         return id;
     }
+   public PlayableCard[] getDrawingCard() {
+       PlayableCard [] drawingCard = new PlayableCard[6];
+       drawingCard[0]= revealedCards[0].getFront();
+       drawingCard[1]= revealedCards[1].getFront();
+       drawingCard[3]= revealedCards[2].getFront();
+       drawingCard[4]= revealedCards[3].getFront();
 
+       drawingCard[2]= goldDeck.peek().getBack();
+       drawingCard[5]= resourceDeck.peek().getBack();
+
+        return drawingCard;
+    }
     public Chat getChat() {
         return chat;
     }

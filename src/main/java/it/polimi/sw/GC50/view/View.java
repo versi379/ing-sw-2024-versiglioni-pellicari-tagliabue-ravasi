@@ -13,7 +13,9 @@ public interface View extends Serializable {
     int joinorcreate();
     void allPlayerReady();
     void addModel(ModelMex modelmex);
+
     int SelectObjectiveCard();
     Boolean selectStarterFace();
+    int game();
 
 }
