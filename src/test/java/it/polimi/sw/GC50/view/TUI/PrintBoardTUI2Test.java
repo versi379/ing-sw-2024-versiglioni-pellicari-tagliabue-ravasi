@@ -51,7 +51,12 @@ class PrintBoardTUI2Test {
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 2);
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 10);
+        ob.print();
+
+
+        System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 39, 41, 2);
         ob.print();
 
 
