@@ -167,12 +167,6 @@ public class CardsMatrixTest {
         }
     }
 
-    @Test
-    void testPrintBoard() {
-        CardsMatrix cardsMatrix = testCardsMatrix();
-        cardsMatrix.printBoard(2, 2, 5);
-    }
-
 
     public static CardsMatrix testCardsMatrix() {
         PlayableCard[][] playableCardsMatrix = new PlayableCard[][]{

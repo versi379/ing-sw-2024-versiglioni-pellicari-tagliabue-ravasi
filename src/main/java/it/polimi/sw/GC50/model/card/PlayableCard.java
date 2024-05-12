@@ -142,23 +142,15 @@ public class PlayableCard implements Serializable {
     }
 
     public String[][] toStringTUI() {
-        String[][] card = new String[3][7];
-        // 7 righe e 3 colonne;
+        String[][] card = new String[3][7];     // 7 righe e 3 colonne
 
-        String colorStart = switch (getColor()) {
-            case WHITE -> "\u001B[37m";
-            case GREEN -> "\u001B[32m";
-            case BLUE -> "\u001B[34m";
-            case RED -> "\u001B[31m";
-            case PURPLE -> "\u001B[35m";
-        };
+        String colorStart = getColor().toStringTUI();
         String colorEnd = "\u001B[0m";
-
 
         // SW corner
         if (getSwCorner().isVisible()) {
             String x = (getSwCorner().isFull())
-                    ? colorEnd + getSwCorner().getResource().toStringTUI() + colorStart : " ";
+                    ? getSwCorner().getResource().toStringTUI() + colorStart : " ";
             card[0][2] = "╠═════╗";
             card[0][1] = "║  " + x + "  ║";
             card[0][0] = "╚═════╩";
@@ -171,7 +163,7 @@ public class PlayableCard implements Serializable {
         // NW corner
         if (getNwCorner().isVisible()) {
             String x = (getNwCorner().isFull())
-                    ? colorEnd + getNwCorner().getResource().toStringTUI() + colorStart : " ";
+                    ? getNwCorner().getResource().toStringTUI() + colorStart : " ";
             card[0][6] = "╔═════╦";
             card[0][5] = "║  " + x + "  ║";
             card[0][4] = "╠═════╝";
@@ -184,7 +176,7 @@ public class PlayableCard implements Serializable {
         // NE corner
         if (getNeCorner().isVisible()) {
             String x = (getNeCorner().isFull())
-                    ? colorEnd + getNeCorner().getResource().toStringTUI() + colorStart : " ";
+                    ? getNeCorner().getResource().toStringTUI() + colorStart : " ";
             card[2][6] = "╦═════╗";
             card[2][5] = "║  " + x + "  ║";
             card[2][4] = "╚═════╣";
@@ -197,7 +189,7 @@ public class PlayableCard implements Serializable {
         // SE corner
         if (getSeCorner().isVisible()) {
             String x = (getSeCorner().isFull())
-                    ? colorEnd + getSeCorner().getResource().toStringTUI() + colorStart : " ";
+                    ? getSeCorner().getResource().toStringTUI() + colorStart : " ";
             card[2][2] = "╔═════╣";
             card[2][1] = "║  " + x + "  ║";
             card[2][0] = "╩═════╝";
@@ -208,7 +200,7 @@ public class PlayableCard implements Serializable {
         }
 
         // TOP
-        String points = (getPoints() > 0) ? colorEnd + getPoints() + colorStart : " ";
+        String points = (getPoints() > 0) ? colorEnd + getPoints() : " ";
         String bonus = getBonus().toStringTUI();
         card[1][6] = "═══════";
         card[1][5] = "  " + points + " " + bonus + "  ";
