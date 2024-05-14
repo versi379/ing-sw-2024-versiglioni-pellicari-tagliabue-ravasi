@@ -22,7 +22,7 @@ public class GuiView implements View {
 
     @Override
     public String askName() {
-        return null;
+        return "giovanni";
     }
 
     @Override
