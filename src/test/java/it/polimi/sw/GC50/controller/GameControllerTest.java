@@ -242,10 +242,9 @@ public class GameControllerTest {
 
         assertEquals("Posizione non disponibile", player.getLatestError());
 
-        /*
+
         PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
         ob.print();
-        */
     }
 
     @Test

@@ -36,7 +36,7 @@ public class PrintTUITest {
 
 
         System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 1);
+        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 2);
         ob.print();
     }
 
