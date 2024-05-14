@@ -79,6 +79,7 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
+                String name = "rmi://IP:1099/server";
                 ClientRmi clientRmi = new ClientRmi("server");
                 clientRmi.addView(view, typeview);
                 clientRmi.lobby();

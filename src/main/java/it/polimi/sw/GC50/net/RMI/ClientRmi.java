@@ -20,6 +20,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static it.polimi.sw.GC50.net.util.Request.DRAW_CARD;
@@ -49,7 +50,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private Thread thread1;
     private Thread thread2;
     //////////////////////////////////////////////////////////
-    private final ReentrantLock lock;
+    private final Object lock;
+    Lock lock2;
+    private boolean thread2pause;
 
     public ClientRmi(String name) throws RemoteException {
         this.servername = name;
@@ -64,7 +67,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         notifyUpdateChat = false;
         this.executorService = Executors.newSingleThreadScheduledExecutor();
         this.executorService2 = Executors.newSingleThreadScheduledExecutor();
-        this.lock = new ReentrantLock();
+        this.lock = new Object();
+        lock2 = new ReentrantLock();
     }
     //////////////////////////////////////////
     //COMUNICATION WITH SERVER
@@ -247,8 +251,19 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
             case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW: {
-                notify = true;
-                System.out.println("notify");
+                synchronized (lock2) {
+                    while (thread2pause) {
+                        try {
+                            lock2.wait();
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
+                synchronized (lock) {
+                    notify= true;
+                    error=false;
+                    this.lock.notifyAll();
+                }
                 break;
             }
             case NOTIFY_PLAYER_JOINED_GAME: {
@@ -277,8 +292,20 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             case NOTIFY_CARD_NOT_FOUND, NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
                  NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
                 if (mex.getObject().equals(nickName)) {
-                    error = true;
-                    notify = true;
+                    synchronized (lock2) {
+                        while (thread2pause) {
+                            try {
+                                lock2.wait();
+                            } catch (InterruptedException e) {
+                            }
+                        }
+                    }
+                    synchronized (lock) {
+                        error = true;
+                        notify = true;
+                        this.lock.notifyAll();
+                    }
+
                 }
                 break;
             }
@@ -290,8 +317,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             default: {
                 break;
             }
-        }
 
+        }
+       thread2.interrupt();
 
     }
 
@@ -302,23 +330,19 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     @Override
     synchronized public void onUpdate(Message mex) throws RemoteException {
+
         thread2 = new Thread(() -> {
             switchMex(mex);
         });
         thread2.start();
-        try {
-            thread2.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
+            }
 
     //////////////////////////////////////////
     //ACTIVE_GAME_CONTROLLER
     ///////////////////////////////////////////
     private void firstPhase() {
-
+        //this.lock = new Object();
         this.getModel();
         view.addModel(this.modelMex);
         this.selectObjectiveCard(view.SelectObjectiveCard());
@@ -342,7 +366,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         while (statusGame) {
             if (this.myTurn) {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
 
                 }
@@ -383,16 +407,31 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     private void waitNoifyfromServer() {
-        notify = false;
-        while (!notify) {
 
 
+        synchronized (lock2) {
+            thread2pause = false;
+            this.lock2.notifyAll();
+        }
+        synchronized (lock) {
+            while (!notify) {
+                try {
+                    lock.wait();
+
+                } catch (InterruptedException e) {
+
+                }
+
+            }
         }
         System.out.println("notify from server");
         if (!error) {
             getModel();
         }
         error = false;
+        notify = false;
+        thread2pause= true;
+
     }
 
 
