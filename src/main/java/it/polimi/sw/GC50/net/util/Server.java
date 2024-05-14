@@ -49,6 +49,9 @@ public class Server {
      */
 
     public synchronized Match createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) {
+        if(numOfPlayer < 2 || numOfPlayer > 4){
+            return null;
+        }
         if (checkUser(client, nickname)) {
             matches.add(new Match(matches.size(), client, gameId, numOfPlayer, nickname));
             System.out.println(gameId + " Match created");

@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 public class ClientHandler implements Runnable, ClientInterface {
@@ -19,17 +21,13 @@ public class ClientHandler implements Runnable, ClientInterface {
     private final ObjectInputStream input;
     //////////////////////////////////////////
     private boolean alive;
-    private boolean send;
-    private Message messageout;
     //////////////////////////////////////////
-    private final Semaphore semaphore;
-    private final Semaphore semaphore2;
     //////////////////////////////////////////
     private final Server server;
     private Match match;
     private String nickName;
     //////////////////////////////////////////
-
+    private final ExecutorService executorService;
     //////////////////////////////////////////
 
 
@@ -37,9 +35,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         this.socketClient = socketClient;
         this.serverSCK = serverSCK;
         this.alive = true;
-        this.send = false;
-        semaphore = new Semaphore(1);
-        semaphore2 = new Semaphore(1);
+        this.executorService = Executors.newSingleThreadScheduledExecutor();
         this.server = server;
         try {
             this.output = new ObjectOutputStream(socketClient.getOutputStream());
@@ -51,53 +47,24 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
 
-
     private void inputThread() {
         System.out.println("server socket listener client");
-        while (alive) {
-            try {
-                Object object = input.readObject();
-                Message.MessageClientToServer message = (Message.MessageClientToServer) object;
-                Thread thread = new Thread(() -> {
-                    switchmex(message);
-                });
-                thread.start();
-
-            } catch (IOException | ClassNotFoundException e) {
-
-            }
-        }
-    }
-
-    private void outputThread() {
-        System.out.println("server socket out ");
-        while (this.alive) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-
-            }
-            if (send) {
-                System.out.println("send");
+        executorService.execute(() -> {
+            while (!executorService.isShutdown()) {
                 try {
-                    if (messageout != null) {
-                        output.writeObject(messageout);
-                        output.flush();
-                        output.reset();
-                    }
-
-                } catch (IOException e) {
-                    System.out.println("error");
+                    Object object = input.readObject();
+                    Message.MessageClientToServer message = (Message.MessageClientToServer) object;
+                    switchmex(message);
+                } catch (IOException | ClassNotFoundException e) {
 
                 }
-                messageout = null;
-                send = false;
             }
-        }
+        });
     }
 
+
     private synchronized void switchmex(Message.MessageClientToServer message) {
-        System.out.println(message.getRequest());
+        //System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
             case Request.MEX_CHAT:
@@ -105,6 +72,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 break;
             case Request.GET_MODEL: {
                 Object object = match.getModel(message.getNickName(), this);
+                System.out.println(object.toString());
                 setMessageout(new Message(Request.GET_MODEL_RESPONSE, object));
                 break;
             }
@@ -154,17 +122,20 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
 
-    private synchronized void setMessageout(Message messageout) {
-        while (send) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
+    synchronized private void setMessageout(Message messageout) {
 
+        try {
+            if (messageout != null) {
+               // System.out.println(messageout.getRequest());
+                output.writeObject(messageout);
+                output.flush();
+                output.reset();
             }
-        }
-        this.messageout = messageout;
-        send = true;
 
+        } catch (IOException e) {
+            System.out.println("error");
+
+        }
     }
 
     @Override
@@ -180,10 +151,10 @@ public class ClientHandler implements Runnable, ClientInterface {
             inputThread();
         });
         thread1.start();
-        Thread thread2 = new Thread(() -> {
-            outputThread();
-        });
-        thread2.start();
+        //  Thread thread2 = new Thread(() -> {
+        //    outputThread();
+        // });
+        //thread2.start();
     }
 
     //////////////////////////////////////////
@@ -195,7 +166,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     @Override
-    public void onUpdate(Message message) throws RemoteException {
+    synchronized public void onUpdate(Message message) throws RemoteException{
         setMessageout(message);
     }
 

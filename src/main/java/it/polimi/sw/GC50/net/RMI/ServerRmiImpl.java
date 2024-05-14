@@ -84,22 +84,12 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     @Override
     public void message(Request request, Object object, String gameName, String nickName, ClientInterface clientInterface) throws RemoteException {
         if (match.getGameId().equals(gameName)) {
-            if (request.equals(Request.MEX_CHAT)) {
-                match.updateChat(clientInterface, nickName, (String) object);
-                System.out.println("chat updated");
-            }
             switch (request) {
-                case PLACE_CARD:
+                case PLACE_CARD, SELECT_STARTER_FACE, SELECT_OBJECTIVE_CARD, DRAW_CARD:
                     match.updateController(request, clientInterface, object, nickName);
                     break;
-                case SELECT_STARTER_FACE:
-                    match.updateController(request, clientInterface, object, nickName);
-                    break;
-                case SELECT_OBJECTIVE_CARD:
-                    match.updateController(request, clientInterface, object, nickName);
-                    break;
-                case DRAW_CARD:
-                    match.updateController(request, clientInterface, object, nickName);
+                case MEX_CHAT:
+                    match.updateChat(clientInterface, nickName, (String) object);
                     break;
                 default:
                     break;
@@ -110,6 +100,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
 
     @Override
     public Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
+       System.out.println("getModel");
         if (!match.getGameId().equals(gameName)) {
             return null;
         }

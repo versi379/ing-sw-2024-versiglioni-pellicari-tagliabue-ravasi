@@ -143,18 +143,47 @@ public class Game extends Observable implements Serializable, GameInterface {
     public String getId() {
         return id;
     }
-   public PlayableCard[] getDrawingCard() {
-       PlayableCard [] drawingCard = new PlayableCard[6];
-       drawingCard[0]= revealedCards[0].getFront();
-       drawingCard[1]= revealedCards[1].getFront();
-       drawingCard[3]= revealedCards[2].getFront();
-       drawingCard[4]= revealedCards[3].getFront();
 
-       drawingCard[2]= goldDeck.peek().getBack();
-       drawingCard[5]= resourceDeck.peek().getBack();
+    public PlayableCard[] getDrawingCard() {
+
+        PlayableCard[] drawingCard = new PlayableCard[6];
+        if (revealedCards[0] != null) {
+            drawingCard[0] = revealedCards[0].getFront();
+        } else {
+            drawingCard[0] = null;
+        }
+        if (revealedCards[1] != null) {
+            drawingCard[1] = revealedCards[1].getFront();
+        } else {
+            drawingCard[1] = null;
+        }
+        if (revealedCards[2] != null) {
+            drawingCard[3] = revealedCards[2].getFront();
+        } else {
+            drawingCard[3] = null;
+        }
+        if (revealedCards[3] != null) {
+            drawingCard[4] = revealedCards[3].getFront();
+        } else {
+            drawingCard[4] = null;
+        }
+
+        if (resourceDeck.isEmpty()) {
+            drawingCard[2] = null;
+        }else{
+            drawingCard[2] = resourceDeck.peek().getFront();
+        }
+        if (goldDeck.isEmpty()) {
+            drawingCard[5] = null;
+        }else {
+            drawingCard[5] = goldDeck.peek().getFront();
+        }
+
+
 
         return drawingCard;
     }
+
     public Chat getChat() {
         return chat;
     }
@@ -203,7 +232,7 @@ public class Game extends Observable implements Serializable, GameInterface {
                 currentIndex = 0;
             }
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_LEFT_GAME, player);
+            notifyObservers(Request.NOTIFY_PLAYER_LEFT_GAME, player.getNickname());
         }
     }
 
@@ -360,7 +389,7 @@ public class Game extends Observable implements Serializable, GameInterface {
         checkPreparation(player);
         if (isReady(player)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_READY, player);
+            notifyObservers(Request.NOTIFY_PLAYER_READY, player.getNickname());
             checkSetupStatus();
         }
     }
@@ -372,7 +401,7 @@ public class Game extends Observable implements Serializable, GameInterface {
         notifyObservers(Request.NOTIFY_CHOOSE_OBJECTIVE, player.getNickname());
         if (isReady(player)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_READY, player);
+            notifyObservers(Request.NOTIFY_PLAYER_READY, player.getNickname());
             checkSetupStatus();
         }
     }
@@ -391,6 +420,7 @@ public class Game extends Observable implements Serializable, GameInterface {
             start();
             setChanged();
             notifyObservers(Request.NOTIFY_GAME_STARTED, null);
+
         }
     }
 
@@ -414,6 +444,8 @@ public class Game extends Observable implements Serializable, GameInterface {
         } else {
             currentIndex = (currentIndex + 1) % playerList.size();
             currentPhase = PlayingPhase.PLACING;
+            setChanged();
+            notifyObservers(Request.NOTIFY_NEXT_TURN, null);
         }
     }
 
@@ -509,6 +541,8 @@ public class Game extends Observable implements Serializable, GameInterface {
 
     public void addCard(Player player, PhysicalCard card) {
         getPlayerData(player).addCard(card);
+        setChanged();
+        notifyObservers(Request.NOTIFY_CARD_DRAW, player.getNickname());
         if (status.equals(GameStatus.PLAYING)) {
             nextPlayer();
         }

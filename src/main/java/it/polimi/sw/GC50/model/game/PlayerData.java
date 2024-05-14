@@ -35,6 +35,7 @@ public class PlayerData implements Serializable {
 
     /**
      * Constructor to build player area
+     *
      * @param deckSize
      */
     public PlayerData(int deckSize) {
@@ -95,6 +96,7 @@ public class PlayerData implements Serializable {
     public CardsMatrix getCardsArea() {
         return cardsArea.copy();
     }
+
 
     public PlayableCard getCard(int x, int y) {
         return cardsArea.get(x, y);

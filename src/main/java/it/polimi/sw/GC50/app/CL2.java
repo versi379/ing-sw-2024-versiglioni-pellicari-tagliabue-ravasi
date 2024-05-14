@@ -40,7 +40,7 @@ public class CL2 {
             view = new TuiView();
             typeview = TypeOfView.TUI;
         } else if (read == 2) {
-            // view = new GuiView();
+            //view = new GuiView();
             typeview = TypeOfView.GUI;
         }
 
@@ -67,16 +67,6 @@ public class CL2 {
                 client.addView(view, typeview);
                 client.lobby();
 
-               /* System.out.println(requestFromClietToServer.setName("luca"));
-                System.out.println(requestFromClietToServer.createGame("game3", 2));
-                System.out.println(requestFromClietToServer.setName("luca2"));
-                System.out.println(requestFromClietToServer.createGame("game4", 2));
-                System.out.println(requestFromClietToServer.getFreeMatch());
-                System.out.println(requestFromClietToServer.enterGame("game3"));*/
-                //client.setName("luca3");
-                //client.createGame("game1", 2);
-
-
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
@@ -86,19 +76,8 @@ public class CL2 {
             try {
                 System.out.println("Connecting to server...");
                 ClientRmi clientRmi = new ClientRmi("server");
-
-
                 clientRmi.addView(view, typeview);
                 clientRmi.lobby();
-                /*System.out.println(requestFromClietToServer.setName("luca3"));
-                System.out.println(requestFromClietToServer.createGame("game1", 3));
-                System.out.println(requestFromClietToServer.setName("luca4"));
-                System.out.println(requestFromClietToServer.createGame("game2", 3));
-                System.out.println(requestFromClietToServer.getFreeMatch());
-                System.out.println(requestFromClietToServer.enterGame("game3"));
-*/
-                //clientRmi.setName("luca3");
-                //clientRmi.createGame("game1", 2);
 
             } catch (RemoteException e) {
                 System.out.println("Error in connection");

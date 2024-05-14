@@ -209,7 +209,12 @@ public class PrintGameArea {
                         if (i == 0) {
                             if (z < 3) {
                                 if (z < this.hand.length) {
-                                    System.out.print(this.hand[z].getFront().toStringTUI()[k][j]);
+                                    if(this.hand[z] != null) {
+                                        System.out.print(this.hand[z].getFront().toStringTUI()[k][j]);
+                                    }else{
+                                        System.out.print("       ");
+                                    }
+
                                     if (z == 2 && k == 2) {
                                         System.out.print("         ║║          ");
                                     }
@@ -224,7 +229,12 @@ public class PrintGameArea {
                                 }
                             } else {
                                 if (z - 3 < decks.length) {
-                                    System.out.print(decks[z - 3].toStringTUI()[k][j]);
+                                    if(this.decks[z - 3]!= null) {
+                                        System.out.print(decks[z - 3].toStringTUI()[k][j]);
+                                    }else{
+                                        System.out.print("       ");
+                                    }
+
                                 } else {
                                     System.out.print("       ");
                                 }
@@ -245,7 +255,7 @@ public class PrintGameArea {
                                     }
                                 }
                             } else {
-                                if (z < decks.length) {
+                                if (z < decks.length&&decks[z]!=null) {
                                     System.out.print(decks[z].toStringTUI()[k][j]);
                                 } else {
                                     System.out.print("       ");

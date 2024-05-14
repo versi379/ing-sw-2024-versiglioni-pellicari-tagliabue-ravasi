@@ -1,8 +1,11 @@
 package it.polimi.sw.GC50.view.TUI;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
+import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
+import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
+import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.View;
 
 import java.util.InputMismatchException;
@@ -64,7 +67,7 @@ public class TuiView implements View {
                 read = 0;
                 scanner.nextLine();
             }
-        } while (read <= 2 && read >= 4);
+        } while (read < 2 || read > 4);
         return read;
     }
 
@@ -103,7 +106,7 @@ public class TuiView implements View {
     @Override
     public void addModel(ModelMex modelmex) {
         this.modelmex = modelmex;
-        this.printGameArea.update(modelmex.getOtherPlayersInfo(),modelmex.getDrawingCard(),modelmex.getPlayerdata().getHand());
+        this.printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
     }
 
 
@@ -159,21 +162,40 @@ public class TuiView implements View {
         return 0;
     }
 
+    @Override
+    public void updateBoard() {
+        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+        printGameArea.printallboard(true,0);
+    }
+
+    @Override
+    public PlaceCardMex askPlaceCard() {
+        System.out.println("Select the card you want to place");
+        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+
+        return null;
+    }
+
+    @Override
+    public DrawingPosition choseWhereToDraw() {
+        return null;
+    }
+
     private void printface(PhysicalCard card) {
         String[][] tmpString;
         System.out.println("Face 1");
         tmpString = card.getFront().toStringTUI();
-        for (int i = 6; i >=0; i--) {
+        for (int i = 6; i >= 0; i--) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(tmpString[i][j]);
+                System.out.print(tmpString[j][i]);
             }
             System.out.println();
         }
         System.out.println("Face 2");
         tmpString = card.getBack().toStringTUI();
-        for (int i = 6; i >=0; i--) {
+        for (int i = 6; i >= 0; i--) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(tmpString[i][j]);
+                System.out.print(tmpString[j][i]);
             }
             System.out.println();
         }
@@ -187,26 +209,29 @@ public class TuiView implements View {
             System.out.println(i + 1 + ") " + objectiveCards.get(i).getPointsPerCompletion() + " points for completing ");
             switch (objectiveCards.get(i).getObjective().getClass().getSimpleName()) {
                 case "CaveObjective": {
-                    System.out.println("Cave Objective");
+                    System.out.println("Cave Objective:");
                     System.out.println(((CaveObjective) objectiveCards.get(i).getObjective()).getOrientation().toString());
+                    System.out.println("____________________________________________________");
                     break;
                 }
                 case "DifferentResourcesObjective": {
-                    System.out.println("Different Resources Objective");
-                    // System.out.println(((DifferentResourcesObjective) objectiveCards.get(i).getObjective().));
+                    System.out.println("Different Resources Objective:");
+                    System.out.println(((DifferentResourcesObjective) objectiveCards.get(i).getObjective()).getTargetResources().toString());
+                    System.out.println("____________________________________________________");
                     break;
                 }
                 case "IdenticalResourcesObjective": {
-                    System.out.println("Identical Resources Objective");
+                    System.out.println("Identical Resources Objective:");
                     System.out.println(((IdenticalResourcesObjective) objectiveCards.get(i).getObjective()).getTargetResource().toString());
+                    System.out.println("____________________________________________________");
                     break;
                 }
                 case "MonolithObjective": {
-                    System.out.println("Monolith Objective");
+                    System.out.println("Monolith Objective:");
                     System.out.println(((MonolithObjective) objectiveCards.get(i).getObjective()).getOrientation().toString());
+                    System.out.println("____________________________________________________");
                     break;
                 }
-
             }
 
         }

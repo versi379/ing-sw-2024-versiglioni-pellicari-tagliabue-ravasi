@@ -70,14 +70,6 @@ public class AppClient {
                 thread.start();
                 client.addView(view, typeview);
                 client.lobby();
-/*
-                System.out.println(client.setName("luca"));
-                System.out.println(client.createGame("game3", 2));
-                System.out.println(client.setName("luca2"));
-                System.out.println(client.createGame("game4", 2));
-                System.out.println(client.getFreeMatch());
-                System.out.println(client.enterGame("game3"));
-*/
 
             } catch (IOException e) {
                 System.err.println(e.getMessage());
@@ -89,15 +81,7 @@ public class AppClient {
                 System.out.println("Connecting to server...");
                 ClientRmi clientRmi = new ClientRmi("server");
                 clientRmi.addView(view, typeview);
-               /* System.out.println(requestFromClietToServer.setName("luca3"));
-                System.out.println(requestFromClietToServer.createGame("game1", 3));
-                System.out.println(requestFromClietToServer.setName("luca4"));
-                System.out.println(requestFromClietToServer.createGame("game2", 3));
-                System.out.println(requestFromClietToServer.getFreeMatch());
-                System.out.println(requestFromClietToServer.enterGame("game3"));*/
-                //clientRmi.setName("luca2");
-                //clientRmi.enterGame("game1");
-               // clientRmi.sendMessage("cane");
+                clientRmi.lobby();
 
             } catch (RemoteException e) {
                 System.out.println("Error in connection");

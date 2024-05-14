@@ -33,7 +33,6 @@ public class GameController {
             game.addPlayer(player);
         } else {
             sendError(player, "Partita già iniziata");
-
         }
     }
 
@@ -88,6 +87,8 @@ public class GameController {
                 if (card.isPlaceable(game.getPlayerData(player), x, y)) {
                     game.placeCard(player, card, x, y);
                     game.removeCard(player, index);
+                    game.error(Request.NOTIFY_CARD_PLACED, player.getNickname());
+
                 } else {
                     sendError(player, "Carta non piazzabile");
                     game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
@@ -190,20 +191,24 @@ public class GameController {
         return null;
     }
 
-    synchronized public Object getGameModel(Player player) {
+     public Object getGameModel(Player player) {
         ArrayList<CardsMatrix> board = new ArrayList<>();
         ArrayList<Color> color = new ArrayList<>();
         ArrayList<Integer> point = new ArrayList<>();
         ArrayList<String> name = new ArrayList<>();
+
         for (Player p : game.getPlayerList()) {
-            //if (!p.getNickname().equals(player.getNickname())) {
-                board.add(game.getPlayerData(p).getCardsArea());
-                color.add(Color.BLUE);
-                point.add(game.getPlayerData(p).getTotalScore());
-                name.add(p.getNickname());
-            //}
+            if (!p.getNickname().equals(player.getNickname())) {
+            board.add(game.getPlayerData(p).getCardsArea());
+            color.add(Color.BLUE);
+            point.add(game.getPlayerData(p).getTotalScore());
+            name.add(p.getNickname());
+            }
         }
-        return new ModelMex(game.getPlayerData(player), game.getChat(), game.getCurrentPlayer().getNickname(),name, board, color, point,game.getDrawingCard());
+
+        ModelMex modelMex = new ModelMex(game.getPlayerData(player),player, game.getChat(), game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDrawingCard(), game.getCurrentPhase(), game.getStatus());
+        return modelMex;
+
     }
 
     public void updateChat(Player player, String message) {

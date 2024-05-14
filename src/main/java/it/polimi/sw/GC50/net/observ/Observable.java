@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Observable {
@@ -31,6 +32,7 @@ public class Observable {
             throw new NullPointerException();
         if (!obs.contains(o)) {
             obs.addElement(o);
+
         }
     }
 
@@ -105,11 +107,12 @@ public class Observable {
             arrLocal = obs.toArray();
             clearChanged();
         }
-
+        System.out.println(request.toString());
         for (int i = arrLocal.length - 1; i >= 0; i--) {
             try {
-                //  ((Observer)arrLocal[i]).update(this, arg);
+                //  ((Observer)arrLocal[i]).update(this, arg);\
                 ((Observer) arrLocal[i]).onUpdate(new Message(request, arg));
+               //observers.get(i).onUpdate(message);
             } catch (RemoteException e) {
                 System.out.println("Error in notifyObservers");
             }

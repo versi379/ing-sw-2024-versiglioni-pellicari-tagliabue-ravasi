@@ -1,6 +1,9 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
+import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
+import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.View;
 
 public class GuiView implements View {
@@ -63,5 +66,20 @@ public class GuiView implements View {
     @Override
     public int game() {
         return 0;
+    }
+
+    @Override
+    public void updateBoard() {
+
+    }
+
+    @Override
+    public PlaceCardMex askPlaceCard() {
+        return null;
+    }
+
+    @Override
+    public DrawingPosition choseWhereToDraw() {
+        return null;
     }
 }

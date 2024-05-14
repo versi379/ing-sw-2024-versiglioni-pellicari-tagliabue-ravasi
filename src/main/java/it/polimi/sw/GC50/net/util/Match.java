@@ -61,6 +61,7 @@ public class Match {
     //ACTIVE GAME
     ///////////////////////////////////////////
     synchronized public void updateController(Request request, ClientInterface clientInterface, Object update, String nickname) {
+       System.out.println(request.toString());
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
@@ -96,6 +97,7 @@ public class Match {
         if (!playerMap.containsKey(clientInterface)) {
             return null;
         }
+
         Player player = playerMap.get(clientInterface);
         return controller.getGameModel(player);
     }
