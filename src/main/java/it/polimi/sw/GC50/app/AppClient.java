@@ -29,6 +29,8 @@ public class AppClient {
 
         int read;
 
+        printBanner();
+
         do {
             System.out.println("1 for Tui , 2 for Gui");
             try {
@@ -65,7 +67,7 @@ public class AppClient {
 
             try {
 
-                ClientSCK client = new ClientSCK(2012, "localhost");
+                ClientSCK client = new ClientSCK(2012, "192.168.79.153");
                 Thread thread = new Thread(client);
                 thread.start();
                 client.addView(view, typeview);
@@ -79,8 +81,8 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
-                String name = "rmi://IP:1099/server";
-                ClientRmi clientRmi = new ClientRmi("server");
+                String name = "rmi://192.168.79.153:1099/server";
+                ClientRmi clientRmi = new ClientRmi(name);
                 clientRmi.addView(view, typeview);
                 clientRmi.lobby();
 
@@ -88,9 +90,16 @@ public class AppClient {
                 System.out.println("Error in connection");
             }
         }
-
-
     }
 
-
+    private static void printBanner() {
+        System.out.print("\u001B[33m");
+        System.out.println("   ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗    ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗");
+        System.out.println("  ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝    ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝");
+        System.out.println("  ██║     ██║   ██║██║  ██║█████╗   ╚███╔╝     ██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗");
+        System.out.println("  ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗     ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║");
+        System.out.println("  ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗    ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║");
+        System.out.println("   ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝");
+        System.out.print("\u001B[0m");
+    }
 }

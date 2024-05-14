@@ -3,11 +3,16 @@ package it.polimi.sw.GC50.model.card;
 import java.io.Serializable;
 
 /**
- * Different types of game colors
+ * Different types of PlayableCard colors
  */
 public enum Color implements Serializable {
     WHITE, GREEN, BLUE, RED, PURPLE;
 
+    /**
+     * Returns the String representing this color's code in the TUI graphics
+     *
+     * @return String containing the code associated with this color
+     */
     public String toStringTUI() {
         return switch (this) {
             case WHITE -> "\u001B[37m";

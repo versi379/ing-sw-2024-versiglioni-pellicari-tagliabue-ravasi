@@ -8,28 +8,39 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Utilized for cards whose score depends on the amount
- * of a certain resource present in the player's area
- * in the instant immediately after the placement
+ * Represents the bonus utilized for cards whose score depends on the amount of a certain resource
+ * present in the player's area in the instant immediately following its placement
  */
 public class ResourcesBonus implements Bonus , Serializable {
 
     private final Resource targetResource;
 
+    /**
+     * Constructs a new ResourceBonus instance given the target resource
+     *
+     * @param targetResource        target resource of this bonus computation
+     */
     public ResourcesBonus(Resource targetResource) {
         this.targetResource = targetResource;
     }
 
+    /**
+     * Returns this bonus's target resource
+     *
+     * @return the target resource
+     */
     public Resource getTargetResource() {
         return targetResource;
     }
 
     /**
-     * @param card
-     * @param playerData
-     * @param x
-     * @param y
-     * @return
+     * Computes the bonus multiplier by which the card score is calculated when placed
+     *
+     * @param card          PlayableCard associated with this bonus
+     * @param playerData    PlayerData in which card will be placed at coordinates (x, y)
+     * @param x             X coordinate of playerData
+     * @param y             Y coordinate of playerData
+     * @return the amount of target resource present in playerData after placing the card
      */
     @Override
     public int checkBonus(PlayableCard card, PlayerData playerData, int x, int y) {
@@ -44,6 +55,11 @@ public class ResourcesBonus implements Bonus , Serializable {
                 + card.resourceCount(targetResource);
     }
 
+    /**
+     * Returns the String representing this bonus in the TUI graphics
+     *
+     * @return target resource's TUI String
+     */
     @Override
     public String toStringTUI() {
         return getTargetResource().toStringTUI();
