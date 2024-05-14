@@ -1,10 +1,12 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.View;
+import javafx.application.Application;
 
 public class GuiView implements View {
 
@@ -12,12 +14,12 @@ public class GuiView implements View {
 
     private GUIApplication guiApplication;
 
-    public GuiView(ModelMex modelmex, GUIApplication guiApplication) {
-        this.modelmex = modelmex;
-        this.guiApplication = guiApplication;
+    public GuiView() {
+        new Thread(() -> {
+            Application.launch(GUIApplication.class);
+        }).start();
     }
 
-    // grafica che chiede il nome
     @Override
     public String askName() {
         return null;
@@ -51,6 +53,11 @@ public class GuiView implements View {
     @Override
     public void addModel(ModelMex modelmex) {
         this.modelmex = modelmex;
+    }
+
+    @Override
+    public void updateChat(Chat chat) {
+
     }
 
     @Override

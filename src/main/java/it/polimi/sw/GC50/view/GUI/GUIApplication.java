@@ -27,7 +27,7 @@ public class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loadScenes();
+        // loadScenes();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Codex Naturalis");
         root = new StackPane();

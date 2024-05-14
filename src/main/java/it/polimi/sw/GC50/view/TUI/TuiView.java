@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view.TUI;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
+import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
@@ -107,6 +108,11 @@ public class TuiView implements View {
     public void addModel(ModelMex modelmex) {
         this.modelmex = modelmex;
         this.printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+    }
+
+    @Override
+    public void updateChat(Chat chat) {
+
     }
 
 
