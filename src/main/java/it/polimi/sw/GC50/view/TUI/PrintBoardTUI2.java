@@ -17,11 +17,17 @@ public class PrintBoardTUI2 {
         int targetAreaWidth = maxX - minX + 1;
         int targetAreaHeight = maxY - minY + 1;
         if (targetAreaWidth > 0 && targetAreaHeight > 0) {
-            board = new String[(targetAreaWidth) * 2 + 1][(targetAreaHeight) * 4 + 3];
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[i].length; j++) {
-                    board[i][j] = "       ";
-                }
+            board = new String[(targetAreaWidth) * 2 + 1 + 1][(targetAreaHeight) * 4 + 3 + 1];
+
+            int counter = minX;
+            for (int i = 0; i < targetAreaWidth; i++) {
+                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter) + "   ";
+                counter++;
+            }
+            counter = minY;
+            for (int i = 0; i < targetAreaHeight; i++) {
+                board[0][i * 4 + 4] = String.format("%02d" ,counter) + "     ";
+                counter++;
             }
 
             for (Integer coordinates : cardsMatrix.getOrderList()) {
@@ -30,9 +36,9 @@ public class PrintBoardTUI2 {
                 String[][] cardTUI = cardsMatrix.get(actualX, actualY).toStringTUI();
 
                 for (int i = 0; i < cardTUI.length; i++) {
-                    int boardX = i + 2 * (actualX - minX);
+                    int boardX = i + 2 * (actualX - minX) + 1;
                     for (int j = 0; j < cardTUI[i].length; j++) {
-                        int boardY = j + 4 * (actualY - minY);
+                        int boardY = j + 4 * (actualY - minY) + 1;
                         board[boardX][boardY] = cardTUI[i][j];
                     }
                 }
@@ -52,11 +58,17 @@ public class PrintBoardTUI2 {
         int targetAreaWidth = maxX - minX + 1;
         int targetAreaHeight = maxY - minY + 1;
         if (targetAreaWidth > 0 && targetAreaHeight > 0) {
-            board = new String[(targetAreaWidth) * 2 + 1][(targetAreaHeight) * 4 + 3];
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[i].length; j++) {
-                    board[i][j] = "       ";
-                }
+            board = new String[(targetAreaWidth) * 2 + 1 + 1][(targetAreaHeight) * 4 + 3 + 1];
+
+            int counter = minX;
+            for (int i = 0; i < targetAreaWidth; i++) {
+                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter) + "   ";
+                counter++;
+            }
+            counter = minY;
+            for (int i = 0; i < targetAreaHeight; i++) {
+                board[0][i * 4 + 4] = String.format("%02d" ,counter) + "     ";
+                counter++;
             }
 
             for (Integer coordinates : cardsMatrix.getOrderList()) {
@@ -65,11 +77,11 @@ public class PrintBoardTUI2 {
                 String[][] cardTUI = cardsMatrix.get(actualX, actualY).toStringTUI();
 
                 for (int i = 0; i < cardTUI.length; i++) {
-                    int boardX = i + 2 * (actualX - minX);
+                    int boardX = i + 2 * (actualX - minX) + 1;
                     for (int j = 0; j < cardTUI[i].length; j++) {
-                        int boardY = j + 4 * (actualY - minY);
-                        if (boardX >= 0 && boardX < board.length &&
-                                boardY >= 0 && boardY < board[i].length) {
+                        int boardY = j + 4 * (actualY - minY) + 1;
+                        if (boardX >= 1 && boardX < board.length &&
+                                boardY >= 1 && boardY < board[i].length) {
                             board[boardX][boardY] = cardTUI[i][j];
                         }
                     }
@@ -84,7 +96,11 @@ public class PrintBoardTUI2 {
     public void print() {
         for (int i = board[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < board.length; j++) {
-                System.out.print(board[j][i]);
+                if (board[j][i] != null) {
+                    System.out.print(board[j][i]);
+                } else {
+                    System.out.print("       ");
+                }
             }
             System.out.println();
         }
