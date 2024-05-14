@@ -27,7 +27,7 @@ public class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // loadScenes();
+        loadScenes();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Codex Naturalis");
         root = new StackPane();
@@ -38,8 +38,8 @@ public class GUIApplication extends Application {
     }
 
     /**
-     * This method uses the FXMLLoader to load the scenes of the game,
-     * and their respective controllers.
+     * This method uses the FXMLLoader to load the scenes of the game
+     * and their respective controllers, for each client.
      */
     private void loadScenes() {
         FXMLLoader loader;
@@ -56,37 +56,15 @@ public class GUIApplication extends Application {
         }
     }
 
+    /**
+     * This method extracts the controller of a given scene.
+     */
     public GUIController getController(ScenePath scenePath) {
         int index = getSceneIndex(scenePath);
         if (index != -1) {
             return scenes.get(getSceneIndex(scenePath)).getController();
         }
         return null;
-    }
-
-    public void setActiveScene(ScenePath scenePath) {
-        this.primaryStage.setTitle("Codex Naturalis" + scenePath.name());
-
-        int index = getSceneIndex(scenePath);
-        if (index != -1) {
-            SceneInfo sceneInfo = scenes.get(getSceneIndex(scenePath));
-            switch (scenePath) {
-                case MENU -> {
-                    this.primaryStage.centerOnScreen();
-                    this.primaryStage.setAlwaysOnTop(false);
-                    MenuController controller = (MenuController) sceneInfo.getController();
-                }
-                case GAME -> {
-                    GameController controller = (GameController) sceneInfo.getController();
-                }
-                default -> {
-                    this.primaryStage.setAlwaysOnTop(false);
-                }
-            }
-
-            this.primaryStage.setScene(sceneInfo.getScene());
-            this.primaryStage.show();
-        }
     }
 
     private int getSceneIndex(ScenePath scenePath) {
