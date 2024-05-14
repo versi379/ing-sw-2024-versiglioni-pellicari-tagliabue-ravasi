@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
@@ -51,6 +52,11 @@ public class GuiView implements View {
     @Override
     public void addModel(ModelMex modelmex) {
         this.modelmex = modelmex;
+    }
+
+    @Override
+    public void updateChat(Chat chat) {
+
     }
 
     @Override
