@@ -33,7 +33,7 @@ public class AppClient {
         } else {
             view = new GuiView();
             typeview = TypeOfView.GUI;
-            GuiView.launch((String) null);
+            // view.start
         }
 
 
