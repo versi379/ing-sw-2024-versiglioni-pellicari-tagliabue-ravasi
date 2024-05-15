@@ -83,7 +83,7 @@ public class TuiView implements View {
     }
 
     @Override
-    public void waitPlayer() {
+    public void waitPlayers() {
         System.out.println("Waiting for other players to join the game");
     }
 
@@ -167,7 +167,7 @@ public class TuiView implements View {
         }
     }
 
-    private String readString(String message) {
+    private static String readString(String message) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(message);
 
@@ -184,7 +184,7 @@ public class TuiView implements View {
         return read;
     }
 
-    private int readInt(String message, int min, int range) {
+    private static int readInt(String message, int min, int range) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(message);
 

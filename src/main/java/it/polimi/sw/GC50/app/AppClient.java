@@ -20,54 +20,26 @@ import java.util.Scanner;
 
 public class AppClient {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         TypeOfConnection connection;
         View view = null;
         TypeOfView typeview = null;
 
-
-        int read;
-
         printBanner();
 
-        do {
-            System.out.println("1 for Tui , 2 for Gui");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read != 1 && read != 2);
-
-        if (read == 1) {
+        if (readBinaryChoice("1 for Tui , 2 for Gui") == 1) {
             view = new TuiView();
             typeview = TypeOfView.TUI;
-        } else if (read == 2) {
+        } else {
             view = new GuiView();
             typeview = TypeOfView.GUI;
             GuiView.launch((String) null);
         }
 
 
-        do {
-            System.out.println("1 for SCK connection, 2 for RMI");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read != 1 && read != 2);
-
-        if (read == 1) {
+        if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
             connection = TypeOfConnection.SOCKET;
-
             try {
-
                 ClientSCK client = new ClientSCK(2012, "localhost");
                 Thread thread = new Thread(client);
                 thread.start();
@@ -77,8 +49,7 @@ public class AppClient {
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
-
-        } else if (read == 2) {
+        } else {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
@@ -91,6 +62,23 @@ public class AppClient {
                 System.out.println("Error in connection");
             }
         }
+    }
+
+    private static int readBinaryChoice(String message) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(message);
+
+        int read;
+        do {
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                read = 0;
+                scanner.nextLine();
+            }
+        } while (read != 1 && read != 2);
+        return read;
     }
 
     private static void printBanner() {

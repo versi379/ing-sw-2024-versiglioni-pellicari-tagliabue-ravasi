@@ -12,7 +12,7 @@ public interface View extends Serializable {
     String selectName();
     String selectGameName();
     int selectNumberOfPlayers();
-    void waitPlayer();
+    void waitPlayers();
     int selectJoinOrCreate();
     void allPlayerReady();
     void addModel(ModelMex modelmex);

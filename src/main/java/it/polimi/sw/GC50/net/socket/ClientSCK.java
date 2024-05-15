@@ -369,7 +369,7 @@ public class ClientSCK implements Runnable {
 
     private void waitingPlayer() {
 
-        view.waitPlayer();
+        view.waitPlayers();
         long startTime = System.currentTimeMillis();
 
         while (!this.allPlayerReady) {

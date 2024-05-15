@@ -492,7 +492,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     private void waitingPlayer() {
 
-        view.waitPlayer();
+        view.waitPlayers();
         long startTime = System.currentTimeMillis();
 
         while (!this.allPlayerReady) {

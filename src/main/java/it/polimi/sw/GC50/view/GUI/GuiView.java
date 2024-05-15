@@ -91,7 +91,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void waitPlayer() {
+    public void waitPlayers() {
 
     }
 
