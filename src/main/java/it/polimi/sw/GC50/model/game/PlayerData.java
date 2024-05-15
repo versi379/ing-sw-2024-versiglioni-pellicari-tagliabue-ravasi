@@ -256,10 +256,6 @@ public class PlayerData implements Serializable {
         }
     }
 
-    public int getBoardSize() {
-        return boardSize;
-    }
-
     public CornerPointer[][] getCornersArea() {
         return cornersArea;
     }

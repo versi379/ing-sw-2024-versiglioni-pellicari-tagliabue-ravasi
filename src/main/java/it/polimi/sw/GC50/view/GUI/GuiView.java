@@ -4,7 +4,6 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.GUI.controllers.GUIController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -77,17 +76,17 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public String askName() {
+    public String selectName() {
         return "giovanni";
     }
 
     @Override
-    public String askGameName() {
+    public String selectGameName() {
         return null;
     }
 
     @Override
-    public int askNumberOfPlayer() {
+    public int selectNumberOfPlayers() {
         return 0;
     }
 
@@ -97,7 +96,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public int joinorcreate() {
+    public int selectJoinOrCreate() {
         return 0;
     }
 
@@ -117,13 +116,13 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public int SelectObjectiveCard() {
+    public int selectObjectiveCard() {
         return 0;
     }
 
     @Override
-    public Boolean selectStarterFace() {
-        return null;
+    public boolean selectStarterFace() {
+        return true;
     }
 
     @Override
@@ -137,12 +136,12 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public PlaceCardMex askPlaceCard() {
+    public PlaceCardMex selectPlaceCard() {
         return null;
     }
 
     @Override
-    public DrawingPosition choseWhereToDraw() {
+    public DrawingPosition selectDrawingPosition() {
         return null;
     }
 
