@@ -58,15 +58,15 @@ public class TuiView implements View {
     public boolean selectStarterFace() {
         System.out.println();
         System.out.println("Select the face of the Starter card");
-        printface(modelmex.getPlayerdata().getStarterCard());
+        printFace(modelmex.getPlayerdata().getStarterCard());
 
         return readInt("Insert the number of the face you want to play with", 1, 2) == 1;
     }
 
     @Override
     public PlaceCardMex selectPlaceCard() {
-        // ???
-        // printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+        System.out.println();
+        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
 
         return new PlaceCardMex(
                 readInt("Select the card you want to place",
@@ -113,7 +113,7 @@ public class TuiView implements View {
         printGameArea.printallboard(true, 0);
     }
 
-    private void printface(PhysicalCard card) {
+    private void printFace(PhysicalCard card) {
         String[][] tmpString;
         System.out.println("Face 1");
         tmpString = card.getFront().toStringTUI();
