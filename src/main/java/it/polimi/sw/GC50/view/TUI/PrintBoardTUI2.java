@@ -21,12 +21,12 @@ public class PrintBoardTUI2 {
 
             int counter = minX;
             for (int i = 0; i < targetAreaWidth; i++) {
-                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter) + "   ";
+                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter + 1) + "   ";
                 counter++;
             }
             counter = minY;
             for (int i = 0; i < targetAreaHeight; i++) {
-                board[0][i * 4 + 4] = String.format("%02d" ,counter) + "     ";
+                board[0][i * 4 + 4] = String.format("%02d" ,counter + 1) + "     ";
                 counter++;
             }
 
@@ -62,12 +62,12 @@ public class PrintBoardTUI2 {
 
             int counter = minX;
             for (int i = 0; i < targetAreaWidth; i++) {
-                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter) + "   ";
+                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter + 1) + "   ";
                 counter++;
             }
             counter = minY;
             for (int i = 0; i < targetAreaHeight; i++) {
-                board[0][i * 4 + 4] = String.format("%02d" ,counter) + "     ";
+                board[0][i * 4 + 4] = String.format("%02d" ,counter + 1) + "     ";
                 counter++;
             }
 

@@ -30,7 +30,7 @@ public class TuiView implements View {
     public String askName() {
         String name = null;
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert ur nickName");
+        System.out.println("Insert your nickName");
         try {
             name = scanner.nextLine();
         } catch (InputMismatchException e) {
@@ -176,9 +176,46 @@ public class TuiView implements View {
 
     @Override
     public PlaceCardMex askPlaceCard() {
-        System.out.println("Select the card you want to place");
-        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+        Scanner scanner = new Scanner(System.in);
+        int read;
 
+        do {
+            System.out.println("Select the card you want to place");
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter an index between 1 and "
+                        + modelmex.getPlayerdata().getHand().size());
+                read = 0;
+                scanner.nextLine();
+            }
+        } while (read < 1 || read >= modelmex.getPlayerdata().getHand().size() + 1);
+        int cardIndex = read - 1;
+
+        do {
+            System.out.println("Select the face of the card");
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                read = 0;
+                scanner.nextLine();
+            }
+        } while (read != 1 && read != 2);
+        boolean face = read == 1;
+
+        do {
+            System.out.println("Select the x coordinate");
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and ");
+                read = 0;
+                scanner.nextLine();
+            }
+        } while (read < 1 || read >= 2);
+
+        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
         return null;
     }
 
