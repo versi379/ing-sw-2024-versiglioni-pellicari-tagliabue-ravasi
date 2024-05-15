@@ -48,7 +48,7 @@ public class AppClient {
         } else if (read == 2) {
             view = new GuiView();
             typeview = TypeOfView.GUI;
-            view.start
+            // view.start
         }
 
 
