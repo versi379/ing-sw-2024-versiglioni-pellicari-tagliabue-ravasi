@@ -48,6 +48,7 @@ public class AppClient {
         } else if (read == 2) {
             view = new GuiView();
             typeview = TypeOfView.GUI;
+            GuiView.launch((String) null);
         }
 
 
@@ -81,7 +82,7 @@ public class AppClient {
             connection = TypeOfConnection.RMI;
             try {
                 System.out.println("Connecting to server...");
-                String name = "rmi://localhost:1099/server";
+                String name = "rmi://IP:1099/server";
                 ClientRmi clientRmi = new ClientRmi(name);
                 clientRmi.addView(view, typeview);
                 clientRmi.lobby();

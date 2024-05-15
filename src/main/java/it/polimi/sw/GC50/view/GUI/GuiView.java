@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -25,11 +26,11 @@ public class GuiView extends Application implements View {
     private ModelMex modelmex;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        loadScenes();
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Codex Naturalis");
-        root = new StackPane();
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/Game.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
