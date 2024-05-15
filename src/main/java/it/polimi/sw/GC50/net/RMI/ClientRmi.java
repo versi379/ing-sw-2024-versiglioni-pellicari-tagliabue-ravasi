@@ -12,7 +12,6 @@ import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -345,7 +344,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         //this.lock = new Object();
         this.getModel();
         view.addModel(this.modelMex);
-        this.selectObjectiveCard(view.SelectObjectiveCard());
+        this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
 
@@ -391,7 +390,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     view.updateBoard();
                     //this.placeCard(view.askPlaceCard());
                     try {
-                        serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(false, 1, x, y), this.matchName, this.nickName, this);
+                        serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(1, false, x, y), this.matchName, this.nickName, this);
                     } catch (RemoteException e) {
                         System.out.println("error");
                     }
@@ -459,13 +458,13 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
 
     private void lobby0() {
-        while (this.setName(view.askName()) == null) {
+        while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
         }
         do {
-            switch (view.joinorcreate()) {
+            switch (view.selectJoinOrCreate()) {
                 case 1: {
-                    while (this.createGame(view.askGameName(), view.askNumberOfPlayer()) == null) {
+                    while (this.createGame(view.selectGameName(), view.selectNumberOfPlayers()) == null) {
                         System.out.println("game name not valid");
                     }
                     break;
@@ -479,7 +478,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     for (String s : this.freeMatch) {
                         System.out.println(s);
                     }
-                    while (this.enterGame(view.askGameName()) == null) {
+                    while (this.enterGame(view.selectGameName()) == null) {
                         System.out.println("game name not valid");
                     }
                     break;

@@ -23,6 +23,5 @@ public class AppServer {
 
         Thread thread = new Thread(serverSck, "serverSocket");
         thread.start();
-
     }
 }

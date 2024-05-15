@@ -18,9 +18,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class ClientSCK implements Runnable {
     private View view;
@@ -338,13 +335,13 @@ public class ClientSCK implements Runnable {
     //LOBBY_CONTROLLER
     ///////////////////////////////////////////
     public void lobby() {
-        while (this.setName(view.askName()) == null) {
+        while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
         }
         do {
-            switch (view.joinorcreate()) {
+            switch (view.selectJoinOrCreate()) {
                 case 1: {
-                    while (this.createGame(view.askGameName(), view.askNumberOfPlayer()) == null) {
+                    while (this.createGame(view.selectGameName(), view.selectNumberOfPlayers()) == null) {
                         System.out.println("game name not valid");
                     }
                     break;
@@ -358,7 +355,7 @@ public class ClientSCK implements Runnable {
                     for (String s : this.freeMatch) {
                         System.out.println(s);
                     }
-                    while (this.enterGame(view.askGameName()) == null) {
+                    while (this.enterGame(view.selectGameName()) == null) {
                         System.out.println("game name not valid");
                     }
                     break;
@@ -405,7 +402,7 @@ public class ClientSCK implements Runnable {
 
         this.getModel();
         view.addModel(this.modelMex);
-        this.selectObjectiveCard(view.SelectObjectiveCard());
+        this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
 
@@ -450,7 +447,7 @@ public class ClientSCK implements Runnable {
 
                     //this.placeCard(view.askPlaceCard());
                     view.updateBoard();
-                    setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, new PlaceCardMex(false, 1, x, y), this.matchName, this.nickName));
+                    setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, new PlaceCardMex(1, false, x, y), this.matchName, this.nickName));
                     waitNoifyfromServer();
                     if (!error) {
                         getModel();

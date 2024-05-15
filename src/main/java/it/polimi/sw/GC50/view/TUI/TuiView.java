@@ -6,7 +6,6 @@ import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.View;
 
 import java.util.InputMismatchException;
@@ -22,86 +21,75 @@ public class TuiView implements View {
     }
 
     public void start() {
-
-
     }
 
     @Override
-    public String askName() {
-        String name = null;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert your nickName");
-        try {
-            name = scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please retry");
-            scanner.nextLine();
-        }
-        return name;
+    public String selectName() {
+        return readString("Insert your nickname");
     }
 
     @Override
-    public String askGameName() {
-        String name = null;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert the game name");
-        try {
-            name = scanner.nextLine();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please retry");
-            scanner.nextLine();
-        }
-        return name;
+    public int selectJoinOrCreate() {
+        return readInt("Do you want to join or create a game?" +
+                "\n1) to create a game" +
+                "\n2) to join a game", 1, 2);
     }
 
     @Override
-    public int askNumberOfPlayer() {
-        Scanner scanner = new Scanner(System.in);
-        int read;
-        do {
+    public String selectGameName() {
+        return readString("Insert the game name");
+    }
 
-            System.out.println("Insert the number of player min 2 max 4");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter min2 or max4.");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read < 2 || read > 4);
-        return read;
+    @Override
+    public int selectNumberOfPlayers() {
+        return readInt("Insert the number of players", 2, 3);
+    }
+
+    @Override
+    public int selectObjectiveCard() {
+        System.out.println();
+        System.out.println("Select the objective card you want to play with");
+        printlistObjectiveCard();
+
+        return readInt("Insert the number of the objective card you want to play with", 1, 2) - 1;
+    }
+
+    @Override
+    public boolean selectStarterFace() {
+        System.out.println();
+        System.out.println("Select the face of the Starter card");
+        printface(modelmex.getPlayerdata().getStarterCard());
+
+        return readInt("Insert the number of the face you want to play with", 1, 2) == 1;
+    }
+
+    @Override
+    public PlaceCardMex selectPlaceCard() {
+        // ???
+        // printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+
+        return new PlaceCardMex(
+                readInt("Select the card you want to place",
+                        1, modelmex.getPlayerdata().getHand().size()) - 1,
+                readInt("Select the face of the card", 1, 2) == 1,
+                readInt("Select the x coordinate", 1, modelmex.getPlayerdata().getCardsArea().length()),
+                readInt("Select the y coordinate", 1, modelmex.getPlayerdata().getCardsArea().length()));
+    }
+
+    @Override
+    public DrawingPosition selectDrawingPosition() {
+        return DrawingPosition.values()[readInt("Select the card you want to draw",
+                1, DrawingPosition.values().length) - 1];
     }
 
     @Override
     public void waitPlayer() {
         System.out.println("Waiting for other players to join the game");
-
-    }
-
-    @Override
-    public int joinorcreate() {
-        Scanner scanner = new Scanner(System.in);
-        int read;
-        do {
-
-            System.out.println("Do you want to join or create a game?");
-            System.out.println("1) to create a game");
-            System.out.println("2) to join a game");
-
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read != 1 && read != 2);
-        return read;
     }
 
     @Override
     public void allPlayerReady() {
-        System.out.println("All players are ready , the game is starting");
+        System.out.println("All players are ready, the game is starting");
     }
 
     @Override
@@ -112,55 +100,6 @@ public class TuiView implements View {
 
     @Override
     public void updateChat(Chat chat) {
-
-    }
-
-
-    @Override
-    public int SelectObjectiveCard() {
-        System.out.println();
-        System.out.println("Select the objective card you want to play with");
-        printlistObjectiveCard();
-        Scanner scanner = new Scanner(System.in);
-        int read;
-        do {
-            System.out.println();
-            System.out.println("Insert the number of the objective card you want to play with");
-            try {
-
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-            }
-        } while (read != 1 && read != 2);
-        return read - 1;
-    }
-
-    @Override
-    public Boolean selectStarterFace() {
-        System.out.println("\n");
-
-        System.out.println("Select the face of the Starter card");
-        printface(modelmex.getPlayerdata().getStarterCard());
-        Scanner scanner = new Scanner(System.in);
-        int read;
-        do {
-            System.out.println("Insert the number of the face you want to play with");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-            }
-        } while (read != 1 && read != 2);
-
-        if (read == 1)
-            return true;
-        else
-            return false;
-
-
     }
 
     @Override
@@ -171,57 +110,7 @@ public class TuiView implements View {
     @Override
     public void updateBoard() {
         printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
-        printGameArea.printallboard(true,0);
-    }
-
-    @Override
-    public PlaceCardMex askPlaceCard() {
-        Scanner scanner = new Scanner(System.in);
-        int read;
-
-        do {
-            System.out.println("Select the card you want to place");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter an index between 1 and "
-                        + modelmex.getPlayerdata().getHand().size());
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read < 1 || read >= modelmex.getPlayerdata().getHand().size() + 1);
-        int cardIndex = read - 1;
-
-        do {
-            System.out.println("Select the face of the card");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read != 1 && read != 2);
-        boolean face = read == 1;
-
-        do {
-            System.out.println("Select the x coordinate");
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number between 1 and ");
-                read = 0;
-                scanner.nextLine();
-            }
-        } while (read < 1 || read >= 2);
-
-        printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
-        return null;
-    }
-
-    @Override
-    public DrawingPosition choseWhereToDraw() {
-        return null;
+        printGameArea.printallboard(true, 0);
     }
 
     private void printface(PhysicalCard card) {
@@ -242,7 +131,6 @@ public class TuiView implements View {
             }
             System.out.println();
         }
-
     }
 
     private void printlistObjectiveCard() {
@@ -276,8 +164,40 @@ public class TuiView implements View {
                     break;
                 }
             }
-
         }
     }
 
+    private String readString(String message) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(message);
+
+        String read;
+        do {
+            try {
+                read = scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please retry");
+                read = null;
+                scanner.nextLine();
+            }
+        } while (read == null);
+        return read;
+    }
+
+    private int readInt(String message, int min, int range) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(message);
+
+        int read;
+        do {
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between " + min + " and " + (min + range - 1));
+                read = min - 1;
+                scanner.nextLine();
+            }
+        } while (read < min || read >= min + range);
+        return read;
+    }
 }

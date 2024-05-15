@@ -75,7 +75,7 @@ public class GameController {
 
 
     public void placeCard(Player player, PlaceCardMex placeCardMex) {
-        int index = placeCardMex.getIndexinhand();
+        int index = placeCardMex.getIndex();
         int x = placeCardMex.getX();
         int y = placeCardMex.getY();
         boolean face = placeCardMex.isFace();
