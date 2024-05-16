@@ -13,7 +13,7 @@
          <children>
             <ChoiceBox fx:id="netConnection" layoutX="225.0" layoutY="200.0" prefWidth="150.0" />
             <TextField fx:id="playerNickname" layoutX="220.0" layoutY="174.0" />
-            <Button layoutX="251.0" layoutY="360.0" mnemonicParsing="false" text="ENTER LOBBY" />
+            <Button fx:id="enterLobbyButton" layoutX="251.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleEnterLobbyButton" text="ENTER LOBBY" />
          </children>
       </Pane>
    </children>

@@ -7,6 +7,7 @@ import it.polimi.sw.GC50.net.socket.ClientSCK;
 
 import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.GUI.GuiView;
+import it.polimi.sw.GC50.view.GUI.controllers.UserConnectionController;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
@@ -33,6 +34,7 @@ public class AppClient {
             view = new TuiView();
             typeview = TypeOfView.TUI;
         } else {
+            view = new GuiView();
             typeview = TypeOfView.GUI;
             launchGui();
         }
@@ -41,10 +43,8 @@ public class AppClient {
         // Via TUI
         if (typeview == TypeOfView.TUI) {
             netChoice = readBinaryChoice("1 for SCK connection, 2 for RMI");
-        }
-        // Via GUI
-        if (typeview == TypeOfView.GUI) {
-            netChoice = readBinaryChoice("1 for SCK connection, 2 for RMI");
+        } else { // Via GUI
+
         }
 
         // Set Net
@@ -73,7 +73,6 @@ public class AppClient {
                 System.out.println("Error in connection");
             }
         }
-
     }
 
     private static int readBinaryChoice(String message) {
