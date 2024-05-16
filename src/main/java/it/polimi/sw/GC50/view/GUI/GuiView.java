@@ -44,7 +44,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectName() {
-        return userConnectionController.getPlayerNickname();
+        return userConnectionController.getPlayerNickname() != null ? userConnectionController.getPlayerNickname() : "Giocatore";
     }
 
     @Override

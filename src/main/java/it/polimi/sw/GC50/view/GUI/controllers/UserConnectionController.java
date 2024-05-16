@@ -33,7 +33,7 @@ public class UserConnectionController extends GUIController {
         Scene scene;
         Parent root;
         stage = (Stage) enterLobbyButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath());
+        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
