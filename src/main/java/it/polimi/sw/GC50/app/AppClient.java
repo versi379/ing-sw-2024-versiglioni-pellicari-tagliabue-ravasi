@@ -10,6 +10,8 @@ import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -31,8 +33,8 @@ public class AppClient {
             view = new TuiView();
             typeview = TypeOfView.TUI;
         } else {
-            view = new GuiView();
             typeview = TypeOfView.GUI;
+            launchGui();
         }
 
 
@@ -90,4 +92,25 @@ public class AppClient {
         System.out.println("   ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝");
         System.out.print("\u001B[0m");
     }
+
+    private static void launchGui() {
+        new Thread(() -> {
+            try {
+                // Ensure JavaFX is initialized
+                Platform.startup(() -> {
+                    try {
+                        // Launch the JavaFX Application
+                        GuiView guiView = new GuiView();
+                        Stage stage = new Stage();
+                        guiView.start(stage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
 }

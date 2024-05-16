@@ -5,8 +5,8 @@ package it.polimi.sw.GC50.view.GUI.scenes;
  */
 public enum ScenePath {
 
-    MENU("/Menu.fxml"),
-    GAME("/Game.fxml");
+    MENU("/scenes/Menu.fxml"),
+    GAME("/scenes/Game.fxml");
 
     private final String path;
 
