@@ -335,6 +335,7 @@ public class ClientSCK implements Runnable {
     //LOBBY_CONTROLLER
     ///////////////////////////////////////////
     public void lobby() {
+        System.out.println(this.setName(view.selectName()));
         while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
         }
