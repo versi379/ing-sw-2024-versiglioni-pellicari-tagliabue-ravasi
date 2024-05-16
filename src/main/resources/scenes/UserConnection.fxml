@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.UserConnectionController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ChoiceBox fx:id="netConnection" layoutX="225.0" layoutY="200.0" prefWidth="150.0" />
+            <TextField fx:id="playerNickname" layoutX="220.0" layoutY="174.0" />
+            <Button layoutX="251.0" layoutY="360.0" mnemonicParsing="false" text="ENTER LOBBY" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

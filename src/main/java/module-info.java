@@ -14,4 +14,5 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.controller;
     exports it.polimi.sw.GC50.trash;
     exports it.polimi.sw.GC50.view.GUI.controllers;
+    opens it.polimi.sw.GC50.view.GUI.controllers;
 }

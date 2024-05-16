@@ -27,7 +27,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(ScenePath.values()[0].getPath()));
+        Parent root = FXMLLoader.load(getClass().getResource(ScenePath.USERCONNECTION.getPath()));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

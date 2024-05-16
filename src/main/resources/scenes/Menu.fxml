@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -15,9 +13,9 @@
                   <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
                </image>
             </ImageView>
-            <Button layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#createNewGame" text=" Create New Game" />
-            <Button layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#joinGame" text="Join Game" />
-            <Button layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#reconnectToGame" text="Button" />
+            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#createNewGame" text=" Create New Game" />
+            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#joinGame" text="Join Game" />
+            <Button fx:id="reconnectToGameButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#reconnectToGame" text="Reconnect To Game" />
          </children>
       </Pane>
    </children>

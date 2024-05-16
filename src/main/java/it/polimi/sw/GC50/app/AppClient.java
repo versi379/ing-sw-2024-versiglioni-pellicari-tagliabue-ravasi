@@ -37,8 +37,18 @@ public class AppClient {
             launchGui();
         }
 
+        int netChoice = 1;
+        // Via TUI
+        if (typeview == TypeOfView.TUI) {
+            netChoice = readBinaryChoice("1 for SCK connection, 2 for RMI");
+        }
+        // Via GUI
+        if (typeview == TypeOfView.GUI) {
+            netChoice = readBinaryChoice("1 for SCK connection, 2 for RMI");
+        }
 
-        if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
+        // Set Net
+        if (netChoice == 1) {
             connection = TypeOfConnection.SOCKET;
             try {
                 ClientSCK client = new ClientSCK(2012, "localhost");
@@ -63,6 +73,7 @@ public class AppClient {
                 System.out.println("Error in connection");
             }
         }
+
     }
 
     private static int readBinaryChoice(String message) {
