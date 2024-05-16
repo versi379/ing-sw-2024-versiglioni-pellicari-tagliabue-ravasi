@@ -5,7 +5,7 @@ import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.view.GUI.controllers.GUIController;
-import it.polimi.sw.GC50.view.GUI.controllers.UserConnectionController;
+import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.View;
@@ -26,13 +26,13 @@ public class GuiView extends Application implements View {
     private ArrayList<SceneInfo> scenes;
     private ModelMex modelmex;
 
-    UserConnectionController userConnectionController;
+    NetController netController;
 
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(ScenePath.USERCONNECTION.getPath()));
         Parent root = loader.load();
-        userConnectionController = loader.getController();
+        netController = loader.getController();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -44,7 +44,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectName() {
-        return userConnectionController.getPlayerNickname() != null ? userConnectionController.getPlayerNickname() : "Giocatore";
+        return netController.getPlayerNickname() != null ? netController.getPlayerNickname() : "Giocatore";
     }
 
     @Override

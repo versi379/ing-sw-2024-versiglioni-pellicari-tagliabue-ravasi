@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 
-public class UserConnectionController extends GUIController {
+public class NetController extends GUIController {
 
     @FXML
     private TextField playerNickname;

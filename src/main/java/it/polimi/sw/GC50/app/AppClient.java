@@ -7,7 +7,6 @@ import it.polimi.sw.GC50.net.socket.ClientSCK;
 
 import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.GUI.controllers.UserConnectionController;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.TypeOfView;
 import it.polimi.sw.GC50.view.View;
@@ -22,7 +21,7 @@ import java.util.Scanner;
 
 
 public class AppClient {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         TypeOfConnection connection;
         View view = null;
@@ -56,7 +55,6 @@ public class AppClient {
                 thread.start();
                 client.addView(view, typeview);
                 client.lobby();
-
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             }
