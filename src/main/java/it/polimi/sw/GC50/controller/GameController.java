@@ -206,7 +206,7 @@ public class GameController {
             }
         }
 
-        ModelMex modelMex = new ModelMex(game.getPlayerData(player),player, game.getChat(), game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDrawingCard(), game.getCurrentPhase(), game.getStatus());
+        ModelMex modelMex = new ModelMex(game.getPlayerData(player),player, game.getChat(), game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDecksTop(), game.getCurrentPhase(), game.getStatus());
         return modelMex;
     }
 

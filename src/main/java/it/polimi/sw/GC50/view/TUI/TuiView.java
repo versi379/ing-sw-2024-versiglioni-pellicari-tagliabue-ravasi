@@ -15,9 +15,11 @@ import java.util.Scanner;
 public class TuiView implements View {
     ModelMex modelMex;
     PrintGameArea printGameArea;
+    ModelPrinter modelPrinter;
 
     public TuiView() {
         printGameArea = new PrintGameArea();
+        modelPrinter = new ModelPrinter();
     }
 
     public void start() {
@@ -67,8 +69,9 @@ public class TuiView implements View {
     @Override
     public PlaceCardMex selectPlaceCard() {
         System.out.println();
-        printGameArea.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
-
+        //printGameArea.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
+        modelPrinter.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
+        modelPrinter.printHand();
         return new PlaceCardMex(
                 readInt("Select the card you want to place",
                         1, modelMex.getPlayerdata().getHand().size()) - 1,
@@ -79,6 +82,7 @@ public class TuiView implements View {
 
     @Override
     public DrawingPosition selectDrawingPosition() {
+        modelPrinter.printDecks();
         return DrawingPosition.values()[readInt("Select the card you want to draw",
                 1, DrawingPosition.values().length) - 1];
     }
@@ -116,6 +120,8 @@ public class TuiView implements View {
 
     private void printFaces(PhysicalCard card) {
         String[][] cardTUI;
+
+        System.out.println();
         System.out.println("1) Front");
         cardTUI = card.getFront().toStringTUI();
         for (int i = cardTUI[0].length - 1; i >= 0; i--) {
@@ -124,10 +130,12 @@ public class TuiView implements View {
             }
             System.out.println();
         }
+
+        System.out.println();
         System.out.println("2) Back");
         cardTUI = card.getBack().toStringTUI();
-        for (int i = 6; i >= 0; i--) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
+            for (int j = 0; j < cardTUI.length; j++) {
                 System.out.print(cardTUI[j][i]);
             }
             System.out.println();

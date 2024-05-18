@@ -144,44 +144,16 @@ public class Game extends Observable implements Serializable, GameInterface {
         return id;
     }
 
-    public PlayableCard[] getDrawingCard() {
+    public PlayableCard[] getDecksTop() {
+        PlayableCard[] drawableCards = new PlayableCard[6];
 
-        PlayableCard[] drawingCard = new PlayableCard[6];
-        if (revealedCards[0] != null) {
-            drawingCard[0] = revealedCards[0].getFront();
-        } else {
-            drawingCard[0] = null;
-        }
-        if (revealedCards[1] != null) {
-            drawingCard[1] = revealedCards[1].getFront();
-        } else {
-            drawingCard[1] = null;
-        }
-        if (revealedCards[2] != null) {
-            drawingCard[3] = revealedCards[2].getFront();
-        } else {
-            drawingCard[3] = null;
-        }
-        if (revealedCards[3] != null) {
-            drawingCard[4] = revealedCards[3].getFront();
-        } else {
-            drawingCard[4] = null;
-        }
-
-        if (resourceDeck.isEmpty()) {
-            drawingCard[2] = null;
-        }else{
-            drawingCard[2] = resourceDeck.peek().getFront();
-        }
-        if (goldDeck.isEmpty()) {
-            drawingCard[5] = null;
-        }else {
-            drawingCard[5] = goldDeck.peek().getFront();
-        }
-
-
-
-        return drawingCard;
+        drawableCards[0] = peekCard(DrawingPosition.RESOURCEDECK);
+        drawableCards[1] = peekCard(DrawingPosition.RESOURCE1);
+        drawableCards[2] = peekCard(DrawingPosition.RESOURCE2);
+        drawableCards[3] = peekCard(DrawingPosition.GOLDDECK);
+        drawableCards[4] = peekCard(DrawingPosition.GOLD1);
+        drawableCards[5] = peekCard(DrawingPosition.GOLD2);
+        return drawableCards;
     }
 
     public Chat getChat() {
@@ -455,6 +427,17 @@ public class Game extends Observable implements Serializable, GameInterface {
 
     private void setLastTurn() {
         lastRound = true;
+    }
+
+    private PlayableCard peekCard(DrawingPosition position) {
+        return switch (position) {
+            case DrawingPosition.RESOURCEDECK -> (!resourceDeck.isEmpty()) ? resourceDeck.peek().getBack() : null;
+            case DrawingPosition.RESOURCE1 -> revealedCards[0].getFront();
+            case DrawingPosition.RESOURCE2 -> revealedCards[1].getFront();
+            case DrawingPosition.GOLDDECK -> (!goldDeck.isEmpty()) ? goldDeck.peek().getBack() : null;
+            case DrawingPosition.GOLD1 -> revealedCards[2].getFront();
+            case DrawingPosition.GOLD2 -> revealedCards[3].getFront();
+        };
     }
 
     public PhysicalCard pickCard(DrawingPosition position) {
