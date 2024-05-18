@@ -7,7 +7,7 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.TypeOfView;
+import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 
 public class ClientSCK implements Runnable {
     private View view;
-    private TypeOfView typeOfView;
+    private ViewType viewType;
     private final int port;
     private final String address;
     private final ObjectInputStream input;
@@ -204,9 +204,9 @@ public class ClientSCK implements Runnable {
 ///////////////////////////////////////////
 
 
-    public void addView(View view, TypeOfView typeOfView) {
+    public void addView(View view, ViewType viewType) {
         this.view = view;
-        this.typeOfView = typeOfView;
+        this.viewType = viewType;
     }
 
     private String createGame(String matchName, int numberOfPlayer) {

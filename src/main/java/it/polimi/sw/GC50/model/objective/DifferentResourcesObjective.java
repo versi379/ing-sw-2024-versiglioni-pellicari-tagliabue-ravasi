@@ -27,4 +27,13 @@ public class DifferentResourcesObjective implements Objective , Serializable {
                 .min(Integer::compareTo)
                 .orElse(0);
     }
+
+    @Override
+    public String toStringTUI() {
+        String result = "Different Resources Objective => target resources:";
+        for (Resource resource : getTargetResources()) {
+            result += (" " + resource);
+        }
+        return result;
+    }
 }

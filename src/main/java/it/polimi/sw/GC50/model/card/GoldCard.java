@@ -73,6 +73,7 @@ public class GoldCard extends PlayableCard implements Serializable {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners(), getConstraintList());
     }
 
+    @Override
     public String[][] toStringTUI() {
         String[][] card = super.toStringTUI();
 

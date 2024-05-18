@@ -9,7 +9,7 @@ import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.TypeOfView;
+import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 
 import java.io.Serializable;
@@ -17,6 +17,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
@@ -28,11 +29,10 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private ServerRmi serverRmi;
     private String servername;
     //////////////////////////////////////////
-    private String nickName;
-    private TypeOfView typeOfView;
+    private String nickname;
+    private ViewType viewType;
     private View view;
-    private String matchName;
-    private ArrayList<String> freeMatch;
+    private String gameId;
     ModelMex modelMex;
     ///////////////////////////////////////////
     Boolean myTurn;
@@ -56,7 +56,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public ClientRmi(String name) throws RemoteException {
         this.servername = name;
         this.connection();
-        this.freeMatch = new ArrayList<>();
         this.gameStatus = GameStatus.SETUP;
         myTurn = false;
         notify = false;
@@ -90,49 +89,48 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     //////////////////////////////////////////
     //LOBBY
     ///////////////////////////////////////////
-    public void addView(View view, TypeOfView typeOfView) {
+    public void addView(View view, ViewType viewType) {
         this.view = view;
-        this.typeOfView = typeOfView;
+        this.viewType = viewType;
     }
 
 
-    public String createGame(String matchName, int numberOfPlayer) {
+    public String createGame(String gameId, int numberOfPlayer) {
         try {
-            this.matchName = this.serverRmi.createGame(numberOfPlayer, matchName, this, this.nickName);
+            this.gameId = this.serverRmi.createGame(gameId, numberOfPlayer, this, this.nickname);
         } catch (RemoteException e) {
             return null;
         }
-        return this.matchName;
+        return this.gameId;
     }
 
 
-    public String enterGame(String matchName) {
+    public String enterGame(String gameId) {
         try {
-            this.matchName = this.serverRmi.enterGame(matchName, this, this.nickName);
+            this.gameId = this.serverRmi.enterGame(gameId, this, this.nickname);
         } catch (RemoteException e) {
             return null;
         }
-        return this.matchName;
+        return this.gameId;
     }
 
 
     public String setName(String name) {
         try {
-            this.nickName = this.serverRmi.setName(this, name);
+            this.nickname = this.serverRmi.setNickname(this, name);
         } catch (RemoteException e) {
             return null;
         }
-        return this.nickName;
+        return this.nickname;
     }
 
 
-    public ArrayList<String> getFreeMatch() {
+    public List<String> getFreeMatches() {
         try {
-            this.freeMatch = this.serverRmi.getFreeMatch();
+            return serverRmi.getFreeMatches();
         } catch (RemoteException e) {
-            return null;
+            return new ArrayList<>();
         }
-        return this.freeMatch;
     }
 
     //////////////////////////////////////////
@@ -140,77 +138,74 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     ///////////////////////////////////////////
 
     public void placeCard(PlaceCardMex placeCardMex) {
-        if (this.matchName == null) {
+        if (this.gameId == null) {
             return;
         }
-        if (this.nickName == null) {
+        if (this.nickname == null) {
             return;
         }
         try {
-            this.serverRmi.message(Request.PLACE_CARD, placeCardMex, this.matchName, this.nickName, this);
+            this.serverRmi.message(Request.PLACE_CARD, placeCardMex, this);
         } catch (RemoteException e) {
             return;
         }
-
     }
 
     public void sendMessage(String message) {
-        if (this.matchName == null) {
+        if (this.gameId == null) {
             return;
         }
-        if (this.nickName == null) {
+        if (this.nickname == null) {
             return;
         }
         try {
-            this.serverRmi.message(Request.MEX_CHAT, message, this.matchName, this.nickName, this);
+            this.serverRmi.message(Request.MEX_CHAT, message, this);
         } catch (RemoteException e) {
             return;
         }
-
     }
 
 
     public void selectStarterFace(Boolean index) {
-        if (this.matchName == null) {
+        if (this.gameId == null) {
             return;
         }
-        if (this.nickName == null) {
+        if (this.nickname == null) {
             return;
         }
         try {
-            this.serverRmi.message(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName, this);
+            this.serverRmi.message(Request.SELECT_STARTER_FACE, index, this);
         } catch (RemoteException e) {
-
+            return;
         }
     }
 
-
     public void selectObjectiveCard(int index) {
-        if (this.matchName == null) {
+        if (this.gameId == null) {
             return;
         }
-        if (this.nickName == null) {
+        if (this.nickname == null) {
             return;
         }
         try {
-            this.serverRmi.message(Request.SELECT_OBJECTIVE_CARD, index, this.matchName, this.nickName, this);
+            this.serverRmi.message(Request.SELECT_OBJECTIVE_CARD, index, this);
         } catch (RemoteException e) {
-
+            return;
         }
     }
 
 
     public void drawCard(DrawingPosition position) {
-        if (this.matchName == null) {
+        if (this.gameId == null) {
             return;
         }
-        if (this.nickName == null) {
+        if (this.nickname == null) {
             return;
         }
         try {
-            this.serverRmi.message(DRAW_CARD, position, this.matchName, this.nickName, this);
+            this.serverRmi.message(DRAW_CARD, position, this);
         } catch (RemoteException e) {
-
+            return;
         }
     }
 
@@ -218,12 +213,12 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public Object getModel() {
 
         try {
-            modelMex = (ModelMex) serverRmi.getModel(this.matchName, this.nickName, this, Request.GET_MODEL, null);
+            modelMex = (ModelMex) serverRmi.getModel(Request.GET_MODEL, null, this);
         } catch (RemoteException e) {
 
         }
         view.addModel(this.modelMex);
-        if (this.modelMex.getCurrentPlayer().equals(this.nickName)) {
+        if (this.modelMex.getCurrentPlayer().equals(this.nickname)) {
             this.myTurn = true;
         } else {
             this.myTurn = false;
@@ -259,8 +254,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     }
                 }
                 synchronized (lock) {
-                    notify= true;
-                    error=false;
+                    notify = true;
+                    error = false;
                     this.lock.notifyAll();
                 }
                 break;
@@ -289,8 +284,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 break;
             }
             case NOTIFY_CARD_NOT_FOUND, NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
-                 NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
-                if (mex.getObject().equals(nickName)) {
+                    NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
+                if (mex.getObject().equals(nickname)) {
                     synchronized (lock2) {
                         while (thread2pause) {
                             try {
@@ -318,7 +313,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
         }
-       thread2.interrupt();
+        thread2.interrupt();
 
     }
 
@@ -335,7 +330,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         });
         thread2.start();
 
-            }
+    }
 
     //////////////////////////////////////////
     //ACTIVE_GAME_CONTROLLER
@@ -375,10 +370,10 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     x++;
                     y++;
                     //this.drawCard(view.choseWhereToDraw());
-                    //setMessageout(new Message.MessageClientToServer(Request.DRAW_CARD, view.choseWhereToDraw(), this.matchName, this.nickName));
+                    //setMessageout(new Message.MessageClientToServer(Request.DRAW_CARD, view.choseWhereToDraw(), this.gameId, this.nickname));
                     view.updateBoard();
                     try {
-                        serverRmi.message(DRAW_CARD, DrawingPosition.GOLD1, this.matchName, this.nickName, this);
+                        serverRmi.message(DRAW_CARD, DrawingPosition.GOLD1, this);
                     } catch (RemoteException e) {
 
                     }
@@ -390,7 +385,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     view.updateBoard();
                     //this.placeCard(view.askPlaceCard());
                     try {
-                        serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(1, false, x, y), this.matchName, this.nickName, this);
+                        serverRmi.message(Request.PLACE_CARD, new PlaceCardMex(1, false, x, y), this);
                     } catch (RemoteException e) {
                         System.out.println("error");
                     }
@@ -429,7 +424,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
         error = false;
         notify = false;
-        thread2pause= true;
+        thread2pause = true;
 
     }
 
@@ -458,36 +453,37 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
 
     private void lobby0() {
-        while (this.setName(view.selectName()) == null) {
-            System.out.println("name not valid");
+        while (setName(view.selectName()) == null) {
+            System.out.println("Player name not valid");
         }
         do {
             switch (view.selectJoinOrCreate()) {
                 case 1: {
                     while (this.createGame(view.selectGameName(), view.selectNumberOfPlayers()) == null) {
-                        System.out.println("game name not valid");
+                        System.out.println("Game name not valid");
                     }
                     break;
                 }
                 case 2: {
-                    if (this.getFreeMatch() == null || this.freeMatch.isEmpty()) {
-                        System.out.println("no free match");
+                    List<String> freeMatches = getFreeMatches();
+                    if (freeMatches.isEmpty()) {
+                        System.out.println("No free matches");
                         break;
                     }
-                    System.out.println("free match");
-                    for (String s : this.freeMatch) {
+                    System.out.println("Free matches:");
+                    for (String s : freeMatches) {
                         System.out.println(s);
                     }
-                    while (this.enterGame(view.selectGameName()) == null) {
-                        System.out.println("game name not valid");
+
+                    while (enterGame(view.selectGameName()) == null) {
+                        System.out.println("Game name not valid");
                     }
                     break;
                 }
             }
-        } while (this.matchName == null);
+        } while (this.gameId == null);
 
         waitingPlayer();
-
     }
 
     private void waitingPlayer() {
@@ -500,7 +496,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - startTime;
                 if (elapsedTime >= 4 * 60 * 1000) {
-                    System.out.println("timeout");
+                    System.out.println("Timeout");
                     break;
                 }
                 Thread.sleep(11);
@@ -514,7 +510,5 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         } else {
             this.lobby();
         }
-
     }
-
 }

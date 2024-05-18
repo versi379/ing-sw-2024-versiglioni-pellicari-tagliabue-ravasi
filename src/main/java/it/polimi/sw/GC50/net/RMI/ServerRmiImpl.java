@@ -23,44 +23,42 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public void start(ServerRmi serverRmi) throws RemoteException {
+    public void start() throws RemoteException {
         try {
             registry = LocateRegistry.createRegistry(this.port);
-            registry.rebind("server", serverRmi);
+            registry.rebind("server", this);
             System.out.println("Server RMI ready");
         } catch (Exception e) {
-            System.err.println("error in binding to RMI registry");
+            System.err.println("Error in binding to RMI registry");
         }
-
     }
 
     @Override
     public void addClient(ClientInterface client) {
-        System.out.println("client connected");
         server.connect(client);
-
+        System.out.println("Client connected");
     }
+
     //////////////////////////////////////////
     //LOBBY
     ///////////////////////////////////////////
-
     @Override
-    public String setName(ClientInterface clientInterface, String name) {
-        if (server.addName(clientInterface, name)) {
-            return name;
+    public String setNickname(ClientInterface clientInterface, String nickname) {
+        if (server.addNickname(clientInterface, nickname)) {
+            return nickname;
         } else {
             return null;
         }
     }
 
     @Override
-    public ArrayList<String> getFreeMatch() throws RemoteException {
-        return server.getFreeMatchesNames();
+    public ArrayList<String> getFreeMatches() throws RemoteException {
+        return server.getFreeMatches();
     }
 
     @Override
-    public String createGame(int numOfPl, String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
-        this.match = server.createMatch(clientInterface, gameName, numOfPl, nickName);
+    public String createGame(String gameId, int numOfPlayers, ClientInterface clientInterface, String nickname) throws RemoteException {
+        this.match = server.createMatch(clientInterface, gameId, numOfPlayers, nickname);
         if (this.match == null) {
             return null;
         }
@@ -68,42 +66,34 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public String enterGame(String gameName, ClientInterface clientInterface, String nickName) throws RemoteException {
-        this.match = server.enterMatch(gameName, clientInterface, nickName);
+    public String enterGame(String gameId, ClientInterface clientInterface, String nickname) throws RemoteException {
+        this.match = server.enterMatch(clientInterface, gameId, nickname);
         if (this.match == null) {
             return null;
         }
         return this.match.getGameId();
     }
-
 
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-
     @Override
-    public void message(Request request, Object object, String gameName, String nickName, ClientInterface clientInterface) throws RemoteException {
-        if (match.getGameId().equals(gameName)) {
-            switch (request) {
-                case PLACE_CARD, SELECT_STARTER_FACE, SELECT_OBJECTIVE_CARD, DRAW_CARD:
-                    match.updateController(request, clientInterface, object, nickName);
-                    break;
-                case MEX_CHAT:
-                    match.updateChat(clientInterface, nickName, (String) object);
-                    break;
-                default:
-                    break;
-
-            }
+    public void message(Request request, Object object, ClientInterface clientInterface) throws RemoteException {
+        switch (request) {
+            case SELECT_STARTER_FACE, SELECT_OBJECTIVE_CARD, PLACE_CARD, DRAW_CARD:
+                match.updateController(request, object, clientInterface);
+                break;
+            case MEX_CHAT:
+                match.updateChat((String) object, clientInterface);
+                break;
+            default:
+                break;
         }
     }
 
     @Override
-    public Object getModel(String gameName, String nickName, ClientInterface clientInterface, Request request, Object object) throws RemoteException {
-       System.out.println("getModel");
-        if (!match.getGameId().equals(gameName)) {
-            return null;
-        }
-        return match.getModel(nickName, clientInterface);
+    public Object getModel(Request request, Object object, ClientInterface clientInterface) throws RemoteException {
+        System.out.println("getModel");
+        return match.getModel(clientInterface);
     }
 }

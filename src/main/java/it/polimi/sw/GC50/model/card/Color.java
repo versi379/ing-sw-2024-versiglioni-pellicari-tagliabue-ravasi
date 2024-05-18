@@ -11,7 +11,7 @@ public enum Color implements Serializable {
     /**
      * Returns the String representing this color's code in the TUI graphics
      *
-     * @return String containing the code associated with this color
+     * @return String[][] containing the code associated with this color
      */
     public String toStringTUI() {
         return switch (this) {

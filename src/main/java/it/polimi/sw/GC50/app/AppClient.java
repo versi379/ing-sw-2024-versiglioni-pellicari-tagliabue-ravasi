@@ -1,14 +1,12 @@
 package it.polimi.sw.GC50.app;
 
-import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 
-import it.polimi.sw.GC50.net.util.RequestFromClietToServer;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
-import it.polimi.sw.GC50.view.TypeOfView;
+import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -16,60 +14,58 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
-import java.util.Observer;
 import java.util.Scanner;
 
 
 public class AppClient {
     public static void main(String[] args) throws InterruptedException {
-        Scanner scanner = new Scanner(System.in);
         TypeOfConnection connection;
-        View view = null;
-        TypeOfView typeview = null;
+        View view;
+        ViewType viewType;
 
         printBanner();
 
         if (readBinaryChoice("1 for Tui , 2 for Gui") == 1) {
             view = new TuiView();
-            typeview = TypeOfView.TUI;
+            viewType = ViewType.TUI;
         } else {
             view = new GuiView();
-            typeview = TypeOfView.GUI;
+            viewType = ViewType.GUI;
             launchGui();
         }
 
-        int netChoice = 1;
-        // Via TUI
-        if (typeview == TypeOfView.TUI) {
-            netChoice = readBinaryChoice("1 for SCK connection, 2 for RMI");
-        } else { // Via GUI
-
-        }
-
-        // Set Net
-        if (netChoice == 1) {
-            connection = TypeOfConnection.SOCKET;
-            try {
-                ClientSCK client = new ClientSCK(2012, "localhost");
-                Thread thread = new Thread(client);
-                thread.start();
-                client.addView(view, typeview);
-                client.lobby();
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
+        // setup connection
+        if (viewType == ViewType.TUI) {
+            if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
+                setupSocket(view, viewType);
+            } else {
+                setupRMI(view, viewType);
             }
         } else {
-            connection = TypeOfConnection.RMI;
-            try {
-                System.out.println("Connecting to server...");
-                String name = "rmi://IP:1099/server";
-                ClientRmi clientRmi = new ClientRmi(name);
-                clientRmi.addView(view, typeview);
-                clientRmi.lobby();
+            // Via GUI
+        }
+    }
 
-            } catch (RemoteException e) {
-                System.out.println("Error in connection");
-            }
+    private static void setupSocket(View view, ViewType viewType) {
+        try {
+            ClientSCK client = new ClientSCK(2012, "localhost");
+            new Thread(client).start();
+            client.addView(view, viewType);
+            client.lobby();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private static void setupRMI(View view, ViewType viewType) {
+        try {
+            System.out.println("Connecting to server...");
+            String name = "rmi://localhost:1099/server";
+            ClientRmi client = new ClientRmi(name);
+            client.addView(view, viewType);
+            client.lobby();
+        } catch (RemoteException e) {
+            System.out.println("Error in connection");
         }
     }
 
@@ -78,15 +74,20 @@ public class AppClient {
         System.out.println(message);
 
         int read;
-        do {
+        try {
+            read = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            read = 0;
+            scanner.nextLine();
+        }
+        while (read != 1 && read != 2) {
+            System.out.println("Invalid input. Please enter 1 or 2.");
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter 1 or 2.");
-                read = 0;
                 scanner.nextLine();
             }
-        } while (read != 1 && read != 2);
+        }
         return read;
     }
 
@@ -120,5 +121,4 @@ public class AppClient {
             }
         }).start();
     }
-
 }

@@ -26,7 +26,11 @@ public class ObjectiveCard implements Serializable {
     }
 
     public int checkObjective(PlayerData playerData) {
-        return pointsPerCompletion * objective.checkCondition(playerData);
+        return getPointsPerCompletion() * getObjective().checkCondition(playerData);
+    }
+
+    public String toStringTUI() {
+        return getObjective().toStringTUI() + "\npoints per completion: " + getPointsPerCompletion();
     }
 
     public CardType getCardType() {

@@ -72,6 +72,13 @@ public class CaveObjective implements Objective , Serializable {
         return result;
     }
 
+    @Override
+    public String toStringTUI() {
+        return "Cave Objective => target color 1: " + getTargetColor1() +
+                ", target color 2: " + getTargetColor2() +
+                ", orientation: " + getOrientation();
+    }
+
     public CardsMatrix adjustOrientation(CardsMatrix matrix) {
         switch (orientation) {
             case CaveOrientation.UPRIGHTJ -> {

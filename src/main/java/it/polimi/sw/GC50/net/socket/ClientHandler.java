@@ -11,7 +11,6 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
@@ -25,7 +24,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     private final Server server;
     private Match match;
-    private String nickName;
+    private String nickname;
     //////////////////////////////////////////
     private final ExecutorService executorService;
     //////////////////////////////////////////
@@ -43,9 +42,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 
     private void inputThread() {
         System.out.println("server socket listener client");
@@ -62,31 +59,30 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
-
     private synchronized void switchmex(Message.MessageClientToServer message) {
         //System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
             case Request.MEX_CHAT:
-                match.updateChat(this, message.getNickName(), (String) message.getObject());
+                match.updateChat((String) message.getObject(), this);
                 break;
             case Request.GET_MODEL: {
-                Object object = match.getModel(message.getNickName(), this);
+                Object object = match.getModel(this);
                 System.out.println(object.toString());
                 setMessageout(new Message(Request.GET_MODEL_RESPONSE, object));
                 break;
             }
             case Request.PLACE_CARD:
-                match.updateController(Request.PLACE_CARD, this, message.getObject(), message.getNickName());
+                match.updateController(Request.PLACE_CARD, message.getObject(), this);
                 break;
             case Request.SELECT_STARTER_FACE:
-                match.updateController(Request.SELECT_STARTER_FACE, this, message.getObject(), message.getNickName());
+                match.updateController(Request.SELECT_STARTER_FACE, message.getObject(), this);
                 break;
             case Request.SELECT_OBJECTIVE_CARD:
-                match.updateController(Request.SELECT_OBJECTIVE_CARD, this, message.getObject(), message.getNickName());
+                match.updateController(Request.SELECT_OBJECTIVE_CARD, message.getObject(), this);
                 break;
             case Request.DRAW_CARD:
-                match.updateController(Request.DRAW_CARD, this, message.getObject(), message.getNickName());
+                match.updateController(Request.DRAW_CARD, message.getObject(), this);
                 break;
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
@@ -99,7 +95,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.ENTER_GAME:
-                this.match = server.enterMatch(message.getMatchName(), this, message.getNickName());
+                this.match = server.enterMatch(this, message.getMatchName(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
                 } else {
@@ -107,10 +103,10 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.GET_FREE_MATCH:
-                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, server.getFreeMatchesNames()));
+                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, server.getFreeMatches()));
                 break;
             case Request.SET_NAME:
-                boolean resp = server.addName(this, message.getNickName());
+                boolean resp = server.addNickname(this, message.getNickName());
                 setMessageout(new Message(Request.SET_NAME_RESPONSE, resp));
                 break;
             case null:
@@ -121,20 +117,16 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
-
     synchronized private void setMessageout(Message messageout) {
-
         try {
             if (messageout != null) {
-               // System.out.println(messageout.getRequest());
+                // System.out.println(messageout.getRequest());
                 output.writeObject(messageout);
                 output.flush();
                 output.reset();
             }
-
         } catch (IOException e) {
             System.out.println("error");
-
         }
     }
 
@@ -166,9 +158,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     @Override
-    synchronized public void onUpdate(Message message) throws RemoteException{
+    synchronized public void onUpdate(Message message) throws RemoteException {
         setMessageout(message);
     }
-
-
 }

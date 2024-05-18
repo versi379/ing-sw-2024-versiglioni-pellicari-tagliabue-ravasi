@@ -155,7 +155,7 @@ public class GameController {
         player.addError(message);
     }
 
-    private boolean isWaiting() {
+    public boolean isWaiting() {
         return game.getStatus().equals(GameStatus.WAITING);
     }
 
@@ -208,7 +208,6 @@ public class GameController {
 
         ModelMex modelMex = new ModelMex(game.getPlayerData(player),player, game.getChat(), game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDrawingCard(), game.getCurrentPhase(), game.getStatus());
         return modelMex;
-
     }
 
     public void updateChat(Player player, String message) {

@@ -2,6 +2,7 @@ package it.polimi.sw.GC50.net.util;
 
 import it.polimi.sw.GC50.controller.GameController;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
+import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 
@@ -10,10 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Match {
-    private boolean isFree;
     private final int code; ///used if there are more than one match with the same name
     private final String gameId;
-    private final int numOfPlayer;
     private final Map<ClientInterface, Player> playerMap;
     private final GameController controller;
 
@@ -21,36 +20,30 @@ public class Match {
     //////////////////////////////////////////
     //PRE GAME
     ///////////////////////////////////////////
-    public Match(int code, ClientInterface client, String gameId, int numOfPlayer, String nickname) {
-        this.isFree = true;
+    public Match(int code, int numOfPlayer, String gameId, ClientInterface client, String nickname) {
         this.code = code;
-
         this.gameId = gameId;
-        this.numOfPlayer = numOfPlayer;
+        playerMap = new HashMap<>();
+
         Player player = new Player(nickname);
-        this.playerMap = new HashMap<>();
-        this.controller = new GameController(gameId, numOfPlayer, 20, player);
-        this.playerMap.put(client, player);
+        controller = new GameController(gameId, numOfPlayer, 20, player);
+        playerMap.put(client, player);
         controller.addObserver(client);
     }
 
     public boolean isFree() {
-        return isFree;
+        return controller.isWaiting();
     }
 
     public boolean addPlayer(ClientInterface client, String nickname) {
-        boolean add = false;
-        if (this.playerMap.size() < numOfPlayer) {
+        if (isFree()) {
             Player player = new Player(nickname);
             this.playerMap.put(client, player);
             this.controller.addObserver(client);
             this.controller.addPlayer(player);
-            add = true;
+            return true;
         }
-        if (numOfPlayer == playerMap.size()) {
-            this.isFree = false;
-        }
-        return add;
+        return false;
     }
 
     public String getGameId() {
@@ -60,7 +53,7 @@ public class Match {
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-    synchronized public void updateController(Request request, ClientInterface clientInterface, Object update, String nickname) {
+    synchronized public void updateController(Request request, Object update, ClientInterface clientInterface) {
        System.out.println(request.toString());
         if (!playerMap.containsKey(clientInterface)) {
             return;
@@ -84,7 +77,7 @@ public class Match {
         }
     }
 
-    synchronized public void updateChat(ClientInterface clientInterface, String nickname, String message) {
+    synchronized public void updateChat(String message, ClientInterface clientInterface) {
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
@@ -93,7 +86,7 @@ public class Match {
         controller.updateChat(player, message);
     }
 
-    synchronized public Object getModel(String nickname, ClientInterface clientInterface) {
+    synchronized public Object getModel(ClientInterface clientInterface) {
         if (!playerMap.containsKey(clientInterface)) {
             return null;
         }

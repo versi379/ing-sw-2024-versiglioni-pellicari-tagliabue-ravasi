@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-    private Map<ClientInterface, String> freePlayer;
-    private ArrayList<ClientInterface> freeClient;
-    private ArrayList<Match> matches;
-    private ArrayList<String> nicknames;
+    private final Map<ClientInterface, String> freePlayers;
+    private final ArrayList<ClientInterface> freeClient;
+    private final ArrayList<Match> matches;
+    private final ArrayList<String> nicknames;
 
 
     public Server() {
         this.matches = new ArrayList<>();
-        this.freePlayer = new HashMap<>();
+        this.freePlayers = new HashMap<>();
         this.freeClient = new ArrayList<>();
         this.nicknames = new ArrayList<>();
 
@@ -31,9 +31,8 @@ public class Server {
 
     public synchronized void connect(ClientInterface client) {
         freeClient.add(client);
-        freePlayer.put(client, null);
+        freePlayers.put(client, null);
         System.out.println("Client connected to Server");
-
     }
 
     /**
@@ -49,39 +48,37 @@ public class Server {
      */
 
     public synchronized Match createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) {
-        if(numOfPlayer < 2 || numOfPlayer > 4){
+        if (numOfPlayer < 2 || numOfPlayer > 4) {
             return null;
         }
         if (checkUser(client, nickname)) {
-            matches.add(new Match(matches.size(), client, gameId, numOfPlayer, nickname));
+            matches.add(new Match(matches.size(), numOfPlayer, gameId, client, nickname));
             System.out.println(gameId + " Match created");
-            freePlayer.remove(client);
-            return matches.get(matches.size() - 1);
-
+            freePlayers.remove(client);
+            return matches.getLast();
         } else {
             return null;
         }
-
     }
 
     private synchronized boolean checkUser(ClientInterface client, String nickname) {
-        if (freePlayer.containsKey(client)) {
-            if (freePlayer.get(client) == null) {
+        if (freePlayers.containsKey(client)) {
+            if (freePlayers.get(client) == null) {
                 return false;
             }
-            if (freePlayer.get(client).equals(nickname)) {
+            if (freePlayers.get(client).equals(nickname)) {
                 return true;
             }
         }
         return false;
     }
 
-    public synchronized Match enterMatch(String code, ClientInterface player, String nickname) {
+    public synchronized Match enterMatch(ClientInterface player, String code, String nickname) {
         if (checkUser(player, nickname)) {
             for (int i = 0; i < matches.size(); i++) {
                 if (matches.get(i).getGameId().equals(code) && matches.get(i).isFree()) {
                     matches.get(i).addPlayer(player, nickname);
-                    freePlayer.remove(player);
+                    freePlayers.remove(player);
                     return matches.get(i);
                 }
             }
@@ -89,38 +86,32 @@ public class Server {
         return null;
     }
 
-    public synchronized ArrayList<String> getFreeMatchesNames() {
+    public synchronized ArrayList<String> getFreeMatches() {
         if (matches.isEmpty()) {
             return null;
         }
-        ArrayList<String> freeMatch = new ArrayList<>();
-        for (int i = 0; i < matches.size(); i++) {
-            if (matches.get(i).isFree()) {
-                freeMatch.add(matches.get(i).getGameId());
+        ArrayList<String> freeMatches = new ArrayList<>();
+        for (Match match : matches) {
+            if (match.isFree()) {
+                freeMatches.add(match.getGameId());
             }
         }
-        return freeMatch;
+        return freeMatches;
     }
 
-    public synchronized boolean addName(ClientInterface clientInterface, String name) {
-        if (name == null) {
+    public synchronized boolean addNickname(ClientInterface clientInterface, String nickname) {
+        if (nickname == null) {
             return false;
         }
-        if (name.equals("")) {
+        if (nickname.isEmpty()) {
             return false;
-        }
-        if (nicknames.isEmpty()) {
-            nicknames.add(name);
-            freePlayer.put(clientInterface, name);
-            return true;
         }
 
-        for (int i = 0; i < nicknames.size(); i++)
-            if (name.equals(nicknames.get(i))) {
-                return false;
-            }
-        nicknames.add(name);
-        freePlayer.put(clientInterface, name);
-        return true;
+        if (!nicknames.contains(nickname)) {
+            nicknames.add(nickname);
+            freePlayers.put(clientInterface, nickname);
+            return true;
+        }
+        return false;
     }
 }

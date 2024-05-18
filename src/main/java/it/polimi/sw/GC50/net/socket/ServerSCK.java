@@ -25,7 +25,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(port);
-            System.out.println("server socket started");
+            System.out.println("Server socket ready");
         } catch (IOException e) {
             return;
         }
@@ -39,11 +39,10 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 server.connect(clientHandler);
                 Thread clientThread = new Thread(clientHandler);
                 clientThread.start();
-                System.out.println("client connected");
+                System.out.println("Client connected");
             } catch (IOException e) {
+                //...
             }
         }
-
     }
-
 }

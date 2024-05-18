@@ -7,7 +7,8 @@ import java.io.Serializable;
 /**
  * Interface for different objectives management
  */
-@FunctionalInterface
 public interface Objective extends Serializable {
     public int checkCondition(PlayerData playerData);
+
+    String toStringTUI();
 }

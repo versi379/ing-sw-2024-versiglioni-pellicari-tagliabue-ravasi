@@ -30,4 +30,10 @@ public class IdenticalResourcesObjective implements Objective , Serializable {
 
         return playerData.numOfResource(targetResource) / count;
     }
+
+    @Override
+    public String toStringTUI() {
+        return "Identical Resources Objective => target resource: " + getTargetResource() +
+                ", count: " + getCount();
+    }
 }

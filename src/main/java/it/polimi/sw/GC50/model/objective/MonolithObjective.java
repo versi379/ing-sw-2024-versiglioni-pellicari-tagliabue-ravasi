@@ -53,6 +53,12 @@ public class MonolithObjective implements Objective , Serializable {
         return result;
     }
 
+    @Override
+    public String toStringTUI() {
+        return "Monolith Objective => target color: " + getTargetColor() +
+                ", orientation: " + getOrientation();
+    }
+
     private CardsMatrix adjustOrientation(CardsMatrix matrix) {
         if (orientation == MonolithOrientation.LEFTDIAGONAL) {
             return matrix.rotate45().transposePrimary();

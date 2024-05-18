@@ -11,7 +11,7 @@ import java.util.Objects;
  * Represents the bonus utilized for cards whose score depends on the amount of a certain resource
  * present in the player's area in the instant immediately following its placement
  */
-public class ResourcesBonus implements Bonus , Serializable {
+public class ResourcesBonus implements Bonus, Serializable {
 
     private final Resource targetResource;
 

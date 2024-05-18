@@ -54,8 +54,8 @@ public class PrintTUITest {
         }
         for (int k = 0; k < 5; k++) {
             String[][] card = game.pickStarterCard().getFront().toStringTUI();
-            for (int i = 6; i >= 0; i--) {
-                for (int j = 0; j < 3; j++) {
+            for (int i = card[0].length - 1; i >= 0; i--) {
+                for (int j = 0; j < card.length; j++) {
                     System.out.print(card[j][i]);
                 }
                 System.out.println();

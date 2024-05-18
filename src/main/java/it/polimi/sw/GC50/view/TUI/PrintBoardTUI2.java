@@ -21,12 +21,12 @@ public class PrintBoardTUI2 {
 
             int counter = minX;
             for (int i = 0; i < targetAreaWidth; i++) {
-                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter + 1) + "   ";
+                board[i * 2 + 2][0] = PrintBoardTUI2.centerString(7, Integer.toString(counter + 1));
                 counter++;
             }
             counter = minY;
             for (int i = 0; i < targetAreaHeight; i++) {
-                board[0][i * 4 + 4] = String.format("%02d" ,counter + 1) + "     ";
+                board[0][i * 4 + 4] = PrintBoardTUI2.centerString(7, Integer.toString(counter + 1));
                 counter++;
             }
 
@@ -62,12 +62,12 @@ public class PrintBoardTUI2 {
 
             int counter = minX;
             for (int i = 0; i < targetAreaWidth; i++) {
-                board[i * 2 + 2][0] = "  " + String.format("%02d" ,counter + 1) + "   ";
+                board[i * 2 + 2][0] = "  " + String.format("%2s", counter + 1) + "   ";
                 counter++;
             }
             counter = minY;
             for (int i = 0; i < targetAreaHeight; i++) {
-                board[0][i * 4 + 4] = String.format("%02d" ,counter + 1) + "     ";
+                board[0][i * 4 + 4] = "  " + String.format("%2s", counter + 1) + "   ";
                 counter++;
             }
 
@@ -104,5 +104,10 @@ public class PrintBoardTUI2 {
             }
             System.out.println();
         }
+    }
+
+    public static String centerString (int width, String s) {
+        return String.format("%-" + width  + "s",
+                String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }
