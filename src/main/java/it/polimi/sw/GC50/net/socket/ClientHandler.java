@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     private boolean alive;
     //////////////////////////////////////////
     //////////////////////////////////////////
-    private final Server server;
+    private final Lobby lobby;
     private Match match;
     private String nickname;
     //////////////////////////////////////////
@@ -30,12 +30,12 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
 
 
-    public ClientHandler(Socket socketClient, ServerSCK serverSCK, Server server) {
+    public ClientHandler(Socket socketClient, ServerSCK serverSCK, Lobby lobby) {
         this.socketClient = socketClient;
         this.serverSCK = serverSCK;
         this.alive = true;
         this.executorService = Executors.newSingleThreadScheduledExecutor();
-        this.server = server;
+        this.lobby = lobby;
         try {
             this.output = new ObjectOutputStream(socketClient.getOutputStream());
             this.input = new ObjectInputStream(socketClient.getInputStream());
@@ -87,7 +87,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
                 System.out.println(message.getNickName());
-                this.match = server.createMatch(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
+                this.match = lobby.createMatch(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
                 } else {
@@ -95,7 +95,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.ENTER_GAME:
-                this.match = server.enterMatch(this, message.getMatchName(), message.getNickName());
+                this.match = lobby.joinMatch(this, message.getMatchName(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
                 } else {
@@ -103,10 +103,10 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.GET_FREE_MATCH:
-                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, server.getFreeMatches()));
+                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeMatches()));
                 break;
             case Request.SET_NAME:
-                boolean resp = server.addNickname(this, message.getNickName());
+                boolean resp = lobby.addPlayer(this, message.getNickName());
                 setMessageout(new Message(Request.SET_NAME_RESPONSE, resp));
                 break;
             case null:

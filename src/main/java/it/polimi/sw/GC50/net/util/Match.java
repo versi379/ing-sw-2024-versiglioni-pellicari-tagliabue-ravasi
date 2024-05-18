@@ -2,7 +2,6 @@ package it.polimi.sw.GC50.net.util;
 
 import it.polimi.sw.GC50.controller.GameController;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 
@@ -20,7 +19,7 @@ public class Match {
     //////////////////////////////////////////
     //PRE GAME
     ///////////////////////////////////////////
-    public Match(int code, int numOfPlayer, String gameId, ClientInterface client, String nickname) {
+    public Match(int code, String gameId, int numOfPlayer, ClientInterface client, String nickname) {
         this.code = code;
         this.gameId = gameId;
         playerMap = new HashMap<>();

@@ -9,8 +9,6 @@ import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.PlayerData;
 import it.polimi.sw.GC50.model.lobby.Player;
 
-import java.util.ArrayList;
-
 public class test {
     public static void main(String[] args) {
         PlayerData pl= new PlayerData(40);
@@ -55,7 +53,7 @@ public class test {
         ob.updateDeck(deck);
         ob.updatePlayerHand(cards);
         //ob.printallboard(false,0);
-        ob.printallboard(true,0);
+        ob.printAllBoard(true,0);
         //.print(0);
 
         //ob.updateDeck();

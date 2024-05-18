@@ -5,18 +5,13 @@ import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.Game;
-import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PrintGameArea {
-    private ArrayList<SinglePlayerArea> singlePlayerAreas;
+    private List<PlayerArea> playerAreas;
     private PlayableCard[] decks;
     private PhysicalCard[] hand;
     private int d = (84 * 4);
@@ -24,32 +19,33 @@ public class PrintGameArea {
 
 
     public PrintGameArea() {
-        singlePlayerAreas = new ArrayList<>();
+        playerAreas = new ArrayList<>();
         this.decks = new PlayableCard[6];
         this.hand = new PhysicalCard[3];
     }
-    public void update(ArrayList<ModelMex.SinglePlayerArea> singlePlayerAreas, PlayableCard[] decks, List<PhysicalCard> hand) {
-        this.singlePlayerAreas = new ArrayList<>();
+
+    public void update(List<ModelMex.SinglePlayerArea> singlePlayerAreas, PlayableCard[] decks, List<PhysicalCard> hand) {
+        this.playerAreas = new ArrayList<>();
         for (ModelMex.SinglePlayerArea singlePlayerArea : singlePlayerAreas) {
-            this.singlePlayerAreas.add(new SinglePlayerArea(singlePlayerArea.getNickname(), singlePlayerArea.getPoint(), singlePlayerArea.getColor(), singlePlayerArea.getCardsMatrix()));
+            this.playerAreas.add(new PlayerArea(singlePlayerArea.getNickname(), singlePlayerArea.getPoint(), singlePlayerArea.getColor(), singlePlayerArea.getCardsMatrix()));
         }
         this.decks = decks;
-        for(int i = 0; i < hand.size(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             this.hand[i] = hand.get(i);
         }
     }
 
     public int addPlayerArea(String nickname, int point, Color color, CardsMatrix cardsMatrix) {
-        singlePlayerAreas.add(new SinglePlayerArea(nickname, point, color, cardsMatrix));
-        return singlePlayerAreas.size() - 1;
+        playerAreas.add(new PlayerArea(nickname, point, color, cardsMatrix));
+        return playerAreas.size() - 1;
     }
 
     public void UpdateCardBoard(CardsMatrix cardsMatrix, int index) {
-        this.singlePlayerAreas.get(index).setCardsMatrix(cardsMatrix);
+        this.playerAreas.get(index).setCardsMatrix(cardsMatrix);
     }
 
     public void updatePlayerPoint(int index, int point) {
-        this.singlePlayerAreas.get(index).setPoint(point);
+        this.playerAreas.get(index).setPoints(point);
     }
 
     public void updatePlayerHand(PhysicalCard[] hand) {
@@ -67,22 +63,23 @@ public class PrintGameArea {
         int index2 = 0;
 
 
-        for (int i = this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().length() - 1; i >= 0; i--) {
+
+        for (int i = this.playerAreas.get(matrixIndex).getCardsMatrix().length() - 1; i >= 0; i--) {
             index2 = 0;
-            for (int j = 0; j < this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().length(); j++) {
-                if (this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().get(j, i) != null) {
-                    tmpString = this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().get(j, i).toStringTUI();
+            for (int j = 0; j < this.playerAreas.get(matrixIndex).getCardsMatrix().length(); j++) {
+                if (this.playerAreas.get(matrixIndex).getCardsMatrix().get(j, i) != null) {
+                    tmpString = this.playerAreas.get(matrixIndex).getCardsMatrix().get(j, i).toStringTUI();
                     int c = 0;
                     for (int k = 6; k >= 0; k--) {
                         switch (k) {
                             case 4, 5, 6: {
                                 //nw
-                                if (this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 1)) {
+                                if (this.playerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 1)) {
                                     mat2[index + c][index2] = tmpString[0][k];
                                 }
                                 mat2[index + c][index2 + 1] = tmpString[1][k];
                                 //ne
-                                if (this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 2)) {
+                                if (this.playerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 2)) {
                                     mat2[index + c][index2 + 2] = tmpString[2][k];
                                 }
                                 break;
@@ -96,12 +93,12 @@ public class PrintGameArea {
                             }
                             case 0, 1, 2: {
                                 //sw
-                                if (this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 0)) {
+                                if (this.playerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 0)) {
                                     mat2[index + c][index2] = tmpString[0][k];
                                 }
                                 mat2[index + c][index2 + 1] = tmpString[1][k];
                                 //se
-                                if (this.singlePlayerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 3)) {
+                                if (this.playerAreas.get(matrixIndex).getCardsMatrix().isCornerUncovered(j, i, 3)) {
                                     mat2[index + c][index2 + 2] = tmpString[2][k];
                                 }
                                 break;
@@ -118,7 +115,7 @@ public class PrintGameArea {
     }
 
     public void print(int index) {
-        if (index > this.singlePlayerAreas.size() - 1) {
+        if (index > this.playerAreas.size() - 1) {
             return;
         }
         String[][] mat = stringBoard(index);
@@ -141,16 +138,16 @@ public class PrintGameArea {
         }
     }
 
-    public void printallboard(boolean condition, int index) {
+    public void printAllBoard(boolean condition, int index) {
         ArrayList<String[][]> mat = new ArrayList<>();
-        int[] ck = new int[this.singlePlayerAreas.size()];
+        int[] ck = new int[this.playerAreas.size()];
         String hand[][] = new String[7][5];
         String[][] pointBoard = getPointBoard();
         int counter = 0;
         if (!condition) {
             mat.add(stringBoard(index));
         } else {
-            for (int i = 0; i < this.singlePlayerAreas.size(); i++) {
+            for (int i = 0; i < this.playerAreas.size(); i++) {
                 mat.add(stringBoard(i));
                 ck[i] = 0;
             }
@@ -187,8 +184,8 @@ public class PrintGameArea {
             }
         }
         if (condition) {
-            for (int i = 0; i < this.singlePlayerAreas.size(); i++) {
-                System.out.print("Player: " + this.singlePlayerAreas.get(i).getNickname());
+            for (int i = 0; i < this.playerAreas.size(); i++) {
+                System.out.print("Player: " + this.playerAreas.get(i).getNickname());
                 for (int j = 0; j < counter; j++) {
 
                     System.out.print("       ");
@@ -209,9 +206,9 @@ public class PrintGameArea {
                         if (i == 0) {
                             if (z < 3) {
                                 if (z < this.hand.length) {
-                                    if(this.hand[z] != null) {
+                                    if (this.hand[z] != null) {
                                         System.out.print(this.hand[z].getFront().toStringTUI()[k][j]);
-                                    }else{
+                                    } else {
                                         System.out.print("       ");
                                     }
 
@@ -229,9 +226,9 @@ public class PrintGameArea {
                                 }
                             } else {
                                 if (z - 3 < decks.length) {
-                                    if(this.decks[z - 3]!= null) {
+                                    if (this.decks[z - 3] != null) {
                                         System.out.print(decks[z - 3].toStringTUI()[k][j]);
-                                    }else{
+                                    } else {
                                         System.out.print("       ");
                                     }
 
@@ -255,7 +252,7 @@ public class PrintGameArea {
                                     }
                                 }
                             } else {
-                                if (z < decks.length&&decks[z]!=null) {
+                                if (z < decks.length && decks[z] != null) {
                                     System.out.print(decks[z].toStringTUI()[k][j]);
                                 } else {
                                     System.out.print("       ");
@@ -389,9 +386,9 @@ public class PrintGameArea {
         square[3][1] = ("╬════╦════╬");
         // square[0][0]=("       ");
 
-        for (int i = 0; i < this.singlePlayerAreas.size(); i++) {
-            if (this.singlePlayerAreas.get(i).getPoint() == point) {
-                color.add(switch (this.singlePlayerAreas.get(i).getColor()) {
+        for (int i = 0; i < this.playerAreas.size(); i++) {
+            if (this.playerAreas.get(i).getPoints() == point) {
+                color.add(switch (this.playerAreas.get(i).getColor()) {
                     case WHITE -> "\u001B[37m";
                     case GREEN -> "\u001B[32m";
                     case BLUE -> "\u001B[34m";
@@ -479,48 +476,41 @@ public class PrintGameArea {
         return square;
     }
 
-    private class SinglePlayerArea {
+    private class PlayerArea {
         private String nickname;
-        private int point;
+        private int points;
         private Color color;
         private CardsMatrix cardsMatrix;
 
-        public SinglePlayerArea(String nickname, int point, Color color, CardsMatrix cardsMatrix) {
+        public PlayerArea(String nickname, int points, Color color, CardsMatrix cardsMatrix) {
             this.nickname = nickname;
-            this.point = point;
+            this.points = points;
             this.color = color;
             this.cardsMatrix = cardsMatrix;
-        }
-
-        public void setPoint(int point) {
-            this.point = point;
         }
 
         public String getNickname() {
             return nickname;
         }
 
-        public int getPoint() {
-            return point;
+        public void setPoints(int points) {
+            this.points = points;
+        }
+
+        public int getPoints() {
+            return points;
         }
 
         public Color getColor() {
             return color;
         }
 
-        public CardsMatrix getCardsMatrix() {
-            return cardsMatrix;
-        }
-
         public void setCardsMatrix(CardsMatrix cardsMatrix) {
             this.cardsMatrix = cardsMatrix;
         }
+
+        public CardsMatrix getCardsMatrix() {
+            return cardsMatrix;
+        }
     }
-
-
 }
-
-
-
-
-

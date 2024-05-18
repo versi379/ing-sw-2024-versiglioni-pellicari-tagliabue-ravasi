@@ -31,8 +31,9 @@ public class TuiView implements View {
     @Override
     public int selectJoinOrCreate() {
         return readInt("Do you want to join or create a game?" +
-                "\n1) to create a game" +
-                "\n2) to join a game", 1, 2);
+                "\n1) create a game" +
+                "\n2) join a game" +
+                "\n3) quit", 1, 3);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class TuiView implements View {
     @Override
     public void updateBoard() {
         printGameArea.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
-        printGameArea.printallboard(true, 0);
+        printGameArea.printAllBoard(true, 0);
     }
 
     private void printFaces(PhysicalCard card) {

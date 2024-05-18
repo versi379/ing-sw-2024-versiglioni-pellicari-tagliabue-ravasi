@@ -5,7 +5,7 @@ import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ServerRmi extends Remote {
     void start() throws RemoteException;
@@ -16,13 +16,13 @@ public interface ServerRmi extends Remote {
     //LOBBY
     ///////////////////////////////////////////
 
-    ArrayList<String> getFreeMatches() throws RemoteException;
+    List<String> getFreeMatches() throws RemoteException;
 
-    String createGame(String gameId, int numOfPlayers, ClientInterface clientInterface, String nickname) throws RemoteException;
+    boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException;
 
-    String enterGame(String gameId, ClientInterface clientInterface, String nickname) throws RemoteException;
+    boolean joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException;
 
-    String setNickname(ClientInterface clientInterface, String name) throws RemoteException;
+    boolean setPlayer(ClientInterface clientInterface, String nickname) throws RemoteException;
 
     //////////////////////////////////////////
     //ACTIVE GAME
