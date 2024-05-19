@@ -12,34 +12,89 @@ import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  */
 public class GameController {
     private final Game game;
+    private final Map<ClientInterface, Player> playerMap;
 
-    public GameController(Game game) {
-        this.game = game;
-    }
-
-    public GameController(String gameId, int numPlayers, int endScore, Player creator) {
+    public GameController(String gameId, int numPlayers, int endScore, ClientInterface clientInterface, String nickname) {
+        playerMap = new HashMap<>();
+        Player creator = new Player(nickname);
         game = new Game(gameId, numPlayers, endScore, creator);
+        game.addGameObserver(clientInterface);
+        playerMap.put(clientInterface, creator);
     }
 
-    public void addPlayer(Player player) {
-        if (isWaiting()) {
+    // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public String getGameId() {
+        return game.getId();
+    }
+
+    public boolean isFree() {
+        return isWaiting();
+    }
+
+    // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
+    public boolean addPlayer(ClientInterface clientInterface, String nickname) {
+        if (isFree()) {
+            Player player = new Player(nickname);
+            game.addGameObserver(clientInterface);
             game.addPlayer(player);
-        } else {
-            sendError(player, "Partita già iniziata");
+            playerMap.put(clientInterface, player);
+            return true;
+        }
+        return false;
+    }
+
+    public void removePlayer(ClientInterface clientInterface) {
+        if (playerMap.containsKey(clientInterface)) {
+            Player player = playerMap.get(clientInterface);
+            game.removePlayer(player);
+            game.removeGameObserver(clientInterface);
         }
     }
 
-    public void removePlayer(Player player) {
-        game.removePlayer(player);
+    // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
+    synchronized public void updateController(Request request, Object update, ClientInterface clientInterface) {
+        if (!playerMap.containsKey(clientInterface)) {
+            return;
+        }
+        System.out.println(request.toString() + " from player " + playerMap.get(clientInterface));
+        Player player = playerMap.get(clientInterface);
+        switch (request) {
+            case SELECT_STARTER_FACE -> {
+                chooseStarterFace(player, (Boolean) update);
+            }
+            case SELECT_OBJECTIVE_CARD -> {
+                chooseObjective(player, (Integer) update);
+            }
+            case PLACE_CARD -> {
+                placeCard(player, (PlaceCardMex) update);
+            }
+            case DRAW_CARD -> {
+                drawCard(player, (DrawingPosition) update);
+            }
+            default -> {
+            }
+        }
     }
 
+    synchronized public void updateChat(String message, ClientInterface clientInterface) {
+        if (!playerMap.containsKey(clientInterface)) {
+            return;
+        }
+        Player player = playerMap.get(clientInterface);
+        updateChat(player, message);
+        System.out.println("chat updated");
+    }
+
+    // UPDATE MODEL ////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * @param player
      * @param face
@@ -49,7 +104,6 @@ public class GameController {
             PhysicalCard starterCard = game.getStarterCard(player);
             game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
         } else {
-            sendError(player, "Operazione non disponibile");
             game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
@@ -64,43 +118,15 @@ public class GameController {
             if (index >= 0 && index < secretObjectivesList.size()) {
                 game.setSecretObjective(player, secretObjectivesList.get(index));
             } else {
-                sendError(player, "Indice non valido");
                 game.error(Request.NOTIFY_INVALID_INDEX, player.getNickname());
             }
         } else {
-            sendError(player, "Operazione non disponibile");
             game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
-
     public void placeCard(Player player, PlaceCardMex placeCardMex) {
-        int index = placeCardMex.getIndex();
-        int x = placeCardMex.getX();
-        int y = placeCardMex.getY();
-        boolean face = placeCardMex.isFace();
-
-        if (isPlacingPhase(player)) {
-            List<PhysicalCard> playerHand = game.getHand(player);
-            if (index >= 0 && index < playerHand.size()) {
-                PlayableCard card = face ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
-                if (card.isPlaceable(game.getPlayerData(player), x, y)) {
-                    game.placeCard(player, card, x, y);
-                    game.removeCard(player, index);
-                    game.error(Request.NOTIFY_CARD_PLACED, player.getNickname());
-
-                } else {
-                    sendError(player, "Carta non piazzabile");
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
-                }
-            } else {
-                sendError(player, "Indice non valido");
-                game.error(Request.NOTIFY_CARD_NOT_FOUND, player.getNickname());
-            }
-        } else {
-            sendError(player, "Operazione non disponibile");
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
-        }
+        placeCard(player, placeCardMex.getIndex(), placeCardMex.isFace(), placeCardMex.getX(), placeCardMex.getY());
     }
 
     /**
@@ -119,15 +145,12 @@ public class GameController {
                     game.placeCard(player, card, x, y);
                     game.removeCard(player, index);
                 } else {
-                    sendError(player, "Carta non piazzabile");
                     game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
                 }
             } else {
-                sendError(player, "Indice non valido");
                 game.error(Request.NOTIFY_CARD_NOT_FOUND, player.getNickname());
             }
         } else {
-            sendError(player, "Operazione non disponibile");
             game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
@@ -142,20 +165,45 @@ public class GameController {
             if (card != null) {
                 game.addCard(player, card);
             } else {
-                sendError(player, "Posizione non disponibile");
                 game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, player.getNickname());
             }
         } else {
-            sendError(player, "Operazione non disponibile");
             game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
         }
     }
 
-    private void sendError(Player player, String message) {
-        player.addError(message);
+    public void updateChat(Player player, String message) {
+        game.sendMessageInChat(player, message);
     }
 
-    public boolean isWaiting() {
+    // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    synchronized public Object getModel(ClientInterface clientInterface) {
+        if (!playerMap.containsKey(clientInterface)) {
+            return null;
+        }
+        Player player = playerMap.get(clientInterface);
+        ArrayList<CardsMatrix> board = new ArrayList<>();
+        ArrayList<Color> color = new ArrayList<>();
+        ArrayList<Integer> point = new ArrayList<>();
+        ArrayList<String> name = new ArrayList<>();
+
+        for (Player p : game.getPlayerList()) {
+            if (!p.getNickname().equals(player.getNickname())) {
+                board.add(game.getPlayerData(p).getCardsArea());
+                color.add(Color.BLUE);
+                point.add(game.getPlayerData(p).getTotalScore());
+                name.add(p.getNickname());
+            }
+        }
+
+        ModelMex modelMex = new ModelMex(game.getPlayerData(player), player, game.getChat(),
+                game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDecksTop(),
+                game.getCurrentPhase(), game.getStatus());
+        return modelMex;
+    }
+
+    // GAME STATUS /////////////////////////////////////////////////////////////////////////////////////////////////////
+    private boolean isWaiting() {
         return game.getStatus().equals(GameStatus.WAITING);
     }
 
@@ -178,9 +226,16 @@ public class GameController {
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING);
     }
 
-    //////////////////////////////////////////
-    //
-    ///////////////////////////////////////////
+    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public GameController(Game game) {
+        this.game = game;
+        playerMap = new HashMap<>();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
     public Player getPlayer(String nickname) {
 
         for (Player p : game.getPlayerList()) {
@@ -189,37 +244,5 @@ public class GameController {
             }
         }
         return null;
-    }
-
-     public Object getGameModel(Player player) {
-        ArrayList<CardsMatrix> board = new ArrayList<>();
-        ArrayList<Color> color = new ArrayList<>();
-        ArrayList<Integer> point = new ArrayList<>();
-        ArrayList<String> name = new ArrayList<>();
-
-        for (Player p : game.getPlayerList()) {
-            if (!p.getNickname().equals(player.getNickname())) {
-            board.add(game.getPlayerData(p).getCardsArea());
-            color.add(Color.BLUE);
-            point.add(game.getPlayerData(p).getTotalScore());
-            name.add(p.getNickname());
-            }
-        }
-
-        ModelMex modelMex = new ModelMex(game.getPlayerData(player),player, game.getChat(), game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDecksTop(), game.getCurrentPhase(), game.getStatus());
-        return modelMex;
-    }
-
-    public void updateChat(Player player, String message) {
-        game.sendMessageInChat(player, message);
-    }
-
-    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public Game getGame() {
-        return game;
-    }
-
-    public void addObserver(ClientInterface clientInterface) {
-        game.addObserver(clientInterface);
     }
 }

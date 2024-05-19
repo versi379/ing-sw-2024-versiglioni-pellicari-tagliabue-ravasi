@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.app;
 
 import it.polimi.sw.GC50.net.RMI.ServerRmiImpl;
-import it.polimi.sw.GC50.net.util.Lobby;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.socket.ServerSCK;
 
 import java.io.IOException;

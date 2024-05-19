@@ -5,18 +5,18 @@ import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.List;
 
-public class Observable {
+public class GameObservable {
     private boolean changed = false;
-    private Vector<Observer> obs;
+    private final List<GameObserver> obs;
 
     /**
      * Construct an Observable with zero Observers.
      */
 
-    public Observable() {
-        obs = new Vector<>();
+    public GameObservable() {
+        obs = new ArrayList<>();
     }
 
     /**
@@ -27,12 +27,11 @@ public class Observable {
      *
      * @throws NullPointerException if the parameter o is null.
      */
-    public synchronized void addObserver(Observer o) {
+    public synchronized void addGameObserver(GameObserver o) {
         if (o == null)
             throw new NullPointerException();
         if (!obs.contains(o)) {
-            obs.addElement(o);
-
+            obs.add(o);
         }
     }
 
@@ -42,29 +41,81 @@ public class Observable {
      *
      * @param o the observer to be deleted.
      */
-    public synchronized void deleteObserver(Observer o) {
-        obs.removeElement(o);
+    public synchronized void removeGameObserver(GameObserver o) {
+        obs.remove(o);
     }
 
-    /**
-     * If this object has changed, as indicated by the
-     * {@code hasChanged} method, then notify all of its observers
-     * and then call the {@code clearChanged} method to
-     * indicate that this object has no longer changed.
-     * <p>
-     * Each observer has its {@code update} method called with two
-     * arguments: this observable object and {@code null}. In other
-     * words, this method is equivalent to:
-     * <blockquote>{@code
-     * notifyObservers(null)}</blockquote>
-     *
-     * @see java.util.Observable#clearChanged()
-     * @see java.util.Observable#hasChanged()
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-     */
-    public void notifyObservers(Object o) {
-        notifyObservers(null);
+    /*
+    public synchronized void notifyPlayerJoined(Player player) {
+        for (GameObserver o : obs) {
+            o.playerJoined(player.getNickname());
+        }
     }
+
+    public synchronized void notifyPlayerLeft(Player player) {
+        for (GameObserver o : obs) {
+            o.playerLeft(player.getNickname());
+        }
+    }
+
+    public synchronized void notifyGameSetup() {
+        for (GameObserver o : obs) {
+            o.gameSetup();
+        }
+    }
+
+    public synchronized void notifyPlayerReady(Player player) {
+        for (GameObserver o : obs) {
+            o.playerReady(player.getNickname());
+        }
+    }
+
+    public synchronized void notifyGameStarted() {
+        for (GameObserver o : obs) {
+            o.gameStarted();
+        }
+    }
+
+    public synchronized void notifyCardAdded(Player player, PhysicalCard card) {
+        for (GameObserver o : obs) {
+            if (o.getNickname().equals(player.getNickname())) {
+                o.cardAdded(player.getNickname(), card);
+            }
+        }
+    }
+
+    public synchronized void notifyCardRemoved(Player player, int index) {
+        for (GameObserver o : obs) {
+            if (o.getNickname().equals(player.getNickname())) {
+                o.cardRemoved(player.getNickname(), index);
+            }
+        }
+    }
+
+    public synchronized void notifyCardPlaced(Player player, PlayableCard card, int x, int y) {
+        for (GameObserver o : obs) {
+            o.cardPlaced(player.getNickname(), card, x, y);
+        }
+    }
+
+    public synchronized void notifyCardDrawn(DrawingPosition drawingPosition) {
+        for (GameObserver o : obs) {
+            o.cardDrawn(drawingPosition);
+        }
+    }
+
+    public synchronized void notifyGameEnd(List<Player> winnerList, int totalScore, int objectivesScore) {
+        for (GameObserver o : obs) {
+            o.gameEnd(winnerList.stream().map(Player::getNickname).toList(), totalScore, objectivesScore);
+        }
+    }
+
+    public synchronized void notifyChatMessage(Player player, String message) {
+        for (GameObserver o : obs) {
+            o.chatMessage(player.getNickname(), message);
+        }
+    }
+
 
     /**
      * If this object has changed, as indicated by the
@@ -81,12 +132,6 @@ public class Observable {
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void notifyObservers(Request request, Object arg) {
-        /*
-         * a temporary array buffer, used as a snapshot of the state of
-         * current Observers.
-         */
-        Object[] arrLocal;
-
 
         synchronized (this) {
             /* We don't want the Observer doing callbacks into
@@ -104,15 +149,14 @@ public class Observable {
 
             if (!changed)
                 return;
-            arrLocal = obs.toArray();
             clearChanged();
         }
+
         System.out.println(request.toString());
-        for (int i = arrLocal.length - 1; i >= 0; i--) {
+        for (GameObserver o : obs) {
             try {
-                //  ((Observer)arrLocal[i]).update(this, arg);\
-                ((Observer) arrLocal[i]).onUpdate(new Message(request, arg));
-               //observers.get(i).onUpdate(message);
+                // ((GameObserver) arrLocal[i]).update(this, request, arg);
+                o.onUpdate(new Message(request, arg));
             } catch (RemoteException e) {
                 System.out.println("Error in notifyObservers");
             }
@@ -123,7 +167,7 @@ public class Observable {
      * Clears the observer list so that this object no longer has any observers.
      */
     public synchronized void deleteObservers() {
-        obs.removeAllElements();
+        obs.clear();
     }
 
     /**

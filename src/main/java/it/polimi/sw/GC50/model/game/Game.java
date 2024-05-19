@@ -9,7 +9,7 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.chat.Message;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.io.FileReader;
@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Game extends Observable implements Serializable, GameInterface {
+public class Game extends GameObservable implements Serializable, GameInterface {
 
     /**
      * Game's unique identifier

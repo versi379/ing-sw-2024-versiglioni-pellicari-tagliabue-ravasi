@@ -44,7 +44,6 @@ public class AppClient {
         } else {
             // Via GUI
         }
-        System.out.println("ciao");
     }
 
     private static void setupSocket(View view, ViewType viewType) {

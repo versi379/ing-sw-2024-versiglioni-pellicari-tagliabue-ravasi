@@ -1,7 +1,9 @@
 package it.polimi.sw.GC50.net.socket;
 
 
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.model.lobby.Lobby;
+import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.*;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     //////////////////////////////////////////
     private final Lobby lobby;
-    private Match match;
+    private GameController match;
     private String nickname;
     //////////////////////////////////////////
     private final ExecutorService executorService;
@@ -153,7 +155,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(GameObservable o, Request request, Object arg) {
 
     }
 

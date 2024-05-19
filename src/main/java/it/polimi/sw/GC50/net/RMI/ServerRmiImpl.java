@@ -1,8 +1,8 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.controller.GameController;
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Lobby;
-import it.polimi.sw.GC50.net.util.Match;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
@@ -15,7 +15,7 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     private final Lobby lobby;
     private final int port;
     private Registry registry;
-    private Match match;
+    private GameController match;
 
     public ServerRmiImpl(Lobby lobby, int port) throws RemoteException {
         this.lobby = lobby;
@@ -52,8 +52,8 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException {
-        match = lobby.createMatch(clientInterface, gameId, numOfPlayers, nickname);
+    public boolean createMatch(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException {
+        match = lobby.createMatch( clientInterface, gameId, numOfPlayers, nickname);
         return match != null;
     }
 

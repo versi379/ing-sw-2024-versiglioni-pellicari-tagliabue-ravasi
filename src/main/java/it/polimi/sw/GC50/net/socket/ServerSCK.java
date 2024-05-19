@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.util.Lobby;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 
 import java.io.IOException;
 import java.net.ServerSocket;

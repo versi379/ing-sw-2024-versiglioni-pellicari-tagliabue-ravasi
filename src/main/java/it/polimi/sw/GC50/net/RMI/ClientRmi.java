@@ -1,11 +1,12 @@
 package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.model.game.DrawingPosition;
+import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
@@ -135,7 +136,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     return;
                 }
             }
-            if(isInGame) {
+            if (isInGame) {
                 waitingPhase();
             }
         }
@@ -156,7 +157,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     private boolean createGame(String gameId, int numPlayers) {
         try {
-            return serverRmi.createGame(this, numPlayers, gameId, nickname);
+            return serverRmi.createMatch(this, numPlayers, gameId, nickname);
         } catch (RemoteException e) {
             return false;
         }
@@ -353,17 +354,25 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
         }
         thread2.interrupt();
-
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(GameObservable o, Request request, Object arg) {
         System.out.println("Update from server");
+
+        /*
+        if (!(o instanceof Game)) {
+            return;
+        }
+        switch (request) {
+
+        }
+
+         */
     }
 
     @Override
     synchronized public void onUpdate(Message mex) throws RemoteException {
-
         thread2 = new Thread(() -> {
             switchMex(mex);
         });
@@ -466,4 +475,49 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private void endPhase() {
         getModel();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
+    @Override
+    public String getNickname() {
+        return nickname;
+    }
+
+
+    @Override
+    public void playerJoined(String nickname) {
+
+        view.playerJoined(String nickname);
+    }
+
+    @Override
+    public void playerLeft(String nickname);
+
+    @Override
+    public void gameSetup();
+
+    @Override
+    public void playerReady(String nickname);
+
+    @Override
+    public void gameStarted();
+
+    @Override
+    public void cardAdded(String nickname, PhysicalCard card);
+
+    @Override
+    public void cardRemoved(String nickname, int index);
+
+    @Override
+    public void cardPlaced(String nickname, PlayableCard card, int x, int y);
+
+    @Override
+    public void cardDrawn(DrawingPosition drawingPosition);
+
+    @Override
+    public void gameEnd(List<String> winnerList, int totalScore, int objectivesScore);
+
+    @Override
+    public void chatMessage(String nickname, String message);
+     */
 }

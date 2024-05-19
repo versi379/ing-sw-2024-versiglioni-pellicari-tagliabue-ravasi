@@ -18,7 +18,6 @@ public class Player implements Serializable {
      */
     private final String nickname;
     private Game currentGame;
-    private final List<String> errorLog;
 
     //Status of the connection to the server of the player
     private PlayerStatus status;
@@ -26,7 +25,6 @@ public class Player implements Serializable {
 
     public Player(String nickname) {
         this.nickname = nickname;
-        errorLog = new ArrayList<>();
         status = PlayerStatus.DISCONNECTED;
     }
 
@@ -40,19 +38,6 @@ public class Player implements Serializable {
 
     public Game getCurrentGame() {
         return currentGame;
-    }
-
-    public void addError(String message) {
-        errorLog.add(message);
-        System.err.println(this + " : " + message);
-    }
-
-    public List<String> getErrorLog() {
-        return errorLog;
-    }
-
-    public String getLatestError() {
-        return errorLog.getLast();
     }
 
     public void setStatus(PlayerStatus status) {

@@ -18,7 +18,7 @@ public interface ServerRmi extends Remote {
 
     List<String> getFreeMatches() throws RemoteException;
 
-    boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException;
+    boolean createMatch(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException;
 
     boolean joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException;
 

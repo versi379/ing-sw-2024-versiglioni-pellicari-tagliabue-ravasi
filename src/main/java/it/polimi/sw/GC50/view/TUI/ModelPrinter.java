@@ -31,18 +31,21 @@ public class ModelPrinter {
         System.out.println("Carte in mano:");
         System.out.println();
 
-        String[][] handMatrix = new String[4 * hand.size()][7 * 2 + 1];
+        String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
-        handMatrix[0][7 * 2] = "Indici: ";
-        handMatrix[0][7 + 3] = "  1)   ";
-        handMatrix[0][3] = "  2)   ";
+        handMatrix[0][7 * 2] = "   Indi";
+        handMatrix[1][7 * 2] = "ci:    ";
+        handMatrix[0][7 + 3] = " 1) Fro";
+        handMatrix[1][7 + 3] = "nte:   ";
+        handMatrix[0][3] = " 2) Ret";
+        handMatrix[1][3] = "ro:    ";
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
-            handMatrix[4 * cardsCounter + 2][7 * 2] = "  " + (cardsCounter + 1) + ")   ";
+            handMatrix[4 * cardsCounter + 3][7 * 2] = "  " + (cardsCounter + 1) + ")   ";
 
             String[][] cardTUI = hand.get(cardsCounter).getFront().toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j + 7;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
@@ -51,7 +54,7 @@ public class ModelPrinter {
 
             cardTUI = hand.get(cardsCounter).getBack().toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
@@ -67,24 +70,28 @@ public class ModelPrinter {
         System.out.println("Carte pescabili:");
         System.out.println();
 
-        String[][] handMatrix = new String[4 * 3][7 * 2 + 2];
+        String[][] handMatrix = new String[4 * 3 + 1][7 * 2 + 2];
+        handMatrix[0][11] = "   Riso";
+        handMatrix[1][11] = "rsa:   ";
+        handMatrix[0][3] = "     Or";
+        handMatrix[1][3] = "o:     ";
 
         for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
 
-            handMatrix[4 * cardsCounter + 2][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
+            handMatrix[4 * cardsCounter + 3][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
             String[][] cardTUI = decks.get(cardsCounter).toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j + 7 + 1;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
                 }
             }
 
-            handMatrix[4 * cardsCounter + 2][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
+            handMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
             cardTUI = decks.get(cardsCounter + 3).toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
@@ -143,6 +150,8 @@ public class ModelPrinter {
 
         printMatrix(boardMatrix);
     }
+
+    public void printScores() {}
 
     private static void printMatrix(String[][] stringMatrix) {
         for (int i = stringMatrix[0].length - 1; i >= 0; i--) {
