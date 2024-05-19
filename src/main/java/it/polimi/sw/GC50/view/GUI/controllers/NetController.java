@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
+import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -13,18 +14,24 @@ import javafx.fxml.FXMLLoader;
 
 public class NetController extends GUIController {
 
-    @FXML
-    private TextField playerNickname;
-
-    @FXML
-    private ChoiceBox<String> netConnection;
 
     @FXML
     private Button enterLobbyButton;
 
+    private static NetController instance;
+    public NetController() {
+        instance = this;
+    }
+    public static NetController getController() {
+        return instance;
+    }
+
     @FXML
     public void initialize() throws Exception {
         netConnection.getItems().addAll("Socket", "RMI");
+        netConnection.setOnAction((event) -> {
+            netChoice = netConnection.getSelectionModel().getSelectedIndex();
+        });
     }
 
     @FXML
@@ -39,11 +46,12 @@ public class NetController extends GUIController {
         stage.show();
     }
 
-    public int getNetChoice() {
-        return netConnection.getSelectionModel().getSelectedItem().equals("Socket") ? 1 : 2;
-    }
-
     public String getPlayerNickname() {
         return playerNickname.getText();
     }
+
+    public int getNetChoice() {
+        return netChoice;
+    }
+
 }

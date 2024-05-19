@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
@@ -10,9 +8,9 @@
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <ChoiceBox fx:id="netConnection" layoutX="225.0" layoutY="200.0" prefWidth="150.0" />
-            <TextField fx:id="playerNickname" layoutX="220.0" layoutY="174.0" />
             <Button fx:id="enterLobbyButton" layoutX="251.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleEnterLobbyButton" text="ENTER LOBBY" />
+            <Button layoutX="224.0" layoutY="194.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="322.0" layoutY="194.0" mnemonicParsing="false" text="Button" />
          </children>
       </Pane>
    </children>

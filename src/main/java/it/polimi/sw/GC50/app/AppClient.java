@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 
 import it.polimi.sw.GC50.view.GUI.GuiView;
+import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
@@ -42,7 +43,11 @@ public class AppClient {
                 setupRMI(view, viewType);
             }
         } else {
-            // Via GUI
+            if (NetController.getController().getNetChoice() == 0) {
+                setupSocket(view, viewType);
+            } else {
+                setupRMI(view, viewType);
+            }
         }
         System.out.println("ciao");
     }
@@ -122,4 +127,5 @@ public class AppClient {
             }
         }).start();
     }
+
 }
