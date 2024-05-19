@@ -1,10 +1,10 @@
 package it.polimi.sw.GC50.net.RMI;
 
-import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.model.lobby.Lobby;
-import it.polimi.sw.GC50.net.util.Request;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -15,20 +15,27 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     private final Lobby lobby;
     private final int port;
     private Registry registry;
-    private GameController match;
 
     public ServerRmiImpl(Lobby lobby, int port) throws RemoteException {
         this.lobby = lobby;
         this.port = port;
+        registry = null;
     }
 
     @Override
-    public void start() throws RemoteException {
+    public void start() {
+        bindToRegistry(this, "server");
+    }
+
+    private void bindToRegistry(Remote remote, String name) {
         try {
-            registry = LocateRegistry.createRegistry(this.port);
-            registry.rebind("server", this);
-            System.out.println("Server RMI ready");
-        } catch (Exception e) {
+            if (registry == null) {
+                registry = LocateRegistry.createRegistry(this.port);
+            }
+            System.out.println("Binding remote " + remote.getClass() + " : " + name);
+            registry.rebind(name, remote);
+            System.out.println("Remote " + remote.getClass() + " : " + name + " bound");
+        } catch (RemoteException e) {
             System.err.println("Error in binding to RMI registry");
         }
     }
@@ -52,37 +59,21 @@ public class ServerRmiImpl extends UnicastRemoteObject implements ServerRmi {
     }
 
     @Override
-    public boolean createMatch(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException {
-        match = lobby.createMatch( clientInterface, gameId, numOfPlayers, nickname);
-        return match != null;
+    public boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException {
+        GameControllerRemote gameController = lobby.createMatch(clientInterface, gameId, numOfPlayers, nickname);
+        if (gameController != null) {
+            bindToRegistry(gameController, gameId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException {
-        match = lobby.joinMatch(clientInterface, gameId, nickname);
-        return match != null;
+        return lobby.joinMatch(clientInterface, gameId, nickname) != null;
     }
 
     //////////////////////////////////////////
     //ACTIVE GAME
     ///////////////////////////////////////////
-    @Override
-    public void message(Request request, Object object, ClientInterface clientInterface) throws RemoteException {
-        switch (request) {
-            case SELECT_STARTER_FACE, SELECT_OBJECTIVE_CARD, PLACE_CARD, DRAW_CARD:
-                match.updateController(request, object, clientInterface);
-                break;
-            case MEX_CHAT:
-                match.updateChat((String) object, clientInterface);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public Object getModel(Request request, Object object, ClientInterface clientInterface) throws RemoteException {
-        System.out.println("getModel");
-        return match.getModel(clientInterface);
-    }
 }

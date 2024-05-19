@@ -60,10 +60,10 @@ public class AppClient {
     private static void setupRMI(View view, ViewType viewType) {
         try {
             System.out.println("Connecting to server...");
-            String name = "rmi://localhost:1099/server";
+            String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
-            client.lobby();
+            client.run();
         } catch (RemoteException e) {
             System.out.println("Error in connection");
         }

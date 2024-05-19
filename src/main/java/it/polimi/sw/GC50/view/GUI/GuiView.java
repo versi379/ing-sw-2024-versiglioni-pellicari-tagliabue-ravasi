@@ -112,4 +112,7 @@ public class GuiView extends Application implements View {
         return null;
     }
 
+    @Override
+    public void printMessage(String message) {}
+
 }

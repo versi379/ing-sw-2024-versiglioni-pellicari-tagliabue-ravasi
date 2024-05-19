@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
@@ -14,7 +14,9 @@ import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -28,7 +30,8 @@ import static it.polimi.sw.GC50.net.util.Request.DRAW_CARD;
 
 public class ClientRmi extends UnicastRemoteObject implements Serializable, ClientInterface {
     private ServerRmi serverRmi;
-    private String servername;
+    private GameControllerRemote gameController;
+    private String serverName;
     //////////////////////////////////////////
     private String nickname;
     private ViewType viewType;
@@ -39,7 +42,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     Boolean myTurn;
     Boolean notify;
     Boolean error;
-    Boolean allPlayerReady;
+    Boolean allPlayersReady;
     Boolean statusGame;
     Boolean notifyUpdateChat;
     ///////////////////////////////////////////
@@ -55,13 +58,13 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private boolean thread2pause;
 
     public ClientRmi(String name) throws RemoteException {
-        this.servername = name;
-        connection();
+        this.serverName = name;
+        connect();
         gameStatus = GameStatus.SETUP;
         myTurn = false;
         notify = false;
         error = false;
-        allPlayerReady = false;
+        allPlayersReady = false;
         statusGame = false;
         notifyUpdateChat = false;
         executorService = Executors.newSingleThreadScheduledExecutor();
@@ -69,45 +72,51 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         lock = new Object();
         lock2 = new ReentrantLock();
     }
-    //////////////////////////////////////////
-    //COMMUNICATION WITH SERVER
-    ///////////////////////////////////////////
-
-    public void connection() throws RemoteException {
-        try {
-            serverRmi = (ServerRmi) Naming.lookup(servername);
-            serverRmi.addClient(this);
-            System.out.println("Connected to server");
-        } catch (Exception e) {
-            System.out.println("Error in connection");
-        }
-    }
 
     public void addView(View view, ViewType viewType) {
         this.view = view;
         this.viewType = viewType;
     }
 
+    // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void connect() {
+        try {
+            serverRmi = (ServerRmi) Naming.lookup(serverName + "/server");
+            serverRmi.addClient(this);
+            System.out.println("Connected to server");
+        } catch (RemoteException | NotBoundException | MalformedURLException e) {
+            System.out.println("Error in connection");
+        }
+    }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void lobby() {
-        thread1 = new Thread(() -> {
-            lobby0();
-        });
+    public void run() {
+        thread1 = new Thread(this::lobby);
         thread1.setPriority(10);
         thread1.start();
     }
 
-    private void lobby0() {
+    public void connectController(String gameId) {
+        try {
+            gameController = (GameControllerRemote) Naming.lookup(serverName + "/" + gameId);
+            System.out.println("Connected to controller");
+        } catch (RemoteException | NotBoundException | MalformedURLException e) {
+            System.out.println("Error in connection to the controller");
+        }
+    }
+
+    private void lobby() {
         while (!setPlayer(view.selectName())) {
             System.out.println("Player name not valid");
         }
 
         while (true) {
             boolean isInGame = false;
+            String gameId = null;
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    if (createGame(view.selectGameName(), view.selectNumberOfPlayers())) {
+                    gameId = view.selectGameName();
+                    if (createGame(gameId, view.selectNumberOfPlayers())) {
                         isInGame = true;
                     } else {
                         System.out.println("Game name not valid");
@@ -123,7 +132,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                         for (String s : freeMatches) {
                             System.out.println(s);
                         }
-                        if (joinGame(view.selectGameName())) {
+
+                        gameId = view.selectGameName();
+                        if (joinGame(gameId)) {
                             isInGame = true;
                         } else {
                             System.out.println("Game name not valid");
@@ -137,6 +148,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 }
             }
             if (isInGame) {
+                connectController(gameId);
                 waitingPhase();
             }
         }
@@ -157,8 +169,10 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     private boolean createGame(String gameId, int numPlayers) {
         try {
-            return serverRmi.createMatch(this, numPlayers, gameId, nickname);
+            return serverRmi.createGame(this, numPlayers, gameId, nickname);
         } catch (RemoteException e) {
+            e.printStackTrace();
+            System.out.println("Errore creazione gioco");
             return false;
         }
     }
@@ -184,7 +198,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         view.waitPlayers();
 
         long startTime = System.currentTimeMillis();
-        while (!allPlayerReady) {
+        while (!allPlayersReady) {
             try {
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - startTime;
@@ -194,23 +208,85 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 }
                 Thread.sleep(11);
             } catch (InterruptedException e) {
-                lobby();
+                return;
             }
         }
-        if (allPlayerReady) {
+        if (allPlayersReady) {
             view.allPlayerReady();
             setupPhase();
         } else {
-            lobby();
+            return;
         }
     }
 
-    //////////////////////////////////////////
-    //ACTIVE GAME
-    ///////////////////////////////////////////
+    // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void setupPhase() {
+        getModel();
+        view.addModel(modelMex);
+        selectObjectiveCard(view.selectObjectiveCard());
+        selectStarterFace(view.selectStarterFace());
+        playingPhase();
+    }
+
+    public void selectObjectiveCard(int index) {
+        try {
+            gameController.updateController(Request.SELECT_OBJECTIVE_CARD, index, this);
+        } catch (RemoteException e) {
+            return;
+        }
+    }
+
+    public void selectStarterFace(Boolean index) {
+        try {
+            gameController.updateController(Request.SELECT_STARTER_FACE, index, this);
+        } catch (RemoteException e) {
+            return;
+        }
+    }
+
+    // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void playingPhase() {
+        while (!statusGame) {
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                System.out.println("AAAAAAAAAAAAAA " + nickname);
+            }
+        }
+        getModel();
+
+        while (statusGame) {
+            if (myTurn) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println("error");
+                }
+                view.updateBoard();
+                if (modelMex.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+                    placeCard(view.selectPlaceCard());
+                } else {
+                    drawCard(view.selectDrawingPosition());
+                }
+                waitNotifyFromServer();
+            } else {
+                waitMyTurn();
+            }
+        }
+        endPhase();
+    }
+
     public void placeCard(PlaceCardMex placeCardMex) {
         try {
-            serverRmi.message(Request.PLACE_CARD, placeCardMex, this);
+            gameController.updateController(Request.PLACE_CARD, placeCardMex, this);
+        } catch (RemoteException e) {
+            return;
+        }
+    }
+
+    public void drawCard(DrawingPosition position) {
+        try {
+            gameController.updateController(DRAW_CARD, position, this);
         } catch (RemoteException e) {
             return;
         }
@@ -218,42 +294,16 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     public void sendMessage(String message) {
         try {
-            serverRmi.message(Request.MEX_CHAT, message, this);
+            gameController.updateChat(message, this);
         } catch (RemoteException e) {
             return;
         }
     }
 
-
-    public void selectStarterFace(Boolean index) {
-        try {
-            serverRmi.message(Request.SELECT_STARTER_FACE, index, this);
-        } catch (RemoteException e) {
-            return;
-        }
-    }
-
-    public void selectObjectiveCard(int index) {
-        try {
-            serverRmi.message(Request.SELECT_OBJECTIVE_CARD, index, this);
-        } catch (RemoteException e) {
-            return;
-        }
-    }
-
-
-    public void drawCard(DrawingPosition position) {
-        try {
-            serverRmi.message(DRAW_CARD, position, this);
-        } catch (RemoteException e) {
-            return;
-        }
-    }
-
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Object getModel() {
         try {
-            modelMex = (ModelMex) serverRmi.getModel(Request.GET_MODEL, null, this);
+            modelMex = (ModelMex) gameController.getModel(this);
         } catch (RemoteException e) {
 
         }
@@ -279,12 +329,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private void switchMex(Message mex) {
         switch (mex.getRequest()) {
 
-            case NOTIFY_GAME_SETUP: {
-                allPlayerReady = true;
-                break;
+            case NOTIFY_GAME_SETUP -> {
+                allPlayersReady = true;
             }
 
-            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW: {
+            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW -> {
                 synchronized (lock2) {
                     while (thread2pause) {
                         try {
@@ -298,33 +347,32 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     error = false;
                     lock.notifyAll();
                 }
-                break;
-            }
-            case NOTIFY_PLAYER_JOINED_GAME: {
-                break;
-            }
-            case NOTIFY_PLAYER_LEFT_GAME: {
-                break;
-            }
-            case NOTIFY_PLAYER_READY: {
-                break;
             }
 
-            case NOTIFY_GAME_STARTED: {
+            case NOTIFY_PLAYER_JOINED_GAME -> {
+            }
+
+            case NOTIFY_PLAYER_LEFT_GAME -> {
+            }
+
+            case NOTIFY_PLAYER_READY -> {
+            }
+
+            case NOTIFY_GAME_STARTED -> {
                 gameStatus = GameStatus.PLAYING;
                 statusGame = true;
                 System.out.println("Game started");
-                break;
             }
-            case NOTIFY_CHAT_MESSAGE: {
+
+            case NOTIFY_CHAT_MESSAGE -> {
                 notifyUpdateChat = true;
-                break;
             }
-            case NOTIFY_ALL_PLAYER_JOINED_THE_GAME: {
-                break;
+
+            case NOTIFY_ALL_PLAYER_JOINED_THE_GAME -> {
             }
+
             case NOTIFY_CARD_NOT_FOUND, NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
-                    NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
+                    NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE -> {
                 if (mex.getObject().equals(nickname)) {
                     synchronized (lock2) {
                         while (thread2pause) {
@@ -341,15 +389,13 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                     }
 
                 }
-                break;
-            }
-            case GET_CHAT_MODEL_RESPONSE: {
-                System.out.println("chat");
-                break;
             }
 
-            default: {
-                break;
+            case GET_CHAT_MODEL_RESPONSE -> {
+                System.out.println("chat");
+            }
+
+            default -> {
             }
 
         }
@@ -383,57 +429,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     //ACTIVE_GAME_CONTROLLER
     ///////////////////////////////////////////
 
-
-    private void setupPhase() {
-        //lock = new Object();
-        getModel();
-        view.addModel(modelMex);
-        selectObjectiveCard(view.selectObjectiveCard());
-        selectStarterFace(view.selectStarterFace());
-        playingPhase();
-    }
-
-    private void playingPhase() {
-        while (!statusGame) {
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
-
-            }
-        }
-        getModel();
-
-        while (statusGame) {
-
-            if (myTurn) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    System.out.println("error");
-                }
-
-                view.updateBoard();
-                if (modelMex.getPlayingPhase().equals(PlayingPhase.PLACING)) {
-                    try {
-                        serverRmi.message(Request.PLACE_CARD, view.selectPlaceCard(), this);
-                    } catch (RemoteException e) {
-                        System.out.println("error");
-                    }
-                } else {
-                    try {
-                        serverRmi.message(DRAW_CARD, view.selectDrawingPosition(), this);
-                    } catch (RemoteException e) {
-                        System.out.println("error");
-                    }
-                }
-
-                waitNotifyFromServer();
-            } else {
-                waitMyTurn();
-            }
-        }
-        endPhase();
-    }
 
     private void waitNotifyFromServer() {
         synchronized (lock2) {

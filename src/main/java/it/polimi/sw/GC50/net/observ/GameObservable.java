@@ -27,7 +27,7 @@ public class GameObservable {
      *
      * @throws NullPointerException if the parameter o is null.
      */
-    public synchronized void addGameObserver(GameObserver o) {
+    public synchronized void addObserver(GameObserver o) {
         if (o == null)
             throw new NullPointerException();
         if (!obs.contains(o)) {
@@ -41,7 +41,7 @@ public class GameObservable {
      *
      * @param o the observer to be deleted.
      */
-    public synchronized void removeGameObserver(GameObserver o) {
+    public synchronized void removeObserver(GameObserver o) {
         obs.remove(o);
     }
 

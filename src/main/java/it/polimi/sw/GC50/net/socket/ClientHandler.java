@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.net.socket;
 
 
-import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.*;
@@ -25,7 +25,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     //////////////////////////////////////////
     private final Lobby lobby;
-    private GameController match;
+    private GameControllerRemote match;
     private String nickname;
     //////////////////////////////////////////
     private final ExecutorService executorService;
@@ -53,7 +53,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 try {
                     Object object = input.readObject();
                     Message.MessageClientToServer message = (Message.MessageClientToServer) object;
-                    switchmex(message);
+                    switchMex(message);
                 } catch (IOException | ClassNotFoundException e) {
 
                 }
@@ -61,7 +61,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
-    private synchronized void switchmex(Message.MessageClientToServer message) {
+    private synchronized void switchMex(Message.MessageClientToServer message) throws RemoteException {
         //System.out.println(message.getRequest());
 
         switch (message.getRequest()) {

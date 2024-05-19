@@ -9,9 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- *
- */
+/*
 public class LobbyInutile {
     private final Set<Player> players;
     private final Map<Game, GameController> gameControllers;
@@ -58,3 +56,5 @@ public class LobbyInutile {
         return gameControllers.get(game);
     }
 }
+
+ */

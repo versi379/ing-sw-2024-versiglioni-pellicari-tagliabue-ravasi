@@ -23,4 +23,5 @@ public interface View extends Serializable {
     void updateBoard();
     PlaceCardMex selectPlaceCard();
     DrawingPosition selectDrawingPosition();
+    void printMessage(String message);
 }

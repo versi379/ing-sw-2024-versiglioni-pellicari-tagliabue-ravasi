@@ -1,8 +1,10 @@
 package it.polimi.sw.GC50.model.lobby;
 
 import it.polimi.sw.GC50.controller.GameController;
+import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +58,7 @@ public class Lobby {
      * this method is called when a client wants to create a match
      * @
      */
-    public synchronized GameController createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) {
+    public synchronized GameController createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
         if (isPlayerPresent(client) && !isGamePresent(gameId)) {
             matches.add(new GameController(gameId, numOfPlayer, 20, client, nickname));
             System.out.println(gameId + " Match created");

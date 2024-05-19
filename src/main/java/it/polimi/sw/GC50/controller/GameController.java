@@ -11,6 +11,8 @@ import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,15 +21,15 @@ import java.util.Map;
 /**
  *
  */
-public class GameController {
+public class GameController extends UnicastRemoteObject implements GameControllerRemote {
     private final Game game;
     private final Map<ClientInterface, Player> playerMap;
 
-    public GameController(String gameId, int numPlayers, int endScore, ClientInterface clientInterface, String nickname) {
+    public GameController(String gameId, int numPlayers, int endScore, ClientInterface clientInterface, String nickname) throws RemoteException {
         playerMap = new HashMap<>();
         Player creator = new Player(nickname);
         game = new Game(gameId, numPlayers, endScore, creator);
-        game.addGameObserver(clientInterface);
+        game.addObserver(clientInterface);
         playerMap.put(clientInterface, creator);
     }
 
@@ -44,7 +46,7 @@ public class GameController {
     public boolean addPlayer(ClientInterface clientInterface, String nickname) {
         if (isFree()) {
             Player player = new Player(nickname);
-            game.addGameObserver(clientInterface);
+            game.addObserver(clientInterface);
             game.addPlayer(player);
             playerMap.put(clientInterface, player);
             return true;
@@ -56,16 +58,16 @@ public class GameController {
         if (playerMap.containsKey(clientInterface)) {
             Player player = playerMap.get(clientInterface);
             game.removePlayer(player);
-            game.removeGameObserver(clientInterface);
+            game.removeObserver(clientInterface);
         }
     }
 
     // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized public void updateController(Request request, Object update, ClientInterface clientInterface) {
+    public void updateController(Request request, Object update, ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
-        System.out.println(request.toString() + " from player " + playerMap.get(clientInterface));
+        System.out.println(request + " from player " + playerMap.get(clientInterface));
         Player player = playerMap.get(clientInterface);
         switch (request) {
             case SELECT_STARTER_FACE -> {
@@ -85,7 +87,7 @@ public class GameController {
         }
     }
 
-    synchronized public void updateChat(String message, ClientInterface clientInterface) {
+    public void updateChat(String message, ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
@@ -177,7 +179,7 @@ public class GameController {
     }
 
     // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized public Object getModel(ClientInterface clientInterface) {
+    synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return null;
         }
@@ -197,8 +199,9 @@ public class GameController {
         }
 
         ModelMex modelMex = new ModelMex(game.getPlayerData(player), player, game.getChat(),
-                game.getCurrentPlayer().getNickname(), name, board, color, point, game.getDecksTop(),
-                game.getCurrentPhase(), game.getStatus());
+                game.getCurrentPlayer().getNickname(), name,
+                board, color, point,
+                game.getDecksTop(), game.getCurrentPhase(), game.getStatus());
         return modelMex;
     }
 
@@ -227,7 +230,7 @@ public class GameController {
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public GameController(Game game) {
+    public GameController(Game game) throws  RemoteException{
         this.game = game;
         playerMap = new HashMap<>();
     }
