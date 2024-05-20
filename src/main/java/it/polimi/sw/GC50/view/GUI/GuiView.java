@@ -146,6 +146,16 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void printCommonObjectives() {
+
+    }
+
+    @Override
+    public void playerReady(String nickname) {
+
+    }
+
+    @Override
     public void error() {
 
     }

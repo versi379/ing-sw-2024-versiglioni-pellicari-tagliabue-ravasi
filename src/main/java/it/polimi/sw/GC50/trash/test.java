@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view.TUI;
+package it.polimi.sw.GC50.trash;
 
 import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.PlayerData;
 import it.polimi.sw.GC50.model.lobby.Player;
+import it.polimi.sw.GC50.trash.PrintGameArea;
 
 public class test {
     public static void main(String[] args) {

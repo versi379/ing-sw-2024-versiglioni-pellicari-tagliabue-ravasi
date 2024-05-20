@@ -62,9 +62,34 @@ public class TuiView implements View {
     }
 
     @Override
+    public void waitPlayers() {
+        System.out.println();
+        System.out.println("In attesa che gli altri giocatori entrino in partita...");
+    }
+
+    @Override
+    public void setup() {
+        System.out.println();
+        System.out.println("Tutti i giocatori sono entrati, la partita sta iniziando");
+        printCommonObjectives();
+    }
+
+    @Override
+    public void printCommonObjectives() {
+        System.out.println();
+        System.out.println("Carte obiettivo comuni:");
+        List<ObjectiveCard> commonObjectives = gameView.getCommonObjectives();
+        for (int i = 0; i < commonObjectives.size(); i++) {
+            System.out.println();
+            System.out.println((commonObjectives.get(i).toStringTUI()));
+        }
+    }
+
+    @Override
     public int selectObjectiveCard() {
         System.out.println();
         System.out.println("Selezione della carta obiettivo segreta");
+        System.out.println();
         printSecretObjectiveChoice();
 
         return readInt("Inserire l'indice della carta obiettivo con cui si vuole giocare:",
@@ -77,13 +102,13 @@ public class TuiView implements View {
             System.out.println();
             System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
         }
-        System.out.println();
     }
 
     @Override
     public boolean selectStarterFace() {
         System.out.println();
         System.out.println("Selezione della faccia della carta iniziale");
+        System.out.println();
         printStarterCardChoice(gameView.getStarterCard());
 
         return readInt("Inserire l'indice della faccia con cui si vuole giocare:",
@@ -113,6 +138,12 @@ public class TuiView implements View {
             System.out.println();
         }
         System.out.println();
+    }
+
+    @Override
+    public void playerReady(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " pronto");
     }
 
     @Override
@@ -160,16 +191,6 @@ public class TuiView implements View {
             scores.put(nickname, gameView.getPlayerArea(nickname).getTotalScore());
         }
         ModelPrinter.printScores(scores);
-    }
-
-    @Override
-    public void waitPlayers() {
-        System.out.println("In attesa che gli altri giocatori entrino in partita...");
-    }
-
-    @Override
-    public void setup() {
-        System.out.println("Tutti i giocatori sono entrati, la partita sta iniziando");
     }
 
     @Override

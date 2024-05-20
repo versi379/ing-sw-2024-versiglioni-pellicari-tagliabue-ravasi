@@ -16,6 +16,7 @@ public class GameView implements Serializable {
     private final GameStatus gameStatus;
     private final PlayingPhase playingPhase;
     private final String currentPlayer;
+    private final List<ObjectiveCard> commonObjectives;
     private final List<PlayableCard> decks;
     private final String playerNickname;
     private final List<PhysicalCard> hand;
@@ -28,6 +29,7 @@ public class GameView implements Serializable {
         gameStatus = game.getStatus();
         playingPhase = game.getCurrentPhase();
         currentPlayer = game.getCurrentPlayer().getNickname();
+        commonObjectives = new ArrayList<>(game.getCommonObjectives());
         decks = new ArrayList<>(Arrays.asList(game.getDecksTop()));
 
         playerNickname = player.getNickname();
@@ -55,6 +57,10 @@ public class GameView implements Serializable {
 
     public String getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public List<ObjectiveCard> getCommonObjectives() {
+        return new ArrayList<>(commonObjectives);
     }
 
     public List<PlayableCard> getDecks() {

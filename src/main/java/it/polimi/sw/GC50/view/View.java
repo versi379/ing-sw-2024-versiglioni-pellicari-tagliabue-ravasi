@@ -30,6 +30,7 @@ public interface View extends Serializable {
     void playerJoined(String nickname);
     void playerLeft(String nickname);
     void endSession();
-
+    void printCommonObjectives();
+    void playerReady(String nickname);
     void error();
 }
