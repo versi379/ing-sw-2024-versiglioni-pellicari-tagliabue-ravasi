@@ -81,6 +81,10 @@ public class GameView implements Serializable {
         return starterCard;
     }
 
+    public List<String> getPlayersList() {
+        return new ArrayList<>(playerAreas.keySet());
+    }
+
     public PlayerDataView getPlayerArea(String nickname) {
         return playerAreas.get(nickname);
     }

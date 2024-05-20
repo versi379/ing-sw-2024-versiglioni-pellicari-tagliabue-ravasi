@@ -88,7 +88,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     public synchronized void run() {
         try {
             lobby();
-            System.out.println("Session ended");
+            view.endSession();
         } catch (RemoteException e) {
             System.out.println("Connection error");
         }
@@ -225,13 +225,38 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     private void playTurn() throws RemoteException {
         getModel();
-        view.updateBoard();
-        if (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+
+        do {
+            if (error) {
+                view.error();
+                error = false;
+            }
             placeCard(view.selectPlaceCard());
-        } else {
+            while (playingPhase.equals(PlayingPhase.PLACING) && !error) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    System.out.println("Interruption error");
+                    return;
+                }
+            }
+        } while (playingPhase.equals(PlayingPhase.PLACING));
+
+        do {
+            if (error) {
+                view.error();
+                error = false;
+            }
             drawCard(view.selectDrawingPosition());
-            myTurn = false;
-        }
+            while (playingPhase.equals(PlayingPhase.DRAWING) && !error) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    System.out.println("Interruption error");
+                    return;
+                }
+            }
+        } while (playingPhase.equals(PlayingPhase.DRAWING));
     }
 
     private void placeCard(PlaceCardMex placeCardMex) throws RemoteException {
@@ -257,13 +282,13 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             gameView = (GameView) gameController.getModel(this);
             view.addModel(gameView);
         } catch (RemoteException e) {
-            System.out.println("errore pazzerello");
+            System.out.println("Error in fetching model from server");
         }
     }
 
     //////////////////////////////////////////
-    //OBSERVER
-    ///////////////////////////////////////////
+//OBSERVER
+///////////////////////////////////////////
     @Override
     public void ping() throws RemoteException {
     }
@@ -283,11 +308,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         getModel();
         switch (request) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
-                view.printMessage("Giocatore " + arg + " è entrato in partita");
+                view.playerJoined((String) arg);
             }
 
             case NOTIFY_PLAYER_LEFT_GAME -> {
-                view.printMessage("Giocatore " + arg + " ha abbandonato la partita");
+                view.playerLeft((String) arg);
             }
 
             case NOTIFY_GAME_SETUP -> {
@@ -300,6 +325,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
             case NOTIFY_GAME_STARTED -> {
                 gameStatus = GameStatus.PLAYING;
+                playingPhase = PlayingPhase.PLACING;
                 myTurn = arg.equals(nickname);
             }
 
@@ -309,11 +335,14 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
             case NOTIFY_CARD_DRAWN -> {
-                playingPhase = PlayingPhase.PLACING;
+                myTurn = false;
+                view.printDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {
+                playingPhase = PlayingPhase.PLACING;
                 myTurn = arg.equals(nickname);
+                view.printDecks();
             }
 
             case NOTIFY_GAME_ENDED -> {
@@ -340,7 +369,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     public Object getModel() {
         try {
@@ -492,7 +521,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
      */
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     @Override
     public String getNickname() {

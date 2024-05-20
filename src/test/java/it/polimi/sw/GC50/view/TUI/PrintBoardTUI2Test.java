@@ -3,6 +3,7 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.lobby.Player;
+import it.polimi.sw.GC50.trash.PrintBoardTUI2;
 import org.junit.jupiter.api.Test;
 
 class PrintBoardTUI2Test {

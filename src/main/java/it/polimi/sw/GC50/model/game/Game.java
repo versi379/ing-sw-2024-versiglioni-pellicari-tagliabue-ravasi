@@ -415,7 +415,7 @@ public class Game extends GameObservable implements Serializable, GameInterface 
             currentIndex = (currentIndex + 1) % playerList.size();
             currentPhase = PlayingPhase.PLACING;
             setChanged();
-            notifyObservers(Request.NOTIFY_NEXT_TURN, playerList.get(currentIndex).getNickname());
+            notifyObservers(Request.NOTIFY_NEXT_TURN, getCurrentPlayer().getNickname());
         }
     }
 

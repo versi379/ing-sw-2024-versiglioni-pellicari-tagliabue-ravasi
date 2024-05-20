@@ -25,4 +25,11 @@ public interface View extends Serializable {
     DrawingPosition selectDrawingPosition();
     void printMessage(String message);
     void printPlayerArea(String nickname);
+    void printDecks();
+    void printScores();
+    void playerJoined(String nickname);
+    void playerLeft(String nickname);
+    void endSession();
+
+    void error();
 }

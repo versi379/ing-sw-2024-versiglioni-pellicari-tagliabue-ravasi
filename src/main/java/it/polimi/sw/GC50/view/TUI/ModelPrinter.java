@@ -3,14 +3,15 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
+import it.polimi.sw.GC50.trash.PrintBoardTUI2;
 import it.polimi.sw.GC50.view.PlayerDataView;
 
 import java.util.List;
+import java.util.Map;
 
-public class ModelPrinter {
+public abstract class ModelPrinter {
 
     public static void printHand(List<PhysicalCard> hand) {
-
         System.out.println();
         System.out.println("Carte in mano:");
         System.out.println();
@@ -55,6 +56,7 @@ public class ModelPrinter {
         System.out.println();
 
         String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
+
         decksMatrix[0][11] = "   Riso";
         decksMatrix[1][11] = "rsa:   ";
         decksMatrix[0][3] = "     Or";
@@ -135,7 +137,15 @@ public class ModelPrinter {
         printMatrix(boardMatrix);
     }
 
-    public void printScores() {}
+    public static void printScores(Map<String, Integer> scores) {
+        System.out.println();
+        System.out.println("Punteggi:");
+        System.out.println();
+
+        for (String nickname : scores.keySet()) {
+            System.out.println("Giocatore " + nickname + ": " + scores.get(nickname));
+        }
+    }
 
     private static void printMatrix(String[][] stringMatrix) {
         for (int i = stringMatrix[0].length - 1; i >= 0; i--) {

@@ -114,9 +114,39 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void printMessage(String message) {}
+    public void printMessage(String message) {
+    }
 
     @Override
-    public  void printPlayerArea(String nickname) {}
+    public void printPlayerArea(String nickname) {
+    }
 
+    @Override
+    public void printDecks() {
+
+    }
+
+    @Override
+    public void printScores() {
+    }
+
+    @Override
+    public void playerJoined(String nickname) {
+
+    }
+
+    @Override
+    public void playerLeft(String nickname) {
+
+    }
+
+    @Override
+    public void endSession() {
+
+    }
+
+    @Override
+    public void error() {
+
+    }
 }

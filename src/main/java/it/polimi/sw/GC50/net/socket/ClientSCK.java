@@ -135,7 +135,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
 
-            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAWN: {
+            case NOTIFY_CARD_PLACED, NOTIFY_CARD_DRAWN: {
                 notify = true;
                 break;
             }

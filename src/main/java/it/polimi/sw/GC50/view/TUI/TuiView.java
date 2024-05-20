@@ -8,9 +8,7 @@ import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TuiView implements View {
     GameView gameView;
@@ -21,36 +19,55 @@ public class TuiView implements View {
     public void start() {
     }
 
+    public void endSession() {
+        System.out.println();
+        System.out.println("Sessione terminata");
+    }
+
     @Override
     public String selectName() {
-        return readString("Insert your nickname");
+        return readString("Inserire il nome del giocatore:");
     }
 
     @Override
     public int selectJoinOrCreate() {
-        return readInt("Do you want to join or create a game?" +
-                "\n1) create a game" +
-                "\n2) join a game" +
-                "\n3) quit", 1, 3);
+        return readInt("Vuoi creare una nuova partita o entrare in una esistente?" +
+                "\n1) crea una partita" +
+                "\n2) entra in una partita" +
+                "\n3) abbandona",
+                1, 3);
     }
 
     @Override
     public String selectGameName() {
-        return readString("Insert the game name");
+        return readString("Inserire il nome della partita:");
     }
 
     @Override
     public int selectNumberOfPlayers() {
-        return readInt("Insert the number of players", 2, 3);
+        return readInt("Inserire il numero di giocatori:",
+                2, 3);
+    }
+
+    @Override
+    public void playerJoined(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " è entrato in partita");
+    }
+
+    @Override
+    public void playerLeft(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " ha abbandonato la partita");
     }
 
     @Override
     public int selectObjectiveCard() {
         System.out.println();
-        System.out.println("Select the objective card you want to play with");
+        System.out.println("Selezione della carta obiettivo segreta");
         printSecretObjectiveChoice();
 
-        return readInt("Insert the number of the objective card you want to play with",
+        return readInt("Inserire l'indice della carta obiettivo con cui si vuole giocare:",
                 1, gameView.getSecreteObjectivesList().size()) - 1;
     }
 
@@ -66,17 +83,18 @@ public class TuiView implements View {
     @Override
     public boolean selectStarterFace() {
         System.out.println();
-        System.out.println("Select the face of the Starter card");
+        System.out.println("Selezione della faccia della carta iniziale");
         printStarterCardChoice(gameView.getStarterCard());
 
-        return readInt("Insert the index of the face you want to play with", 1, 2) == 1;
+        return readInt("Inserire l'indice della faccia con cui si vuole giocare:",
+                1, 2) == 1;
     }
 
     private void printStarterCardChoice(PhysicalCard card) {
         String[][] cardTUI;
 
         System.out.println();
-        System.out.println("1) Front");
+        System.out.println("1) Fronte");
         cardTUI = card.getFront().toStringTUI();
         for (int i = cardTUI[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < cardTUI.length; j++) {
@@ -86,7 +104,7 @@ public class TuiView implements View {
         }
 
         System.out.println();
-        System.out.println("2) Back");
+        System.out.println("2) Retro");
         cardTUI = card.getBack().toStringTUI();
         for (int i = cardTUI[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < cardTUI.length; j++) {
@@ -100,15 +118,19 @@ public class TuiView implements View {
     @Override
     public PlaceCardMex selectPlaceCard() {
         System.out.println();
+        System.out.println("Piazzamento di una carta");
         printPlayerArea(gameView.getPlayerNickname());
         ModelPrinter.printHand(gameView.getHand());
         return new PlaceCardMex(
-                readInt("Select the card you want to place",
+                readInt("Selezionare l'indice della carta da piazzare:",
                         1, gameView.getHand().size()) - 1,
-                readInt("Select the face of the card", 1, 2) == 1,
-                readInt("Select the x coordinate", 1, gameView.getPlayerArea(gameView.getPlayerNickname())
+                readInt("Selezionare la faccia della carta:",
+                        1, 2) == 1,
+                readInt("Inserire il valore della coordinata x:",
+                        1, gameView.getPlayerArea(gameView.getPlayerNickname())
                         .getCardsMatrix().length()) - 1,
-                readInt("Select the y coordinate", 1,gameView.getPlayerArea(gameView.getPlayerNickname())
+                readInt("Inserire il valore della coordinata y:",
+                        1,gameView.getPlayerArea(gameView.getPlayerNickname())
                         .getCardsMatrix().length()) - 1);
     }
 
@@ -119,19 +141,35 @@ public class TuiView implements View {
 
     @Override
     public DrawingPosition selectDrawingPosition() {
-        ModelPrinter.printDecks(gameView.getDecks());
-        return DrawingPosition.values()[readInt("Select the card you want to draw",
+        System.out.println();
+        System.out.println("Pescaggio di una carta");
+        printDecks();
+        return DrawingPosition.values()[readInt("Selezionare la carta da pescare:",
                 1, DrawingPosition.values().length) - 1];
     }
 
     @Override
+    public void printDecks() {
+        ModelPrinter.printDecks(gameView.getDecks());
+    }
+
+    @Override
+    public void printScores() {
+        Map<String, Integer> scores = new HashMap<>();
+        for (String nickname : gameView.getPlayersList()) {
+            scores.put(nickname, gameView.getPlayerArea(nickname).getTotalScore());
+        }
+        ModelPrinter.printScores(scores);
+    }
+
+    @Override
     public void waitPlayers() {
-        System.out.println("Waiting for other players to join the game");
+        System.out.println("In attesa che gli altri giocatori entrino in partita...");
     }
 
     @Override
     public void setup() {
-        System.out.println("All players are ready, the game is starting");
+        System.out.println("Tutti i giocatori sono entrati, la partita sta iniziando");
     }
 
     @Override
@@ -150,6 +188,12 @@ public class TuiView implements View {
 
     @Override
     public void updateBoard() {
+    }
+
+    @Override
+    public void error() {
+        System.out.println();
+        System.out.println("Errore");
     }
 
     private static String readString(String message) {
