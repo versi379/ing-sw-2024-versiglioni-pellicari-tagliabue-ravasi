@@ -332,6 +332,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             case NOTIFY_CARD_PLACED -> {
                 playingPhase = PlayingPhase.DRAWING;
                 view.printPlayerArea((String) arg);
+                view.printScores();
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -342,7 +343,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             case NOTIFY_NEXT_TURN -> {
                 playingPhase = PlayingPhase.PLACING;
                 myTurn = arg.equals(nickname);
-                view.printDecks();
             }
 
             case NOTIFY_GAME_ENDED -> {
