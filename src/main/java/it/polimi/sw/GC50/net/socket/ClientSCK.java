@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.net.socket;
 
+import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
@@ -7,7 +8,7 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.ViewType;
+
 import it.polimi.sw.GC50.view.View;
 
 import java.io.IOException;
@@ -16,12 +17,13 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ClientSCK implements Runnable {
     private View view;
-    private ViewType viewType;
     private final int port;
     private final String address;
     private final ObjectInputStream input;
@@ -33,20 +35,22 @@ public class ClientSCK implements Runnable {
     private String nickName;
     private ModelMex modelMex;
     ///////////////////////////////////////////
-    private boolean notyfyUpdateModel;
-    private boolean notifyUpdateChat;
-    private boolean notify;
     private boolean alive;
     private boolean allPlayerReady;
     private boolean myTurn;
     private boolean error;
-    private Boolean statusGame;
+    private boolean statusGame;
     ///////////////////////////////////////////
     //Thread
     Thread thread2;
     Thread thread1;
+    private Thread thread3;
+    private Thread thread4;
     private final ExecutorService executorService;
-
+    /////////////////////////////////////////////////////
+    private Object[] lock;
+    private Queue<Message> queue;
+    private boolean[] condition;
 
     public ClientSCK(int port, String address) throws IOException {
         this.port = port;
@@ -55,20 +59,32 @@ public class ClientSCK implements Runnable {
         socket.connect(new InetSocketAddress(address, port), 1000);
         this.output = new ObjectOutputStream(socket.getOutputStream());
         this.input = new ObjectInputStream(socket.getInputStream());
-        view = null;
+
+        System.out.println("connected to the server");
+        this.view = null;
         this.myTurn = false;
         this.alive = true;
-        this.notify = false;
         this.matchName = null;
         this.nickName = null;
         this.freeMatch = new ArrayList<>();
-        this.notifyUpdateChat = false;
-        this.notyfyUpdateModel = false;
-        this.allPlayerReady = false;
+
+
         this.gameStatus = GameStatus.SETUP;
-        this.statusGame = false;
+
         this.executorService = Executors.newSingleThreadScheduledExecutor();
+
+        this.queue = new LinkedList<>();
+
+        this.condition = new boolean[6];
+        this.lock = new Object[6];
+        for (int i = 0; i < 6; i++) {
+            this.condition[i] = true;
+            this.lock[i] = new Object();
+        }
         this.error = false;
+        this.statusGame = false;
+        this.allPlayerReady = false;
+
     }
 
     //////////////////////////////////////////
@@ -82,7 +98,10 @@ public class ClientSCK implements Runnable {
                 try {
                     Object object = input.readObject();
                     Message message = (Message) object;
-                    switchmex(message);
+                    queue.add(message);
+                    notifyMessageFromServer();
+                    //System.out.println((boolean) message.getObject());
+
 
                 } catch (IOException | ClassNotFoundException e) {
 
@@ -98,21 +117,31 @@ public class ClientSCK implements Runnable {
             output.writeObject(messageout);
             output.flush();
             output.reset();
-
         } catch (IOException e) {
 
         }
     }
 
-    private synchronized void switchmex(Message mex) {
+    private void switchmex() {
+        while (!queue.isEmpty()) {
+            switchmex(queue.poll());
+        }
+    }
 
+    private void switchmex(Message mex) {
         switch (mex.getRequest()) {
             case SET_NAME_RESPONSE: {
                 boolean response = (boolean) mex.getObject();
                 if (!response) {
                     nickName = null;
                 }
-                notify = true;
+                System.out.println("name setted");
+                notifyFirsPhase();
+                break;
+            }
+            case GET_FREE_MATCH_RESPONSE: {
+                freeMatch = (ArrayList<String>) mex.getObject();
+                notifyFirsPhase();
                 break;
             }
             case CREATE_GAME_RESPONSE, ENTER_GAME_RESPONSE: {
@@ -120,21 +149,20 @@ public class ClientSCK implements Runnable {
                 if (!response) {
                     this.matchName = null;
                 }
-                notify = true;
-                break;
-            }
-            case GET_FREE_MATCH_RESPONSE: {
-                freeMatch = (ArrayList<String>) mex.getObject();
-                notify = true;
+                notifyFirsPhase();
                 break;
             }
             case NOTIFY_GAME_SETUP: {
                 allPlayerReady = true;
+                notifyMidPhase();
                 break;
             }
 
             case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW: {
-                notify = true;
+                if (GameStatus.PLAYING.equals(gameStatus)) {
+                    error = false;
+                    notifyMidPhase();
+                }
                 break;
             }
             case NOTIFY_PLAYER_JOINED_GAME: {
@@ -150,10 +178,21 @@ public class ClientSCK implements Runnable {
             case NOTIFY_GAME_STARTED: {
                 this.gameStatus = GameStatus.PLAYING;
                 this.statusGame = true;
+                error = false;
+                notifyMidPhase();
                 break;
             }
             case NOTIFY_CHAT_MESSAGE: {
-                notifyUpdateChat = true;
+                if (!view.getClass().getSimpleName().equals("TuiView")) {
+                    view.updateChat((Chat) mex.getObject());
+                }
+                break;
+
+            }
+            case NOTIFY_CHOOSE_OBJECTIVE, NOTIFY_CHOOSE_STARTER_FACE: {
+                if (mex.getObject().equals(nickName)) {
+                    notifyFirsPhase();
+                }
                 break;
             }
             case NOTIFY_ALL_PLAYER_JOINED_THE_GAME: {
@@ -163,17 +202,13 @@ public class ClientSCK implements Runnable {
                  NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
                 if (mex.getObject().equals(nickName)) {
                     error = true;
-                    notify = true;
+                    notifyMidPhase();
                 }
                 break;
             }
             case GET_MODEL_RESPONSE: {
-                modelMex = (ModelMex) mex.getObject();
-                notyfyUpdateModel = true;
-                break;
-            }
-            case GET_CHAT_MODEL_RESPONSE: {
-                System.out.println("chat");
+                this.modelMex = (ModelMex) mex.getObject();
+                notifyModelChangedFromServer();
                 break;
             }
 
@@ -186,16 +221,74 @@ public class ClientSCK implements Runnable {
     }
 
 
-    private void waitNoifyfromServer() {
-        notify = false;
-        while (!notify) {
-            try {
-                Thread.sleep(12);
-            } catch (InterruptedException e) {
-
+    private void lock(int index) {
+        if (index > this.condition.length) {
+            return;
+        }
+        synchronized (this.lock[index]) {
+            while (this.condition[index]) {
+                try {
+                    this.lock[index].wait();
+                } catch (InterruptedException e) {
+                    System.out.println("error");
+                }
             }
         }
+        condition[index] = true;
+    }
 
+    private void unlock(int index) {
+        if (index > this.condition.length) {
+            return;
+        }
+        synchronized (this.lock[index]) {
+            this.condition[index] = false;
+            this.lock[index].notifyAll();
+        }
+
+    }
+
+    private void notifyMessageFromServer() {
+        unlock(0);
+    }
+
+    private void waitMessageFromServer() {
+        lock(0);
+    }
+
+    private void notifyChatUpdate() {
+        unlock(1);
+
+    }
+
+    private void waitChatUpdate() {
+        lock(1);
+    }
+
+    private void notifyModelChangedFromServer() {
+        unlock(2);
+    }
+
+    private void waitModelChangedFromServer() {
+        lock(2);
+    }
+
+    private void notifyMidPhase() {
+        unlock(3);
+
+    }
+
+    private void waitMidPhase() {
+        lock(3);
+    }
+
+    private void notifyFirsPhase() {
+        unlock(4);
+
+    }
+
+    private void waitFirstPhase() {
+        lock(4);
     }
 
 
@@ -204,15 +297,14 @@ public class ClientSCK implements Runnable {
 ///////////////////////////////////////////
 
 
-    public void addView(View view, ViewType viewType) {
+    public void addView(View view) {
         this.view = view;
-        this.viewType = viewType;
     }
 
     private String createGame(String matchName, int numberOfPlayer) {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
-        waitNoifyfromServer();
+        waitFirstPhase();
         return this.matchName;
 
     }
@@ -220,20 +312,20 @@ public class ClientSCK implements Runnable {
     private String enterGame(String matchName) {
         this.matchName = matchName;
         setMessageout(new Message.MessageClientToServer(Request.ENTER_GAME, null, matchName, nickName));
-        waitNoifyfromServer();
+        waitFirstPhase();
         return this.matchName;
     }
 
     private String setName(String name) {
         this.nickName = name;
         setMessageout(new Message.MessageClientToServer(Request.SET_NAME, null, null, name));
-        waitNoifyfromServer();
+        waitFirstPhase();
         return this.nickName;
     }
 
     private ArrayList<String> getFreeMatch() {
         setMessageout(new Message.MessageClientToServer(Request.GET_FREE_MATCH, null, null, null));
-        waitNoifyfromServer();
+        waitFirstPhase();
         return this.freeMatch;
     }
 
@@ -251,8 +343,13 @@ public class ClientSCK implements Runnable {
             return;
         }
         setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, placeCardMex, this.matchName, this.nickName));
+        waitMidPhase();
+        if (!error) {
+            getModel();
+            view.updateBoard();
+        }
+        error = false;
     }
-
 
     private void sendMessage(String message) {
         if (this.matchName == null) {
@@ -262,10 +359,10 @@ public class ClientSCK implements Runnable {
             return;
         }
         setMessageout(new Message.MessageClientToServer(Request.MEX_CHAT, message, this.matchName, this.nickName));
+
     }
 
-
-    private void selectStarterFace(Boolean index) {
+    private void selectStarterFace(boolean index) {
         if (this.matchName == null) {
             return;
         }
@@ -273,6 +370,7 @@ public class ClientSCK implements Runnable {
             return;
         }
         setMessageout(new Message.MessageClientToServer(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName));
+        waitFirstPhase();
     }
 
 
@@ -284,7 +382,7 @@ public class ClientSCK implements Runnable {
             return;
         }
         setMessageout(new Message.MessageClientToServer(Request.SELECT_OBJECTIVE_CARD, index, this.matchName, this.nickName));
-
+        waitFirstPhase();
     }
 
 
@@ -296,13 +394,18 @@ public class ClientSCK implements Runnable {
             return;
         }
         setMessageout(new Message.MessageClientToServer(Request.DRAW_CARD, position, this.matchName, this.nickName));
+        waitMidPhase();
+        if (!error) {
+            getModel();
+            view.updateBoard();
+        }
+        error = false;
     }
 
 
     private Object getModel() {
-
         setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
-        waitNotifyModelChangedFromServer();
+        waitModelChangedFromServer();
         view.addModel(this.modelMex);
 
         if (this.modelMex.getCurrentPlayer().equals(this.nickName)) {
@@ -313,27 +416,10 @@ public class ClientSCK implements Runnable {
         return this.modelMex;
     }
 
-
-    private void waitNotifyModelChangedFromServer() {
-        this.notyfyUpdateModel = false;
-        while (!this.notyfyUpdateModel) {
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
-
-            }
-
-        }
-
-    }
-
-    private void updateView() {
-
-    }
-
     //////////////////////////////////////////
     //LOBBY_CONTROLLER
     ///////////////////////////////////////////
+
     public void lobby() {
         while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
@@ -363,8 +449,6 @@ public class ClientSCK implements Runnable {
             }
         } while (this.matchName == null);
         waitingPlayer();
-
-
     }
 
     private void waitingPlayer() {
@@ -374,6 +458,7 @@ public class ClientSCK implements Runnable {
 
         while (!this.allPlayerReady) {
             try {
+
                 long currentTime = System.currentTimeMillis();
                 long elapsedTime = currentTime - startTime;
                 if (elapsedTime >= 4 * 60 * 1000) {
@@ -399,103 +484,80 @@ public class ClientSCK implements Runnable {
     //ACTIVE_GAME_CONTROLLER
     ///////////////////////////////////////////
     private void firstPhase() {
-
         this.getModel();
         view.addModel(this.modelMex);
         this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
-
     }
 
     private void midPhase() {
-        while (!this.statusGame) {
-            try {
-                Thread.sleep(2);
-            } catch (InterruptedException e) {
 
-            }
-        }
-        getModel();
         int y = 41;
         int x = 41;
+        waitMidPhase();
+        getModel();
+        ///////////////////////////////////////////
 
+        ///////////////////////////////////////////
         while (statusGame) {
             if (myTurn) {
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-
-                }
-
                 if (modelMex.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
-                    x++;
-                    y++;
-                    // this.drawCard(view.choseWhereToDraw());
-
-                    view.updateBoard();
-                    setMessageout(new Message.MessageClientToServer(Request.DRAW_CARD, DrawingPosition.GOLD1, this.matchName, this.nickName));
-                    waitNoifyfromServer();
-                    if (!error) {
-                        getModel();
-                        view.updateBoard();
-                    }
-                    error = false;
-
-
+                    this.drawCard(view.selectDrawingPosition());
                 } else if (modelMex.getPlayingPhase().equals(PlayingPhase.PLACING)) {
-
-                    //this.placeCard(view.askPlaceCard());
-                    view.updateBoard();
-                    setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, new PlaceCardMex(1, false, x, y), this.matchName, this.nickName));
-                    waitNoifyfromServer();
-                    if (!error) {
-                        getModel();
-                    }
-                    error = false;
-
+                    this.placeCard(view.selectPlaceCard());
                 }
             } else {
-
                 waitMyTurn();
             }
         }
-        endPhase();
+
     }
 
 
     private void waitMyTurn() {
         while (!myTurn) {
-            waitNoifyfromServer();
+            waitMidPhase();
             if (!error) {
                 getModel();
                 view.updateBoard();
             }
             error = false;
-
         }
     }
 
     private void endPhase() {
         this.getModel();
+        //view.endGame();
     }
 
     //////////////////////////////////////////
     //PASSIVE_GAME_CONTROLLER
     ///////////////////////////////////////////
 
-
     @Override
     public void run() {
         thread1 = new Thread(() -> {
             inputThread();
         });
+
+
+        thread2 = new Thread(() -> {
+            while (alive) {
+                waitMessageFromServer();
+                switchmex();
+            }
+        });
+        thread2.start();
         thread1.start();
 
-        /*thread2 = new Thread(() -> {
-            outputThread();
+/*
+        thread3 = new Thread(() -> {
+            while (alive) {
+                sendMessage(view.askMessage());
+            }
         });
-        thread2.start();*/
+*/
     }
 
 
