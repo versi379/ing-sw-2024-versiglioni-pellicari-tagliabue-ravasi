@@ -5,10 +5,14 @@ import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
+import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.View;
 import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,10 +22,12 @@ import java.util.Scanner;
 
 
 public class AppClient {
+
+    TypeOfConnection connection;
+    static View view;
+    static ViewType viewType;
+
     public static void main(String[] args) throws InterruptedException {
-        TypeOfConnection connection;
-        View view;
-        ViewType viewType;
 
         printBanner();
 
@@ -34,20 +40,17 @@ public class AppClient {
             launchGui();
         }
 
-        // setup connection
+        // setup connection (only TUI)
         if (viewType == ViewType.TUI) {
             if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
                 setupSocket(view, viewType);
             } else {
                 setupRMI(view, viewType);
             }
-        } else {
-
         }
-        System.out.println("ciao");
     }
 
-    private static void setupSocket(View view, ViewType viewType) {
+    public static void setupSocket(View view, ViewType viewType) {
         try {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
@@ -58,7 +61,7 @@ public class AppClient {
         }
     }
 
-    private static void setupRMI(View view, ViewType viewType) {
+    public static void setupRMI(View view, ViewType viewType) {
         try {
             System.out.println("Connecting to server...");
             String name = "rmi://localhost:1099/server";
@@ -121,6 +124,39 @@ public class AppClient {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    public static void waitForScene(Stage stage, String fxmlFilePath, Runnable action) {
+        ChangeListener<Scene> sceneChangeListener = new ChangeListener<>() {
+            @Override
+            public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
+                if (isSceneLoadedFrom(newScene, fxmlFilePath)) {
+                    // Remove the listener once the condition is met
+                    stage.sceneProperty().removeListener(this);
+                    // Run the specified action
+                    Platform.runLater(action);
+                }
+            }
+        };
+
+        // Add the listener to the scene property of the stage
+        stage.sceneProperty().addListener(sceneChangeListener);
+    }
+
+    private static boolean isSceneLoadedFrom(Scene scene, String fxmlFilePath) {
+        if (scene == null || scene.getRoot() == null) {
+            return false;
+        }
+        Object userData = scene.getRoot().getUserData();
+        return fxmlFilePath.equals(userData);
+    }
+
+    public static View getView() {
+        return view;
+    }
+
+    public static ViewType getViewType() {
+        return viewType;
     }
 
 }

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class MenuController extends GUIController {
 
     @FXML
-    private Button createGameButton;
+    private Button createNewGameButton;
 
     @FXML
     private Button joinGameButton;
@@ -34,7 +34,7 @@ public class MenuController extends GUIController {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) createGameButton.getScene().getWindow();
+        stage = (Stage) createNewGameButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
