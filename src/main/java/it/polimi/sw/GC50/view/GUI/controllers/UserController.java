@@ -40,6 +40,7 @@ public class UserController extends GUIController {
 
     @FXML
     public void handleMenuButton(ActionEvent event) throws Exception {
+        System.out.println(playerNickname.getText());
         Stage stage;
         Scene scene;
         Parent root;
@@ -48,6 +49,10 @@ public class UserController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public String getPlayerNickname() {
+        return playerNickname.getText();
     }
 
 }

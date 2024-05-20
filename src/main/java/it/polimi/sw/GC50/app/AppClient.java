@@ -55,7 +55,9 @@ public class AppClient {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
             client.addView(view, viewType);
-            client.lobby();
+            if(viewType == ViewType.TUI) {
+                client.lobby();
+            }
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -67,7 +69,9 @@ public class AppClient {
             String name = "rmi://localhost:1099/server";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
-            client.lobby();
+            if(viewType == ViewType.TUI) {
+                client.lobby();
+            }
         } catch (RemoteException e) {
             System.out.println("Error in connection");
         }
@@ -124,31 +128,6 @@ public class AppClient {
                 e.printStackTrace();
             }
         }).start();
-    }
-
-    public static void waitForScene(Stage stage, String fxmlFilePath, Runnable action) {
-        ChangeListener<Scene> sceneChangeListener = new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
-                if (isSceneLoadedFrom(newScene, fxmlFilePath)) {
-                    // Remove the listener once the condition is met
-                    stage.sceneProperty().removeListener(this);
-                    // Run the specified action
-                    Platform.runLater(action);
-                }
-            }
-        };
-
-        // Add the listener to the scene property of the stage
-        stage.sceneProperty().addListener(sceneChangeListener);
-    }
-
-    private static boolean isSceneLoadedFrom(Scene scene, String fxmlFilePath) {
-        if (scene == null || scene.getRoot() == null) {
-            return false;
-        }
-        Object userData = scene.getRoot().getUserData();
-        return fxmlFilePath.equals(userData);
     }
 
     public static View getView() {

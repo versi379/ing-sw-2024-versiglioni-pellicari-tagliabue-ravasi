@@ -8,6 +8,6 @@
    <children>
       <TextField fx:id="playerNickname" layoutX="220.0" layoutY="187.0" promptText="Player Name" />
       <Button fx:id="netMenuButton" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleNetMenuButton" text="NET" />
-      <Button fx:id="menuButton" layoutX="531.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleMenuButton" text="MENU" />
+      <Button fx:id="menuButton" layoutX="531.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleMenuButton" text="PLAY" />
    </children>
 </AnchorPane>
