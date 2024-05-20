@@ -153,12 +153,13 @@ public class GameObservable {
         }
 
         System.out.println(request.toString());
-        for (GameObserver o : obs) {
-            try {
-                // ((GameObserver) arrLocal[i]).update(this, request, arg);
-                o.onUpdate(new Message(request, arg));
-            } catch (RemoteException e) {
-                System.out.println("Error in notifyObservers");
+        synchronized (obs) {
+            for (GameObserver o : obs) {
+                try {
+                    o.update(request, arg);
+                } catch (RemoteException e) {
+                    System.out.println("Error in notifyObservers");
+                }
             }
         }
     }

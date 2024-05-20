@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -63,7 +64,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
-    public void updateController(Request request, Object update, ClientInterface clientInterface) throws RemoteException {
+    synchronized public void updateController(Request request, Object update, ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
@@ -87,7 +88,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    public void updateChat(String message, ClientInterface clientInterface) throws RemoteException {
+    synchronized public void updateChat(String message, ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return;
         }
@@ -167,7 +168,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             if (card != null) {
                 game.addCard(player, card);
             } else {
-                game.error(Request.NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, player.getNickname());
+                game.error(Request.NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, player.getNickname());
             }
         } else {
             game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
@@ -179,6 +180,11 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
+        return new GameView(game, playerMap.get(clientInterface));
+    }
+
+    /*
     synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
         if (!playerMap.containsKey(clientInterface)) {
             return null;
@@ -204,6 +210,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                 game.getDecksTop(), game.getCurrentPhase(), game.getStatus());
         return modelMex;
     }
+     */
 
     // GAME STATUS /////////////////////////////////////////////////////////////////////////////////////////////////////
     private boolean isWaiting() {

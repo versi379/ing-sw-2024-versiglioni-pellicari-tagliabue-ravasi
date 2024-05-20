@@ -1,18 +1,14 @@
 package it.polimi.sw.GC50.net.observ;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
-import java.util.List;
 
 public interface GameObserver {
-    void update(GameObservable o, Request request, Object arg) throws RemoteException;
-    void onUpdate(Message message) throws RemoteException;
+    void update(Request request, Object arg) throws RemoteException;
+
+    //void onUpdate(Message message) throws RemoteException;
 
     /*
     String getNickname();

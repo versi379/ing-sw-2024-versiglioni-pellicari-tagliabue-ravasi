@@ -7,6 +7,7 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 
@@ -31,7 +32,8 @@ public class ClientSCK implements Runnable {
     //match
     private String matchName;
     private String nickName;
-    private ModelMex modelMex;
+    private GameView gameView;
+    //private ModelMex modelMex;
     ///////////////////////////////////////////
     private boolean notyfyUpdateModel;
     private boolean notifyUpdateChat;
@@ -133,7 +135,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
 
-            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW: {
+            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAWN: {
                 notify = true;
                 break;
             }
@@ -156,10 +158,7 @@ public class ClientSCK implements Runnable {
                 notifyUpdateChat = true;
                 break;
             }
-            case NOTIFY_ALL_PLAYER_JOINED_THE_GAME: {
-                break;
-            }
-            case NOTIFY_CARD_NOT_FOUND, NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
+            case NOTIFY_CARD_NOT_FOUND, NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
                  NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
                 if (mex.getObject().equals(nickName)) {
                     error = true;
@@ -168,7 +167,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
             case GET_MODEL_RESPONSE: {
-                modelMex = (ModelMex) mex.getObject();
+                gameView = (GameView) mex.getObject();
                 notyfyUpdateModel = true;
                 break;
             }
@@ -303,14 +302,14 @@ public class ClientSCK implements Runnable {
 
         setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
         waitNotifyModelChangedFromServer();
-        view.addModel(this.modelMex);
+        view.addModel(this.gameView);
 
-        if (this.modelMex.getCurrentPlayer().equals(this.nickName)) {
+        if (this.gameView.getCurrentPlayer().equals(this.nickName)) {
             this.myTurn = true;
         } else {
             this.myTurn = false;
         }
-        return this.modelMex;
+        return this.gameView;
     }
 
 
@@ -386,7 +385,7 @@ public class ClientSCK implements Runnable {
             }
         }
         if (this.allPlayerReady) {
-            view.allPlayerReady();
+            view.setup();
             firstPhase();
         } else {
             this.lobby();
@@ -401,7 +400,7 @@ public class ClientSCK implements Runnable {
     private void firstPhase() {
 
         this.getModel();
-        view.addModel(this.modelMex);
+        view.addModel(this.gameView);
         this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
@@ -428,7 +427,7 @@ public class ClientSCK implements Runnable {
 
                 }
 
-                if (modelMex.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
+                if (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
                     x++;
                     y++;
                     // this.drawCard(view.choseWhereToDraw());
@@ -443,7 +442,7 @@ public class ClientSCK implements Runnable {
                     error = false;
 
 
-                } else if (modelMex.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+                } else if (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
 
                     //this.placeCard(view.askPlaceCard());
                     view.updateBoard();

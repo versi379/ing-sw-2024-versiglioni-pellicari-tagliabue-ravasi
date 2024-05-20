@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.view.GUI.controllers.GUIController;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
+import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,7 @@ public class GuiView extends Application implements View {
     private Stage primaryStage;
     private StackPane root;
     private ArrayList<SceneInfo> scenes;
-    private ModelMex modelmex;
+    private GameView gameView;
 
     NetController netController;
 
@@ -68,13 +69,13 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void allPlayerReady() {
+    public void setup() {
 
     }
 
     @Override
-    public void addModel(ModelMex modelmex) {
-        this.modelmex = modelmex;
+    public void addModel(GameView gameView) {
+        this.gameView = gameView;
     }
 
     @Override
@@ -114,5 +115,8 @@ public class GuiView extends Application implements View {
 
     @Override
     public void printMessage(String message) {}
+
+    @Override
+    public  void printPlayerArea(String nickname) {}
 
 }

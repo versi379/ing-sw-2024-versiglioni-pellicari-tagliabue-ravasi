@@ -3,7 +3,6 @@ package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
-import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.*;
 
 import java.io.IOException;
@@ -155,12 +154,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(GameObservable o, Request request, Object arg) {
+    public void update(Request request, Object arg) {
 
-    }
-
-    @Override
-    synchronized public void onUpdate(Message message) throws RemoteException {
-        setMessageout(message);
     }
 }

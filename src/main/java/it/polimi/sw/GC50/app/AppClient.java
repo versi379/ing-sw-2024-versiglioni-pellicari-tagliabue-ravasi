@@ -75,6 +75,7 @@ public class AppClient {
 
         int read;
         try {
+            System.out.print("> ");
             read = scanner.nextInt();
         } catch (InputMismatchException e) {
             read = 0;
@@ -83,6 +84,7 @@ public class AppClient {
         while (read != 1 && read != 2) {
             System.out.println("Invalid input. Please enter 1 or 2.");
             try {
+                System.out.print("> ");
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 scanner.nextLine();

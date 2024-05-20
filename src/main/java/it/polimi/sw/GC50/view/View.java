@@ -14,8 +14,8 @@ public interface View extends Serializable {
     int selectNumberOfPlayers();
     void waitPlayers();
     int selectJoinOrCreate();
-    void allPlayerReady();
-    void addModel(ModelMex modelmex);
+    void setup();
+    void addModel(GameView gameView);
     void updateChat(Chat chat);
     int selectObjectiveCard();
     boolean selectStarterFace();
@@ -24,4 +24,5 @@ public interface View extends Serializable {
     PlaceCardMex selectPlaceCard();
     DrawingPosition selectDrawingPosition();
     void printMessage(String message);
+    void printPlayerArea(String nickname);
 }
