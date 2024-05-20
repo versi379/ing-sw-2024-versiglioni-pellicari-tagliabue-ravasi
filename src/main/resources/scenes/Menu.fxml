@@ -15,10 +15,11 @@
                   <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
                </image>
             </ImageView>
-            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#createNewGame" text=" Create New Game" />
-            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#joinGame" text="Join Game" />
-            <Button fx:id="reconnectToGameButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#reconnectToGame" text="Reconnect To Game" />
-            <Button fx:id="userLoginButton" layoutX="531.0" layoutY="356.0" mnemonicParsing="false" onAction="#handleUserLoginButton" text="Button" />
+            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCreateNewGameButton" text=" Create New Game" />
+            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleJoinGameButton" text="Join Game" />
+            <Button fx:id="reconnectToGameButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleReconnectToGameButton" text="Reconnect To Game" />
+            <Button fx:id="quitGameButton" layoutX="26.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleQuitGameButton" text="Quit Game" />
+            <Button fx:id="userMenuButton" layoutX="531.0" layoutY="356.0" mnemonicParsing="false" onAction="#handleUserMenuButton" text="USER" />
          </children>
       </Pane>
    </children>

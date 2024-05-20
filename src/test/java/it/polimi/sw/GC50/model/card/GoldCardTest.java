@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static it.polimi.sw.GC50.model.card.CornerTest.*;
-import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
+import static it.polimi.sw.GC50.model.card.CornerTest.fungiCorner;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.corners;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GoldCardTest {
 

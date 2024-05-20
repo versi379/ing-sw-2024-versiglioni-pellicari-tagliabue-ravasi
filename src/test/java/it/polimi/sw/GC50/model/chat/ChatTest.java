@@ -1,12 +1,10 @@
 package it.polimi.sw.GC50.model.chat;
 
-import it.polimi.sw.GC50.model.card.Resource;
 import it.polimi.sw.GC50.model.lobby.Player;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

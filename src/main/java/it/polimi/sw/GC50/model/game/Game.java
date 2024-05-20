@@ -8,7 +8,8 @@ import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.chat.Message;
 import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.model.objective.Objective;
+import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.observ.Observable;
 import it.polimi.sw.GC50.net.util.Request;
 

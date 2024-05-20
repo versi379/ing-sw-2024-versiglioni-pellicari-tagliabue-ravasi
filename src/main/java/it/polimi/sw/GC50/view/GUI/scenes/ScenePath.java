@@ -5,7 +5,8 @@ package it.polimi.sw.GC50.view.GUI.scenes;
  */
 public enum ScenePath {
 
-    USERCONNECTION("/scenes/Net.fxml"),
+    NET("/scenes/Net.fxml"),
+    USER("/scenes/User.fxml"),
     MENU("/scenes/Menu.fxml"),
     GAME("/scenes/Game.fxml");
 

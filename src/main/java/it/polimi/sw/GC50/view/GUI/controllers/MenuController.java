@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 /**
  * Controller for Menu FXML scene.
  */
@@ -26,36 +24,66 @@ public class MenuController extends GUIController {
     private Button reconnectToGameButton;
 
     @FXML
-    public void handleEnterLobbyButton(ActionEvent event) throws Exception {
+    private Button quitGameButton;
+
+    @FXML
+    private Button userMenuButton;
+
+    @FXML
+    public void handleCreateNewGameButton(ActionEvent event) throws Exception {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) enterLobbyButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
+        stage = (Stage) createGameButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    public void handleEnterLobbyButton(ActionEvent event) throws Exception {
+    public void handleJoinGameButton(ActionEvent event) throws Exception {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) enterLobbyButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
+        stage = (Stage) joinGameButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    public void handleEnterLobbyButton(ActionEvent event) throws Exception {
+    public void handleReconnectToGameButton(ActionEvent event) throws Exception {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) enterLobbyButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
+        stage = (Stage) reconnectToGameButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void handleQuitGameButton(ActionEvent event) throws Exception {
+        Stage stage;
+        Scene scene;
+        Parent root;
+        stage = (Stage) quitGameButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void handleUserMenuButton(ActionEvent event) throws Exception {
+        Stage stage;
+        Scene scene;
+        Parent root;
+        stage = (Stage) userMenuButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

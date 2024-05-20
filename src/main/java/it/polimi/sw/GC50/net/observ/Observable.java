@@ -4,7 +4,6 @@ import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class Observable {

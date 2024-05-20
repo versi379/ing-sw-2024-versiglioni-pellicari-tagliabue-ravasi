@@ -3,12 +3,11 @@ package it.polimi.sw.GC50.app;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
-
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.TUI.TuiView;
-import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
+import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -43,11 +42,7 @@ public class AppClient {
                 setupRMI(view, viewType);
             }
         } else {
-            if (NetController.getController().getNetChoice() == 0) {
-                setupSocket(view, viewType);
-            } else {
-                setupRMI(view, viewType);
-            }
+
         }
         System.out.println("ciao");
     }

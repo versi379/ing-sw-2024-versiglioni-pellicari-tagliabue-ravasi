@@ -1,11 +1,9 @@
 package it.polimi.sw.GC50.model.chat;
 
-import org.junit.jupiter.api.Test;
 import it.polimi.sw.GC50.model.lobby.Player;
+import org.junit.jupiter.api.Test;
 
-import java.sql.Time;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -4,7 +4,6 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.view.GUI.controllers.GUIController;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -16,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GuiView extends Application implements View {
@@ -30,7 +28,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(ScenePath.USERCONNECTION.getPath()));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
         Parent root = loader.load();
         netController = loader.getController();
         Scene scene = new Scene(root);
@@ -44,7 +42,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectName() {
-        return netController.getPlayerNickname() != null ? netController.getPlayerNickname() : "Giocatore";
+        return null;
     }
 
     @Override

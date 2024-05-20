@@ -2,8 +2,6 @@ package it.polimi.sw.GC50.model.lobby;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class LobbyTest {
 
     @Test

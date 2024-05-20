@@ -16,29 +16,34 @@ public class UserController extends GUIController {
     private TextField playerNickname;
 
     @FXML
-    private Button enterLobbyButton;
+    private Button netMenuButton;
 
     @FXML
-    private Button netConnectionButton;
+    private Button menuButton;
 
     @FXML
-    public void handleEnterLobbyButton(ActionEvent event) throws Exception {
+    public void initialize() throws Exception {
+
+    }
+
+    @FXML
+    public void handleNetMenuButton(ActionEvent event) throws Exception {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) enterLobbyButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
+        stage = (Stage) netMenuButton.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource(ScenePath.NET.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
-    public void handleNetConnectionButton(ActionEvent event) throws Exception {
+    public void handleMenuButton(ActionEvent event) throws Exception {
         Stage stage;
         Scene scene;
         Parent root;
-        stage = (Stage) netConnectionButton.getScene().getWindow();
+        stage = (Stage) menuButton.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
         scene = new Scene(root);
         stage.setScene(scene);

@@ -1,11 +1,13 @@
 package it.polimi.sw.GC50.model.objective;
 
-import it.polimi.sw.GC50.model.card.*;
+import it.polimi.sw.GC50.model.card.Color;
+import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.PlayerData;
 import org.junit.jupiter.api.Test;
 
-import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.bluePlayableCard;
+import static it.polimi.sw.GC50.model.card.PlayableCardTest.redPlayableCard;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CaveObjectiveTest {

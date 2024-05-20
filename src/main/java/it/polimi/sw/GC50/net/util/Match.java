@@ -5,7 +5,6 @@ import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

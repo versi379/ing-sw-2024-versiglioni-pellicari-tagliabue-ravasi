@@ -7,8 +7,8 @@ import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
+import it.polimi.sw.GC50.view.ViewType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
