@@ -98,6 +98,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // UPDATE MODEL ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @param player
      * @param face
@@ -237,7 +238,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public GameController(Game game) throws  RemoteException{
+    public GameController(Game game) throws RemoteException {
         this.game = game;
         playerMap = new HashMap<>();
     }

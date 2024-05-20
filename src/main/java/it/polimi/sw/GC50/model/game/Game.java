@@ -375,10 +375,7 @@ public class Game extends GameObservable implements Serializable, GameInterface 
     }
 
     public boolean isReady(Player player) {
-        if (getPlayerData(player).isReady()) {
-            return true;
-        }
-        return false;
+        return getPlayerData(player).isReady();
     }
 
     private void checkPreparation(Player player) {

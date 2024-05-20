@@ -50,7 +50,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     public ClientRmi(String name) throws RemoteException {
         this.serverName = name;
-        connect();
         gameStatus = GameStatus.WAITING;
         playingPhase = PlayingPhase.PLACING;
         myTurn = false;
@@ -65,28 +64,30 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void connect() {
+    private void connect() throws RemoteException {
         try {
             serverRmi = (ServerRmiRemote) Naming.lookup(serverName + "/server");
             serverRmi.addClient(this);
             System.err.println("Connected to server");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             System.err.println("Error in connection to the server");
+            throw new RemoteException();
         }
     }
 
-    public void connectController(String gameId) {
+    private void connectController(String gameId) throws RemoteException {
         try {
             gameController = (GameControllerRemote) Naming.lookup(serverName + "/" + gameId);
             System.err.println("Connected to controller");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             System.err.println("Error in connection to the controller");
+            throw new RemoteException();
         }
     }
 
-    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     public synchronized void run() {
         try {
+            connect();
             lobby();
             view.endSession();
         } catch (RemoteException e) {
@@ -94,7 +95,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void lobby() throws RemoteException {
         while (!setPlayer(view.selectName())) {
             view.printMessage("Player name not valid");
@@ -274,6 +275,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void endPhase() {
         getModel();
+        view.printMessage("Fine partita spe poi metto a posto");
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -305,7 +307,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     private void switchRequest(Request request, Object arg) {
-        getModel();
         switch (request) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 view.playerJoined((String) arg);
@@ -316,36 +317,43 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
             case NOTIFY_GAME_SETUP -> {
+                getModel();
                 gameStatus = GameStatus.SETUP;
             }
 
             case NOTIFY_PLAYER_READY -> {
+                getModel();
                 view.playerReady((String) arg);
             }
 
             case NOTIFY_GAME_STARTED -> {
+                getModel();
                 gameStatus = GameStatus.PLAYING;
                 playingPhase = PlayingPhase.PLACING;
                 myTurn = arg.equals(nickname);
             }
 
             case NOTIFY_CARD_PLACED -> {
+                getModel();
                 playingPhase = PlayingPhase.DRAWING;
                 view.printPlayerArea((String) arg);
                 view.printScores();
             }
 
             case NOTIFY_CARD_DRAWN -> {
+                getModel();
                 myTurn = false;
                 view.printDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {
+                getModel();
                 playingPhase = PlayingPhase.PLACING;
                 myTurn = arg.equals(nickname);
             }
 
             case NOTIFY_GAME_ENDED -> {
+                getModel();
                 gameStatus = GameStatus.ENDED;
             }
 

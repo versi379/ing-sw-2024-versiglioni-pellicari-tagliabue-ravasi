@@ -89,7 +89,6 @@ public class TuiView implements View {
     public int selectObjectiveCard() {
         System.out.println();
         System.out.println("Selezione della carta obiettivo segreta");
-        System.out.println();
         printSecretObjectiveChoice();
 
         return readInt("Inserire l'indice della carta obiettivo con cui si vuole giocare:",
@@ -108,7 +107,6 @@ public class TuiView implements View {
     public boolean selectStarterFace() {
         System.out.println();
         System.out.println("Selezione della faccia della carta iniziale");
-        System.out.println();
         printStarterCardChoice(gameView.getStarterCard());
 
         return readInt("Inserire l'indice della faccia con cui si vuole giocare:",
@@ -267,6 +265,7 @@ public class TuiView implements View {
 
     @Override
     public void printMessage(String message) {
+        System.out.println();
         System.out.println(message);
     }
 }

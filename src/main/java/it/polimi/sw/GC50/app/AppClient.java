@@ -18,14 +18,16 @@ import java.util.Scanner;
 
 
 public class AppClient {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         TypeOfConnection connection;
         View view;
         ViewType viewType;
 
         printBanner();
 
-        if (readBinaryChoice("1 for Tui , 2 for Gui") == 1) {
+        if (readBinaryChoice("Selezionare la tipologia di interfaccia:" +
+                "\n1) terminale" +
+                "\n2) interfaccia grafica") == 1) {
             view = new TuiView();
             viewType = ViewType.TUI;
         } else {
@@ -36,7 +38,9 @@ public class AppClient {
 
         // setup connection
         if (viewType == ViewType.TUI) {
-            if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
+            if (readBinaryChoice("Selezionare la tipologia di connessione:" +
+                    "\n1) Socket" +
+                    "\n2) RMI") == 1) {
                 setupSocket(view, viewType);
             } else {
                 setupRMI(view, viewType);
@@ -44,6 +48,7 @@ public class AppClient {
         } else {
             // Via GUI
         }
+        System.err.println("Bye");
     }
 
     private static void setupSocket(View view, ViewType viewType) {
@@ -65,7 +70,7 @@ public class AppClient {
             client.addView(view, viewType);
             client.run();
         } catch (RemoteException e) {
-            System.out.println("Error in connection");
+            System.err.println("Error in connection");
         }
     }
 
