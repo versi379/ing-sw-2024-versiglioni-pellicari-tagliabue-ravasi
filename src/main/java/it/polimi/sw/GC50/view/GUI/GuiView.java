@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GuiView extends Application implements View {
 
@@ -59,7 +61,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void waitPlayers() {
+    public void showWaitPlayers() {
 
     }
 
@@ -69,7 +71,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void setup() {
+    public void showSetup() {
 
     }
 
@@ -114,49 +116,54 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void printMessage(String message) {
-    }
-
-    @Override
-    public void printPlayerArea(String nickname) {
-    }
-
-    @Override
-    public void printDecks() {
+    public void showFreeGames(Map<String, List<String>> freeGames) {
 
     }
 
     @Override
-    public void printScores() {
+    public void showMessage(String message) {
     }
 
     @Override
-    public void playerJoined(String nickname) {
-
+    public void showPlayerArea(String nickname) {
     }
 
     @Override
-    public void playerLeft(String nickname) {
-
-    }
-
-    @Override
-    public void endSession() {
+    public void showDecks() {
 
     }
 
     @Override
-    public void printCommonObjectives() {
+    public void showScores() {
+    }
+
+    @Override
+    public void showPlayerJoined(String nickname) {
 
     }
 
     @Override
-    public void playerReady(String nickname) {
+    public void showPlayerLeft(String nickname) {
 
     }
 
     @Override
-    public void error() {
+    public void showEndSession() {
+
+    }
+
+    @Override
+    public void showCommonObjectives() {
+
+    }
+
+    @Override
+    public void showPlayerReady(String nickname) {
+
+    }
+
+    @Override
+    public void showError() {
 
     }
 }

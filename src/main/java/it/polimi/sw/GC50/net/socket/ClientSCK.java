@@ -3,7 +3,6 @@ package it.polimi.sw.GC50.net.socket;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
@@ -368,7 +367,7 @@ public class ClientSCK implements Runnable {
 
     private void waitingPlayer() {
 
-        view.waitPlayers();
+        view.showWaitPlayers();
         long startTime = System.currentTimeMillis();
 
         while (!this.allPlayerReady) {
@@ -385,7 +384,7 @@ public class ClientSCK implements Runnable {
             }
         }
         if (this.allPlayerReady) {
-            view.setup();
+            view.showSetup();
             firstPhase();
         } else {
             this.lobby();

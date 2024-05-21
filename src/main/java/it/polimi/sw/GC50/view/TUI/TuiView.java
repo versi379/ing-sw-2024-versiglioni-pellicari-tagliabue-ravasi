@@ -19,7 +19,7 @@ public class TuiView implements View {
     public void start() {
     }
 
-    public void endSession() {
+    public void showEndSession() {
         System.out.println();
         System.out.println("Sessione terminata");
     }
@@ -39,6 +39,22 @@ public class TuiView implements View {
     }
 
     @Override
+    public void showFreeGames(Map<String, List<String>> freeGames) {
+        if (freeGames.isEmpty()) {
+            System.out.println("No free games");
+        } else {
+            System.out.println("Free games:");
+            for (String game : freeGames.keySet()) {
+                System.out.print("Game " + game + ", current players:");
+                for (String nickname : freeGames.get(game)) {
+                    System.out.print(" " + nickname);
+                }
+                System.out.println();
+            }
+        }
+    }
+
+    @Override
     public String selectGameName() {
         return readString("Inserire il nome della partita:");
     }
@@ -50,32 +66,32 @@ public class TuiView implements View {
     }
 
     @Override
-    public void playerJoined(String nickname) {
+    public void showPlayerJoined(String nickname) {
         System.out.println();
         System.out.println("Giocatore " + nickname + " è entrato in partita");
     }
 
     @Override
-    public void playerLeft(String nickname) {
+    public void showPlayerLeft(String nickname) {
         System.out.println();
         System.out.println("Giocatore " + nickname + " ha abbandonato la partita");
     }
 
     @Override
-    public void waitPlayers() {
+    public void showWaitPlayers() {
         System.out.println();
         System.out.println("In attesa che gli altri giocatori entrino in partita...");
     }
 
     @Override
-    public void setup() {
+    public void showSetup() {
         System.out.println();
         System.out.println("Tutti i giocatori sono entrati, la partita sta iniziando");
-        printCommonObjectives();
+        showCommonObjectives();
     }
 
     @Override
-    public void printCommonObjectives() {
+    public void showCommonObjectives() {
         System.out.println();
         System.out.println("Carte obiettivo comuni:");
         List<ObjectiveCard> commonObjectives = gameView.getCommonObjectives();
@@ -139,7 +155,7 @@ public class TuiView implements View {
     }
 
     @Override
-    public void playerReady(String nickname) {
+    public void showPlayerReady(String nickname) {
         System.out.println();
         System.out.println("Giocatore " + nickname + " pronto");
     }
@@ -148,7 +164,7 @@ public class TuiView implements View {
     public PlaceCardMex selectPlaceCard() {
         System.out.println();
         System.out.println("Piazzamento di una carta");
-        printPlayerArea(gameView.getPlayerNickname());
+        showPlayerArea(gameView.getPlayerNickname());
         ModelPrinter.printHand(gameView.getHand());
         return new PlaceCardMex(
                 readInt("Selezionare l'indice della carta da piazzare:",
@@ -164,7 +180,7 @@ public class TuiView implements View {
     }
 
     @Override
-    public void printPlayerArea(String nickname) {
+    public void showPlayerArea(String nickname) {
         ModelPrinter.printPlayerArea(nickname, gameView.getPlayerArea(nickname));
     }
 
@@ -172,18 +188,18 @@ public class TuiView implements View {
     public DrawingPosition selectDrawingPosition() {
         System.out.println();
         System.out.println("Pescaggio di una carta");
-        printDecks();
+        showDecks();
         return DrawingPosition.values()[readInt("Selezionare la carta da pescare:",
                 1, DrawingPosition.values().length) - 1];
     }
 
     @Override
-    public void printDecks() {
+    public void showDecks() {
         ModelPrinter.printDecks(gameView.getDecks());
     }
 
     @Override
-    public void printScores() {
+    public void showScores() {
         Map<String, Integer> scores = new HashMap<>();
         for (String nickname : gameView.getPlayersList()) {
             scores.put(nickname, gameView.getPlayerArea(nickname).getTotalScore());
@@ -210,7 +226,7 @@ public class TuiView implements View {
     }
 
     @Override
-    public void error() {
+    public void showError() {
         System.out.println();
         System.out.println("Errore");
     }
@@ -264,7 +280,7 @@ public class TuiView implements View {
     }
 
     @Override
-    public void printMessage(String message) {
+    public void showMessage(String message) {
         System.out.println();
         System.out.println(message);
     }

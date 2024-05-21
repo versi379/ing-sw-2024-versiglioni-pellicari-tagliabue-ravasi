@@ -14,8 +14,8 @@ public class test {
     public static void main(String[] args) {
         PlayerData pl= new PlayerData(40);
         Player player= new Player("luca");
-        Game game2 = new Game("Partita", 1, 20, player);
-
+        Game game2 = new Game("Partita", 1, 20);
+        game2.addPlayer(player);
 
 
         PhysicalCard card;

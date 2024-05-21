@@ -89,7 +89,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
                 System.out.println(message.getNickName());
-                this.match = lobby.createMatch(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
+                this.match = lobby.createGame(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
                 } else {
@@ -97,7 +97,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.ENTER_GAME:
-                this.match = lobby.joinMatch(this, message.getMatchName(), message.getNickName());
+                this.match = lobby.joinGame(this, message.getMatchName(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
                 } else {
@@ -105,7 +105,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.GET_FREE_MATCH:
-                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeMatches()));
+                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeGames()));
                 break;
             case Request.SET_NAME:
                 boolean resp = lobby.addPlayer(this, message.getNickName());

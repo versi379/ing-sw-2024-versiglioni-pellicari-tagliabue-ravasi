@@ -1,49 +1,27 @@
 package it.polimi.sw.GC50.model.lobby;
 
 import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Lobby {
-    private final Map<ClientInterface, String> freePlayers;
-    private final ArrayList<String> nicknames;
-    private final ArrayList<GameController> matches;
-
+    private final Map<ClientInterface, String> clients;
+    private final ArrayList<GameController> freeGameControllers;
 
     public Lobby() {
-        freePlayers = new HashMap<>();
-        nicknames = new ArrayList<>();
-        matches = new ArrayList<>();
+        clients = new HashMap<>();
+        freeGameControllers = new ArrayList<>();
 
         System.out.println("Server Ready!");
     }
 
-    ///////////////////////////////////////////////////////////
-    ///LOBBY
-    ///////////////////////////////////////////////////////////
-
-    /*
-    /**
-     * @param client this method is called when a client connects to the server
-
-    public synchronized void connect(ClientInterface client) {
-        freePlayers.put(client, null);
-        System.out.println("Client connected to Server");
-    }
-    */
-
     public synchronized boolean addPlayer(ClientInterface clientInterface, String nickname) {
-        if (nickname == null || nickname.isEmpty() || nicknames.contains(nickname)) {
+        if (nickname == null || nickname.isEmpty() || clients.containsValue(nickname)) {
             return false;
         }
-        nicknames.add(nickname);
-        freePlayers.put(clientInterface, nickname);
+        clients.put(clientInterface, nickname);
         return true;
     }
 
@@ -52,53 +30,53 @@ public class Lobby {
      * @param numOfPlayer
      * @param gameId
      * @param nickname
-     * @return Match
-     * the return value is the match created by the client
-     * if is it null the Match is not created
-     * this method is called when a client wants to create a match
+     * @return GameController
+     * the return value is the GameController created by the client
+     * if is it null the GameController is not created
+     * this method is called when a client wants to create a GameController
      * @
      */
-    public synchronized GameController createMatch(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
+    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
         if (isPlayerPresent(client) && !isGamePresent(gameId)) {
-            matches.add(new GameController(gameId, numOfPlayer, 20, client, nickname));
-            System.out.println(gameId + " Match created");
-            freePlayers.remove(client);
-            return matches.getLast();
+            System.out.println("Game " + gameId + " created");
+            GameController newGameController = new GameController(client, gameId, numOfPlayer, 20, nickname);
+            freeGameControllers.add(newGameController);
+            return newGameController;
         } else {
             return null;
         }
     }
 
     private synchronized boolean isPlayerPresent(ClientInterface client) {
-        return freePlayers.containsKey(client);
+        return clients.containsKey(client);
     }
 
     private synchronized boolean isGamePresent(String gameId) {
-        return matches.stream()
+        return freeGameControllers.stream()
                 .map(GameController::getGameId)
                 .anyMatch(gameId::equals);
     }
 
-    public synchronized GameController joinMatch(ClientInterface player, String gameId, String nickname) {
-        if (isPlayerPresent(player)) {
-            for (GameController match : matches) {
-                if (match.getGameId().equals(gameId) && match.isFree()) {
-                    match.addPlayer(player, nickname);
-                    freePlayers.remove(player);
-                    return match;
+    public synchronized GameController joinGame(ClientInterface client, String gameId, String nickname) {
+        if (isPlayerPresent(client)) {
+            for (GameController gameController : freeGameControllers) {
+                if (gameController.getGameId().equals(gameId) && gameController.isFree()) {
+                    gameController.addPlayer(client, nickname);
+                    if (!gameController.isFree()) {
+                        freeGameControllers.remove(gameController);
+                    }
+                    return gameController;
                 }
             }
         }
         return null;
     }
 
-    public synchronized List<String> getFreeMatches() {
-        List<String> freeMatches = new ArrayList<>();
-        for (GameController match : matches) {
-            if (match.isFree()) {
-                freeMatches.add(match.getGameId());
-            }
+    public synchronized Map<String, List<String>> getFreeGames() {
+        Map<String, List<String>> freeGames = new HashMap<>();
+        for (GameController gameController : freeGameControllers) {
+            freeGames.put(gameController.getGameId(), gameController.getPlayerList());
         }
-        return freeMatches;
+        return freeGames;
     }
 }

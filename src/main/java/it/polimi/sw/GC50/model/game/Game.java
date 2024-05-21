@@ -113,7 +113,7 @@ public class Game extends GameObservable implements Serializable, GameInterface 
      */
     private final Chat chat;
 
-    public Game(String id, int numPlayers, int endScore, Player creator) {
+    public Game(String id, int numPlayers, int endScore) {
         this.id = id;
         this.numPlayers = numPlayers;
         this.endScore = endScore;
@@ -136,8 +136,6 @@ public class Game extends GameObservable implements Serializable, GameInterface 
         commonObjectives = new ArrayList<>();
 
         chat = new Chat();
-
-        addPlayer(creator);
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////

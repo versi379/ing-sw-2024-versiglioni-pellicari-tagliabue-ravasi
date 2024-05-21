@@ -4,11 +4,9 @@ import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.GameException;
-import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
@@ -21,10 +19,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Map;
 
 import static it.polimi.sw.GC50.net.util.Request.DRAW_CARD;
 
@@ -51,6 +46,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     public ClientRmi(String name) throws RemoteException {
         this.serverName = name;
+        serverRmi = null;
+        gameController = null;
         gameStatus = GameStatus.WAITING;
         playingPhase = PlayingPhase.PLACING;
         myTurn = false;
@@ -75,20 +72,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    private void connectController(String gameId) throws GameException {
-        try {
-            gameController = (GameControllerRemote) Naming.lookup(serverName + "/game" + gameId);
-            System.err.println("Connected to controller");
-        } catch (RemoteException | NotBoundException | MalformedURLException e) {
-            throw new GameException("Error in connection to the controller", e.getCause());
-        }
-    }
-
     synchronized public void run() {
         try {
             connect();
             lobby();
-            view.endSession();
+            view.showEndSession();
         } catch (GameException e) {
             System.err.println(e.getMessage());
         }
@@ -97,49 +85,31 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     synchronized private void lobby() throws GameException {
         while (!setPlayer(view.selectName())) {
-            view.printMessage("Player name not valid");
+            view.showMessage("Player name not valid");
         }
 
         while (true) {
-            boolean isInGame = false;
-            String gameId = null;
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    gameId = view.selectGameName();
-                    if (createGame(gameId, view.selectNumberOfPlayers())) {
-                        isInGame = true;
-                    } else {
-                        view.printMessage("Game name not valid");
-                    }
+                    createGame(view.selectGameName(), view.selectNumberOfPlayers());
                 }
 
                 case 2 -> {
-                    List<String> freeMatches = getFreeMatches();
-                    if (freeMatches.isEmpty()) {
-                        view.printMessage("No free matches");
-                    } else {
-                        view.printMessage("Free matches:");
-                        for (String s : freeMatches) {
-                            view.printMessage(s);
-                        }
-
-                        gameId = view.selectGameName();
-                        if (joinGame(gameId)) {
-                            isInGame = true;
-                        } else {
-                            view.printMessage("Game name not valid");
-                        }
+                    Map<String, List<String>> freeGames = getFreeGames();
+                    view.showFreeGames(freeGames);
+                    if (!freeGames.isEmpty()) {
+                        joinGame(view.selectGameName());
                     }
                 }
 
                 case 3 -> {
-                    view.printMessage("Quitting");
                     return;
                 }
             }
-            if (isInGame) {
-                connectController(gameId);
+            if (gameController != null) {
                 waitingPhase();
+            } else {
+                view.showMessage("Game name not valid");
             }
         }
     }
@@ -156,25 +126,25 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return false;
     }
 
-    synchronized private boolean createGame(String gameId, int numPlayers) throws GameException {
+    synchronized private void createGame(String gameId, int numPlayers) throws GameException {
         try {
-            return serverRmi.createGame(this, numPlayers, gameId, nickname);
+            gameController = serverRmi.createGame(this, gameId, numPlayers, nickname);
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }
     }
 
-    synchronized private List<String> getFreeMatches() throws GameException {
+    synchronized private Map<String, List<String>> getFreeGames() throws GameException {
         try {
-            return serverRmi.getFreeMatches();
+            return serverRmi.getFreeGames();
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }
     }
 
-    synchronized private boolean joinGame(String gameId) throws GameException {
+    synchronized private void joinGame(String gameId) throws GameException {
         try {
-            return serverRmi.joinGame(this, gameId, nickname);
+            gameController = serverRmi.joinGame(this, gameId, nickname);
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }
@@ -182,7 +152,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     synchronized private void waitingPhase() throws GameException {
-        view.waitPlayers();
+        view.showWaitPlayers();
 
         while (gameStatus.equals(GameStatus.WAITING)) {
             try {
@@ -196,7 +166,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     synchronized private void setupPhase() throws GameException {
-        view.setup();
+        view.showSetup();
         selectObjectiveCard(view.selectObjectiveCard());
         selectStarterFace(view.selectStarterFace());
 
@@ -228,7 +198,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     synchronized private void playingPhase() throws GameException {
-        view.printMessage("Partita iniziata");
+        view.showMessage("Partita iniziata");
 
         while (gameStatus.equals(GameStatus.PLAYING)) {
             while (!myTurn) {
@@ -246,7 +216,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     synchronized private void playTurn() throws GameException {
         do {
             if (error) {
-                view.error();
+                view.showError();
                 error = false;
             }
             placeCard(view.selectPlaceCard());
@@ -261,7 +231,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
         do {
             if (error) {
-                view.error();
+                view.showError();
                 error = false;
             }
             drawCard(view.selectDrawingPosition());
@@ -301,8 +271,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     synchronized private void endPhase() {
-        view.printMessage("Fine partita spe poi metto a posto");
-        view.printScores();
+        view.showMessage("Fine partita spe poi metto a posto");
+        view.showScores();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,11 +297,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         System.err.println("Update from server: " + request);
         switch (request) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
-                view.playerJoined((String) arg);
+                view.showPlayerJoined((String) arg);
             }
 
             case NOTIFY_PLAYER_LEFT_GAME -> {
-                view.playerLeft((String) arg);
+                view.showPlayerLeft((String) arg);
             }
 
             case NOTIFY_GAME_SETUP -> {
@@ -340,7 +310,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
             case NOTIFY_PLAYER_READY -> {
-                view.playerReady((String) arg);
+                view.showPlayerReady((String) arg);
             }
 
             case NOTIFY_GAME_STARTED -> {
@@ -353,14 +323,14 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             case NOTIFY_CARD_PLACED -> {
                 setModel(gameView);
                 playingPhase = PlayingPhase.DRAWING;
-                view.printPlayerArea((String) arg);
-                view.printScores();
+                view.showPlayerArea((String) arg);
+                view.showScores();
             }
 
             case NOTIFY_CARD_DRAWN -> {
                 setModel(gameView);
                 myTurn = false;
-                view.printDecks();
+                view.showDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {
@@ -385,7 +355,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             }
 
             case GET_CHAT_MODEL_RESPONSE -> {
-                view.printMessage("chat");
+                view.showMessage("chat");
             }
 
             default -> {

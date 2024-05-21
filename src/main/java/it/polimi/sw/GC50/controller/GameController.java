@@ -1,12 +1,10 @@
 package it.polimi.sw.GC50.controller;
 
-import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
@@ -14,7 +12,6 @@ import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,17 +23,18 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     private final Game game;
     private final Map<ClientInterface, Player> playerMap;
 
-    public GameController(String gameId, int numPlayers, int endScore, ClientInterface clientInterface, String nickname) throws RemoteException {
+    public GameController(ClientInterface clientInterface, String gameId, int numPlayers, int endScore, String nickname) throws RemoteException {
         playerMap = new HashMap<>();
-        Player creator = new Player(nickname);
-        game = new Game(gameId, numPlayers, endScore, creator);
-        game.addObserver(clientInterface, creator);
-        playerMap.put(clientInterface, creator);
+        game = new Game(gameId, numPlayers, endScore);
+        addPlayer(clientInterface, nickname);
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
     public String getGameId() {
         return game.getId();
+    }
+    public List<String> getPlayerList() {
+        return game.getPlayerList().stream().map(Player::getNickname).toList();
     }
 
     public boolean isFree() {
