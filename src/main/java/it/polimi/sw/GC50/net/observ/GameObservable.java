@@ -1,22 +1,27 @@
 package it.polimi.sw.GC50.net.observ;
 
+import it.polimi.sw.GC50.model.game.Game;
+import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class GameObservable {
+public abstract class GameObservable {
     private boolean changed = false;
-    private final List<GameObserver> obs;
+    private final Map<GameObserver, Player> obs;
 
     /**
      * Construct an Observable with zero Observers.
      */
 
     public GameObservable() {
-        obs = new ArrayList<>();
+        obs = new HashMap<>();
     }
 
     /**
@@ -27,11 +32,11 @@ public class GameObservable {
      *
      * @throws NullPointerException if the parameter o is null.
      */
-    public synchronized void addObserver(GameObserver o) {
+    public synchronized void addObserver(GameObserver o, Player player) {
         if (o == null)
             throw new NullPointerException();
-        if (!obs.contains(o)) {
-            obs.add(o);
+        if (!obs.containsKey(o)) {
+            obs.put(o, player);
         }
     }
 
@@ -154,15 +159,17 @@ public class GameObservable {
 
         System.out.println(request.toString());
         synchronized (obs) {
-            for (GameObserver o : obs) {
+            for (GameObserver o : obs.keySet()) {
                 try {
-                    o.update(request, arg);
+                    o.update(request, arg, getGameView(obs.get(o)));
                 } catch (RemoteException e) {
                     System.out.println("Error in notifyObservers");
                 }
             }
         }
     }
+
+     public abstract GameView getGameView(Player player);
 
     /**
      * Clears the observer list so that this object no longer has any observers.

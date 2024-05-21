@@ -2,11 +2,12 @@ package it.polimi.sw.GC50.net.observ;
 
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 
 public interface GameObserver {
-    void update(Request request, Object arg) throws RemoteException;
+    void update(Request request, Object arg, GameView gameView) throws RemoteException;
 
     //void onUpdate(Message message) throws RemoteException;
 

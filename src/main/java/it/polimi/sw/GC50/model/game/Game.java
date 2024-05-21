@@ -11,6 +11,7 @@ import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -145,8 +146,11 @@ public class Game extends GameObservable implements Serializable, GameInterface 
     }
 
     public PlayableCard[] getDecksTop() {
-        PlayableCard[] drawableCards = new PlayableCard[6];
+        if(status.equals(GameStatus.WAITING)) {
+            return null;
+        }
 
+        PlayableCard[] drawableCards = new PlayableCard[6];
         drawableCards[0] = peekCard(DrawingPosition.RESOURCEDECK);
         drawableCards[1] = peekCard(DrawingPosition.RESOURCE1);
         drawableCards[2] = peekCard(DrawingPosition.RESOURCE2);
@@ -513,9 +517,9 @@ public class Game extends GameObservable implements Serializable, GameInterface 
             setLastTurn();
         }
         if (status.equals(GameStatus.PLAYING)) {
+            drawingPhase();
             setChanged();
             notifyObservers(Request.NOTIFY_CARD_PLACED, player.getNickname());
-            drawingPhase();
         }
     }
 
@@ -603,6 +607,11 @@ public class Game extends GameObservable implements Serializable, GameInterface 
     public void error(Request request, Object arg) {
         setChanged();
         notifyObservers(request, arg);
+    }
+
+    @Override
+    public GameView getGameView(Player player) {
+        return new GameView(this, player);
     }
 
     @Override

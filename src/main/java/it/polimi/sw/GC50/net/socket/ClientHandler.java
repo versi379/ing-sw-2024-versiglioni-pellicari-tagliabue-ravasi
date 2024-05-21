@@ -4,6 +4,7 @@ package it.polimi.sw.GC50.net.socket;
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.util.*;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -154,7 +155,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(Request request, Object arg) {
+    public void update(Request request, Object arg, GameView gameView) {
 
     }
 }

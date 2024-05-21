@@ -50,7 +50,7 @@ public abstract class ModelPrinter {
         printMatrix(handMatrix);
     }
 
-    public static void printDecks(List<PlayableCard> decks) {
+    public static void printDecks(PlayableCard[] decks) {
         System.out.println();
         System.out.println("Carte pescabili:");
         System.out.println();
@@ -65,23 +65,31 @@ public abstract class ModelPrinter {
         for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
 
             decksMatrix[4 * cardsCounter + 3][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
-            String[][] cardTUI = decks.get(cardsCounter).toStringTUI();
-            for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 2;
-                for (int j = 0; j < cardTUI[i].length; j++) {
-                    int matrixY = j + 7 + 1;
-                    decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+            String[][] cardTUI = decks[cardsCounter].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j + 7 + 1;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
                 }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Vuoto ";
             }
 
             decksMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
-            cardTUI = decks.get(cardsCounter + 3).toStringTUI();
-            for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 2;
-                for (int j = 0; j < cardTUI[i].length; j++) {
-                    int matrixY = j;
-                    decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+            cardTUI = decks[cardsCounter + 3].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
                 }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Vuoto ";
             }
         }
 

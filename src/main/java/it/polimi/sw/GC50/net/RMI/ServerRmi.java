@@ -62,7 +62,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     public boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException {
         GameControllerRemote gameController = lobby.createMatch(clientInterface, gameId, numOfPlayers, nickname);
         if (gameController != null) {
-            bindToRegistry(gameController, gameId);
+            bindToRegistry(gameController, "game" + gameId);
             return true;
         }
         return false;

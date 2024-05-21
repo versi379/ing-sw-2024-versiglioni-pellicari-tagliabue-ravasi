@@ -30,7 +30,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         playerMap = new HashMap<>();
         Player creator = new Player(nickname);
         game = new Game(gameId, numPlayers, endScore, creator);
-        game.addObserver(clientInterface);
+        game.addObserver(clientInterface, creator);
         playerMap.put(clientInterface, creator);
     }
 
@@ -47,7 +47,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     public boolean addPlayer(ClientInterface clientInterface, String nickname) {
         if (isFree()) {
             Player player = new Player(nickname);
-            game.addObserver(clientInterface);
+            game.addObserver(clientInterface, player);
             game.addPlayer(player);
             playerMap.put(clientInterface, player);
             return true;

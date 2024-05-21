@@ -2,10 +2,7 @@ package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
-import it.polimi.sw.GC50.model.game.Game;
-import it.polimi.sw.GC50.model.game.GameStatus;
-import it.polimi.sw.GC50.model.game.PlayerData;
-import it.polimi.sw.GC50.model.game.PlayingPhase;
+import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 
@@ -13,16 +10,20 @@ import java.io.Serializable;
 import java.util.*;
 
 public class GameView implements Serializable {
+    // GENERAL //////////////////////////////////////////////////////
     private final GameStatus gameStatus;
     private final PlayingPhase playingPhase;
     private final String currentPlayer;
     private final List<ObjectiveCard> commonObjectives;
-    private final List<PlayableCard> decks;
+    private final PlayableCard[] decks;
+    // winnerlist
+    // PLAYER SPECIFIC //////////////////////////////////////////////
     private final String playerNickname;
     private final List<PhysicalCard> hand;
     private final ObjectiveCard secretObjective;
     private final List<ObjectiveCard> secreteObjectivesList;
     private final PhysicalCard starterCard;
+    // BOARDS ///////////////////////////////////////////////////////
     private final Map<String, PlayerDataView> playerAreas;
 
     public GameView(Game game, Player player) {
@@ -30,7 +31,7 @@ public class GameView implements Serializable {
         playingPhase = game.getCurrentPhase();
         currentPlayer = game.getCurrentPlayer().getNickname();
         commonObjectives = new ArrayList<>(game.getCommonObjectives());
-        decks = new ArrayList<>(Arrays.asList(game.getDecksTop()));
+        decks = game.getDecksTop();
 
         playerNickname = player.getNickname();
         PlayerData playerData = game.getPlayerData(player);
@@ -63,8 +64,8 @@ public class GameView implements Serializable {
         return new ArrayList<>(commonObjectives);
     }
 
-    public List<PlayableCard> getDecks() {
-        return new ArrayList<>(decks);
+    public PlayableCard[] getDecks() {
+        return decks;
     }
 
     public String getPlayerNickname() {
