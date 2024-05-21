@@ -160,7 +160,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
 
-            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAW: {
+            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAWN: {
                 if (GameStatus.PLAYING.equals(gameStatus)) {
                     error = false;
                     notifyMidPhase();
@@ -191,16 +191,7 @@ public class ClientSCK implements Runnable {
                 break;
 
             }
-            case NOTIFY_CHOOSE_OBJECTIVE: {
-                if (mex.getObject().equals(nickName)) {
-                    notifyFirsPhase();
-                }
-                break;
-            }
-            case NOTIFY_ALL_PLAYER_JOINED_THE_GAME: {
-                break;
-            }
-            case NOTIFY_CARD_NOT_FOUND, NOTIFY_POSITION_DRAWING_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
+            case NOTIFY_CARD_NOT_FOUND, NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
                     NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
                 if (mex.getObject().equals(nickName)) {
                     error = true;
@@ -209,7 +200,7 @@ public class ClientSCK implements Runnable {
                 break;
             }
             case GET_MODEL_RESPONSE: {
-                this.modelMex = (ModelMex) mex.getObject();
+                this.gameView = (GameView) mex.getObject();
                 notifyModelChangedFromServer();
                 break;
             }
@@ -408,8 +399,8 @@ public class ClientSCK implements Runnable {
     private Object getModel() {
         setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
         waitModelChangedFromServer();
-        view.addModel(this.modelMex);
-        waitNotifyModelChangedFromServer();
+        view.addModel(this.gameView);
+        // ??? waitNotifyModelChangedFromServer();
         view.addModel(this.gameView);
 
         if (this.gameView.getCurrentPlayer().equals(this.nickName)) {
@@ -506,9 +497,9 @@ public class ClientSCK implements Runnable {
         ///////////////////////////////////////////
         while (statusGame) {
             if (myTurn) {
-                if (modelMex.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
+                if (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
                     this.drawCard(view.selectDrawingPosition());
-                } else if (modelMex.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+                } else if (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
                     this.placeCard(view.selectPlaceCard());
                 }
             } else {

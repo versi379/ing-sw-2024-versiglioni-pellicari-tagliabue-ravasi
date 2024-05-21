@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.observ;
+package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;

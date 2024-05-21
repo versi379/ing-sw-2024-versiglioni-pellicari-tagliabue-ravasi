@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.trash;
+package trash;
 
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;

@@ -3,7 +3,7 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.trash.PrintBoardTUI2;
+import trash.PrintBoardTUI2;
 import it.polimi.sw.GC50.view.PlayerDataView;
 
 import java.util.List;

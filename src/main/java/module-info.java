@@ -7,13 +7,13 @@ module it.polimi.sw.GC50 {
     requires jdk.httpserver;
     exports it.polimi.sw.GC50.view.GUI;
     exports it.polimi.sw.GC50.net.RMI;
-    exports it.polimi.sw.GC50.net;
     exports it.polimi.sw.GC50.app;
     exports it.polimi.sw.GC50.net.util;
-    exports it.polimi.sw.GC50.net.observ;
     exports it.polimi.sw.GC50.controller;
-    exports it.polimi.sw.GC50.trash;
+    exports trash;
     exports it.polimi.sw.GC50.view.GUI.controllers;
     opens it.polimi.sw.GC50.view.GUI.controllers;
     exports it.polimi.sw.GC50.model.lobby;
+    exports it.polimi.sw.GC50.model;
+    exports it.polimi.sw.GC50.view;
 }

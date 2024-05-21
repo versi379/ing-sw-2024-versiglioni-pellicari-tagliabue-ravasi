@@ -1,18 +1,12 @@
 package it.polimi.sw.GC50.app;
 
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
-import it.polimi.sw.GC50.net.TypeOfConnection;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.GUI.controllers.NetController;
-import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.View;
 import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,11 +16,9 @@ import java.util.Scanner;
 
 
 public class AppClient {
+    private static View view;
+    private static ViewType viewType;
     public static void main(String[] args) {
-        TypeOfConnection connection;
-        View view;
-        ViewType viewType;
-
         printBanner();
 
         if (readBinaryChoice("Selezionare la tipologia di interfaccia:" +

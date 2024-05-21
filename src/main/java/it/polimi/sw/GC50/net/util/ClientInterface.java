@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.net.util;
 
-import it.polimi.sw.GC50.net.observ.GameObserver;
+import it.polimi.sw.GC50.view.GameObserver;
 import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.Remote;
