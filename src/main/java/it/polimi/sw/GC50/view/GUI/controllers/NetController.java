@@ -40,7 +40,7 @@ public class NetController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        AppClient.setupSocket(AppClient.getView(), AppClient.getViewType());
+        AppClient.setupSocket(AppClient.getView());
     }
 
     @FXML

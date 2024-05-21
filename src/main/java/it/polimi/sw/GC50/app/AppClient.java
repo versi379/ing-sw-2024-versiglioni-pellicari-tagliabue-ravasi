@@ -50,11 +50,11 @@ public class AppClient {
         }
     }
 
-    public static void setupSocket(View view, ViewType viewType) {
+    public static void setupSocket(View view) {
         try {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
-            client.addView(view, viewType);
+            client.addView(view);
             if(viewType == ViewType.TUI) {
                 client.lobby();
             }
