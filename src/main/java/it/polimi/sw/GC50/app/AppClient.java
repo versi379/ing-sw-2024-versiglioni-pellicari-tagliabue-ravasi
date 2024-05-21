@@ -50,12 +50,12 @@ public class AppClient {
         }
     }
 
-    public static void setupSocket(View view) {
+    public static void setupSocket(View view, ViewType viewType) {
         try {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
             client.addView(view);
-            if(viewType == ViewType.TUI) {
+            if (viewType == ViewType.TUI) {
                 client.lobby();
             }
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class AppClient {
             String name = "rmi://localhost:1099/server";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
-            if(viewType == ViewType.TUI) {
+            if (viewType == ViewType.TUI) {
                 client.lobby();
             }
         } catch (RemoteException e) {
