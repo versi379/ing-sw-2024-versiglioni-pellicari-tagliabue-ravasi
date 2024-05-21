@@ -1,59 +1,82 @@
 package it.polimi.sw.GC50.model.lobby;
 
 import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.model.game.Game;
+import it.polimi.sw.GC50.net.util.ClientInterface;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.rmi.RemoteException;
+import java.util.*;
 
-/**
- *
- */
 public class Lobby {
-    private final Set<Player> players;
-    private final Map<Game, GameController> gameControllers;
+    private final Map<ClientInterface, String> clients;
+    private final ArrayList<GameController> freeGameControllers;
 
     public Lobby() {
-        players = new HashSet<>();
-        gameControllers = new HashMap<>();
+        clients = new HashMap<>();
+        freeGameControllers = new ArrayList<>();
+
+        System.out.println("Server Ready!");
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
+    public synchronized boolean addPlayer(ClientInterface clientInterface, String nickname) {
+        if (nickname == null || nickname.isEmpty() || clients.containsValue(nickname)) {
+            return false;
+        }
+        clients.put(clientInterface, nickname);
+        return true;
     }
 
-    public void removePlayer(Player player) {
-        players.remove(player);
+    /**
+     * @param client
+     * @param numOfPlayer
+     * @param gameId
+     * @param nickname
+     * @return GameController
+     * the return value is the GameController created by the client
+     * if is it null the GameController is not created
+     * this method is called when a client wants to create a GameController
+     * @
+     */
+    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
+        if (isPlayerPresent(client) && !isGamePresent(gameId)) {
+            System.out.println("Game " + gameId + " created");
+            GameController newGameController = new GameController(client, gameId, numOfPlayer, 20, nickname);
+            freeGameControllers.add(newGameController);
+            return newGameController;
+        } else {
+            return null;
+        }
     }
 
-    public boolean containsPlayer(Player player) {
-        return players.contains(player);
+    private synchronized boolean isPlayerPresent(ClientInterface client) {
+        return clients.containsKey(client);
     }
 
-    public void addGame(Game game) {
-        gameControllers.put(game, new GameController(game));
-    }
-
-    public void removeGame(Game game) {
-        gameControllers.remove(game);
-    }
-
-    public boolean containsGame(String gameId) {
-        return gameControllers.keySet().stream()
-                .map(Game::getId)
+    private synchronized boolean isGamePresent(String gameId) {
+        return freeGameControllers.stream()
+                .map(GameController::getGameId)
                 .anyMatch(gameId::equals);
     }
 
-    public Game getGame(String gameId) {
-        return gameControllers.keySet().stream()
-                .filter(x -> gameId.equals(x.getId()))
-                .findAny()
-                .orElse(null);
+    public synchronized GameController joinGame(ClientInterface client, String gameId, String nickname) {
+        if (isPlayerPresent(client)) {
+            for (GameController gameController : freeGameControllers) {
+                if (gameController.getGameId().equals(gameId) && gameController.isFree()) {
+                    gameController.addPlayer(client, nickname);
+                    if (!gameController.isFree()) {
+                        freeGameControllers.remove(gameController);
+                    }
+                    return gameController;
+                }
+            }
+        }
+        return null;
     }
 
-    public GameController getController(Game game) {
-        return gameControllers.get(game);
+    public synchronized Map<String, List<String>> getFreeGames() {
+        Map<String, List<String>> freeGames = new HashMap<>();
+        for (GameController gameController : freeGameControllers) {
+            freeGames.put(gameController.getGameId(), gameController.getPlayerList());
+        }
+        return freeGames;
     }
 }

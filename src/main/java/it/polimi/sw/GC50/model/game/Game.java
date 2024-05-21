@@ -11,7 +11,10 @@ import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.Objective;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.net.observ.GameObservable;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +23,7 @@ import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Game extends Observable implements Serializable, GameInterface {
+public class Game extends GameObservable implements Serializable, GameInterface {
 
     /**
      * Game's unique identifier
@@ -113,7 +116,7 @@ public class Game extends Observable implements Serializable, GameInterface {
      */
     private final Chat chat;
 
-    public Game(String id, int numPlayers, int endScore, Player creator) {
+    public Game(String id, int numPlayers, int endScore) {
         this.id = id;
         this.numPlayers = numPlayers;
         this.endScore = endScore;
@@ -136,8 +139,6 @@ public class Game extends Observable implements Serializable, GameInterface {
         commonObjectives = new ArrayList<>();
 
         chat = new Chat();
-
-        addPlayer(creator);
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,8 +147,11 @@ public class Game extends Observable implements Serializable, GameInterface {
     }
 
     public PlayableCard[] getDecksTop() {
-        PlayableCard[] drawableCards = new PlayableCard[6];
+        if(status.equals(GameStatus.WAITING)) {
+            return null;
+        }
 
+        PlayableCard[] drawableCards = new PlayableCard[6];
         drawableCards[0] = peekCard(DrawingPosition.RESOURCEDECK);
         drawableCards[1] = peekCard(DrawingPosition.RESOURCE1);
         drawableCards[2] = peekCard(DrawingPosition.RESOURCE2);
@@ -189,11 +193,7 @@ public class Game extends Observable implements Serializable, GameInterface {
         notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, player.getNickname());
 
         if (playerList.size() >= getNumPlayers()) {
-            setChanged();
-            notifyObservers(Request.NOTIFY_ALL_PLAYER_JOINED_THE_GAME, null);
             setup();
-            setChanged();
-            notifyObservers(Request.NOTIFY_GAME_SETUP, null);
         }
     }
 
@@ -246,6 +246,8 @@ public class Game extends Observable implements Serializable, GameInterface {
             addCard(player, pickCard(DrawingPosition.GOLDDECK));
             setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
         }
+        setChanged();
+        notifyObservers(Request.NOTIFY_GAME_SETUP, null);
     }
 
     /**
@@ -370,8 +372,6 @@ public class Game extends Observable implements Serializable, GameInterface {
     public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
         getPlayerData(player).setSecretObjective(secretObjective);
         checkPreparation(player);
-        setChanged();
-        notifyObservers(Request.NOTIFY_CHOOSE_OBJECTIVE, player.getNickname());
         if (isReady(player)) {
             setChanged();
             notifyObservers(Request.NOTIFY_PLAYER_READY, player.getNickname());
@@ -391,9 +391,6 @@ public class Game extends Observable implements Serializable, GameInterface {
         if (playerList.stream()
                 .allMatch(this::isReady)) {
             start();
-            setChanged();
-            notifyObservers(Request.NOTIFY_GAME_STARTED, null);
-
         }
     }
 
@@ -401,6 +398,8 @@ public class Game extends Observable implements Serializable, GameInterface {
     private void start() {
         status = GameStatus.PLAYING;
         System.err.println("Game \"" + id + "\" has started");
+        setChanged();
+        notifyObservers(Request.NOTIFY_GAME_STARTED, getCurrentPlayer().getNickname());
     }
 
     public PlayingPhase getCurrentPhase() {
@@ -418,7 +417,7 @@ public class Game extends Observable implements Serializable, GameInterface {
             currentIndex = (currentIndex + 1) % playerList.size();
             currentPhase = PlayingPhase.PLACING;
             setChanged();
-            notifyObservers(Request.NOTIFY_NEXT_TURN, null);
+            notifyObservers(Request.NOTIFY_NEXT_TURN, getCurrentPlayer().getNickname());
         }
     }
 
@@ -520,14 +519,16 @@ public class Game extends Observable implements Serializable, GameInterface {
         }
         if (status.equals(GameStatus.PLAYING)) {
             drawingPhase();
+            setChanged();
+            notifyObservers(Request.NOTIFY_CARD_PLACED, player.getNickname());
         }
     }
 
     public void addCard(Player player, PhysicalCard card) {
         getPlayerData(player).addCard(card);
-        setChanged();
-        notifyObservers(Request.NOTIFY_CARD_DRAW, player.getNickname());
         if (status.equals(GameStatus.PLAYING)) {
+            setChanged();
+            notifyObservers(Request.NOTIFY_CARD_DRAWN, player.getNickname());
             nextPlayer();
         }
     }
@@ -543,7 +544,7 @@ public class Game extends Observable implements Serializable, GameInterface {
     public void sendMessageInChat(Player player, String message) {
         chat.addMessage(new Message(player, message, LocalTime.now()));
         setChanged();
-        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, null);
+        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, player.getNickname());
     }
 
     // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -587,6 +588,8 @@ public class Game extends Observable implements Serializable, GameInterface {
                 System.err.println();
             }
         }
+        setChanged();
+        notifyObservers(Request.NOTIFY_GAME_ENDED, winnerList.stream().map(Player::getNickname).toList());
     }
 
     public List<Player> getWinnerList() {
@@ -605,6 +608,11 @@ public class Game extends Observable implements Serializable, GameInterface {
     public void error(Request request, Object arg) {
         setChanged();
         notifyObservers(request, arg);
+    }
+
+    @Override
+    public GameView getGameView(Player player) {
+        return new GameView(this, player);
     }
 
     @Override

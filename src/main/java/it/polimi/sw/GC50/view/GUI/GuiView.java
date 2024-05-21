@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.controllers.UserController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
+import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,13 +18,15 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GuiView extends Application implements View {
 
     private Stage primaryStage;
     private StackPane root;
     private ArrayList<SceneInfo> scenes;
-    private ModelMex modelmex;
+    private GameView gameView;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -54,7 +57,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void waitPlayers() {
+    public void showWaitPlayers() {
 
     }
 
@@ -64,13 +67,13 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void allPlayerReady() {
+    public void showSetup() {
 
     }
 
     @Override
-    public void addModel(ModelMex modelmex) {
-        this.modelmex = modelmex;
+    public void addModel(GameView gameView) {
+        this.gameView = gameView;
     }
 
     @Override
@@ -108,4 +111,55 @@ public class GuiView extends Application implements View {
         return null;
     }
 
+    @Override
+    public void showFreeGames(Map<String, List<String>> freeGames) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+    }
+
+    @Override
+    public void showPlayerArea(String nickname) {
+    }
+
+    @Override
+    public void showDecks() {
+
+    }
+
+    @Override
+    public void showScores() {
+    }
+
+    @Override
+    public void showPlayerJoined(String nickname) {
+
+    }
+
+    @Override
+    public void showPlayerLeft(String nickname) {
+
+    }
+
+    @Override
+    public void showEndSession() {
+
+    }
+
+    @Override
+    public void showCommonObjectives() {
+
+    }
+
+    @Override
+    public void showPlayerReady(String nickname) {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
 }

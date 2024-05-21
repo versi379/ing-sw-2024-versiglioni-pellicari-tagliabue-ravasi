@@ -3,46 +3,34 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
-import it.polimi.sw.GC50.view.PlayerArea1;
+import it.polimi.sw.GC50.trash.PrintBoardTUI2;
+import it.polimi.sw.GC50.view.PlayerDataView;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-public class ModelPrinter {
-    private Map<String, PlayerArea1> playerAreas;
-    private List<PlayableCard> decks;
-    private List<PhysicalCard> hand;
-    private ObjectiveCard secretObjective;
+public abstract class ModelPrinter {
 
-    public void update(List<ModelMex.SinglePlayerArea> singlePlayerAreas, PlayableCard[] decks, List<PhysicalCard> hand) {
-        this.playerAreas = new HashMap<>();
-        for (ModelMex.SinglePlayerArea singlePlayerArea : singlePlayerAreas) {
-            this.playerAreas.put(singlePlayerArea.getNickname(),
-                    new PlayerArea1(singlePlayerArea.getNickname(), singlePlayerArea.getColor(),
-                            singlePlayerArea.getCardsMatrix(),singlePlayerArea.getPoint()));
-        }
-        this.decks = new ArrayList<>(Arrays.asList(decks));
-        this.hand = new ArrayList<>(hand);
-    }
-
-    public void printHand() {
+    public static void printHand(List<PhysicalCard> hand) {
         System.out.println();
         System.out.println("Carte in mano:");
         System.out.println();
 
-        String[][] handMatrix = new String[4 * hand.size()][7 * 2 + 1];
+        String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
-        handMatrix[0][7 * 2] = "Indici: ";
-        handMatrix[0][7 + 3] = "  1)   ";
-        handMatrix[0][3] = "  2)   ";
+        handMatrix[0][7 * 2] = "   Indi";
+        handMatrix[1][7 * 2] = "ci:    ";
+        handMatrix[0][7 + 3] = " 1) Fro";
+        handMatrix[1][7 + 3] = "nte:   ";
+        handMatrix[0][3] = " 2) Ret";
+        handMatrix[1][3] = "ro:    ";
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
-            handMatrix[4 * cardsCounter + 2][7 * 2] = "  " + (cardsCounter + 1) + ")   ";
+            handMatrix[4 * cardsCounter + 3][7 * 2] = "  " + (cardsCounter + 1) + ")   ";
 
             String[][] cardTUI = hand.get(cardsCounter).getFront().toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j + 7;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
@@ -51,7 +39,7 @@ public class ModelPrinter {
 
             cardTUI = hand.get(cardsCounter).getBack().toStringTUI();
             for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
+                int matrixX = i + 4 * cardsCounter + 2;
                 for (int j = 0; j < cardTUI[i].length; j++) {
                     int matrixY = j;
                     handMatrix[matrixX][matrixY] = cardTUI[i][j];
@@ -62,46 +50,59 @@ public class ModelPrinter {
         printMatrix(handMatrix);
     }
 
-    public void printDecks() {
+    public static void printDecks(PlayableCard[] decks) {
         System.out.println();
         System.out.println("Carte pescabili:");
         System.out.println();
 
-        String[][] handMatrix = new String[4 * 3][7 * 2 + 2];
+        String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
+
+        decksMatrix[0][11] = "   Riso";
+        decksMatrix[1][11] = "rsa:   ";
+        decksMatrix[0][3] = "     Or";
+        decksMatrix[1][3] = "o:     ";
 
         for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
 
-            handMatrix[4 * cardsCounter + 2][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
-            String[][] cardTUI = decks.get(cardsCounter).toStringTUI();
-            for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
-                for (int j = 0; j < cardTUI[i].length; j++) {
-                    int matrixY = j + 7 + 1;
-                    handMatrix[matrixX][matrixY] = cardTUI[i][j];
+            decksMatrix[4 * cardsCounter + 3][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
+            String[][] cardTUI = decks[cardsCounter].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j + 7 + 1;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
                 }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Vuoto ";
             }
 
-            handMatrix[4 * cardsCounter + 2][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
-            cardTUI = decks.get(cardsCounter + 3).toStringTUI();
-            for (int i = 0; i < cardTUI.length; i++) {
-                int matrixX = i + 4 * cardsCounter + 1;
-                for (int j = 0; j < cardTUI[i].length; j++) {
-                    int matrixY = j;
-                    handMatrix[matrixX][matrixY] = cardTUI[i][j];
+            decksMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
+            cardTUI = decks[cardsCounter + 3].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
                 }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Vuoto ";
             }
         }
 
-        printMatrix(handMatrix);
+        printMatrix(decksMatrix);
     }
 
-    public void printPlayerArea(String nickname) {
+    public static void printPlayerArea(String nickname, PlayerDataView playerArea) {
         System.out.println();
         System.out.println("Area di gioco del giocatore " + nickname);
         System.out.println();
 
         String[][] boardMatrix;
-        CardsMatrix cardsMatrix = playerAreas.get(nickname).getCardsMatrix();
+        CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
         int minX = cardsMatrix.getMinX();
         int maxX = cardsMatrix.getMaxX();
         int minY = cardsMatrix.getMinY();
@@ -142,6 +143,16 @@ public class ModelPrinter {
         }
 
         printMatrix(boardMatrix);
+    }
+
+    public static void printScores(Map<String, Integer> scores) {
+        System.out.println();
+        System.out.println("Punteggi:");
+        System.out.println();
+
+        for (String nickname : scores.keySet()) {
+            System.out.println("Giocatore " + nickname + ": " + scores.get(nickname));
+        }
     }
 
     private static void printMatrix(String[][] stringMatrix) {

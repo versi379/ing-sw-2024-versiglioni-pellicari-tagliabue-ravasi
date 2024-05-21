@@ -1,8 +1,10 @@
 package it.polimi.sw.GC50.net.socket;
 
 
-import it.polimi.sw.GC50.net.observ.Observable;
+import it.polimi.sw.GC50.controller.GameControllerRemote;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.util.*;
+import it.polimi.sw.GC50.view.GameView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +25,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     //////////////////////////////////////////
     private final Lobby lobby;
-    private Match match;
+    private GameControllerRemote match;
     private String nickname;
     //////////////////////////////////////////
     private final ExecutorService executorService;
@@ -51,7 +53,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 try {
                     Object object = input.readObject();
                     Message.MessageClientToServer message = (Message.MessageClientToServer) object;
-                    switchmex(message);
+                    switchMex(message);
                 } catch (IOException | ClassNotFoundException e) {
 
                 }
@@ -59,7 +61,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
-    private synchronized void switchmex(Message.MessageClientToServer message) {
+    private synchronized void switchMex(Message.MessageClientToServer message) throws RemoteException {
         //System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
@@ -87,7 +89,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.CREATE_GAME:
                 System.out.println(message.getMatchName());
                 System.out.println(message.getNickName());
-                this.match = lobby.createMatch(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
+                this.match = lobby.createGame(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
                 } else {
@@ -95,7 +97,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.ENTER_GAME:
-                this.match = lobby.joinMatch(this, message.getMatchName(), message.getNickName());
+                this.match = lobby.joinGame(this, message.getMatchName(), message.getNickName());
                 if (match != null) {
                     setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
                 } else {
@@ -103,7 +105,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 }
                 break;
             case Request.GET_FREE_MATCH:
-                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeMatches()));
+                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeGames()));
                 break;
             case Request.SET_NAME:
                 boolean resp = lobby.addPlayer(this, message.getNickName());
@@ -153,12 +155,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Request request, Object arg, GameView gameView) {
 
-    }
-
-    @Override
-    synchronized public void onUpdate(Message message) throws RemoteException {
-        setMessageout(message);
     }
 }

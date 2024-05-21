@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view.TUI;
+package it.polimi.sw.GC50.trash;
 
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 

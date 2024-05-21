@@ -3,104 +3,213 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
+import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
+import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TuiView implements View {
-    ModelMex modelMex;
-    PrintGameArea printGameArea;
-    ModelPrinter modelPrinter;
+    GameView gameView;
 
     public TuiView() {
-        printGameArea = new PrintGameArea();
-        modelPrinter = new ModelPrinter();
     }
 
     public void start() {
     }
 
+    public void showEndSession() {
+        System.out.println();
+        System.out.println("Sessione terminata");
+    }
+
     @Override
     public String selectName() {
-        return readString("Insert your nickname");
+        return readString("Inserire il nome del giocatore:");
     }
 
     @Override
     public int selectJoinOrCreate() {
-        return readInt("Do you want to join or create a game?" +
-                "\n1) create a game" +
-                "\n2) join a game" +
-                "\n3) quit", 1, 3);
+        return readInt("Vuoi creare una nuova partita o entrare in una esistente?" +
+                "\n1) crea una partita" +
+                "\n2) entra in una partita" +
+                "\n3) abbandona",
+                1, 3);
+    }
+
+    @Override
+    public void showFreeGames(Map<String, List<String>> freeGames) {
+        if (freeGames.isEmpty()) {
+            System.out.println("No free games");
+        } else {
+            System.out.println("Free games:");
+            for (String game : freeGames.keySet()) {
+                System.out.print("Game " + game + ", current players:");
+                for (String nickname : freeGames.get(game)) {
+                    System.out.print(" " + nickname);
+                }
+                System.out.println();
+            }
+        }
     }
 
     @Override
     public String selectGameName() {
-        return readString("Insert the game name");
+        return readString("Inserire il nome della partita:");
     }
 
     @Override
     public int selectNumberOfPlayers() {
-        return readInt("Insert the number of players", 2, 3);
+        return readInt("Inserire il numero di giocatori:",
+                2, 3);
+    }
+
+    @Override
+    public void showPlayerJoined(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " è entrato in partita");
+    }
+
+    @Override
+    public void showPlayerLeft(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " ha abbandonato la partita");
+    }
+
+    @Override
+    public void showWaitPlayers() {
+        System.out.println();
+        System.out.println("In attesa che gli altri giocatori entrino in partita...");
+    }
+
+    @Override
+    public void showSetup() {
+        System.out.println();
+        System.out.println("Tutti i giocatori sono entrati, la partita sta iniziando");
+        showCommonObjectives();
+    }
+
+    @Override
+    public void showCommonObjectives() {
+        System.out.println();
+        System.out.println("Carte obiettivo comuni:");
+        List<ObjectiveCard> commonObjectives = gameView.getCommonObjectives();
+        for (int i = 0; i < commonObjectives.size(); i++) {
+            System.out.println();
+            System.out.println((commonObjectives.get(i).toStringTUI()));
+        }
     }
 
     @Override
     public int selectObjectiveCard() {
         System.out.println();
-        System.out.println("Select the objective card you want to play with");
-        printListObjectiveCard();
+        System.out.println("Selezione della carta obiettivo segreta");
+        printSecretObjectiveChoice();
 
-        return readInt("Insert the number of the objective card you want to play with", 1, 2) - 1;
+        return readInt("Inserire l'indice della carta obiettivo con cui si vuole giocare:",
+                1, gameView.getSecreteObjectivesList().size()) - 1;
+    }
+
+    private void printSecretObjectiveChoice() {
+        List<ObjectiveCard> objectiveCards = gameView.getSecreteObjectivesList();
+        for (int i = 0; i < objectiveCards.size(); i++) {
+            System.out.println();
+            System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
+        }
     }
 
     @Override
     public boolean selectStarterFace() {
         System.out.println();
-        System.out.println("Select the face of the Starter card");
-        printFaces(modelMex.getPlayerdata().getStarterCard());
+        System.out.println("Selezione della faccia della carta iniziale");
+        printStarterCardChoice(gameView.getStarterCard());
 
-        return readInt("Insert the number of the face you want to play with", 1, 2) == 1;
+        return readInt("Inserire l'indice della faccia con cui si vuole giocare:",
+                1, 2) == 1;
+    }
+
+    private void printStarterCardChoice(PhysicalCard card) {
+        String[][] cardTUI;
+
+        System.out.println();
+        System.out.println("1) Fronte");
+        cardTUI = card.getFront().toStringTUI();
+        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
+            for (int j = 0; j < cardTUI.length; j++) {
+                System.out.print(cardTUI[j][i]);
+            }
+            System.out.println();
+        }
+
+        System.out.println();
+        System.out.println("2) Retro");
+        cardTUI = card.getBack().toStringTUI();
+        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
+            for (int j = 0; j < cardTUI.length; j++) {
+                System.out.print(cardTUI[j][i]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    @Override
+    public void showPlayerReady(String nickname) {
+        System.out.println();
+        System.out.println("Giocatore " + nickname + " pronto");
     }
 
     @Override
     public PlaceCardMex selectPlaceCard() {
         System.out.println();
-        //printGameArea.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
-        modelPrinter.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
-        modelPrinter.printHand();
+        System.out.println("Piazzamento di una carta");
+        showPlayerArea(gameView.getPlayerNickname());
+        ModelPrinter.printHand(gameView.getHand());
         return new PlaceCardMex(
-                readInt("Select the card you want to place",
-                        1, modelMex.getPlayerdata().getHand().size()) - 1,
-                readInt("Select the face of the card", 1, 2) == 1,
-                readInt("Select the x coordinate", 1, modelMex.getPlayerdata().getCardsArea().length()),
-                readInt("Select the y coordinate", 1, modelMex.getPlayerdata().getCardsArea().length()));
+                readInt("Selezionare l'indice della carta da piazzare:",
+                        1, gameView.getHand().size()) - 1,
+                readInt("Selezionare la faccia della carta:",
+                        1, 2) == 1,
+                readInt("Inserire il valore della coordinata x:",
+                        1, gameView.getPlayerArea(gameView.getPlayerNickname())
+                        .getCardsMatrix().length()) - 1,
+                readInt("Inserire il valore della coordinata y:",
+                        1,gameView.getPlayerArea(gameView.getPlayerNickname())
+                        .getCardsMatrix().length()) - 1);
+    }
+
+    @Override
+    public void showPlayerArea(String nickname) {
+        ModelPrinter.printPlayerArea(nickname, gameView.getPlayerArea(nickname));
     }
 
     @Override
     public DrawingPosition selectDrawingPosition() {
-        modelPrinter.printDecks();
-        return DrawingPosition.values()[readInt("Select the card you want to draw",
+        System.out.println();
+        System.out.println("Pescaggio di una carta");
+        showDecks();
+        return DrawingPosition.values()[readInt("Selezionare la carta da pescare:",
                 1, DrawingPosition.values().length) - 1];
     }
 
     @Override
-    public void waitPlayers() {
-        System.out.println("Waiting for other players to join the game");
+    public void showDecks() {
+        ModelPrinter.printDecks(gameView.getDecks());
     }
 
     @Override
-    public void allPlayerReady() {
-        System.out.println("All players are ready, the game is starting");
+    public void showScores() {
+        Map<String, Integer> scores = new HashMap<>();
+        for (String nickname : gameView.getPlayersList()) {
+            scores.put(nickname, gameView.getPlayerArea(nickname).getTotalScore());
+        }
+        ModelPrinter.printScores(scores);
     }
 
     @Override
-    public void addModel(ModelMex modelmex) {
-        this.modelMex = modelmex;
-        this.printGameArea.update(modelmex.getOtherPlayersInfo(), modelmex.getDrawingCard(), modelmex.getPlayerdata().getHand());
+    public void addModel(GameView gameView) {
+        this.gameView = gameView;
     }
 
     @Override
@@ -114,40 +223,12 @@ public class TuiView implements View {
 
     @Override
     public void updateBoard() {
-        printGameArea.update(modelMex.getOtherPlayersInfo(), modelMex.getDrawingCard(), modelMex.getPlayerdata().getHand());
-        printGameArea.printAllBoard(true, 0);
     }
 
-    private void printFaces(PhysicalCard card) {
-        String[][] cardTUI;
-
+    @Override
+    public void showError() {
         System.out.println();
-        System.out.println("1) Front");
-        cardTUI = card.getFront().toStringTUI();
-        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
-            for (int j = 0; j < cardTUI.length; j++) {
-                System.out.print(cardTUI[j][i]);
-            }
-            System.out.println();
-        }
-
-        System.out.println();
-        System.out.println("2) Back");
-        cardTUI = card.getBack().toStringTUI();
-        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
-            for (int j = 0; j < cardTUI.length; j++) {
-                System.out.print(cardTUI[j][i]);
-            }
-            System.out.println();
-        }
-    }
-
-    private void printListObjectiveCard() {
-        List<ObjectiveCard> objectiveCards = modelMex.getPlayerdata().getSecretObjectivesList();
-        for (int i = 0; i < objectiveCards.size(); i++) {
-            System.out.println();
-            System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
-        }
+        System.out.println("Errore");
     }
 
     private static String readString(String message) {
@@ -156,6 +237,7 @@ public class TuiView implements View {
 
         String read;
         try {
+            System.out.print("> ");
             read = scanner.nextLine();
         } catch (InputMismatchException e) {
             read = null;
@@ -164,6 +246,7 @@ public class TuiView implements View {
         while (read == null) {
             System.out.println("Invalid input. Please retry");
             try {
+                System.out.print("> ");
                 read = scanner.nextLine();
             } catch (InputMismatchException e) {
                 scanner.nextLine();
@@ -178,6 +261,7 @@ public class TuiView implements View {
 
         int read;
         try {
+            System.out.print("> ");
             read = scanner.nextInt();
         } catch (InputMismatchException e) {
             read = min - 1;
@@ -186,11 +270,18 @@ public class TuiView implements View {
         while (read < min || read >= min + range) {
             System.out.println("Invalid input. Please enter a number between " + min + " and " + (min + range - 1));
             try {
+                System.out.print("> ");
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 scanner.nextLine();
             }
         }
         return read;
+    }
+
+    @Override
+    public void showMessage(String message) {
+        System.out.println();
+        System.out.println(message);
     }
 }

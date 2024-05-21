@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.util;
+package it.polimi.sw.GC50.trash;
 
 import it.polimi.sw.GC50.controller.GameController;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
@@ -7,7 +7,7 @@ import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/*
 public class Match {
     private final int code; ///used if there are more than one match with the same name
     private final String gameId;
@@ -93,3 +93,4 @@ public class Match {
         return controller.getGameModel(player);
     }
 }
+*/

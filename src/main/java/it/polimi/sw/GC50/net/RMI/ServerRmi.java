@@ -1,34 +1,61 @@
 package it.polimi.sw.GC50.net.RMI;
 
+import it.polimi.sw.GC50.controller.GameControllerRemote;
+import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Request;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
 
-public interface ServerRmi extends Remote {
-    void start() throws RemoteException;
+public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
+    private final Lobby lobby;
+    private final int port;
+    private Registry registry;
 
-    void addClient(ClientInterface client) throws RemoteException;
+    public ServerRmi(Lobby lobby, int port) throws RemoteException {
+        this.lobby = lobby;
+        this.port = port;
+        registry = null;
+    }
+
+    @Override
+    public void start() {
+        try {
+            LocateRegistry.createRegistry(this.port).rebind("server", this);
+        } catch (RemoteException e) {
+            System.err.println("Error in binding to RMI registry");
+        }
+    }
+
+    @Override
+    public void addClient(ClientInterface client) {
+        System.out.println("Client connected");
+    }
 
     //////////////////////////////////////////
     //LOBBY
     ///////////////////////////////////////////
+    @Override
+    public boolean setPlayer(ClientInterface clientInterface, String nickname) {
+        return lobby.addPlayer(clientInterface, nickname);
+    }
 
-    List<String> getFreeMatches() throws RemoteException;
+    @Override
+    public Map<String, List<String>> getFreeGames() throws RemoteException {
+        return lobby.getFreeGames();
+    }
 
-    boolean createGame(ClientInterface clientInterface, int numOfPlayers, String gameId, String nickname) throws RemoteException;
+    @Override
+    public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, String nickname) throws RemoteException {
+        return lobby.createGame(clientInterface, gameId, numOfPlayers, nickname);
+    }
 
-    boolean joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException;
-
-    boolean setPlayer(ClientInterface clientInterface, String nickname) throws RemoteException;
-
-    //////////////////////////////////////////
-    //ACTIVE GAME
-    ///////////////////////////////////////////
-
-    void message(Request request, Object object, ClientInterface clientInterface) throws RemoteException;
-
-    Object getModel(Request request, Object object, ClientInterface clientInterface) throws RemoteException;
+    @Override
+    public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException {
+        return lobby.joinGame(clientInterface, gameId, nickname);
+    }
 }

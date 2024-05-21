@@ -22,16 +22,16 @@ import java.util.Scanner;
 
 
 public class AppClient {
-
-    TypeOfConnection connection;
-    static View view;
-    static ViewType viewType;
-
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+        TypeOfConnection connection;
+        View view;
+        ViewType viewType;
 
         printBanner();
 
-        if (readBinaryChoice("1 for Tui , 2 for Gui") == 1) {
+        if (readBinaryChoice("Selezionare la tipologia di interfaccia:" +
+                "\n1) terminale" +
+                "\n2) interfaccia grafica") == 1) {
             view = new TuiView();
             viewType = ViewType.TUI;
         } else {
@@ -42,12 +42,15 @@ public class AppClient {
 
         // setup connection (only TUI)
         if (viewType == ViewType.TUI) {
-            if (readBinaryChoice("1 for SCK connection, 2 for RMI") == 1) {
+            if (readBinaryChoice("Selezionare la tipologia di connessione:" +
+                    "\n1) Socket" +
+                    "\n2) RMI") == 1) {
                 setupSocket(view, viewType);
             } else {
                 setupRMI(view, viewType);
             }
         }
+        System.err.println("Bye");
     }
 
     public static void setupSocket(View view, ViewType viewType) {
@@ -66,14 +69,12 @@ public class AppClient {
     public static void setupRMI(View view, ViewType viewType) {
         try {
             System.out.println("Connecting to server...");
-            String name = "rmi://localhost:1099/server";
+            String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
-            if (viewType == ViewType.TUI) {
-                client.lobby();
-            }
+            client.run();
         } catch (RemoteException e) {
-            System.out.println("Error in connection");
+            System.err.println("Error in connection");
         }
     }
 
@@ -83,6 +84,7 @@ public class AppClient {
 
         int read;
         try {
+            System.out.print("> ");
             read = scanner.nextInt();
         } catch (InputMismatchException e) {
             read = 0;
@@ -91,6 +93,7 @@ public class AppClient {
         while (read != 1 && read != 2) {
             System.out.println("Invalid input. Please enter 1 or 2.");
             try {
+                System.out.print("> ");
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 scanner.nextLine();

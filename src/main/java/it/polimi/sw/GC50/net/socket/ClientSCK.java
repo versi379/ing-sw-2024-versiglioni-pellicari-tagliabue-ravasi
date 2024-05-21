@@ -4,10 +4,11 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
 import it.polimi.sw.GC50.net.util.Message;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameView;
+import it.polimi.sw.GC50.view.ViewType;
 
 import it.polimi.sw.GC50.view.View;
 
@@ -33,7 +34,8 @@ public class ClientSCK implements Runnable {
     //match
     private String matchName;
     private String nickName;
-    private ModelMex modelMex;
+    private GameView gameView;
+    //private ModelMex modelMex;
     ///////////////////////////////////////////
     private boolean alive;
     private boolean allPlayerReady;
@@ -407,13 +409,15 @@ public class ClientSCK implements Runnable {
         setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
         waitModelChangedFromServer();
         view.addModel(this.modelMex);
+        waitNotifyModelChangedFromServer();
+        view.addModel(this.gameView);
 
-        if (this.modelMex.getCurrentPlayer().equals(this.nickName)) {
+        if (this.gameView.getCurrentPlayer().equals(this.nickName)) {
             this.myTurn = true;
         } else {
             this.myTurn = false;
         }
-        return this.modelMex;
+        return this.gameView;
     }
 
     //////////////////////////////////////////
@@ -453,7 +457,7 @@ public class ClientSCK implements Runnable {
 
     private void waitingPlayer() {
 
-        view.waitPlayers();
+        view.showWaitPlayers();
         long startTime = System.currentTimeMillis();
 
         while (!this.allPlayerReady) {
@@ -471,7 +475,7 @@ public class ClientSCK implements Runnable {
             }
         }
         if (this.allPlayerReady) {
-            view.allPlayerReady();
+            view.showSetup();
             firstPhase();
         } else {
             this.lobby();
@@ -485,7 +489,7 @@ public class ClientSCK implements Runnable {
     ///////////////////////////////////////////
     private void firstPhase() {
         this.getModel();
-        view.addModel(this.modelMex);
+        view.addModel(this.gameView);
         this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
