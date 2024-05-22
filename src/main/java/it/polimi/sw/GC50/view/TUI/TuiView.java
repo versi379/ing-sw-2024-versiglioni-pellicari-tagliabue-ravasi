@@ -292,4 +292,5 @@ public class TuiView implements View {
         System.out.println();
         System.out.println(message);
     }
+
 }

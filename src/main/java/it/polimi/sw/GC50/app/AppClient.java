@@ -29,8 +29,8 @@ public class AppClient {
             viewType = ViewType.TUI;
         } else {
             view = new GuiView();
+            launchGui((GuiView) view);
             viewType = ViewType.GUI;
-            launchGui();
         }
 
         // setup connection (only TUI)
@@ -40,6 +40,20 @@ public class AppClient {
                     "\n2) RMI") == 1) {
                 setupSocket(view, viewType);
             } else {
+                setupRMI(view, viewType);
+            }
+        } else { // GUI
+            while (((GuiView) view).getNetController() == null) {
+                System.out.println("ATTENDO SCHERMATA NET");
+            }
+            while(!((GuiView) view).getNetController().isnetSetted()) {
+                System.out.println("ATTENDO SCELTA NET");
+            }
+            if (((GuiView) view).getNetController().getNetSelected() == 1) {
+                System.out.println("LANCIO SOCKET");
+                setupSocket(view, viewType);
+            } else {
+                System.out.println("LANCIO RMI");
                 setupRMI(view, viewType);
             }
         }
@@ -104,16 +118,15 @@ public class AppClient {
         System.out.print("\u001B[0m");
     }
 
-    private static void launchGui() {
+    private static void launchGui(GuiView view) {
         new Thread(() -> {
             try {
                 // Ensure JavaFX is initialized
                 Platform.startup(() -> {
                     try {
                         // Launch the JavaFX Application
-                        GuiView guiView = new GuiView();
                         Stage stage = new Stage();
-                        guiView.start(stage);
+                        view.start(stage);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -10,49 +10,47 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class UserController extends GUIController {
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+public class UserController {
 
     @FXML
     private TextField playerNickname;
 
     @FXML
-    private Button netMenuButton;
-
-    @FXML
     private Button menuButton;
+
+    private boolean nameSetted;
 
     @FXML
     public void initialize() throws Exception {
+        playerNickname.setText("Giocatore");
+        System.out.println("testo iniziale label"+playerNickname.getText());
+        nameSetted = false;
 
     }
 
-    @FXML
-    public void handleNetMenuButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) netMenuButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.NET.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void showMenuView() throws Exception{
+        Stage stage = (Stage) menuButton.getScene().getWindow();
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        stage.setScene(userScene);
     }
 
     @FXML
     public void handleMenuButton(ActionEvent event) throws Exception {
-        System.out.println(playerNickname.getText());
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) menuButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        nameSetted = true;
+        showMenuView();
     }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
+    }
+
+    public boolean isNameSetted() {
+        return nameSetted;
     }
 
 }

@@ -3,7 +3,10 @@ package it.polimi.sw.GC50.view.GUI;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
-import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
+import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
+import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
+import it.polimi.sw.GC50.view.GUI.controllers.NetController;
+import it.polimi.sw.GC50.view.GUI.controllers.UserController;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
@@ -11,36 +14,75 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GuiView extends Application implements View {
 
-    private Stage primaryStage;
-    private StackPane root;
-    private ArrayList<SceneInfo> scenes;
     private GameView gameView;
+
+    private Stage primaryStage;
+
+    // GUI Controllers
+    private NetController netController;
+    private UserController userController;
+    private MenuController menuController;
+    private GameControllerGUI gameController;
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        this.primaryStage = stage;
+
+        FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
+        Parent netRoot = netLoader.load();
+        netController = netLoader.getController();
+
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+        Parent userRoot = userLoader.load();
+        userController = userLoader.getController();
+
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent menuRoot = menuLoader.load();
+        menuController = menuLoader.getController();
+
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+        Parent gameRoot = gameLoader.load();
+        gameController = gameLoader.getController();
+
+        Scene scene = new Scene(netRoot);
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public GuiView() {
+
     }
 
     @Override
     public String selectName() {
-        return "giovanni";
+        while(userController == null) {
+            System.out.println("ATTENDO SCHERMATA USER");
+        }
+        System.out.println("username setted: "+userController.isNameSetted());
+        while(!userController.isNameSetted()) {
+            // System.out.println("ATTENDO SCELTA USERNAME");
+        }
+        System.out.println("username impostato");
+        // qui il nome è impostato ed è stata cambiata scena
+        return userController.getPlayerNickname();
+        //return "giovanni";
+    }
+
+    @Override
+    public int selectJoinOrCreate() {
+        return menuController.getGameChoice();
+    }
+
+    @Override
+    public void showFreeGames(Map<String, List<String>> freeGames) {
+
     }
 
     @Override
@@ -56,11 +98,6 @@ public class GuiView extends Application implements View {
     @Override
     public void showWaitPlayers() {
 
-    }
-
-    @Override
-    public int selectJoinOrCreate() {
-        return 0;
     }
 
     @Override
@@ -96,11 +133,6 @@ public class GuiView extends Application implements View {
     @Override
     public DrawingPosition selectDrawingPosition() {
         return null;
-    }
-
-    @Override
-    public void showFreeGames(Map<String, List<String>> freeGames) {
-
     }
 
     @Override
@@ -158,5 +190,16 @@ public class GuiView extends Application implements View {
     @Override
     public void showStart() {
 
+    }
+
+    public void showUserView() throws Exception{
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        primaryStage.setScene(userScene);
+    }
+
+    public NetController getNetController() {
+        return netController;
     }
 }
