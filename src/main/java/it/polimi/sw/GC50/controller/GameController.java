@@ -5,7 +5,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.GameView;
@@ -76,7 +76,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                 chooseObjective(player, (Integer) update);
             }
             case PLACE_CARD -> {
-                placeCard(player, (PlaceCardMex) update);
+                placeCard(player, (PlaceCardRequest) update);
             }
             case DRAW_CARD -> {
                 drawCard(player, (DrawingPosition) update);
@@ -106,7 +106,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             PhysicalCard starterCard = game.getStarterCard(player);
             game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
         } else {
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
+            game.error(player, "Operation not available");
         }
     }
 
@@ -120,15 +120,15 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             if (index >= 0 && index < secretObjectivesList.size()) {
                 game.setSecretObjective(player, secretObjectivesList.get(index));
             } else {
-                game.error(Request.NOTIFY_INVALID_INDEX, player.getNickname());
+                game.error(player, "Invalid index");
             }
         } else {
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
+            game.error(player, "Operation not available");
         }
     }
 
-    public void placeCard(Player player, PlaceCardMex placeCardMex) {
-        placeCard(player, placeCardMex.getIndex(), placeCardMex.isFace(), placeCardMex.getX(), placeCardMex.getY());
+    public void placeCard(Player player, PlaceCardRequest placeCardRequest) {
+        placeCard(player, placeCardRequest.getIndex(), placeCardRequest.isFace(), placeCardRequest.getX(), placeCardRequest.getY());
     }
 
     /**
@@ -147,13 +147,13 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                     game.placeCard(player, card, x, y);
                     game.removeCard(player, index);
                 } else {
-                    game.error(Request.NOTIFY_CARD_NOT_PLACEABLE, player.getNickname());
+                    game.error(player, "Card not placeable");
                 }
             } else {
-                game.error(Request.NOTIFY_CARD_NOT_FOUND, player.getNickname());
+                game.error(player, "Invalid index");
             }
         } else {
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
+            game.error(player, "Operation not available");
         }
     }
 
@@ -167,10 +167,10 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             if (card != null) {
                 game.addCard(player, card);
             } else {
-                game.error(Request.NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, player.getNickname());
+                game.error(player, "Invalid index");
             }
         } else {
-            game.error(Request.NOTIFY_OPERATION_NOT_AVAILABLE, player.getNickname());
+            game.error(player, "Operation not available");
         }
     }
 
@@ -179,9 +179,12 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*
     synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
         return new GameView(game, playerMap.get(clientInterface));
     }
+
+     */
 
     /*
     synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {

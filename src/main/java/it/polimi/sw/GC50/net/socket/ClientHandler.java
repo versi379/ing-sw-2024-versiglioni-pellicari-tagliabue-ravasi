@@ -3,8 +3,8 @@ package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
+import it.polimi.sw.GC50.net.Messages.Message;
 import it.polimi.sw.GC50.net.util.*;
-import it.polimi.sw.GC50.view.GameView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,8 +13,9 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+/*
 public class ClientHandler implements Runnable, ClientInterface {
+
     private final Socket socketClient;
     private final ServerSCK serverSCK;
     //////////////////////////////////////////
@@ -52,7 +53,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             while (!executorService.isShutdown()) {
                 try {
                     Object object = input.readObject();
-                    Message.MessageClientToServer message = (Message.MessageClientToServer) object;
+                    Message1.Message1ClientToServer message = (Message1.Message1ClientToServer) object;
                     switchMex(message);
                 } catch (IOException | ClassNotFoundException e) {
 
@@ -61,7 +62,7 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
-    private synchronized void switchMex(Message.MessageClientToServer message) throws RemoteException {
+    private synchronized void switchMex(Message1.Message1ClientToServer message) throws RemoteException {
         //System.out.println(message.getRequest());
 
         switch (message.getRequest()) {
@@ -71,7 +72,7 @@ public class ClientHandler implements Runnable, ClientInterface {
             case Request.GET_MODEL: {
                 Object object = match.getModel(this);
                 System.out.println(object.toString());
-                setMessageout(new Message(Request.GET_MODEL_RESPONSE, object));
+                setMessageout(new Message1(Request.GET_MODEL_RESPONSE, object));
                 break;
             }
             case Request.PLACE_CARD:
@@ -91,35 +92,35 @@ public class ClientHandler implements Runnable, ClientInterface {
                 System.out.println(message.getNickName());
                 this.match = lobby.createGame(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
                 if (match != null) {
-                    setMessageout(new Message(Request.CREATE_GAME_RESPONSE, true));
+                    setMessageout(new Message1(Request.CREATE_GAME_RESPONSE, true));
                 } else {
-                    setMessageout(new Message(Request.CREATE_GAME_RESPONSE, false));
+                    setMessageout(new Message1(Request.CREATE_GAME_RESPONSE, false));
                 }
                 break;
             case Request.ENTER_GAME:
                 this.match = lobby.joinGame(this, message.getMatchName(), message.getNickName());
                 if (match != null) {
-                    setMessageout(new Message(Request.ENTER_GAME_RESPONSE, true));
+                    setMessageout(new Message1(Request.ENTER_GAME_RESPONSE, true));
                 } else {
-                    setMessageout(new Message(Request.ENTER_GAME_RESPONSE, false));
+                    setMessageout(new Message1(Request.ENTER_GAME_RESPONSE, false));
                 }
                 break;
             case Request.GET_FREE_MATCH:
-                setMessageout(new Message(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeGames()));
+                setMessageout(new Message1(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeGames()));
                 break;
             case Request.SET_NAME:
                 boolean resp = lobby.addPlayer(this, message.getNickName());
-                setMessageout(new Message(Request.SET_NAME_RESPONSE, resp));
+                setMessageout(new Message1(Request.SET_NAME_RESPONSE, resp));
                 break;
             case null:
 
                 break;
             default:
-                setMessageout(new Message(Request.REQUEST_NOT_AVAILABLE, null));
+                setMessageout(new Message1(Request.REQUEST_NOT_AVAILABLE, null));
         }
     }
 
-    synchronized private void setMessageout(Message messageout) {
+    synchronized private void setMessageout(Message1 messageout) {
         try {
             if (messageout != null) {
                 // System.out.println(messageout.getRequest());
@@ -155,7 +156,10 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(Request request, Object arg, GameView gameView) {
+    public void update(Request request, Message message) {
 
     }
-}
+
+    }
+ */
+

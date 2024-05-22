@@ -18,12 +18,13 @@ import java.util.Scanner;
 public class AppClient {
     private static View view;
     private static ViewType viewType;
+
     public static void main(String[] args) {
         printBanner();
 
-        if (readBinaryChoice("Selezionare la tipologia di interfaccia:" +
-                "\n1) terminale" +
-                "\n2) interfaccia grafica") == 1) {
+        if (readBinaryChoice("Select the desired interface style:" +
+                "\n1) command line interface" +
+                "\n2) graphic interface") == 1) {
             view = new TuiView();
             viewType = ViewType.TUI;
         } else {
@@ -33,8 +34,8 @@ public class AppClient {
         }
 
         // setup connection (only TUI)
-        if (viewType == ViewType.TUI) {
-            if (readBinaryChoice("Selezionare la tipologia di connessione:" +
+        if (viewType.equals(ViewType.TUI)) {
+            if (readBinaryChoice("Select the desired connection technology:" +
                     "\n1) Socket" +
                     "\n2) RMI") == 1) {
                 setupSocket(view, viewType);
@@ -50,9 +51,7 @@ public class AppClient {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
             client.addView(view);
-            if (viewType == ViewType.TUI) {
-                client.lobby();
-            }
+            client.lobby();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -72,7 +71,7 @@ public class AppClient {
 
     private static int readBinaryChoice(String message) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(message);
+        System.out.println(TuiView.blueTxt + message + TuiView.baseTxt);
 
         int read;
         try {

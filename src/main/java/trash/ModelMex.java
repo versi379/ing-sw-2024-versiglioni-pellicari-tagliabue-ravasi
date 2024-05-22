@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.gameMexNet;
+package trash;
 
 import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PlayableCard;

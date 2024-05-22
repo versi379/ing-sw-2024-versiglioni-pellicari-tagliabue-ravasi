@@ -13,11 +13,11 @@ public class ChatTest {
 
     @Test
     void Chat(){
-        List<Message> messages =  new ArrayList<Message>();
+        List<ChatMessage> chatMessages =  new ArrayList<ChatMessage>();
         Player player = new Player("XXX");
-        Message m = new Message(player, "message1", LocalTime.now());
-        messages.add(m);
-        assertEquals(messages.get(0).getContent(),m.getContent());
+        ChatMessage m = new ChatMessage(player, "message1", LocalTime.now());
+        chatMessages.add(m);
+        assertEquals(chatMessages.get(0).getContent(),m.getContent());
 
     }
     @Test

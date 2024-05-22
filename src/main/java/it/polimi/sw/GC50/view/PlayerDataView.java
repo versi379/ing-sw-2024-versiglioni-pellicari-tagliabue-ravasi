@@ -4,14 +4,15 @@ import it.polimi.sw.GC50.model.game.CardsMatrix;
 
 import java.io.Serializable;
 
-public class PlayerDataView implements Serializable {
+public class PlayerDataView {
     private final CardsMatrix cardsMatrix;
-    private int totalScore;
-    private int objectivesScore;
+    private final int totalScore;
+    private final int objectivesScore;
 
-    public PlayerDataView(CardsMatrix cardsMatrix, int totalScore) {
-        this.cardsMatrix = cardsMatrix.copy();
+    public PlayerDataView(CardsMatrix cardsMatrix, int totalScore, int objectivesScore) {
+        this.cardsMatrix = cardsMatrix;
         this.totalScore = totalScore;
+        this.objectivesScore = objectivesScore;
     }
 
     public CardsMatrix getCardsMatrix() {

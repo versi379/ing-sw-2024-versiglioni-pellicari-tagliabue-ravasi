@@ -5,7 +5,6 @@ import it.polimi.sw.GC50.model.card.Color;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 
 import java.util.ArrayList;
 import java.util.List;

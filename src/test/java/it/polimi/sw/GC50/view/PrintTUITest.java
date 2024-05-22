@@ -14,7 +14,7 @@ public class PrintTUITest {
         Game game = new Game("Partita", 1, 20);
         game.addPlayer(player);
 
-        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
 
 
@@ -25,19 +25,19 @@ public class PrintTUITest {
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 41);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
 
 
         System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         game.placeCard(player, game.pickCard(DrawingPosition.RESOURCEDECK).getFront(), 0, 0);
 
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
 
 
         System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 2);
+        ob = new PrintBoardTUI2(game.getCardsArea(player), 40, 40, 2);
         ob.print();
     }
 

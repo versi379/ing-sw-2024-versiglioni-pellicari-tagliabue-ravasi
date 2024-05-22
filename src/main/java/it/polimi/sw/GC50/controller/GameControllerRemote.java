@@ -14,5 +14,5 @@ public interface GameControllerRemote extends Remote {
     void updateChat(String message, ClientInterface clientInterface) throws RemoteException;
 
     // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    Object getModel(ClientInterface clientInterface) throws RemoteException;
+    //Object getModel(ClientInterface clientInterface) throws RemoteException;
 }

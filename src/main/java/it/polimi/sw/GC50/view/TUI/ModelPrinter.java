@@ -13,17 +13,16 @@ public abstract class ModelPrinter {
 
     public static void printHand(List<PhysicalCard> hand) {
         System.out.println();
-        System.out.println("Carte in mano:");
-        System.out.println();
+        System.out.println("Cards in hand:");
 
         String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
-        handMatrix[0][7 * 2] = "   Indi";
-        handMatrix[1][7 * 2] = "ci:    ";
+        handMatrix[0][7 * 2] = "   Inde";
+        handMatrix[1][7 * 2] = "xes:   ";
         handMatrix[0][7 + 3] = " 1) Fro";
-        handMatrix[1][7 + 3] = "nte:   ";
-        handMatrix[0][3] = " 2) Ret";
-        handMatrix[1][3] = "ro:    ";
+        handMatrix[1][7 + 3] = "nt:    ";
+        handMatrix[0][3] = "  2) Ba";
+        handMatrix[1][3] = "ck:    ";
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
             handMatrix[4 * cardsCounter + 3][7 * 2] = "  " + (cardsCounter + 1) + ")   ";
@@ -52,15 +51,14 @@ public abstract class ModelPrinter {
 
     public static void printDecks(PlayableCard[] decks) {
         System.out.println();
-        System.out.println("Carte pescabili:");
-        System.out.println();
+        System.out.println("Center of the table:");
 
         String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
 
-        decksMatrix[0][11] = "   Riso";
-        decksMatrix[1][11] = "rsa:   ";
-        decksMatrix[0][3] = "     Or";
-        decksMatrix[1][3] = "o:     ";
+        decksMatrix[0][11] = " Resour";
+        decksMatrix[1][11] = "ce:    ";
+        decksMatrix[0][3] = "     Go";
+        decksMatrix[1][3] = "ld:    ";
 
         for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
 
@@ -75,7 +73,7 @@ public abstract class ModelPrinter {
                     }
                 }
             } else {
-                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Vuoto ";
+                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Empty ";
             }
 
             decksMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
@@ -89,7 +87,7 @@ public abstract class ModelPrinter {
                     }
                 }
             } else {
-                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Vuoto ";
+                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Empty ";
             }
         }
 
@@ -98,8 +96,7 @@ public abstract class ModelPrinter {
 
     public static void printPlayerArea(String nickname, PlayerDataView playerArea) {
         System.out.println();
-        System.out.println("Area di gioco del giocatore " + nickname);
-        System.out.println();
+        System.out.println("Player " + nickname + " cards area:");
 
         String[][] boardMatrix;
         CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
@@ -139,7 +136,7 @@ public abstract class ModelPrinter {
             }
         } else {
             boardMatrix = new String[1][1];
-            boardMatrix[0][0] = "Nessuna carta piazzata";
+            boardMatrix[0][0] = TuiView.redTxt + "No cards placed" + TuiView.baseTxt;
         }
 
         printMatrix(boardMatrix);
@@ -147,11 +144,10 @@ public abstract class ModelPrinter {
 
     public static void printScores(Map<String, Integer> scores) {
         System.out.println();
-        System.out.println("Punteggi:");
-        System.out.println();
+        System.out.println("Scores:");
 
         for (String nickname : scores.keySet()) {
-            System.out.println("Giocatore " + nickname + ": " + scores.get(nickname));
+            System.out.println("Player " + nickname + " -> " + scores.get(nickname));
         }
     }
 

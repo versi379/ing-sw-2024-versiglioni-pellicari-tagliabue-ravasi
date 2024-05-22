@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.net.util;
 
-import it.polimi.sw.GC50.view.GameView;
+import it.polimi.sw.GC50.net.Messages.Message;
 
 import java.rmi.RemoteException;
 
@@ -16,7 +16,7 @@ public class MockClient implements ClientInterface {
     }
 
     @Override
-    public void update(Request request, Object arg, GameView gameView) throws RemoteException {
+    public void update(Request request, Message message) throws RemoteException {
 
     }
 }

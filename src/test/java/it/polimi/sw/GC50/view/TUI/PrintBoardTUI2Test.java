@@ -14,7 +14,7 @@ class PrintBoardTUI2Test {
         game.addPlayer(player);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
 
 
@@ -25,14 +25,14 @@ class PrintBoardTUI2Test {
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
 
 
         game.placeCard(player, game.pickCard(DrawingPosition.RESOURCEDECK).getFront(), 0, 0);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
+        ob = new PrintBoardTUI2(game.getCardsArea(player));
         ob.print();
     }
 
@@ -43,7 +43,7 @@ class PrintBoardTUI2Test {
         game.addPlayer(player);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 82);
+        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getCardsArea(player), 40, 40, 82);
         ob.print();
 
 
@@ -54,17 +54,17 @@ class PrintBoardTUI2Test {
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 40, 40, 10);
+        ob = new PrintBoardTUI2(game.getCardsArea(player), 40, 40, 10);
         ob.print();
 
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 39, 41, 2);
+        ob = new PrintBoardTUI2(game.getCardsArea(player), 39, 41, 2);
         ob.print();
 
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
-        ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea(), 0, 0, 2);
+        ob = new PrintBoardTUI2(game.getCardsArea(player), 0, 0, 2);
         ob.print();
     }
 }

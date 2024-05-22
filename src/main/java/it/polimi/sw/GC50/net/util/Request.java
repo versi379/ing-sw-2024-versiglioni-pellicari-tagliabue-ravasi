@@ -40,17 +40,14 @@ public enum Request {
     NOTIFY_CARD_PLACED,
     NOTIFY_CARD_DRAWN,
     NOTIFY_NEXT_TURN,
-    NOTIFY_CARD_NOT_FOUND,
-    NOTIFY_CARD_NOT_PLACEABLE,
-    NOTIFY_DRAWING_POSITION_NOT_AVAILABLE,
-    NOTIFY_NOT_YOUR_PLACING_PHASE,
-    NOTIFY_OPERATION_NOT_AVAILABLE,
-    NOTIFY_INVALID_INDEX,
     NOTIFY_CHAT_MESSAGE,
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     NOTIFY_GAME_ENDED,
+
+    // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     GET_MODEL_RESPONSE,
     REQUEST_NOT_AVAILABLE,
-    GET_CHAT_MODEL_RESPONSE
+    GET_CHAT_MODEL_RESPONSE,
+    NOTIFY_ERROR
 }

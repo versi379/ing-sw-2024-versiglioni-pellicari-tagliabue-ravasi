@@ -1,15 +1,16 @@
 package it.polimi.sw.GC50.model;
 
 import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.view.GameObserver;
+import it.polimi.sw.GC50.net.Messages.Message;
 import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.view.GameObserver;
 import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GameObservable {
+public class GameObservable {
     private boolean changed = false;
     private final Map<GameObserver, Player> obs;
 
@@ -63,11 +64,10 @@ public abstract class GameObservable {
      * Each observer has its {@code update} method called with two
      * arguments: this observable object and the {@code arg} argument.
      *
-     * @param arg any object.
-     * @see java.util.Observable#hasChanged()
+     * @param message@see java.util.Observable#hasChanged()
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    public void notifyObservers(Request request, Object arg) {
+    public void notifyObservers(Request request, Message message) {
 
         synchronized (this) {
             /* We don't want the Observer doing callbacks into
@@ -92,7 +92,7 @@ public abstract class GameObservable {
         synchronized (obs) {
             for (GameObserver o : obs.keySet()) {
                 try {
-                    o.update(request, arg, getGameView(obs.get(o)));
+                    o.update(request, message);
                 } catch (RemoteException e) {
                     System.out.println("Error in notifyObservers");
                 }
@@ -100,7 +100,7 @@ public abstract class GameObservable {
         }
     }
 
-     public abstract GameView getGameView(Player player);
+     //public abstract GameView getGameView(Player player);
 
     /**
      * Marks this {@code Observable} object as having been changed; the

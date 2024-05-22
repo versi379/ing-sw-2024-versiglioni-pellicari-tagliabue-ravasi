@@ -1,14 +1,14 @@
-package it.polimi.sw.GC50.net.gameMexNet;
+package it.polimi.sw.GC50.net.util;
 
 import java.io.Serializable;
 
-public class PlaceCardMex implements Serializable {
+public class PlaceCardRequest implements Serializable {
     private final int index;
     private final boolean face;
     private final int x;
     private final int y;
 
-    public PlaceCardMex(int index, boolean face, int x, int y) {
+    public PlaceCardRequest(int index, boolean face, int x, int y) {
         this.index = index;
         this.face = face;
         this.x = x;

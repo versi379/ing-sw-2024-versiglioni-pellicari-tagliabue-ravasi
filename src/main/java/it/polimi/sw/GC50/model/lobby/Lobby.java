@@ -39,7 +39,7 @@ public class Lobby {
     public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
         if (isPlayerPresent(client) && !isGamePresent(gameId)) {
             System.out.println("Game " + gameId + " created");
-            GameController newGameController = new GameController(client, gameId, numOfPlayer, 20, nickname);
+            GameController newGameController = new GameController(client, gameId, numOfPlayer, 0, nickname);
             freeGameControllers.add(newGameController);
             return newGameController;
         } else {

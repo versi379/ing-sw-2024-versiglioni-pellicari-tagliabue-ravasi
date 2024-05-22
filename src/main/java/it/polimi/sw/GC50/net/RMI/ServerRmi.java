@@ -6,7 +6,6 @@ import it.polimi.sw.GC50.net.util.ClientInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +13,17 @@ import java.util.Map;
 public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     private final Lobby lobby;
     private final int port;
-    private Registry registry;
 
     public ServerRmi(Lobby lobby, int port) throws RemoteException {
         this.lobby = lobby;
         this.port = port;
-        registry = null;
     }
 
     @Override
     public void start() {
         try {
             LocateRegistry.createRegistry(this.port).rebind("server", this);
+            System.out.println("Server RMI ready");
         } catch (RemoteException e) {
             System.err.println("Error in binding to RMI registry");
         }
@@ -36,9 +34,8 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
         System.out.println("Client connected");
     }
 
-    //////////////////////////////////////////
-    //LOBBY
-    ///////////////////////////////////////////
+
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public boolean setPlayer(ClientInterface clientInterface, String nickname) {
         return lobby.addPlayer(clientInterface, nickname);

@@ -4,12 +4,10 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.net.util.Message;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import it.polimi.sw.GC50.net.util.Message1;
 import it.polimi.sw.GC50.net.util.Request;
 import it.polimi.sw.GC50.view.GameView;
-import it.polimi.sw.GC50.view.ViewType;
-
 import it.polimi.sw.GC50.view.View;
 
 import java.io.IOException;
@@ -51,7 +49,7 @@ public class ClientSCK implements Runnable {
     private final ExecutorService executorService;
     /////////////////////////////////////////////////////
     private Object[] lock;
-    private Queue<Message> queue;
+    private Queue<Message1> queue;
     private boolean[] condition;
 
     public ClientSCK(int port, String address) throws IOException {
@@ -99,8 +97,8 @@ public class ClientSCK implements Runnable {
             while (!executorService.isShutdown()) {
                 try {
                     Object object = input.readObject();
-                    Message message = (Message) object;
-                    queue.add(message);
+                    Message1 message1 = (Message1) object;
+                    queue.add(message1);
                     notifyMessageFromServer();
                     //System.out.println((boolean) message.getObject());
 
@@ -114,7 +112,7 @@ public class ClientSCK implements Runnable {
 
     }
 
-    private synchronized void setMessageout(Message.MessageClientToServer messageout) {
+    private synchronized void setMessageout(Message1.Message1ClientToServer messageout) {
         try {
             output.writeObject(messageout);
             output.flush();
@@ -130,7 +128,7 @@ public class ClientSCK implements Runnable {
         }
     }
 
-    private void switchmex(Message mex) {
+    private void switchmex(Message1 mex) {
         switch (mex.getRequest()) {
             case SET_NAME_RESPONSE: {
                 boolean response = (boolean) mex.getObject();
@@ -191,8 +189,7 @@ public class ClientSCK implements Runnable {
                 break;
 
             }
-            case NOTIFY_CARD_NOT_FOUND, NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
-                    NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE: {
+            case NOTIFY_ERROR: {
                 if (mex.getObject().equals(nickName)) {
                     error = true;
                     notifyMidPhase();
@@ -296,7 +293,7 @@ public class ClientSCK implements Runnable {
 
     private String createGame(String matchName, int numberOfPlayer) {
         this.matchName = matchName;
-        setMessageout(new Message.MessageClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.CREATE_GAME, numberOfPlayer, matchName, nickName));
         waitFirstPhase();
         return this.matchName;
 
@@ -304,20 +301,20 @@ public class ClientSCK implements Runnable {
 
     private String enterGame(String matchName) {
         this.matchName = matchName;
-        setMessageout(new Message.MessageClientToServer(Request.ENTER_GAME, null, matchName, nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.ENTER_GAME, null, matchName, nickName));
         waitFirstPhase();
         return this.matchName;
     }
 
     private String setName(String name) {
         this.nickName = name;
-        setMessageout(new Message.MessageClientToServer(Request.SET_NAME, null, null, name));
+        setMessageout(new Message1.Message1ClientToServer(Request.SET_NAME, null, null, name));
         waitFirstPhase();
         return this.nickName;
     }
 
     private ArrayList<String> getFreeMatch() {
-        setMessageout(new Message.MessageClientToServer(Request.GET_FREE_MATCH, null, null, null));
+        setMessageout(new Message1.Message1ClientToServer(Request.GET_FREE_MATCH, null, null, null));
         waitFirstPhase();
         return this.freeMatch;
     }
@@ -328,18 +325,18 @@ public class ClientSCK implements Runnable {
 ///////////////////////////////////////////
 
 
-    private void placeCard(PlaceCardMex placeCardMex) {
+    private void placeCard(PlaceCardRequest placeCardRequest) {
         if (this.matchName == null) {
             return;
         }
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.PLACE_CARD, placeCardMex, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.PLACE_CARD, placeCardRequest, this.matchName, this.nickName));
         waitMidPhase();
         if (!error) {
             getModel();
-            view.updateBoard();
+            //view.updateBoard();
         }
         error = false;
     }
@@ -351,7 +348,7 @@ public class ClientSCK implements Runnable {
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.MEX_CHAT, message, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.MEX_CHAT, message, this.matchName, this.nickName));
 
     }
 
@@ -362,7 +359,7 @@ public class ClientSCK implements Runnable {
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName));
         waitFirstPhase();
     }
 
@@ -374,7 +371,7 @@ public class ClientSCK implements Runnable {
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.SELECT_OBJECTIVE_CARD, index, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.SELECT_OBJECTIVE_CARD, index, this.matchName, this.nickName));
         waitFirstPhase();
     }
 
@@ -386,22 +383,22 @@ public class ClientSCK implements Runnable {
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message.MessageClientToServer(Request.DRAW_CARD, position, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.DRAW_CARD, position, this.matchName, this.nickName));
         waitMidPhase();
         if (!error) {
             getModel();
-            view.updateBoard();
+            //view.updateBoard();
         }
         error = false;
     }
 
 
     private Object getModel() {
-        setMessageout(new Message.MessageClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.GET_MODEL, null, this.matchName, this.nickName));
         waitModelChangedFromServer();
-        view.addModel(this.gameView);
+        view.setModel(this.gameView);
         // ??? waitNotifyModelChangedFromServer();
-        view.addModel(this.gameView);
+        view.setModel(this.gameView);
 
         if (this.gameView.getCurrentPlayer().equals(this.nickName)) {
             this.myTurn = true;
@@ -480,7 +477,7 @@ public class ClientSCK implements Runnable {
     ///////////////////////////////////////////
     private void firstPhase() {
         this.getModel();
-        view.addModel(this.gameView);
+        view.setModel(this.gameView);
         this.selectObjectiveCard(view.selectObjectiveCard());
         this.selectStarterFace(view.selectStarterFace());
         midPhase();
@@ -515,7 +512,7 @@ public class ClientSCK implements Runnable {
             waitMidPhase();
             if (!error) {
                 getModel();
-                view.updateBoard();
+                //view.updateBoard();
             }
             error = false;
         }

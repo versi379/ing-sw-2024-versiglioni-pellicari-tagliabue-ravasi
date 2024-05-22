@@ -12,31 +12,31 @@ import java.util.List;
 public class Chat implements Serializable {
 
 
-    private final List<Message> messages;
+    private final List<ChatMessage> chatMessages;
 
     public Chat() {
-        this.messages = new ArrayList<Message>();
+        this.chatMessages = new ArrayList<ChatMessage>();
     }
 
     /**
      * This method stores every message sent in an ArrayList
      */
-    public void addMessage(Message message){
-        this.messages.add(message);
+    public void addMessage(ChatMessage chatMessage){
+        this.chatMessages.add(chatMessage);
     }
 
     /**
      * This method gives the player all the messages that he sends and that are sent to him
      */
-    public List<Message> getMessages(Player player) {
-        List<Message> copyMessages = new ArrayList<Message>();
+    public List<ChatMessage> getMessages(Player player) {
+        List<ChatMessage> copyChatMessages = new ArrayList<ChatMessage>();
         // messages where sender is (input) player
-        copyMessages.addAll(this.messages.stream().filter(t->t.getSender().equals(player)).toList());
+        copyChatMessages.addAll(this.chatMessages.stream().filter(t->t.getSender().equals(player)).toList());
         // messages where receiver is null (broadcast)
-        copyMessages.addAll(this.messages.stream().filter(t-> t.getReceiver() == null).toList());
+        copyChatMessages.addAll(this.chatMessages.stream().filter(t-> t.getReceiver() == null).toList());
         // messages where receiver is (input) player
-        copyMessages.addAll(this.messages.stream().filter(t->(t.getReceiver() != null && t.getReceiver().equals(player))).toList());
-        return copyMessages;
+        copyChatMessages.addAll(this.chatMessages.stream().filter(t->(t.getReceiver() != null && t.getReceiver().equals(player))).toList());
+        return copyChatMessages;
     }
     
 }

@@ -2,10 +2,7 @@ package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
-import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
-import it.polimi.sw.GC50.view.GUI.controllers.NetController;
-import it.polimi.sw.GC50.view.GUI.controllers.UserController;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
@@ -72,7 +69,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void addModel(GameView gameView) {
+    public void setModel(GameView gameView) {
         this.gameView = gameView;
     }
 
@@ -92,17 +89,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public int game() {
-        return 0;
-    }
-
-    @Override
-    public void updateBoard() {
-
-    }
-
-    @Override
-    public PlaceCardMex selectPlaceCard() {
+    public PlaceCardRequest selectPlaceCard() {
         return null;
     }
 
@@ -134,6 +121,11 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showEnd() {
+
+    }
+
+    @Override
     public void showPlayerJoined(String nickname) {
 
     }
@@ -149,6 +141,11 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showError(String content) {
+
+    }
+
+    @Override
     public void showCommonObjectives() {
 
     }
@@ -159,7 +156,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showError() {
+    public void showStart() {
 
     }
 }

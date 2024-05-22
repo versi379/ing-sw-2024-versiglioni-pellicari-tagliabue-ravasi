@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * This class defines messages that players can send to each other
  */
-public class Message {
+public class ChatMessage {
 
     private final Player sender;
     private final String content;
@@ -18,7 +18,7 @@ public class Message {
     /**
      * This constructor creates a broadcast message (to all other players)
      */
-    public Message(Player sender, String content, LocalTime time) {
+    public ChatMessage(Player sender, String content, LocalTime time) {
         this.sender = sender;
         this.content = content;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
@@ -29,7 +29,7 @@ public class Message {
     /**
      * This constructor creates a message between sender and receiver
      */
-    public Message(Player sender, String content, LocalTime time, Player receiver) throws UnsupportedOperationException {
+    public ChatMessage(Player sender, String content, LocalTime time, Player receiver) throws UnsupportedOperationException {
         if(sender.equals(receiver)) throw new UnsupportedOperationException("You can't send a message to yourself!");
         this.sender = sender;
         this.content = content;

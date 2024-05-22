@@ -8,16 +8,16 @@ import java.net.Socket;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 public class ServerSCK extends UnicastRemoteObject implements Runnable {
     private final Lobby lobby;
     private final int port;
-    private List<ClientHandler> client;
+    private final List<ClientHandler> clients;
 
     public ServerSCK(Lobby lobby, int port) throws IOException {
         this.lobby = lobby;
         this.port = port;
-        this.client = new ArrayList<>();
+        this.clients = new ArrayList<>();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 Socket socketClient = serverSocket.accept();
                 socketClient.setSoTimeout(0);
                 ClientHandler clientHandler = new ClientHandler(socketClient, this, lobby);
-                client.add(clientHandler);
+                clients.add(clientHandler);
                 Thread clientThread = new Thread(clientHandler);
                 clientThread.start();
                 System.out.println("Client connected");
@@ -45,3 +45,6 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
         }
     }
 }
+
+
+ */
