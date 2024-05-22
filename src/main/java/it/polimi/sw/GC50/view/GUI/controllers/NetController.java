@@ -1,11 +1,7 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
-import it.polimi.sw.GC50.net.RMI.ClientRmi;
-import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
-import it.polimi.sw.GC50.view.View;
-import it.polimi.sw.GC50.view.ViewType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
-
-public class NetController extends GUIController {
+public class NetController {
 
     @FXML
     private Button socketButton;
@@ -25,11 +18,10 @@ public class NetController extends GUIController {
     @FXML
     private Button rmiButton;
 
-    private boolean netSelected;
+    private int netSelected;
 
     @FXML
     public void initialize() throws Exception {
-        netSelected = false;
     }
 
     @FXML
@@ -42,8 +34,7 @@ public class NetController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        AppClient.setupSocket(AppClient.getView(), AppClient.getViewType());
-        netSelected = true;
+        netSelected = 1;
     }
 
     @FXML
@@ -56,8 +47,7 @@ public class NetController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        AppClient.setupRMI(AppClient.getView(), AppClient.getViewType());
-        netSelected = true;
+        netSelected = 2;
     }
 
     public Button getSocketButton() {
@@ -68,7 +58,8 @@ public class NetController extends GUIController {
         return rmiButton;
     }
 
-    public boolean isNetSelected() {
+    public int getNetSelected() {
         return netSelected;
     }
+
 }

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * Controller for Menu FXML scene.
  */
-public class MenuController extends GUIController {
+public class MenuController {
 
     @FXML
     private Button createNewGameButton;

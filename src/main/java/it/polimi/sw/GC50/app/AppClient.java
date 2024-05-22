@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class AppClient {
     private static View view;
     private static ViewType viewType;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         printBanner();
 
         if (readBinaryChoice("Selezionare la tipologia di interfaccia:" +
@@ -32,11 +32,20 @@ public class AppClient {
             viewType = ViewType.GUI;
         }
 
-        // setup connection (only TUI)
+        // setup connection
         if (viewType == ViewType.TUI) {
             if (readBinaryChoice("Selezionare la tipologia di connessione:" +
                     "\n1) Socket" +
                     "\n2) RMI") == 1) {
+                setupSocket(view, viewType);
+            } else {
+                setupRMI(view, viewType);
+            }
+        } else { // GUI
+            while (((GuiView) view).getNetController() == null) {
+
+            }
+            if (((GuiView) view).getNetController().getNetSelected() == 1) {
                 setupSocket(view, viewType);
             } else {
                 setupRMI(view, viewType);

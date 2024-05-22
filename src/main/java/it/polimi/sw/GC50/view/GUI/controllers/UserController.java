@@ -10,7 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class UserController extends GUIController {
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+public class UserController {
 
     @FXML
     private TextField playerNickname;
@@ -20,6 +23,8 @@ public class UserController extends GUIController {
 
     @FXML
     private Button menuButton;
+
+    BlockingQueue<String> userInputQueue = new ArrayBlockingQueue<>(1);
 
     @FXML
     public void initialize() throws Exception {
@@ -48,10 +53,17 @@ public class UserController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        userInputQueue.offer(playerNickname.getText());
+        System.out.println(playerNickname.getText());
     }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
+    }
+
+    // Method to get user input from the queue
+    public String getUserInput() throws InterruptedException {
+        return userInputQueue.take();
     }
 
 }
