@@ -27,6 +27,8 @@ public class GuiView extends Application implements View {
 
     private GameView gameView;
 
+    private Stage primaryStage;
+
     // GUI Controllers
     private NetController netController;
     private UserController userController;
@@ -35,6 +37,8 @@ public class GuiView extends Application implements View {
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.primaryStage = stage;
+
         FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
         Parent netRoot = netLoader.load();
         netController = netLoader.getController();
@@ -54,6 +58,10 @@ public class GuiView extends Application implements View {
         Scene scene = new Scene(netRoot);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public GuiView() {
+
     }
 
     @Override
@@ -177,4 +185,12 @@ public class GuiView extends Application implements View {
     public void showError() {
 
     }
+
+    public void showUserView() throws Exception{
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        primaryStage.setScene(userScene);
+    }
+
 }

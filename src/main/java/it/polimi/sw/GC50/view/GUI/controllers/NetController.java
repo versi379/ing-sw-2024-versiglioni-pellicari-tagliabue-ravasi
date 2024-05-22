@@ -25,9 +25,11 @@ public class NetController extends GUIController {
     @FXML
     private Button rmiButton;
 
+    private boolean netSelected;
+
     @FXML
     public void initialize() throws Exception {
-
+        netSelected = false;
     }
 
     @FXML
@@ -40,7 +42,8 @@ public class NetController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        AppClient.setupSocket(AppClient.getView(), ViewType.GUI);
+        AppClient.setupSocket(AppClient.getView(), AppClient.getViewType());
+        netSelected = true;
     }
 
     @FXML
@@ -54,6 +57,18 @@ public class NetController extends GUIController {
         stage.setScene(scene);
         stage.show();
         AppClient.setupRMI(AppClient.getView(), AppClient.getViewType());
+        netSelected = true;
     }
 
+    public Button getSocketButton() {
+        return socketButton;
+    }
+
+    public Button getRmiButton() {
+        return rmiButton;
+    }
+
+    public boolean isNetSelected() {
+        return netSelected;
+    }
 }
