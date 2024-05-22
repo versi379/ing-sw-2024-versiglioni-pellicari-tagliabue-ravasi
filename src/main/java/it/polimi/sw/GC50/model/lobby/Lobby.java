@@ -36,10 +36,10 @@ public class Lobby {
      * this method is called when a client wants to create a GameController
      * @
      */
-    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, String nickname) throws RemoteException {
+    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, int endScore, String nickname) throws RemoteException {
         if (isPlayerPresent(client) && !isGamePresent(gameId)) {
             System.out.println("Game " + gameId + " created");
-            GameController newGameController = new GameController(client, gameId, numOfPlayer, 0, nickname);
+            GameController newGameController = new GameController(client, gameId, numOfPlayer, endScore, nickname);
             freeGameControllers.add(newGameController);
             return newGameController;
         } else {

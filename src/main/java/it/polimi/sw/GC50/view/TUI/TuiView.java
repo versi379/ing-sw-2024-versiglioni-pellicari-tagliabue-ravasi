@@ -67,6 +67,12 @@ public class TuiView implements View {
     }
 
     @Override
+    public int selectEndScore() {
+        return readInt("Insert the score needed for triggering the game's ending:",
+                0, 51);
+    }
+
+    @Override
     public void showPlayerJoined(String nickname) {
         System.out.println("Player " + nickname + " joined the game");
     }

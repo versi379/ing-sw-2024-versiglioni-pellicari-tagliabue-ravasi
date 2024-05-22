@@ -47,8 +47,8 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     }
 
     @Override
-    public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, String nickname) throws RemoteException {
-        return lobby.createGame(clientInterface, gameId, numOfPlayers, nickname);
+    public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore, String nickname) throws RemoteException {
+        return lobby.createGame(clientInterface, gameId, numOfPlayers, endScore, nickname);
     }
 
     @Override

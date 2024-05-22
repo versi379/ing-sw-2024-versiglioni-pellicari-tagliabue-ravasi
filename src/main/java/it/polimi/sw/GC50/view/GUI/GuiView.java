@@ -96,6 +96,11 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public int selectEndScore() {
+        return 0;
+    }
+
+    @Override
     public void showWaitPlayers() {
 
     }

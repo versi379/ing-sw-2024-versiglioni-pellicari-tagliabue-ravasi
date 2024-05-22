@@ -19,7 +19,7 @@ public interface ServerRmiRemote extends Remote {
 
     Map<String, List<String>> getFreeGames() throws RemoteException;
 
-    GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, String nickname) throws RemoteException;
+    GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore, String nickname) throws RemoteException;
 
     GameControllerRemote joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException;
 

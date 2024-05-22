@@ -16,6 +16,7 @@ public interface View extends Serializable {
     int selectJoinOrCreate();
     String selectGameName();
     int selectNumberOfPlayers();
+    int selectEndScore();
     int selectObjectiveCard();
     boolean selectStarterFace();
     PlaceCardRequest selectPlaceCard();

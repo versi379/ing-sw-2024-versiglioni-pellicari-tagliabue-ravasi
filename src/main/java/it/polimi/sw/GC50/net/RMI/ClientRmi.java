@@ -80,7 +80,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    createGame(view.selectGameName(), view.selectNumberOfPlayers());
+                    createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
                 }
 
                 case 2 -> {
@@ -116,9 +116,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return false;
     }
 
-    synchronized private void createGame(String gameId, int numPlayers) throws GameException {
+    synchronized private void createGame(String gameId, int numPlayers, int endScore) throws GameException {
         try {
-            gameController = serverRmi.createGame(this, gameId, numPlayers, nickname);
+            gameController = serverRmi.createGame(this, gameId, numPlayers, endScore, nickname);
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }
