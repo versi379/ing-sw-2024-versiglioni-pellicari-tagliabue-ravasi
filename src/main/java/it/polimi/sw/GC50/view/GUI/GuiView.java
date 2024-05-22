@@ -4,6 +4,8 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.gameMexNet.ModelMex;
 import it.polimi.sw.GC50.net.gameMexNet.PlaceCardMex;
+import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
+import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.controllers.UserController;
 import it.polimi.sw.GC50.view.GUI.scenes.SceneInfo;
@@ -23,27 +25,50 @@ import java.util.Map;
 
 public class GuiView extends Application implements View {
 
-    private Stage primaryStage;
-    private StackPane root;
-    private ArrayList<SceneInfo> scenes;
     private GameView gameView;
+
+    // GUI Controllers
+    private NetController netController;
+    private UserController userController;
+    private MenuController menuController;
+    private GameControllerGUI gameController;
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
+        Parent netRoot = netLoader.load();
+        netController = netLoader.getController();
+
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+        Parent userRoot = userLoader.load();
+        userController = userLoader.getController();
+
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent menuRoot = menuLoader.load();
+        menuController = menuLoader.getController();
+
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+        Parent gameRoot = gameLoader.load();
+        gameController = gameLoader.getController();
+
+        Scene scene = new Scene(netRoot);
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public String selectName() {
+        return userController.getPlayerNickname();
     }
 
     @Override
-    public String selectName() {
-        return "giovanni";
+    public int selectJoinOrCreate() {
+        return menuController.getGameChoice();
+    }
+
+    @Override
+    public void showFreeGames(Map<String, List<String>> freeGames) {
+
     }
 
     @Override
@@ -59,11 +84,6 @@ public class GuiView extends Application implements View {
     @Override
     public void showWaitPlayers() {
 
-    }
-
-    @Override
-    public int selectJoinOrCreate() {
-        return 0;
     }
 
     @Override
@@ -109,11 +129,6 @@ public class GuiView extends Application implements View {
     @Override
     public DrawingPosition selectDrawingPosition() {
         return null;
-    }
-
-    @Override
-    public void showFreeGames(Map<String, List<String>> freeGames) {
-
     }
 
     @Override

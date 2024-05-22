@@ -28,8 +28,8 @@ public class AppClient {
             viewType = ViewType.TUI;
         } else {
             view = new GuiView();
+            launchGui((GuiView) view);
             viewType = ViewType.GUI;
-            launchGui();
         }
 
         // setup connection (only TUI)
@@ -50,9 +50,7 @@ public class AppClient {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
             client.addView(view);
-            if (viewType == ViewType.TUI) {
-                client.lobby();
-            }
+            client.lobby();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -105,16 +103,15 @@ public class AppClient {
         System.out.print("\u001B[0m");
     }
 
-    private static void launchGui() {
+    private static void launchGui(GuiView view) {
         new Thread(() -> {
             try {
                 // Ensure JavaFX is initialized
                 Platform.startup(() -> {
                     try {
                         // Launch the JavaFX Application
-                        GuiView guiView = new GuiView();
                         Stage stage = new Stage();
-                        guiView.start(stage);
+                        view.start(stage);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

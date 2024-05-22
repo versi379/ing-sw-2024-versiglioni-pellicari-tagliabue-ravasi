@@ -29,6 +29,8 @@ public class MenuController extends GUIController {
     @FXML
     private Button userMenuButton;
 
+    private int gameChoice;
+
     @FXML
     public void handleCreateNewGameButton(ActionEvent event) throws Exception {
         Stage stage;
@@ -39,6 +41,7 @@ public class MenuController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        gameChoice = 1;
     }
 
     @FXML
@@ -51,6 +54,7 @@ public class MenuController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        gameChoice = 2;
     }
 
     @FXML
@@ -63,6 +67,7 @@ public class MenuController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+
     }
 
     @FXML
@@ -75,6 +80,7 @@ public class MenuController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        gameChoice = 3;
     }
 
     @FXML
@@ -87,6 +93,10 @@ public class MenuController extends GUIController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public int getGameChoice() {
+        return gameChoice;
     }
 
 }
