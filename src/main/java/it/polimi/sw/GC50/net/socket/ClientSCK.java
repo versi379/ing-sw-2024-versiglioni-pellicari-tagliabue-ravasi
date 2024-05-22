@@ -420,6 +420,7 @@ public class ClientSCK implements Runnable {
         while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
         }
+        System.out.println("username impostato rete |||||||||||||||||||");
         do {
             switch (view.selectJoinOrCreate()) {
                 case 1: {
