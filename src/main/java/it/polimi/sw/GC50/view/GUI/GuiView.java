@@ -65,15 +65,14 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectName() {
-        String name = "";
-        try {
-            String userInput = userController.getUserInput();
-            // Once user input is received, you can return the result to the client thread or perform further processing
-            name = userInput;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while(userController == null) {
+            System.out.println("ATTENDO SCHERMATA USER");
         }
-        return name;
+        while(!userController.isNameSetted()) {
+            System.out.println("ATTENDO SCELTA USERNAME");
+        }
+        // qui il nome è impostato ed è stata cambiata scena
+        return userController.getPlayerNickname();
     }
 
     @Override

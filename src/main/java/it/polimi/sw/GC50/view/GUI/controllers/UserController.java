@@ -19,28 +19,17 @@ public class UserController {
     private TextField playerNickname;
 
     @FXML
-    private Button netMenuButton;
-
-    @FXML
     private Button menuButton;
 
-    BlockingQueue<String> userInputQueue = new ArrayBlockingQueue<>(1);
+    private boolean nameSetted;
 
     @FXML
     public void initialize() throws Exception {
-
-    }
-
-    @FXML
-    public void handleNetMenuButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) netMenuButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.NET.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        nameSetted = false;
+        // qui il nome non è null
+        menuButton.setOnAction(event -> {
+            nameSetted = true;
+        });
     }
 
     @FXML
@@ -53,17 +42,14 @@ public class UserController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        userInputQueue.offer(playerNickname.getText());
-        System.out.println(playerNickname.getText());
     }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
     }
 
-    // Method to get user input from the queue
-    public String getUserInput() throws InterruptedException {
-        return userInputQueue.take();
+    public boolean isNameSetted() {
+        return nameSetted;
     }
 
 }
