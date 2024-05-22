@@ -43,10 +43,15 @@ public class AppClient {
             }
         } else { // GUI
             while (((GuiView) view).getNetController() == null) {
-
+                System.out.println("ATTENDO SCHERMATA NET");
+            }
+            while(!((GuiView) view).getNetController().isnetSetted()) {
+                System.out.println("ATTENDO SCELTA NET");
             }
             if (((GuiView) view).getNetController().getNetSelected() == 1) {
+                System.out.println("vediamo se manda socket");
                 setupSocket(view, viewType);
+                System.out.println("socket lanciata");
             } else {
                 setupRMI(view, viewType);
             }
@@ -59,6 +64,7 @@ public class AppClient {
             ClientSCK client = new ClientSCK(2012, "localhost");
             new Thread(client).start();
             client.addView(view);
+            System.out.println(view.selectName()+"vei");
             client.lobby();
         } catch (IOException e) {
             System.err.println(e.getMessage());

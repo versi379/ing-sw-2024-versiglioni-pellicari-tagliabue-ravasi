@@ -18,37 +18,66 @@ public class NetController {
     @FXML
     private Button rmiButton;
 
+    private boolean netSetted;
     private int netSelected;
 
     @FXML
     public void initialize() throws Exception {
-    }
-
-    @FXML
-    public void handleSocketButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) socketButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        netSetted = false;
         netSelected = 1;
+        socketButton.setOnAction(event -> {
+            netSetted = true;
+            netSelected = 1;
+            System.out.println("Scelta Socket, carico login view...");
+            try {
+                showUserView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        rmiButton.setOnAction(event -> {
+            netSetted = true;
+            netSelected = 2;
+            System.out.println("Scelta RMI, carico login view...");
+            try {
+                showUserView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    @FXML
-    public void handleRmiButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) rmiButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        netSelected = 2;
+    public void showUserView() throws Exception{
+        Stage stage = (Stage) socketButton.getScene().getWindow();
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        stage.setScene(userScene);
     }
+
+//    @FXML
+//    public void handleSocketButton(ActionEvent event) throws Exception {
+//        Stage stage;
+//        Scene scene;
+//        Parent root;
+//        stage = (Stage) socketButton.getScene().getWindow();
+//        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
+
+//    @FXML
+//    public void handleRmiButton(ActionEvent event) throws Exception {
+//        Stage stage;
+//        Scene scene;
+//        Parent root;
+//        stage = (Stage) rmiButton.getScene().getWindow();
+//        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 
     public Button getSocketButton() {
         return socketButton;
@@ -56,6 +85,10 @@ public class NetController {
 
     public Button getRmiButton() {
         return rmiButton;
+    }
+
+    public boolean isnetSetted() {
+        return netSetted;
     }
 
     public int getNetSelected() {
