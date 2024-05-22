@@ -62,17 +62,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectName() {
-        while(userController == null) {
-            System.out.println("ATTENDO SCHERMATA USER");
-        }
-        System.out.println("username setted: "+userController.isNameSetted());
-        while(!userController.isNameSetted()) {
-            // System.out.println("ATTENDO SCELTA USERNAME");
-        }
-        System.out.println("username impostato");
-        // qui il nome è impostato ed è stata cambiata scena
-        return userController.getPlayerNickname();
-        //return "giovanni";
+        return "giovanni";
     }
 
     @Override
@@ -207,4 +197,13 @@ public class GuiView extends Application implements View {
     public NetController getNetController() {
         return netController;
     }
+
+    public UserController getUserController() {
+        return userController;
+    }
+
+    public GameControllerGUI getGameController() {
+        return gameController;
+    }
+
 }

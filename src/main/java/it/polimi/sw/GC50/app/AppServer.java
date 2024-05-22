@@ -15,6 +15,6 @@ public class AppServer {
         new ServerRmi(lobby, 1099).start();
 
         // server socket
-        //new Thread(new ServerSCK(lobby, 2012), "serverSocket").start();
+        // new Thread(new ServerSCK(lobby, 2012), "serverSocket").start();
     }
 }

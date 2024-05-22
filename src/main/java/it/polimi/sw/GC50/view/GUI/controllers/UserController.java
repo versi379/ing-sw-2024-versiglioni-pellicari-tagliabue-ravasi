@@ -25,10 +25,16 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
-        playerNickname.setText("Giocatore");
-        System.out.println("testo iniziale label"+playerNickname.getText());
         nameSetted = false;
+        menuButton.setOnAction(event -> {
 
+            nameSetted = true;
+            try {
+                showMenuView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void showMenuView() throws Exception{
@@ -39,11 +45,11 @@ public class UserController {
         stage.setScene(userScene);
     }
 
-    @FXML
-    public void handleMenuButton(ActionEvent event) throws Exception {
-        nameSetted = true;
-        showMenuView();
-    }
+//    @FXML
+//    public void handleMenuButton(ActionEvent event) throws Exception {
+//        nameSetted = true;
+//        showMenuView();
+//    }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
@@ -53,4 +59,7 @@ public class UserController {
         return nameSetted;
     }
 
+    public Button getMenuButton() {
+        return menuButton;
+    }
 }

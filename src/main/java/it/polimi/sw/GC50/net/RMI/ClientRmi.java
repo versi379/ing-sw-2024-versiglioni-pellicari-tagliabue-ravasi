@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.util.*;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
@@ -76,7 +77,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
-
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
