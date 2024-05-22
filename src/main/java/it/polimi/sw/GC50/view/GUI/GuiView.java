@@ -68,11 +68,13 @@ public class GuiView extends Application implements View {
         while(userController == null) {
             System.out.println("ATTENDO SCHERMATA USER");
         }
-        while(!userController.isNameSetted()) {
+        while(userController.getPlayerNickname() == null) {
             System.out.println("ATTENDO SCELTA USERNAME");
         }
+        System.out.println("username impostato");
         // qui il nome è impostato ed è stata cambiata scena
         return userController.getPlayerNickname();
+//        return "giovanni";
     }
 
     @Override

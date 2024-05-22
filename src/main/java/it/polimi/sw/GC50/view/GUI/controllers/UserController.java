@@ -29,20 +29,33 @@ public class UserController {
         // qui il nome non è null
         menuButton.setOnAction(event -> {
             nameSetted = true;
+            try {
+                showMenuView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
-    @FXML
-    public void handleMenuButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) menuButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void showMenuView() throws Exception{
+        Stage stage = (Stage) menuButton.getScene().getWindow();
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        stage.setScene(userScene);
     }
+
+//    @FXML
+//    public void handleMenuButton(ActionEvent event) throws Exception {
+//        Stage stage;
+//        Scene scene;
+//        Parent root;
+//        stage = (Stage) menuButton.getScene().getWindow();
+//        root = FXMLLoader.load(getClass().getResource(ScenePath.MENU.getPath()));
+//        scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
