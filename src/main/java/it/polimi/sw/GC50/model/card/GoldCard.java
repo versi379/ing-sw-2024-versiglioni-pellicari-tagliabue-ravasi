@@ -16,6 +16,15 @@ public class GoldCard extends PlayableCard implements Serializable {
      */
     private final Map<Resource, Integer> constraint;
 
+    /**
+     * constructs a new Gold Card instance
+     * @param color                 specify the color
+     * @param points                specify the points associated
+     * @param bonus                 specify the bonus associated
+     * @param fixedResources        specify fixed resources associated
+     * @param corners               specify the corners
+     * @param constraint            specify constraints of gold card
+     */
     public GoldCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
         super(color, points, bonus, fixedResources, corners);
 
@@ -30,6 +39,10 @@ public class GoldCard extends PlayableCard implements Serializable {
         }
     }
 
+    /**
+     * Specifies List of constraints required for play a gold card
+     * @return  an arrayList of constraints
+     */
     public List<Resource> getConstraintList() {
         List<Resource> constraintList = new ArrayList<>();
         for (Map.Entry<Resource, Integer> entry : constraint.entrySet()) {
@@ -40,13 +53,24 @@ public class GoldCard extends PlayableCard implements Serializable {
         }
         return constraintList;
     }
-
+    /**
+     * Verify if the position selected is valid
+     * @param board     identify game board
+     * @param x         X coordinate of playerData
+     * @param y         Y coordinate of playerData
+     * @return          boolean (true if it is valid)
+     */
     @Override
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y) &&
                 this.checkConstraint(board);
     }
 
+    /**
+     * Verify if constraints are respected
+     * @param playerData PlayerData in which card will be placed
+     * @return a boolean (true if it is valid)
+     */
     public boolean checkConstraint(PlayerData playerData) {
         return constraint.keySet().stream()
                 .noneMatch(x -> constraint.get(x) > playerData.numOfResource(x));
@@ -72,7 +96,11 @@ public class GoldCard extends PlayableCard implements Serializable {
     public int hashCode() {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners(), getConstraintList());
     }
-
+    /**
+     * Returns the String representing this card in the TUI graphics
+     *
+     * @return space character String
+     */
     @Override
     public String[][] toStringTUI() {
         String[][] card = super.toStringTUI();

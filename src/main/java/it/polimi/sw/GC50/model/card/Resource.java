@@ -7,7 +7,11 @@ import java.io.Serializable;
  */
 public enum Resource implements Serializable {
     PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK;
-
+    /**
+     * Returns the String representing this color's code in the TUI graphics
+     *
+     * @return String[][] containing the code associated with this color
+     */
     public String toStringTUI() {
         return switch (this) {
             case PLANT -> "\u001B[32mP\u001B[0m";
