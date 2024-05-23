@@ -112,7 +112,7 @@ public class GuiView extends Application implements View {
     }
 
     // metodo creazione gioco
-    public void createGame() {
+    public void waitGameParams() {
         while(createGameController == null) {
             System.out.println("Attendo caricamento create game page.");
         }
