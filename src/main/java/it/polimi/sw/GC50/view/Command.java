@@ -5,6 +5,7 @@ public enum Command {
     CHOOSE_STARTER_FACE,
     PLACE_CARD,
     DRAW_CARD,
+    CHAT,
     HELP,
     NOT_A_COMMAND
 }

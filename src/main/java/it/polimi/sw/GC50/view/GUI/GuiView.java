@@ -183,6 +183,11 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showHelp() {
+
+    }
+
+    @Override
     public void showError(String content) {
 
     }

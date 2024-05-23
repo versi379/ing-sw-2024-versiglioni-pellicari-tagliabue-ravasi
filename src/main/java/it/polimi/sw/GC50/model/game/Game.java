@@ -547,9 +547,10 @@ public class Game extends GameObservable implements Serializable {
     }
 
     public void sendMessageInChat(Player player, String message) {
-        chat.addMessage(new ChatMessage(player, message, LocalTime.now()));
+        ChatMessage chatMessage = new ChatMessage(player, message, LocalTime.now());
+        chat.addMessage(chatMessage);
         setChanged();
-        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, new PlayerMex(player));
+        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
     }
 
     // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////

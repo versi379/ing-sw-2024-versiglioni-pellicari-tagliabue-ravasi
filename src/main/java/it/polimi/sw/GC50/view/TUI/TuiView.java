@@ -1,16 +1,14 @@
 package it.polimi.sw.GC50.view.TUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.util.Pair;
 
+import java.lang.constant.Constable;
 import java.util.*;
 
 public class TuiView implements View {
@@ -165,7 +163,7 @@ public class TuiView implements View {
 
     @Override
     public void showCurrentPlayer() {
-        System.out.println(yellowTxt + "Player " + getGameView().getCurrentPlayer() + " turn");
+        System.out.println(yellowTxt + "Player " + getGameView().getCurrentPlayer() + " turn" + baseTxt);
     }
 
     /*
@@ -242,8 +240,19 @@ public class TuiView implements View {
     }
 
     @Override
-    public void showError(String content) {
+    public void showHelp() {
         System.out.println();
+        System.out.println(yellowTxt + "Commands:" + baseTxt);
+        System.out.println("Select secret objective card -> \"-choose_objective\", \"-co\" [index]");
+        System.out.println("Select starter card face -> \"-choose_starter_face\", \"-cs\" [index]");
+        System.out.println("Place card -> \"-place_card\", \"-p\" [card index] [face index] [x] [y]");
+        System.out.println("Draw card -> \"-draw_card\", \"-d\" [index]");
+        System.out.println("Send message in chat -> \"-chat\", \"-c\" [message]");
+        System.out.println("Help -> \"-help\", \"-h\"");
+    }
+
+    @Override
+    public void showError(String content) {
         System.out.println(redTxt + "Error: " + content + baseTxt);
     }
 
@@ -253,7 +262,6 @@ public class TuiView implements View {
 
         String read;
         try {
-            System.out.print("> ");
             read = scanner.nextLine();
         } catch (InputMismatchException e) {
             read = null;
@@ -262,7 +270,6 @@ public class TuiView implements View {
         while (read == null) {
             System.out.println(redTxt + "Invalid input. Please retry" + baseTxt);
             try {
-                System.out.print("> ");
                 read = scanner.nextLine();
             } catch (InputMismatchException e) {
                 scanner.nextLine();
@@ -277,7 +284,6 @@ public class TuiView implements View {
 
         int read;
         try {
-            System.out.print("> ");
             read = scanner.nextInt();
         } catch (InputMismatchException e) {
             read = min - 1;
@@ -286,7 +292,6 @@ public class TuiView implements View {
         while (read < min || read >= min + range) {
             System.out.println(redTxt + "Invalid input. Please enter a number between " + min + " and " + (min + range - 1) + baseTxt);
             try {
-                System.out.print("> ");
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
                 scanner.nextLine();
@@ -306,7 +311,6 @@ public class TuiView implements View {
         Pair<Command, List<Integer>> command = readCommand();
         client.addCommand(command.getKey(), command.getValue());
     }
-
 
     public Pair<Command, List<Integer>> readCommand() {
         Scanner scanner = new Scanner(System.in);
@@ -365,6 +369,17 @@ public class TuiView implements View {
                                 .toList());
                     } catch (NumberFormatException ignored) {
                     }
+                }
+            }
+
+            case "-chat", "-c" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                try {
+                    return new Pair<>(Command.CHAT, args.stream()
+                            .map(Integer::valueOf)
+                            .toList());
+                } catch (NumberFormatException ignored) {
                 }
             }
 
