@@ -19,7 +19,8 @@ public class Chat implements Serializable {
     }
 
     /**
-     * This method stores every message sent in an ArrayList
+     *  This method stores every message sent in an ArrayList
+     * @param chatMessage   message associated with ChatMessage
      */
     public void addMessage(ChatMessage chatMessage){
         this.chatMessages.add(chatMessage);
@@ -27,6 +28,8 @@ public class Chat implements Serializable {
 
     /**
      * This method gives the player all the messages that he sends and that are sent to him
+     * @param player    specify the player that receive messages
+     * @return a copy of chat messages
      */
     public List<ChatMessage> getMessages(Player player) {
         List<ChatMessage> copyChatMessages = new ArrayList<ChatMessage>();
