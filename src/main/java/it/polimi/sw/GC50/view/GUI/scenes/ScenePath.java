@@ -8,6 +8,8 @@ public enum ScenePath {
     NET("/scenes/Net.fxml"),
     USER("/scenes/User.fxml"),
     MENU("/scenes/Menu.fxml"),
+    CREATEGAME("/scenes/CreateGame.fxml"),
+    JOINGAME("/scenes/JoinGame.fxml"),
     GAME("/scenes/Game.fxml");
 
     private final String path;

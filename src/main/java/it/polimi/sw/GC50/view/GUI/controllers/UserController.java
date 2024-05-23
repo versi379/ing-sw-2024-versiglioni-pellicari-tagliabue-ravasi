@@ -30,7 +30,7 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
-        playerNickname.setText("prova");
+        playerNickname.setText("Giocatore");
         nameSetted = false;
         guiView = (GuiView) AppClient.getView();
     }
@@ -47,11 +47,9 @@ public class UserController {
     public void handleMenuButton(ActionEvent event) throws Exception {
         nameSetted = true;
         showMenuView();
-        System.out.println("nome finale client prima resume " + playerNickname.getText());
         String submittedPlayerName = playerNickname.getText();
         guiView.setSubmittedPlayerNickname(submittedPlayerName);
         guiView.resumeExecution();
-        System.out.println("nome finale client " + playerNickname.getText());
     }
 
     public String getPlayerNickname() {

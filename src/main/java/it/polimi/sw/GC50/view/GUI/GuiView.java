@@ -32,6 +32,7 @@ public class GuiView extends Application implements View {
     private ClientRmi clientRmi;
 
     private String submittedPlayerNickname;
+    private int submittedGameChoice;
 
     // GUI Controllers
     private NetController netController;
@@ -80,20 +81,19 @@ public class GuiView extends Application implements View {
     @Override
     public String selectName() throws InterruptedException {
         while(userController == null) {
-            System.out.println("ATTENDO CARICAMENTO USER LOGIN PAGE");
+            System.out.println("Attendo caricamento user login page.");
         }
-        System.out.println("stampa nome dopo caricamento user login: " + userController.getPlayerNickname());
-
         waitForButtonPress();
-
-        System.out.println("NOME CHE MANDA AL SERVER: !!! " + submittedPlayerNickname);
-
         return submittedPlayerNickname;
     }
 
     @Override
     public int selectJoinOrCreate() {
-        return menuController.getGameChoice();
+        while(menuController == null) {
+            System.out.println("Attendo caricamento menu page.");
+        }
+        waitForButtonPress();
+        return submittedGameChoice;
     }
 
     @Override
@@ -245,5 +245,9 @@ public class GuiView extends Application implements View {
 
     public void setSubmittedPlayerNickname(String submittedPlayerNickname) {
         this.submittedPlayerNickname = submittedPlayerNickname;
+    }
+
+    public void setSubmittedGameChoice(int submittedGameChoice) {
+        this.submittedGameChoice = submittedGameChoice;
     }
 }

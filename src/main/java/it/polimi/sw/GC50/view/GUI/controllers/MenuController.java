@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
+import it.polimi.sw.GC50.app.AppClient;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,78 +23,52 @@ public class MenuController {
     private Button joinGameButton;
 
     @FXML
-    private Button reconnectToGameButton;
-
-    @FXML
-    private Button quitGameButton;
-
-    @FXML
-    private Button userMenuButton;
+    private Button quitButton;
 
     private int gameChoice;
 
+    private GuiView guiView;
+
+    @FXML
+    public void initialize() throws Exception {
+        guiView = (GuiView) AppClient.getView();
+    }
+
+    public void showCreateGameView() throws Exception {
+        Stage stage = (Stage) createNewGameButton.getScene().getWindow();
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        stage.setScene(userScene);
+    }
+
+    public void showJoinGameView() throws Exception {
+        Stage stage = (Stage) joinGameButton.getScene().getWindow();
+        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
+        Parent userRoot = userLoader.load();
+        Scene userScene = new Scene(userRoot);
+        stage.setScene(userScene);
+    }
+
     @FXML
     public void handleCreateNewGameButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) createNewGameButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
         gameChoice = 1;
+        showCreateGameView();
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
     }
 
     @FXML
     public void handleJoinGameButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) joinGameButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
         gameChoice = 2;
+        showJoinGameView();
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
     }
 
     @FXML
-    public void handleReconnectToGameButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) reconnectToGameButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void handleQuitButton(ActionEvent event) {
 
-    }
-
-    @FXML
-    public void handleQuitGameButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) quitGameButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.GAME.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        gameChoice = 3;
-    }
-
-    @FXML
-    public void handleUserMenuButton(ActionEvent event) throws Exception {
-        Stage stage;
-        Scene scene;
-        Parent root;
-        stage = (Stage) userMenuButton.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     public int getGameChoice() {

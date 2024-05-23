@@ -79,9 +79,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
+        System.out.println("CLIENT USERNAME SUBMITTED");
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
+                    System.out.println("scelta 1");
                     createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
                 }
 
