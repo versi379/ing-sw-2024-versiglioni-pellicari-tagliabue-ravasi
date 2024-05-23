@@ -5,8 +5,10 @@ import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.objective.*;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -33,9 +35,9 @@ public class TuiView implements View {
     @Override
     public int selectJoinOrCreate() {
         return readInt("Do you want to create a new game or join an existing one?" +
-                "\n1) create a new game" +
-                "\n2) join a game" +
-                "\n3) quit",
+                        "\n1) create a new game" +
+                        "\n2) join a game" +
+                        "\n3) quit",
                 1, 3);
     }
 
@@ -123,12 +125,12 @@ public class TuiView implements View {
     }
 
     @Override
-    public boolean selectStarterFace() {
+    public int selectStarterFace() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
         printStarterCardChoice(gameView.getStarterCard());
 
         return readInt("Select the face of the starter card you want to begin with:",
-                1, 2) == 1;
+                1, 2);
     }
 
     private void printStarterCardChoice(PhysicalCard card) {
@@ -168,6 +170,11 @@ public class TuiView implements View {
     }
 
     @Override
+    public void showCurrentPlayer() {
+        System.out.println(yellowTxt + "Player " + gameView.getCurrentPlayer() + " turn");
+    }
+
+    @Override
     public PlaceCardRequest selectPlaceCard() {
         System.out.println();
         System.out.println(yellowTxt + "Placing phase" + baseTxt);
@@ -177,13 +184,13 @@ public class TuiView implements View {
                 readInt("Select the card you want to place:",
                         1, gameView.getHand().size()) - 1,
                 readInt("Select the card's face:",
-                        1, 2) == 1,
+                        1, 2) - 1,
                 readInt("Insert the value of the x coordinate:",
                         1, gameView.getPlayerArea(gameView.getNickname())
-                        .getCardsMatrix().length()) - 1,
+                                .getCardsMatrix().length()) - 1,
                 readInt("Insert the value of the y coordinate:",
-                        1,gameView.getPlayerArea(gameView.getNickname())
-                        .getCardsMatrix().length()) - 1);
+                        1, gameView.getPlayerArea(gameView.getNickname())
+                                .getCardsMatrix().length()) - 1);
     }
 
     @Override
@@ -192,12 +199,12 @@ public class TuiView implements View {
     }
 
     @Override
-    public DrawingPosition selectDrawingPosition() {
+    public int selectDrawingPosition() {
         System.out.println();
         System.out.println(yellowTxt + "Drawing phase" + baseTxt);
         showDecks();
-        return DrawingPosition.values()[readInt("Select the card to draw:",
-                1, DrawingPosition.values().length) - 1];
+        return readInt("Select the card to draw:",
+                1, DrawingPosition.values().length) - 1;
     }
 
     @Override
@@ -299,4 +306,102 @@ public class TuiView implements View {
         System.out.println(message);
     }
 
+    @Override
+    public Pair<Command, List<Integer>> listenCommands() {
+        Scanner scanner = new Scanner(System.in);
+
+        String read;
+        System.out.print("> ");
+        read = scanner.nextLine();
+
+        switch (getFirstWord(read)) {
+            case "-choose_objective" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                if (args.size() == 1) {
+                    try {
+                        return new Pair<>(Command.CHOOSE_OBJECTIVE, args.stream()
+                                .map(Integer::valueOf)
+                                .map(x -> x - 1)
+                                .toList());
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+
+            case "-choose_starter_face" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                if (args.size() == 1) {
+                    try {
+                        return new Pair<>(Command.CHOOSE_STARTER_FACE, args.stream()
+                                .map(Integer::valueOf)
+                                .map(x -> x - 1)
+                                .toList());
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+
+            case "-place_card" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                if (args.size() == 4) {
+                    try {
+                        return new Pair<>(Command.PLACE_CARD, args.stream()
+                                .map(Integer::valueOf)
+                                .map(x -> x - 1)
+                                .toList());
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+
+            case "-draw_card" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                if (args.size() == 1) {
+                    try {
+                        return new Pair<>(Command.DRAW_CARD, args.stream()
+                                .map(Integer::valueOf)
+                                .map(x -> x - 1)
+                                .toList());
+                    } catch (NumberFormatException ignored) {
+                    }
+                }
+            }
+
+            case "-help" -> {
+                List<String> args = getWords(read);
+                args.removeFirst();
+                if (args.isEmpty()) {
+                    return new Pair<>(Command.HELP, null);
+                }
+            }
+
+            default -> {}
+        }
+
+        return new Pair<>(Command.NOT_A_COMMAND, null);
+    }
+
+    private static String getFirstWord(String read) {
+        int index = read.indexOf(' ');
+        if (index > -1) {
+            return read.substring(0, index).trim();
+        } else {
+            return read;
+        }
+    }
+
+    private static List<String> getWords(String read) {
+        List<String> words = new ArrayList<>();
+
+        int index = read.indexOf(' ');
+        words.add(getFirstWord(read));
+        if (index > -1) {
+            words.addAll(getWords(read.substring(index).trim()));
+        }
+        return words;
+    }
 }

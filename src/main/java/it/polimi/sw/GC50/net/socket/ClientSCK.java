@@ -352,14 +352,14 @@ public class ClientSCK implements Runnable {
 
     }
 
-    private void selectStarterFace(boolean index) {
+    private void selectStarterFace(int face) {
         if (this.matchName == null) {
             return;
         }
         if (this.nickName == null) {
             return;
         }
-        setMessageout(new Message1.Message1ClientToServer(Request.SELECT_STARTER_FACE, index, this.matchName, this.nickName));
+        setMessageout(new Message1.Message1ClientToServer(Request.SELECT_STARTER_FACE, face, this.matchName, this.nickName));
         waitFirstPhase();
     }
 
@@ -376,7 +376,7 @@ public class ClientSCK implements Runnable {
     }
 
 
-    private void drawCard(DrawingPosition position) {
+    private void drawCard(int position) {
         if (this.matchName == null) {
             return;
         }

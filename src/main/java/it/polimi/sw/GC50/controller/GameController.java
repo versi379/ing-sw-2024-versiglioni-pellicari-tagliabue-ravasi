@@ -8,7 +8,6 @@ import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -33,6 +32,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     public String getGameId() {
         return game.getId();
     }
+
     public List<String> getPlayerList() {
         return game.getPlayerList().stream().map(Player::getNickname).toList();
     }
@@ -69,17 +69,17 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         System.out.println(request + " from player " + playerMap.get(clientInterface));
         Player player = playerMap.get(clientInterface);
         switch (request) {
-            case SELECT_STARTER_FACE -> {
-                chooseStarterFace(player, (Boolean) update);
-            }
             case SELECT_OBJECTIVE_CARD -> {
                 chooseObjective(player, (Integer) update);
+            }
+            case SELECT_STARTER_FACE -> {
+                chooseStarterFace(player, (Integer) update);
             }
             case PLACE_CARD -> {
                 placeCard(player, (PlaceCardRequest) update);
             }
             case DRAW_CARD -> {
-                drawCard(player, (DrawingPosition) update);
+                drawCard(player, (Integer) update);
             }
             default -> {
             }
@@ -99,19 +99,6 @@ public class GameController extends UnicastRemoteObject implements GameControlle
 
     /**
      * @param player
-     * @param face
-     */
-    public void chooseStarterFace(Player player, boolean face) {
-        if (isStarting()) {
-            PhysicalCard starterCard = game.getStarterCard(player);
-            game.setStarterCard(player, face ? starterCard.getFront() : starterCard.getBack());
-        } else {
-            game.error(player, "Operation not available");
-        }
-    }
-
-    /**
-     * @param player
      * @param index
      */
     public void chooseObjective(Player player, int index) {
@@ -123,12 +110,30 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                 game.error(player, "Invalid index");
             }
         } else {
-            game.error(player, "Operation not available");
+            game.error(player, "Operation currently not available");
+        }
+    }
+
+    /**
+     * @param player
+     * @param face
+     */
+    public void chooseStarterFace(Player player, int face) {
+        if (isStarting()) {
+            if (face >= 0 && face < 2) {
+                PhysicalCard starterCard = game.getStarterCard(player);
+                game.setStarterCard(player, (face == 0) ? starterCard.getFront() : starterCard.getBack());
+            } else {
+                game.error(player, "Invalid index");
+            }
+        } else {
+            game.error(player, "Operation currently not available");
         }
     }
 
     public void placeCard(Player player, PlaceCardRequest placeCardRequest) {
-        placeCard(player, placeCardRequest.getIndex(), placeCardRequest.isFace(), placeCardRequest.getX(), placeCardRequest.getY());
+        placeCard(player, placeCardRequest.getIndex(), placeCardRequest.getFace(),
+                placeCardRequest.getX(), placeCardRequest.getY());
     }
 
     /**
@@ -138,22 +143,26 @@ public class GameController extends UnicastRemoteObject implements GameControlle
      * @param x
      * @param y
      */
-    public void placeCard(Player player, int index, boolean face, int x, int y) {
+    public void placeCard(Player player, int index, int face, int x, int y) {
         if (isPlacingPhase(player)) {
             List<PhysicalCard> playerHand = game.getHand(player);
             if (index >= 0 && index < playerHand.size()) {
-                PlayableCard card = face ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
-                if (card.isPlaceable(game.getPlayerData(player), x, y)) {
-                    game.placeCard(player, card, x, y);
-                    game.removeCard(player, index);
+                if (face >= 0 && face < 2) {
+                    PlayableCard card = (face == 1) ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
+                    if (card.isPlaceable(game.getPlayerData(player), x, y)) {
+                        game.placeCard(player, card, x, y);
+                        game.removeCard(player, index);
+                    } else {
+                        game.error(player, "Card not placeable");
+                    }
                 } else {
-                    game.error(player, "Card not placeable");
+                    game.error(player, "Invalid face index");
                 }
             } else {
-                game.error(player, "Invalid index");
+                game.error(player, "Invalid card index");
             }
         } else {
-            game.error(player, "Operation not available");
+            game.error(player, "Operation currently not available");
         }
     }
 
@@ -161,16 +170,20 @@ public class GameController extends UnicastRemoteObject implements GameControlle
      * @param player
      * @param position
      */
-    public void drawCard(Player player, DrawingPosition position) {
+    public void drawCard(Player player, int position) {
         if (isDrawingPhase(player)) {
-            PhysicalCard card = game.pickCard(position);
-            if (card != null) {
-                game.addCard(player, card);
+            if (position >= 0 && position < DrawingPosition.values().length) {
+                PhysicalCard card = game.pickCard(DrawingPosition.values()[position]);
+                if (card != null) {
+                    game.addCard(player, card);
+                } else {
+                    game.error(player, "Empty deck");
+                }
             } else {
                 game.error(player, "Invalid index");
             }
         } else {
-            game.error(player, "Operation not available");
+            game.error(player, "Operation currently not available");
         }
     }
 

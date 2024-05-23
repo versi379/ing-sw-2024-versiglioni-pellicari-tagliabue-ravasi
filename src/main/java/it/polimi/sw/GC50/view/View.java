@@ -1,8 +1,8 @@
 package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,9 +18,9 @@ public interface View extends Serializable {
     int selectNumberOfPlayers();
     int selectEndScore();
     int selectObjectiveCard();
-    boolean selectStarterFace();
+    int selectStarterFace();
     PlaceCardRequest selectPlaceCard();
-    DrawingPosition selectDrawingPosition();
+    int selectDrawingPosition();
 
     // SHOW /////////////////////////////////////////////////////////
     void showFreeGames(Map<String, List<String>> freeGames);
@@ -31,6 +31,7 @@ public interface View extends Serializable {
     void showCommonObjectives();
     void showPlayerReady(String nickname);
     void showStart();
+    void showCurrentPlayer();
     void showPlayerArea(String nickname);
     void showDecks();
     void showScores();
@@ -38,7 +39,7 @@ public interface View extends Serializable {
     void showEndSession();
     void showError(String content);
     void showMessage(String message);
-
+    Pair<Command, List<Integer>> listenCommands();
     // ????
     void updateChat(Chat chat);
 }

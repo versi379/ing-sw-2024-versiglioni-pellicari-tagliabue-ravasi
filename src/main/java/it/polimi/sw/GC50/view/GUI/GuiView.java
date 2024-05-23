@@ -1,8 +1,8 @@
 package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
 import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Map;
@@ -116,8 +117,8 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public boolean selectStarterFace() {
-        return true;
+    public int selectStarterFace() {
+        return 0;
     }
 
     @Override
@@ -126,12 +127,17 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public DrawingPosition selectDrawingPosition() {
-        return null;
+    public int selectDrawingPosition() {
+        return 0;
     }
 
     @Override
     public void showMessage(String message) {
+    }
+
+    @Override
+    public Pair<Command, List<Integer>> listenCommands() {
+        return null;
     }
 
     @Override
@@ -184,6 +190,11 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showStart() {
+
+    }
+
+    @Override
+    public void showCurrentPlayer() {
 
     }
 

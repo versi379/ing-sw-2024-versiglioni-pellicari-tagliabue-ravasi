@@ -1,15 +1,15 @@
 package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.util.*;
-import it.polimi.sw.GC50.view.GUI.GuiView;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
+import javafx.util.Pair;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -26,13 +26,14 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private final String serverName;
     private ServerRmiRemote serverRmi;
     private GameControllerRemote gameController;
-    //////////////////////////////////////////
     private String nickname;
+    private GameView gameView;
     private View view;
     private ViewType viewType;
-    private GameView gameView;
-    ///////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
     private boolean error;
+    private boolean newCommand;
+    private boolean newUpdate;
     private boolean notifyUpdateChat;
     ///////////////////////////////////////////
     /////////////////////////////////////////
@@ -43,6 +44,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         serverRmi = null;
         gameController = null;
         error = false;
+        newCommand = false;
         notifyUpdateChat = false;
     }
 
@@ -62,7 +64,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized public void run() {
+    public synchronized void run() {
         try {
             connect();
             lobby();
@@ -73,7 +75,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized private void lobby() throws GameException {
+    private void lobby() throws GameException {
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
@@ -96,18 +98,19 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 }
             }
             if (gameController != null) {
-                waitingPhase();
+                gameView = new GameView(nickname);
+                game();
+                //waitingPhase();
             } else {
                 view.showError("Game name not valid");
             }
         }
     }
 
-    synchronized private boolean setPlayer(String nickname) throws GameException {
+    private boolean setPlayer(String nickname) throws GameException {
         try {
             if (serverRmi.setPlayer(this, nickname)) {
                 this.nickname = nickname;
-                gameView = new GameView(nickname);
                 return true;
             }
         } catch (RemoteException e) {
@@ -116,7 +119,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return false;
     }
 
-    synchronized private void createGame(String gameId, int numPlayers, int endScore) throws GameException {
+    private void createGame(String gameId, int numPlayers, int endScore) throws GameException {
         try {
             gameController = serverRmi.createGame(this, gameId, numPlayers, endScore, nickname);
         } catch (RemoteException e) {
@@ -124,7 +127,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized private Map<String, List<String>> getFreeGames() throws GameException {
+    private Map<String, List<String>> getFreeGames() throws GameException {
         try {
             return serverRmi.getFreeGames();
         } catch (RemoteException e) {
@@ -132,7 +135,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized private void joinGame(String gameId) throws GameException {
+    private void joinGame(String gameId) throws GameException {
         try {
             gameController = serverRmi.joinGame(this, gameId, nickname);
         } catch (RemoteException e) {
@@ -140,8 +143,59 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
+    private void game() throws GameException {
+        while (!gameView.getGameStatus().equals(GameStatus.ENDED)) {
+            new Thread(() -> {
+                synchronized (this) {
+                    try {
+                        listenCommands();
+                    } catch (GameException e) {
+                    }
+                    notifyAll();
+                }
+            }).start();
+
+            while (!newCommand && !newUpdate) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    throw new GameException("Interruption error", e.getCause());
+                }
+            }
+            newCommand = false;
+            newUpdate = false;
+        }
+    }
+
+    private void listenCommands() throws GameException {
+        Pair<Command, List<Integer>> command = view.listenCommands();
+        newCommand = true;
+        switch (command.getKey()) {
+            case CHOOSE_OBJECTIVE -> {
+                selectObjectiveCard(command.getValue().getFirst());
+            }
+            case CHOOSE_STARTER_FACE -> {
+                selectStarterFace(command.getValue().getFirst());
+            }
+            case PLACE_CARD -> {
+                placeCard(new PlaceCardRequest(command.getValue().getFirst(),
+                        command.getValue().get(1),
+                        command.getValue().get(2),
+                        command.getValue().get(3)));
+            }
+            case DRAW_CARD -> {
+                drawCard(command.getValue().getFirst());
+            }
+            case HELP -> {
+            }
+            case NOT_A_COMMAND -> {
+                System.err.println("Error not a command");
+            }
+        }
+    }
+
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized private void waitingPhase() throws GameException {
+    private void waitingPhase() throws GameException {
         view.showWaitPlayers();
 
         while (gameView.getGameStatus().equals(GameStatus.WAITING)) {
@@ -155,7 +209,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized private void setupPhase() throws GameException {
+    private void setupPhase() throws GameException {
         view.showSetup();
         selectObjectiveCard(view.selectObjectiveCard());
         selectStarterFace(view.selectStarterFace());
@@ -170,7 +224,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         playingPhase();
     }
 
-    synchronized private void selectObjectiveCard(int index) throws GameException {
+    private void selectObjectiveCard(int index) throws GameException {
         try {
             gameController.updateController(Request.SELECT_OBJECTIVE_CARD, index, this);
         } catch (RemoteException e) {
@@ -178,16 +232,16 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized private void selectStarterFace(boolean index) throws GameException {
+    private void selectStarterFace(int face) throws GameException {
         try {
-            gameController.updateController(Request.SELECT_STARTER_FACE, index, this);
+            gameController.updateController(Request.SELECT_STARTER_FACE, face, this);
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized private void playingPhase() throws GameException {
+    private void playingPhase() throws GameException {
         view.showStart();
 
         while (gameView.getGameStatus().equals(GameStatus.PLAYING)) {
@@ -206,7 +260,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         endPhase();
     }
 
-    synchronized private void playTurn() throws GameException {
+    private void playTurn() throws GameException {
         do {
             error = false;
             placeCard(view.selectPlaceCard());
@@ -232,7 +286,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         } while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING));
     }
 
-    synchronized private void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
+    private void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
         try {
             gameController.updateController(Request.PLACE_CARD, placeCardRequest, this);
         } catch (RemoteException e) {
@@ -240,7 +294,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized private void drawCard(DrawingPosition position) throws GameException {
+    private void drawCard(int position) throws GameException {
         try {
             gameController.updateController(DRAW_CARD, position, this);
         } catch (RemoteException e) {
@@ -248,7 +302,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    synchronized private void sendMessage(String message) throws GameException {
+    private void sendMessage(String message) throws GameException {
         try {
             gameController.updateChat(message, this);
         } catch (RemoteException e) {
@@ -257,8 +311,9 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized private void endPhase() {
+    private void endPhase() {
         view.showEnd();
+        gameController = null;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -308,6 +363,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 gameView.setStarterCard(setupMex.getStarterCard(gameView.getNickname()));
 
                 updateView();
+                view.showSetup();
             }
 
             case NOTIFY_PLAYER_READY -> {
@@ -329,6 +385,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
 
                 updateView();
+                view.showStart();
             }
 
             case NOTIFY_CARD_PLACED -> {
@@ -362,6 +419,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
 
                 updateView();
+                view.showCurrentPlayer();
             }
 
             case NOTIFY_GAME_ENDED -> {
@@ -375,6 +433,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 }
 
                 updateView();
+                view.showEnd();
             }
 
             case NOTIFY_CHAT_MESSAGE -> {
