@@ -1,9 +1,10 @@
 package it.polimi.sw.GC50.view.TUI;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.model.game.GameStatus;
+import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
@@ -13,7 +14,7 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class TuiView implements View {
-    private GameView gameView;
+    private Client client;
     public static String baseTxt = "\u001B[0m";
     public static String redTxt = "\u001B[31m";
     public static String yellowTxt = "\u001B[33m";
@@ -22,6 +23,16 @@ public class TuiView implements View {
     public TuiView() {
     }
 
+    @Override
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    private GameView getGameView() {
+        return client.getGameView();
+    }
+
+    @Override
     public void showEndSession() {
         System.out.println();
         System.out.println(yellowTxt + "Session ended" + baseTxt);
@@ -95,50 +106,35 @@ public class TuiView implements View {
         System.out.println();
         System.out.println(yellowTxt + "All players joined, beginning game setup" + baseTxt);
         showCommonObjectives();
+        showSecretObjectiveSelection();
+        showStarterCardSelection();
     }
 
     @Override
     public void showCommonObjectives() {
         System.out.println(yellowTxt + "Common objective cards:" + baseTxt);
-        List<ObjectiveCard> commonObjectives = gameView.getCommonObjectives();
-        for (int i = 0; i < commonObjectives.size(); i++) {
-            System.out.println((commonObjectives.get(i).toStringTUI()));
+        List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
+        for (ObjectiveCard commonObjective : commonObjectives) {
+            System.out.println((commonObjective.toStringTUI()));
             System.out.println();
         }
     }
 
-    @Override
-    public int selectObjectiveCard() {
+    public void showSecretObjectiveSelection() {
         System.out.println(yellowTxt + "Secret objective cards:" + baseTxt);
-        printSecretObjectiveChoice();
-
-        return readInt("Select the secret objective card you want to play with:",
-                1, gameView.getSecreteObjectivesList().size()) - 1;
-    }
-
-    private void printSecretObjectiveChoice() {
-        List<ObjectiveCard> objectiveCards = gameView.getSecreteObjectivesList();
+        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
         for (int i = 0; i < objectiveCards.size(); i++) {
             System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
             System.out.println();
         }
     }
 
-    @Override
-    public int selectStarterFace() {
+    public void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
-        printStarterCardChoice(gameView.getStarterCard());
-
-        return readInt("Select the face of the starter card you want to begin with:",
-                1, 2);
-    }
-
-    private void printStarterCardChoice(PhysicalCard card) {
         String[][] cardTUI;
 
-        System.out.println();
         System.out.println("1) Front");
-        cardTUI = card.getFront().toStringTUI();
+        cardTUI = getGameView().getStarterCard().getFront().toStringTUI();
         for (int i = cardTUI[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < cardTUI.length; j++) {
                 System.out.print(cardTUI[j][i]);
@@ -146,16 +142,14 @@ public class TuiView implements View {
             System.out.println();
         }
 
-        System.out.println();
         System.out.println("2) Back");
-        cardTUI = card.getBack().toStringTUI();
+        cardTUI = getGameView().getStarterCard().getBack().toStringTUI();
         for (int i = cardTUI[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < cardTUI.length; j++) {
                 System.out.print(cardTUI[j][i]);
             }
             System.out.println();
         }
-        System.out.println();
     }
 
     @Override
@@ -171,33 +165,37 @@ public class TuiView implements View {
 
     @Override
     public void showCurrentPlayer() {
-        System.out.println(yellowTxt + "Player " + gameView.getCurrentPlayer() + " turn");
+        System.out.println(yellowTxt + "Player " + getGameView().getCurrentPlayer() + " turn");
     }
 
+    /*
     @Override
     public PlaceCardRequest selectPlaceCard() {
         System.out.println();
         System.out.println(yellowTxt + "Placing phase" + baseTxt);
-        showPlayerArea(gameView.getNickname());
-        ModelPrinter.printHand(gameView.getHand());
+        showPlayerArea(getGameView().getNickname());
+        ModelPrinter.printHand(getGameView().getHand());
         return new PlaceCardRequest(
                 readInt("Select the card you want to place:",
-                        1, gameView.getHand().size()) - 1,
+                        1, getGameView().getHand().size()) - 1,
                 readInt("Select the card's face:",
                         1, 2) - 1,
                 readInt("Insert the value of the x coordinate:",
-                        1, gameView.getPlayerArea(gameView.getNickname())
+                        1, getGameView().getPlayerArea(getGameView().getNickname())
                                 .getCardsMatrix().length()) - 1,
                 readInt("Insert the value of the y coordinate:",
-                        1, gameView.getPlayerArea(gameView.getNickname())
+                        1, getGameView().getPlayerArea(getGameView().getNickname())
                                 .getCardsMatrix().length()) - 1);
     }
 
+     */
+
     @Override
     public void showPlayerArea(String nickname) {
-        ModelPrinter.printPlayerArea(nickname, gameView.getPlayerArea(nickname));
+        ModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
     }
 
+    /*
     @Override
     public int selectDrawingPosition() {
         System.out.println();
@@ -207,16 +205,18 @@ public class TuiView implements View {
                 1, DrawingPosition.values().length) - 1;
     }
 
+     */
+
     @Override
     public void showDecks() {
-        ModelPrinter.printDecks(gameView.getDecks());
+        ModelPrinter.printDecks(getGameView().getDecks());
     }
 
     @Override
     public void showScores() {
         Map<String, Integer> scores = new HashMap<>();
-        for (String nickname : gameView.getPlayerList()) {
-            scores.put(nickname, gameView.getPlayerArea(nickname).getTotalScore());
+        for (String nickname : getGameView().getPlayerList()) {
+            scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
         }
         ModelPrinter.printScores(scores);
     }
@@ -226,20 +226,15 @@ public class TuiView implements View {
         System.out.println();
         System.out.println(yellowTxt + "Game ended!" + baseTxt);
 
-        if (gameView.getWinnerList().size() == 1) {
-            System.out.println("winner -> " + gameView.getWinnerList().getFirst());
+        if (getGameView().getWinnerList().size() == 1) {
+            System.out.println("winner -> " + getGameView().getWinnerList().getFirst());
         } else {
             System.out.print("winners ->");
-            for (String nickname : gameView.getWinnerList()) {
+            for (String nickname : getGameView().getWinnerList()) {
                 System.out.print(" " + nickname);
             }
         }
         showScores();
-    }
-
-    @Override
-    public void setModel(GameView gameView) {
-        this.gameView = gameView;
     }
 
     @Override
@@ -307,15 +302,17 @@ public class TuiView implements View {
     }
 
     @Override
-    public Pair<Command, List<Integer>> listenCommands() {
+    public void listen() {
+        Pair<Command, List<Integer>> command = readCommand();
+        client.addCommand(command.getKey(), command.getValue());
+    }
+
+
+    public Pair<Command, List<Integer>> readCommand() {
         Scanner scanner = new Scanner(System.in);
-
-        String read;
-        System.out.print("> ");
-        read = scanner.nextLine();
-
+        String read = scanner.nextLine();
         switch (getFirstWord(read)) {
-            case "-choose_objective" -> {
+            case "-choose_objective", "-co" -> {
                 List<String> args = getWords(read);
                 args.removeFirst();
                 if (args.size() == 1) {
@@ -329,7 +326,7 @@ public class TuiView implements View {
                 }
             }
 
-            case "-choose_starter_face" -> {
+            case "-choose_starter_face", "-cs" -> {
                 List<String> args = getWords(read);
                 args.removeFirst();
                 if (args.size() == 1) {
@@ -343,7 +340,7 @@ public class TuiView implements View {
                 }
             }
 
-            case "-place_card" -> {
+            case "-place_card", "-p" -> {
                 List<String> args = getWords(read);
                 args.removeFirst();
                 if (args.size() == 4) {
@@ -357,7 +354,7 @@ public class TuiView implements View {
                 }
             }
 
-            case "-draw_card" -> {
+            case "-draw_card", "-d" -> {
                 List<String> args = getWords(read);
                 args.removeFirst();
                 if (args.size() == 1) {
@@ -371,7 +368,7 @@ public class TuiView implements View {
                 }
             }
 
-            case "-help" -> {
+            case "-help", "-h" -> {
                 List<String> args = getWords(read);
                 args.removeFirst();
                 if (args.isEmpty()) {
@@ -379,7 +376,8 @@ public class TuiView implements View {
                 }
             }
 
-            default -> {}
+            default -> {
+            }
         }
 
         return new Pair<>(Command.NOT_A_COMMAND, null);

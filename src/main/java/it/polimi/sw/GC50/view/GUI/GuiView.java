@@ -3,6 +3,7 @@ package it.polimi.sw.GC50.view.GUI;
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
+import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
@@ -10,7 +11,6 @@ import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
 import it.polimi.sw.GC50.view.GUI.controllers.NetController;
 import it.polimi.sw.GC50.view.GUI.controllers.UserController;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
-import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public class GuiView extends Application implements View {
-
-    private GameView gameView;
 
     private Stage primaryStage;
 
@@ -64,6 +62,11 @@ public class GuiView extends Application implements View {
     }
 
     public GuiView() {
+
+    }
+
+    @Override
+    public void setClient(Client client) {
 
     }
 
@@ -119,33 +122,8 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void setModel(GameView gameView) {
-        this.gameView = gameView;
-    }
-
-    @Override
     public void updateChat(Chat chat) {
 
-    }
-
-    @Override
-    public int selectObjectiveCard() {
-        return 0;
-    }
-
-    @Override
-    public int selectStarterFace() {
-        return 0;
-    }
-
-    @Override
-    public PlaceCardRequest selectPlaceCard() {
-        return null;
-    }
-
-    @Override
-    public int selectDrawingPosition() {
-        return 0;
     }
 
     @Override
@@ -153,8 +131,8 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public Pair<Command, List<Integer>> listenCommands() {
-        return null;
+    public void listen() {
+
     }
 
     @Override

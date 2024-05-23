@@ -21,6 +21,7 @@ import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/*
 public class ClientSCK implements Runnable {
     private View view;
     private final int port;
@@ -551,9 +552,13 @@ public class ClientSCK implements Runnable {
                 sendMessage(view.askMessage());
             }
         });
-*/
+
     }
 
 
 }
 
+
+
+
+ */
