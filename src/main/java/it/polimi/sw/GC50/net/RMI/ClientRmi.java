@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.util.*;
 import it.polimi.sw.GC50.view.Command;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
@@ -84,12 +85,21 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
                     System.out.println("scelta 1");
+                    if(viewType.equals(viewType.GUI)) {
+                        ((GuiView) view).createGame();
+                    }
                     createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
+                    System.out.println("gioco creato");
+                    System.out.println(view.selectGameName());
+                    System.out.println(view.selectNumberOfPlayers());
+                    System.out.println(view.selectEndScore());
                 }
 
                 case 2 -> {
+                    System.out.println("scelta 2");
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
+                    // qui per la gui è meglio cliccarci direttamente sul gioco free che si vuole
                     if (!freeGames.isEmpty()) {
                         joinGame(view.selectGameName());
                     }

@@ -32,6 +32,7 @@ public class GuiView extends Application implements View {
     private int submittedGameChoice;
     private String submittedGameName;
     private int submittedNumPlayers;
+    private int submittedEndPoints;
 
     // GUI Controllers
     private NetController netController;
@@ -64,6 +65,14 @@ public class GuiView extends Application implements View {
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
         Parent gameRoot = gameLoader.load();
         gameController = gameLoader.getController();
+
+        FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
+        Parent createGameRoot = createGameLoader.load();
+        createGameController = createGameLoader.getController();
+
+        FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
+        Parent joinGameRoot = joinGameLoader.load();
+        joinGameController = joinGameLoader.getController();
 
         Scene scene = new Scene(netRoot);
         stage.setScene(scene);
@@ -102,27 +111,27 @@ public class GuiView extends Application implements View {
 
     }
 
-    @Override
-    public String selectGameName() {
+    // metodo creazione gioco
+    public void createGame() {
         while(createGameController == null) {
             System.out.println("Attendo caricamento create game page.");
         }
         waitForButtonPress();
+    }
+
+    @Override
+    public String selectGameName() {
         return submittedGameName;
     }
 
     @Override
     public int selectNumberOfPlayers() {
-        while(createGameController == null) {
-            System.out.println("Attendo caricamento create game page.");
-        }
-        waitForButtonPress();
         return submittedNumPlayers;
     }
 
     @Override
     public int selectEndScore() {
-        return 0;
+        return submittedEndPoints;
     }
 
     @Override
@@ -259,4 +268,17 @@ public class GuiView extends Application implements View {
     public void setSubmittedGameChoice(int submittedGameChoice) {
         this.submittedGameChoice = submittedGameChoice;
     }
+
+    public void setSubmittedGameName(String submittedGameName) {
+        this.submittedGameName = submittedGameName;
+    }
+
+    public void setSubmittedNumPlayers(int submittedNumPlayers) {
+        this.submittedNumPlayers = submittedNumPlayers;
+    }
+
+    public void setSubmittedEndPoints(int submittedEndPoints) {
+        this.submittedEndPoints = submittedEndPoints;
+    }
+
 }
