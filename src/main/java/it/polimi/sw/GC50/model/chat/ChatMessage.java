@@ -2,13 +2,14 @@ package it.polimi.sw.GC50.model.chat;
 
 import it.polimi.sw.GC50.model.lobby.Player;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
  * This class defines messages that players can send to each other
  */
-public class ChatMessage {
+public class ChatMessage implements Serializable {
 
     private final Player sender;
     private final String content;
