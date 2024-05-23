@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 
 public class UserController {
 
@@ -25,16 +26,8 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
+        playerNickname.setText("prova");
         nameSetted = false;
-        menuButton.setOnAction(event -> {
-
-            nameSetted = true;
-            try {
-                showMenuView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     public void showMenuView() throws Exception{
@@ -45,11 +38,11 @@ public class UserController {
         stage.setScene(userScene);
     }
 
-//    @FXML
-//    public void handleMenuButton(ActionEvent event) throws Exception {
-//        nameSetted = true;
-//        showMenuView();
-//    }
+    @FXML
+    public void handleMenuButton(ActionEvent event) throws Exception {
+        nameSetted = true;
+        showMenuView();
+    }
 
     public String getPlayerNickname() {
         return playerNickname.getText();
@@ -62,4 +55,5 @@ public class UserController {
     public Button getMenuButton() {
         return menuButton;
     }
+
 }

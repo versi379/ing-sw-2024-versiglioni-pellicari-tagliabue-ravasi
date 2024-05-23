@@ -1,6 +1,8 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
@@ -19,12 +21,16 @@ import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class GuiView extends Application implements View {
 
     private GameView gameView;
 
     private Stage primaryStage;
+
+    // RIF client
+    private ClientRmi clientRmi;
 
     // GUI Controllers
     private NetController netController;
@@ -62,8 +68,19 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public String selectName() {
-        return "giovanni";
+    public String selectName() throws InterruptedException {
+        while(userController == null) {
+            System.out.println("ATTENDO CARICAMENTO USER LOGIN PAGE");
+        }
+        System.out.println("stampa nome dopo caricamento user login: " + userController.getPlayerNickname());
+//        while(!userController.isNameSetted()) {
+//            System.out.println("ATTENDO CHE UTENTE CONFERMI NOME");
+//        }
+
+        AppClient.getClientThread().sleep(5000);
+
+        System.out.println("stampa nome dopo aver confermato: " + userController.getPlayerNickname());
+        return userController.getPlayerNickname();
     }
 
     @Override
@@ -217,4 +234,7 @@ public class GuiView extends Application implements View {
         return gameController;
     }
 
+    public void setClientRmi(ClientRmi clientRmi) {
+        this.clientRmi = clientRmi;
+    }
 }

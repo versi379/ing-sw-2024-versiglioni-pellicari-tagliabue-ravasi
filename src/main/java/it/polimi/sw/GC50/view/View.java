@@ -12,7 +12,7 @@ public interface View extends Serializable {
     void setModel(GameView gameView);
 
     // SELECT ///////////////////////////////////////////////////////
-    String selectName();
+    String selectName() throws InterruptedException;
     int selectJoinOrCreate();
     String selectGameName();
     int selectNumberOfPlayers();

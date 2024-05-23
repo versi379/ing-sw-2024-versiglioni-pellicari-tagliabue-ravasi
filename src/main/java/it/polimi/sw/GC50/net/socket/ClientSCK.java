@@ -412,7 +412,7 @@ public class ClientSCK implements Runnable {
     //LOBBY_CONTROLLER
     ///////////////////////////////////////////
 
-    public void lobby() {
+    public void lobby() throws InterruptedException {
         System.out.println("prova");
         while (this.setName(view.selectName()) == null) {
             System.out.println("name not valid");
@@ -445,7 +445,7 @@ public class ClientSCK implements Runnable {
         waitingPlayer();
     }
 
-    private void waitingPlayer() {
+    private void waitingPlayer() throws InterruptedException {
 
         view.showWaitPlayers();
         long startTime = System.currentTimeMillis();

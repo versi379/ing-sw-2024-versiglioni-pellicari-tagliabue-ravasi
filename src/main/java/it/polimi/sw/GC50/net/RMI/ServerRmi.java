@@ -55,4 +55,5 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException {
         return lobby.joinGame(clientInterface, gameId, nickname);
     }
+
 }

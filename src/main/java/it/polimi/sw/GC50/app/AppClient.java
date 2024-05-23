@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class AppClient {
     private static View view;
     private static ViewType viewType;
+    private static Thread clientThread;
 
     public static void main(String[] args) {
         printBanner();
@@ -63,11 +64,14 @@ public class AppClient {
     public static void setupSocket(View view, ViewType viewType) {
         try {
             ClientSCK client = new ClientSCK(2012, "localhost");
-            new Thread(client).start();
+            Thread clientThread = new Thread(client);
+            clientThread.start();
             client.addView(view);
             client.lobby();
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -77,6 +81,7 @@ public class AppClient {
             String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
+            ((GuiView) view).setClientRmi(client); // salvo ref client nella view
             client.run();
         } catch (RemoteException e) {
             System.err.println("Error in connection");
@@ -145,4 +150,7 @@ public class AppClient {
         return viewType;
     }
 
+    public static Thread getClientThread() {
+        return clientThread;
+    }
 }

@@ -71,14 +71,18 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             view.showEndSession();
         } catch (GameException e) {
             System.err.println(e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void lobby() throws GameException {
+    private void lobby() throws GameException, InterruptedException {
+        System.out.println("ENTRATO NELLA LOBBY RMI");
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
+        System.out.println("NOME SELEZIONATO CLIENT");
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
@@ -110,6 +114,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     private boolean setPlayer(String nickname) throws GameException {
         try {
             if (serverRmi.setPlayer(this, nickname)) {
+                System.out.println("--- ENTRATO NEL SET PLAYER DEL SERVER RMI ---");
                 this.nickname = nickname;
                 return true;
             }
