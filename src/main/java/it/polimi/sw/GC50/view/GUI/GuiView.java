@@ -6,10 +6,7 @@ import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.view.Command;
-import it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI;
-import it.polimi.sw.GC50.view.GUI.controllers.MenuController;
-import it.polimi.sw.GC50.view.GUI.controllers.NetController;
-import it.polimi.sw.GC50.view.GUI.controllers.UserController;
+import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
@@ -33,12 +30,16 @@ public class GuiView extends Application implements View {
 
     private String submittedPlayerNickname;
     private int submittedGameChoice;
+    private String submittedGameName;
+    private int submittedNumPlayers;
 
     // GUI Controllers
     private NetController netController;
     private UserController userController;
     private MenuController menuController;
     private GameControllerGUI gameController;
+    private CreateGameController createGameController;
+    private JoinGameController joinGameController;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -103,12 +104,20 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectGameName() {
-        return null;
+        while(createGameController == null) {
+            System.out.println("Attendo caricamento create game page.");
+        }
+        waitForButtonPress();
+        return submittedGameName;
     }
 
     @Override
     public int selectNumberOfPlayers() {
-        return 0;
+        while(createGameController == null) {
+            System.out.println("Attendo caricamento create game page.");
+        }
+        waitForButtonPress();
+        return submittedNumPlayers;
     }
 
     @Override
