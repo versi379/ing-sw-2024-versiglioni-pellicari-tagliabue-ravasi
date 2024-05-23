@@ -17,29 +17,36 @@ public class Lobby {
         System.out.println("Server Ready!");
     }
 
-    public synchronized boolean addPlayer(ClientInterface clientInterface, String nickname) {
+    public synchronized String addPlayer(ClientInterface clientInterface, String nickname) {
         if (nickname == null || nickname.isEmpty() || clients.containsValue(nickname)) {
-            return false;
+            return null;
         }
         clients.put(clientInterface, nickname);
-        return true;
+        return nickname;
+    }
+
+    public synchronized void removePlayer(ClientInterface clientInterface) {
+        clients.remove(clientInterface);
+    }
+
+    private synchronized boolean isPlayerPresent(ClientInterface client) {
+        return clients.containsKey(client);
     }
 
     /**
      * @param client
      * @param numOfPlayer
      * @param gameId
-     * @param nickname
      * @return GameController
      * the return value is the GameController created by the client
      * if is it null the GameController is not created
      * this method is called when a client wants to create a GameController
      * @
      */
-    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, int endScore, String nickname) throws RemoteException {
+    public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, int endScore) throws RemoteException {
         if (isPlayerPresent(client) && !isGamePresent(gameId)) {
             System.out.println("Game " + gameId + " created");
-            GameController newGameController = new GameController(client, gameId, numOfPlayer, endScore, nickname);
+            GameController newGameController = new GameController(client, gameId, numOfPlayer, endScore, clients.get(client));
             freeGameControllers.add(newGameController);
             return newGameController;
         } else {
@@ -47,21 +54,11 @@ public class Lobby {
         }
     }
 
-    private synchronized boolean isPlayerPresent(ClientInterface client) {
-        return clients.containsKey(client);
-    }
-
-    private synchronized boolean isGamePresent(String gameId) {
-        return freeGameControllers.stream()
-                .map(GameController::getGameId)
-                .anyMatch(gameId::equals);
-    }
-
-    public synchronized GameController joinGame(ClientInterface client, String gameId, String nickname) {
+    public synchronized GameController joinGame(ClientInterface client, String gameId) {
         if (isPlayerPresent(client)) {
             for (GameController gameController : freeGameControllers) {
                 if (gameController.getGameId().equals(gameId) && gameController.isFree()) {
-                    gameController.addPlayer(client, nickname);
+                    gameController.addPlayer(client, clients.get(client));
                     if (!gameController.isFree()) {
                         freeGameControllers.remove(gameController);
                     }
@@ -70,6 +67,12 @@ public class Lobby {
             }
         }
         return null;
+    }
+
+    private synchronized boolean isGamePresent(String gameId) {
+        return freeGameControllers.stream()
+                .map(GameController::getGameId)
+                .anyMatch(gameId::equals);
     }
 
     public synchronized Map<String, List<String>> getFreeGames() {

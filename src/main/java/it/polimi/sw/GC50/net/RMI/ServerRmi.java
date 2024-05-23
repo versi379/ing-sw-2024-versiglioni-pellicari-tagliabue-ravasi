@@ -20,7 +20,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     }
 
     @Override
-    public void start() {
+    public void start() throws RemoteException {
         try {
             LocateRegistry.createRegistry(this.port).rebind("server", this);
             System.out.println("Server RMI ready");
@@ -30,30 +30,34 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     }
 
     @Override
-    public void addClient(ClientInterface client) {
+    public void addClient(ClientInterface client) throws RemoteException {
         System.out.println("Client connected");
     }
 
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public boolean setPlayer(ClientInterface clientInterface, String nickname) {
+    public String setPlayer(ClientInterface clientInterface, String nickname) throws RemoteException {
         return lobby.addPlayer(clientInterface, nickname);
+    }
+
+    @Override
+    public void resetPlayer(ClientInterface clientInterface) throws RemoteException {
+        lobby.removePlayer(clientInterface);
+    }
+
+    @Override
+    public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore) throws RemoteException {
+        return lobby.createGame(clientInterface, gameId, numOfPlayers, endScore);
+    }
+
+    @Override
+    public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId) throws RemoteException {
+        return lobby.joinGame(clientInterface, gameId);
     }
 
     @Override
     public Map<String, List<String>> getFreeGames() throws RemoteException {
         return lobby.getFreeGames();
     }
-
-    @Override
-    public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore, String nickname) throws RemoteException {
-        return lobby.createGame(clientInterface, gameId, numOfPlayers, endScore, nickname);
-    }
-
-    @Override
-    public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException {
-        return lobby.joinGame(clientInterface, gameId, nickname);
-    }
-
 }

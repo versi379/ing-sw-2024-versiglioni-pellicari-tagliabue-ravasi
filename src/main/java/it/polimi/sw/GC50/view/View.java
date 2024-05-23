@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface View extends Serializable {
     void setClient(Client client);
-
+    void listen();
 
     // SELECT ///////////////////////////////////////////////////////
     String selectName() throws InterruptedException;
@@ -35,9 +35,9 @@ public interface View extends Serializable {
     void showScores();
     void showEnd();
     void showEndSession();
+    void showHelp();
     void showError(String content);
     void showMessage(String message);
-    void listen();
     // ????
     void updateChat(Chat chat);
 }

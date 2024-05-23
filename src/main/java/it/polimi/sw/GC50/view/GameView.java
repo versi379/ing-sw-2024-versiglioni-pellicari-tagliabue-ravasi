@@ -3,7 +3,6 @@ package it.polimi.sw.GC50.view;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
-import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 
 import java.util.*;
@@ -40,6 +39,22 @@ public class GameView {
         starterCard = null;
 
         playerAreas = new HashMap<>();
+    }
+
+    public void clear() {
+        gameStatus = GameStatus.WAITING;
+        playingPhase = PlayingPhase.PLACING;
+        currentPlayer = null;
+        commonObjectives = null;
+        decks = null;
+
+        hand = null;
+        secretObjective = null;
+
+        secreteObjectivesList = null;
+        starterCard = null;
+
+        playerAreas.clear();
     }
 
     public void setGameStatus(GameStatus gameStatus) {

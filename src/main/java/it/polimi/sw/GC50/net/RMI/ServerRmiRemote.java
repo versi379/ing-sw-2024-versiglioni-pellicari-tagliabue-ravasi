@@ -13,19 +13,14 @@ public interface ServerRmiRemote extends Remote {
 
     void addClient(ClientInterface client) throws RemoteException;
 
-    //////////////////////////////////////////
-    //LOBBY
-    ///////////////////////////////////////////
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    String setPlayer(ClientInterface clientInterface, String nickname) throws RemoteException;
+
+    void resetPlayer(ClientInterface clientInterface) throws RemoteException;
+
+    GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore) throws RemoteException;
+
+    GameControllerRemote joinGame(ClientInterface clientInterface, String gameId) throws RemoteException;
 
     Map<String, List<String>> getFreeGames() throws RemoteException;
-
-    GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore, String nickname) throws RemoteException;
-
-    GameControllerRemote joinGame(ClientInterface clientInterface, String gameId, String nickname) throws RemoteException;
-
-    boolean setPlayer(ClientInterface clientInterface, String nickname) throws RemoteException;
-
-    //////////////////////////////////////////
-    //ACTIVE GAME
-    ///////////////////////////////////////////
 }

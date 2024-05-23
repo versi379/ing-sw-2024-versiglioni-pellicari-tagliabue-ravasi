@@ -13,22 +13,37 @@ public class CardsMatrix implements Serializable {
     private final PlayableCard[][] cardsMatrix;
     private final List<Integer> orderList;
 
+    /**
+     * Constructs a new CardMatrix instance given length
+     * @param length of array of cards
+     */
     public CardsMatrix(int length) {
         cardsMatrix = new PlayableCard[length][length];
         orderList = new ArrayList<>();
     }
 
+    /**
+     * Returns dimension of matrix
+     * @return cardsMatrix.length
+     */
     public int length() {
         return cardsMatrix.length;
     }
 
+    /**
+     * Returns minimum
+     * @return the smallest value of X
+     */
     public int getMinX() {
         return orderList.stream()
                 .map(x -> x / length())
                 .min(Integer::compareTo)
                 .orElse(length());
     }
-
+    /**
+     * Returns max
+     * @return the biggest value of X
+     */
     public int getMaxX() {
         return orderList.stream()
                 .map(x -> x / length())
@@ -36,13 +51,20 @@ public class CardsMatrix implements Serializable {
                 .orElse(0);
     }
 
+    /**
+     * Returns minimum
+     * @return the smallest value of Y
+     */
     public int getMinY() {
         return orderList.stream()
                 .map(x -> x % length())
                 .min(Integer::compareTo)
                 .orElse(length());
     }
-
+    /**
+     * Returns max
+     * @return the biggest value of Y
+     */
     public int getMaxY() {
         return orderList.stream()
                 .map(x -> x % length())
@@ -67,9 +89,9 @@ public class CardsMatrix implements Serializable {
     /**
      * Inserts an element at the position (x, y)
      *
-     * @param card
-     * @param x
-     * @param y
+     * @param card      playableCard positioned
+     * @param x         X coordinate of playerData
+     * @param y         Y coordinate of playerData
      */
     public void insert(PlayableCard card, int x, int y) {
         cardsMatrix[x][y] = card;
@@ -79,9 +101,9 @@ public class CardsMatrix implements Serializable {
     /**
      * Gets the element present at the position (x, y)
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x     X coordinate of playerData
+     * @param y     Y coordinate of playerData
+     * @return      card matrix
      */
     public PlayableCard get(int x, int y) {
         return cardsMatrix[x][y];
@@ -90,9 +112,9 @@ public class CardsMatrix implements Serializable {
     /**
      * Returns all adjacent cards to the one present at the position (x, y)
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x     X coordinate of playerData
+     * @param y     Y coordinate of playerData
+     * @return      the nearest card
      */
     public PlayableCard[] getNearCards(int x, int y) {
         CardsMatrix rotatedMatrix = rotate45();
@@ -107,10 +129,20 @@ public class CardsMatrix implements Serializable {
         return result;
     }
 
+    /**
+     *
+     * @return a new ordered list using getOrder method
+     */
     public List<Integer> getOrderList() {
         return new ArrayList<>(orderList);
     }
 
+    /**
+     * This method orders the list
+     * @param x     first integer value
+     * @param y     second integer value
+     * @return      ordered list
+     */
     public int getOrder(int x, int y) {
         for (int order = 0; order < orderList.size(); order++) {
             if (orderList.get(order) / length() == x && orderList.get(order) % length() == y) {
@@ -124,10 +156,10 @@ public class CardsMatrix implements Serializable {
      * Tells if the corner at the selected position (0->sw, 1->nw, 2->ne, 3->se)
      * of the card at (x, y) is visible from the player's perspective
      *
-     * @param x
-     * @param y
-     * @param position
-     * @return
+     * @param x         X coordinate of playerData
+     * @param y         Y coordinate of playerData
+     * @param position  where we place the card
+     * @return  a boolean ( true if the corner is visible)
      */
     public boolean isCornerUncovered(int x, int y, int position) {
         CardsMatrix rotatedMatrix = rotate45();
@@ -147,6 +179,9 @@ public class CardsMatrix implements Serializable {
         };
     }
 
+    /**
+     * methods used for matrix rotation
+     */
     private int cornersToCardsX(int x, int y) {
         return (x + y) / 2;
     }
