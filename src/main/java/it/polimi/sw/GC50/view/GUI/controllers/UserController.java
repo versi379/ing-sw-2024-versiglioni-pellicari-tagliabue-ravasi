@@ -1,5 +1,7 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
+import it.polimi.sw.GC50.app.AppClient;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,10 +26,13 @@ public class UserController {
 
     private boolean nameSetted;
 
+    private GuiView guiView;
+
     @FXML
     public void initialize() throws Exception {
         playerNickname.setText("prova");
         nameSetted = false;
+        guiView = (GuiView) AppClient.getView();
     }
 
     public void showMenuView() throws Exception{
@@ -42,6 +47,11 @@ public class UserController {
     public void handleMenuButton(ActionEvent event) throws Exception {
         nameSetted = true;
         showMenuView();
+        System.out.println("nome finale client prima resume " + playerNickname.getText());
+        String submittedPlayerName = playerNickname.getText();
+        guiView.setSubmittedPlayerNickname(submittedPlayerName);
+        guiView.resumeExecution();
+        System.out.println("nome finale client " + playerNickname.getText());
     }
 
     public String getPlayerNickname() {

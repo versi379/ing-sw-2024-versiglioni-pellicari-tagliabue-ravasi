@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javafx.application.Platform;
 
 import java.util.List;
 import java.util.Map;
@@ -32,11 +33,17 @@ public class GuiView extends Application implements View {
     // RIF client
     private ClientRmi clientRmi;
 
+    private String submittedPlayerNickname;
+
     // GUI Controllers
     private NetController netController;
     private UserController userController;
     private MenuController menuController;
     private GameControllerGUI gameController;
+
+    private Object lock = new Object(); // Object for synchronization
+    private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -73,14 +80,12 @@ public class GuiView extends Application implements View {
             System.out.println("ATTENDO CARICAMENTO USER LOGIN PAGE");
         }
         System.out.println("stampa nome dopo caricamento user login: " + userController.getPlayerNickname());
-//        while(!userController.isNameSetted()) {
-//            System.out.println("ATTENDO CHE UTENTE CONFERMI NOME");
-//        }
 
-        AppClient.getClientThread().sleep(5000);
+        waitForButtonPress();
 
-        System.out.println("stampa nome dopo aver confermato: " + userController.getPlayerNickname());
-        return userController.getPlayerNickname();
+        System.out.println("NOME CHE MANDA AL SERVER: !!! " + submittedPlayerNickname);
+
+        return submittedPlayerNickname;
     }
 
     @Override
@@ -236,5 +241,31 @@ public class GuiView extends Application implements View {
 
     public void setClientRmi(ClientRmi clientRmi) {
         this.clientRmi = clientRmi;
+    }
+
+
+
+    private void waitForButtonPress() {
+        synchronized (lock) {
+            waitingForButton = true; // Set flag to indicate waiting for button press
+            try {
+                while (waitingForButton) {
+                    lock.wait(); // Wait until notified
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void resumeExecution() {
+        synchronized (lock) {
+            waitingForButton = false; // Reset the flag
+            lock.notify(); // Notify to resume execution
+        }
+    }
+
+    public void setSubmittedPlayerNickname(String submittedPlayerNickname) {
+        this.submittedPlayerNickname = submittedPlayerNickname;
     }
 }
