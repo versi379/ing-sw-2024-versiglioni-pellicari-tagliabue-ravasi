@@ -1,7 +1,6 @@
 package it.polimi.sw.GC50.app;
 
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
-import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.View;
@@ -9,7 +8,6 @@ import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -62,6 +60,7 @@ public class AppClient {
     }
 
     public static void setupSocket(View view, ViewType viewType) {
+        /*
         try {
             ClientSCK client = new ClientSCK(2012, "localhost");
             Thread clientThread = new Thread(client);
@@ -73,6 +72,8 @@ public class AppClient {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+         */
     }
 
     public static void setupRMI(View view, ViewType viewType) {
@@ -81,7 +82,6 @@ public class AppClient {
             String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name);
             client.addView(view, viewType);
-            ((GuiView) view).setClientRmi(client); // salvo ref client nella view
             client.run();
         } catch (RemoteException e) {
             System.err.println("Error in connection");

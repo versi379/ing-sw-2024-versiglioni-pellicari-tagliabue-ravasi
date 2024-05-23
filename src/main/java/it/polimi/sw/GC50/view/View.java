@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import javafx.util.Pair;
 
@@ -9,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface View extends Serializable {
-    void setModel(GameView gameView);
+    void setClient(Client client);
+
 
     // SELECT ///////////////////////////////////////////////////////
     String selectName() throws InterruptedException;
@@ -17,10 +19,6 @@ public interface View extends Serializable {
     String selectGameName();
     int selectNumberOfPlayers();
     int selectEndScore();
-    int selectObjectiveCard();
-    int selectStarterFace();
-    PlaceCardRequest selectPlaceCard();
-    int selectDrawingPosition();
 
     // SHOW /////////////////////////////////////////////////////////
     void showFreeGames(Map<String, List<String>> freeGames);
@@ -39,7 +37,7 @@ public interface View extends Serializable {
     void showEndSession();
     void showError(String content);
     void showMessage(String message);
-    Pair<Command, List<Integer>> listenCommands();
+    void listen();
     // ????
     void updateChat(Chat chat);
 }
