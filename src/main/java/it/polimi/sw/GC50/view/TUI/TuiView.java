@@ -234,7 +234,6 @@ public class TuiView implements View {
         return readInt("Select the card to draw:",
                 1, DrawingPosition.values().length) - 1;
     }
-
      */
 
     @Override
