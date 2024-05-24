@@ -122,17 +122,29 @@ public class GuiView extends Application implements View {
     public void showFreeGames(Map<String, List<String>> freeGames) {
         while(joinGameController == null) {
             System.out.println("Attendo caricamento join game page.");
+            try {
+                // Sleep briefly to avoid busy-waiting
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Restore interrupted status
+                return; // Exit the method if interrupted
+            }
         }
+
         if (!freeGames.isEmpty()) {
             for (String game : freeGames.keySet()) {
                 StringBuilder gameItem = new StringBuilder("GAME: " + game + "\nPLAYERS: ");
                 for (String nickname : freeGames.get(game)) {
                     gameItem.append(nickname).append(", ");
                 }
+                if (gameItem.length() > 0) {
+                    gameItem.setLength(gameItem.length() - 2);
+                }
                 System.out.println(gameItem.toString());
-                joinGameController.setFreeGames(gameItem.toString());
+                menuController.gameItems2.add(gameItem.toString());
             }
         }
+
     }
 
     public void waitGameParams() {
@@ -299,9 +311,11 @@ public class GuiView extends Application implements View {
         this.clientRmi = clientRmi;
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
-
-    private void waitForButtonPress() {
+    public void waitForButtonPress() {
         synchronized (lock) {
             waitingForButton = true; // Set flag to indicate waiting for button press
             try {

@@ -3,13 +3,18 @@ package it.polimi.sw.GC50.view.GUI.controllers;
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+
+import javax.rmi.ssl.SslRMIClientSocketFactory;
 
 /**
  * Controller for Menu FXML scene.
@@ -28,6 +33,9 @@ public class MenuController {
     private int gameChoice;
 
     private GuiView guiView;
+
+
+    public ObservableList<String> gameItems2 = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() throws Exception {
