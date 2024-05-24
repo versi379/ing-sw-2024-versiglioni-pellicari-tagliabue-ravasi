@@ -4,21 +4,16 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
    <children>
-      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dfd7b0 #dfd7b0;">
-         <children>
-            <ImageView fitHeight="436.0" fitWidth="600.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
-               </image>
-            </ImageView>
-            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCreateNewGameButton" styleClass="orange-button" text=" Create New Game" />
-            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleJoinGameButton" styleClass="orange-button" text="Join Game" />
-            <Button fx:id="quitButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleQuitButton" styleClass="orange-button" text="Quit" />
-         </children>
-      </Pane>
+      <ImageView fitHeight="436.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
+         </image>
+      </ImageView>
+      <Button fx:id="createNewGameButton" mnemonicParsing="false" onAction="#handleCreateNewGameButton" styleClass="orange-button" text=" Create New Game" />
+      <Button fx:id="joinGameButton" mnemonicParsing="false" onAction="#handleJoinGameButton" styleClass="orange-button" text="Join Game" />
+      <Button fx:id="quitButton" mnemonicParsing="false" onAction="#handleQuitButton" styleClass="orange-button" text="Quit" />
    </children>
 </AnchorPane>

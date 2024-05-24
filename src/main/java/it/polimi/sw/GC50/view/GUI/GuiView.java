@@ -68,9 +68,10 @@ public class GuiView extends Application implements View {
         Parent joinGameRoot = joinGameLoader.load();
         joinGameController = joinGameLoader.getController();
 
-        Scene scene = new Scene(netRoot);
+        Scene scene = new Scene(netRoot, 700, 500);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.setTitle("Codex Naturalis");
         stage.show();
     }
