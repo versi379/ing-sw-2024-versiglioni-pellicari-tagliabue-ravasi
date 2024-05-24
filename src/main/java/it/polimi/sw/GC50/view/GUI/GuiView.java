@@ -185,7 +185,12 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showPlayerArea(String nickname) {
+    public void showCardsArea(String nickname) {
+    }
+
+    @Override
+    public void showHand() {
+
     }
 
     @Override
@@ -239,6 +244,16 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showStart() {
+
+    }
+
+    @Override
+    public void showPlacingPhase() {
+
+    }
+
+    @Override
+    public void showDrawingPhase() {
 
     }
 

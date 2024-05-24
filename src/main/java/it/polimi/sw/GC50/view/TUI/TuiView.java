@@ -128,24 +128,23 @@ public class TuiView implements View {
 
     @Override
     public void showPlayerJoined(String nickname) {
-        System.out.println("Player " + nickname + " joined the game");
+        System.out.println("Player \"" + nickname + "\" joined the game");
     }
 
     @Override
     public void showPlayerLeft(String nickname) {
-        System.out.println("Player " + nickname + " left the game");
+        System.out.println("Player \"" + nickname + "\" left the game");
     }
 
     @Override
     public void showWaitPlayers() {
         System.out.println();
         System.out.println(yellowTxt + "Waiting for other players to join the game..." + baseTxt);
+        showHelp();
     }
 
     @Override
     public void showSetup() {
-        showHelp();
-
         System.out.println();
         System.out.println(yellowTxt + "All players joined, beginning game setup!" + baseTxt);
         showCommonObjectives();
@@ -182,7 +181,7 @@ public class TuiView implements View {
 
     @Override
     public void showPlayerReady(String nickname) {
-        System.out.println("Player " + nickname + " ready!");
+        System.out.println("Player \"" + nickname + "\" ready!");
     }
 
     @Override
@@ -194,55 +193,55 @@ public class TuiView implements View {
 
     @Override
     public void showCurrentPlayer() {
-        System.out.println();
-        System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
+        if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
+            System.out.println(yellowTxt + "Your turn:" + baseTxt);
+        } else {
+            System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
+        }
     }
 
-    /*
     @Override
-    public PlaceCardRequest selectPlaceCard() {
+    public void showPlacingPhase() {
         System.out.println();
         System.out.println(yellowTxt + "Placing phase" + baseTxt);
-        showPlayerArea(getGameView().getNickname());
-        ModelPrinter.printHand(getGameView().getHand());
-        return new PlaceCardRequest(
-                readInt("Select the card you want to place:",
-                        1, getGameView().getHand().size()) - 1,
-                readInt("Select the card's face:",
-                        1, 2) - 1,
-                readInt("Insert the value of the x coordinate:",
-                        1, getGameView().getPlayerArea(getGameView().getNickname())
-                                .getCardsMatrix().length()) - 1,
-                readInt("Insert the value of the y coordinate:",
-                        1, getGameView().getPlayerArea(getGameView().getNickname())
-                                .getCardsMatrix().length()) - 1);
+        showCardsArea(getGameView().getNickname());
+        showHand();
+        System.out.println(blueTxt + "Place a card:" + baseTxt);
     }
 
-     */
-
     @Override
-    public void showPlayerArea(String nickname) {
-        TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
-    }
-
-    /*
-    @Override
-    public int selectDrawingPosition() {
+    public void showDrawingPhase() {
         System.out.println();
         System.out.println(yellowTxt + "Drawing phase" + baseTxt);
         showDecks();
-        return readInt("Select the card to draw:",
-                1, DrawingPosition.values().length) - 1;
+        System.out.println(blueTxt + "Draw a card:" + baseTxt);
     }
-     */
+
+    @Override
+    public void showCardsArea(String nickname) {
+        if (getGameView().getNickname().equals(nickname)) {
+            System.out.println("Your cards area:");
+        } else {
+            System.out.println("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
+        }
+        TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+    }
+
+    @Override
+    public void showHand() {
+        System.out.println("Your hand:");
+        TuiModelPrinter.printHand(getGameView().getHand());
+    }
 
     @Override
     public void showDecks() {
+        System.out.println("Cards in the center of the table:");
         TuiModelPrinter.printDecks(getGameView().getDecks());
     }
 
     @Override
     public void showScores() {
+        System.out.println("Scores:");
         Map<String, Integer> scores = new HashMap<>();
         for (String nickname : getGameView().getPlayerList()) {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
@@ -274,11 +273,11 @@ public class TuiView implements View {
     public void showEndSession() {
         System.out.println();
         System.out.println(yellowTxt + "Session ended" + baseTxt);
+        System.out.println();
     }
 
     @Override
     public void showHelp() {
-        System.out.println();
         System.out.println(yellowTxt + "Commands:" + baseTxt);
         System.out.println("Select secret objective card -> \"-choose_objective\", \"-co\" [index]");
         System.out.println("Select starter card face -> \"-choose_starter_face\", \"-cs\" [index]");
@@ -286,6 +285,7 @@ public class TuiView implements View {
         System.out.println("Draw card -> \"-draw_card\", \"-d\" [index]");
         System.out.println("Send message in chat -> \"-chat\", \"-c\" [message]");
         System.out.println("Help -> \"-help\", \"-h\"");
+        System.out.println();
     }
 
     @Override
@@ -300,94 +300,77 @@ public class TuiView implements View {
 
     @Override
     public void listen() {
-        Pair<Command, List<Integer>> command = readCommand();
+        Pair<Command, String[]> command = readCommand();
         client.addCommand(command.getKey(), command.getValue());
     }
 
-    public Pair<Command, List<Integer>> readCommand() {
+    public Pair<Command, String[]> readCommand() {
         Scanner scanner = new Scanner(System.in);
         String read = scanner.nextLine();
         switch (getFirstWord(read)) {
             case "-choose_objective", "-co" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                if (args.size() == 1) {
-                    try {
-                        return new Pair<>(Command.CHOOSE_OBJECTIVE, args.stream()
-                                .map(Integer::valueOf)
-                                .map(x -> x - 1)
-                                .toList());
-                    } catch (NumberFormatException ignored) {
-                    }
+                String arg = removeFirstWord(read);
+                try {
+                    return new Pair<>(Command.CHOOSE_OBJECTIVE,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
             case "-choose_starter_face", "-cs" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                if (args.size() == 1) {
-                    try {
-                        return new Pair<>(Command.CHOOSE_STARTER_FACE, args.stream()
-                                .map(Integer::valueOf)
-                                .map(x -> x - 1)
-                                .toList());
-                    } catch (NumberFormatException ignored) {
-                    }
+                String arg = removeFirstWord(read);
+                try {
+                    return new Pair<>(Command.CHOOSE_STARTER_FACE,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
             case "-place_card", "-p" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                if (args.size() == 4) {
+                String[] args = new String[4];
+                read = removeFirstWord(read);
+                for (int i = 0; i < args.length; i++) {
                     try {
-                        return new Pair<>(Command.PLACE_CARD, args.stream()
-                                .map(Integer::valueOf)
-                                .map(x -> x - 1)
-                                .toList());
-                    } catch (NumberFormatException ignored) {
+                        args[i] = String.valueOf(Integer.parseInt(getFirstWord(read)) - 1);
+                        read = removeFirstWord(read);
+                    } catch (NumberFormatException e) {
+                        return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                     }
+                }
+                if (read.isEmpty()) {
+                    return new Pair<>(Command.PLACE_CARD, args);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
             case "-draw_card", "-d" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                if (args.size() == 1) {
-                    try {
-                        return new Pair<>(Command.DRAW_CARD, args.stream()
-                                .map(Integer::valueOf)
-                                .map(x -> x - 1)
-                                .toList());
-                    } catch (NumberFormatException ignored) {
-                    }
+                String arg = removeFirstWord(read);
+                try {
+                    return new Pair<>(Command.DRAW_CARD,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
             case "-chat", "-c" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                try {
-                    return new Pair<>(Command.CHAT, args.stream()
-                            .map(Integer::valueOf)
-                            .toList());
-                } catch (NumberFormatException ignored) {
-                }
+                return new Pair<>(Command.CHAT, new String[]{removeFirstWord(read)});
             }
 
             case "-help", "-h" -> {
-                List<String> args = getWords(read);
-                args.removeFirst();
-                if (args.isEmpty()) {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
                     return new Pair<>(Command.HELP, null);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
                 }
-            }
-
-            default -> {
             }
         }
 
-        return new Pair<>(Command.NOT_A_COMMAND, null);
+        return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid command"});
     }
 
     private static String getFirstWord(String read) {
@@ -396,6 +379,15 @@ public class TuiView implements View {
             return read.substring(0, index).trim();
         } else {
             return read;
+        }
+    }
+
+    private static String removeFirstWord(String read) {
+        int index = read.indexOf(' ');
+        if (index > -1) {
+            return read.substring(index).trim();
+        } else {
+            return "";
         }
     }
 

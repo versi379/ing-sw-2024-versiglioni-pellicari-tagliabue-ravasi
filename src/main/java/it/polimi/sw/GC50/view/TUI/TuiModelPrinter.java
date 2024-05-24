@@ -46,8 +46,6 @@ public abstract class TuiModelPrinter {
     public static void printHand(List<PhysicalCard> hand) {
         String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
-        handMatrix[0][7 * 2] = "   Inde";
-        handMatrix[1][7 * 2] = "xes:   ";
         handMatrix[0][7 + 3] = " 1) Fro";
         handMatrix[1][7 + 3] = "nt:    ";
         handMatrix[0][3] = "  2) Ba";

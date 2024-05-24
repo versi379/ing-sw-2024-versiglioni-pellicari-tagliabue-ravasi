@@ -148,7 +148,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             List<PhysicalCard> playerHand = game.getHand(player);
             if (index >= 0 && index < playerHand.size()) {
                 if (face >= 0 && face < 2) {
-                    PlayableCard card = (face == 1) ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
+                    PlayableCard card = (face == 0) ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
                     if (card.isPlaceable(game.getPlayerData(player), x, y)) {
                         game.placeCard(player, card, x, y);
                         game.removeCard(player, index);
