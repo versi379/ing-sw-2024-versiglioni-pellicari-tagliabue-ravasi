@@ -34,24 +34,27 @@ public class JoinGameController {
 
     private GuiView guiView;
 
-    private boolean joinGameInit = false;
-
     @FXML
     public void initialize() throws InterruptedException {
-//     Label emptyGamesListLabel = new Label("No free games.");
-//     freeGames.setPlaceholder(emptyGamesListLabel);
         guiView = (GuiView) AppClient.getView();
         freeGames.setItems(guiView.getMenuController().gameItems2);
-        // freeGames.getItems().add("ciao");
-//        gameItems.add("ciao");
-//        freeGames.setItems(gameItems);
-        //System.out.println(gameItems);
-        //System.out.println(freeGames);
+        freeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });
     }
 
     @FXML
     public void handleEnterGameButton(ActionEvent event) throws Exception {
         showGameView();
+        //guiView.setSubmittedJoinGameName();
+        guiView.resumeExecution();
+//        String[] parts = selectedItem.split("\nPLAYERS: ");
+//        if (parts.length > 0) {
+//            String game = parts[0];
+//            System.out.println("Extracted game: " + game);
+//        } else {
+//            System.out.println("Invalid format");
+//        }
     }
 
     public void showGameView() throws Exception {

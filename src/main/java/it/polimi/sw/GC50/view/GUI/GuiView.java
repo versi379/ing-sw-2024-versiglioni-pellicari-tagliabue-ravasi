@@ -26,7 +26,7 @@ public class GuiView extends Application implements View {
     private String submittedGameName;
     private int submittedNumPlayers;
     private int submittedEndPoints;
-    private List<String> submittedFreeGames;
+    private String submittedJoinGameName;
 
     // GUI Controllers
     private NetController netController;
@@ -101,9 +101,6 @@ public class GuiView extends Application implements View {
     }
 
     public void waitJoinGame() {
-        while(joinGameController == null) {
-            System.out.println("Attendo caricamento join game page.");
-        }
         waitForButtonPress();
     }
 
@@ -123,7 +120,7 @@ public class GuiView extends Application implements View {
 
         if (!freeGames.isEmpty()) {
             for (String game : freeGames.keySet()) {
-                StringBuilder gameItem = new StringBuilder("GAME: " + game + "\nPLAYERS: ");
+                StringBuilder gameItem = new StringBuilder(game + "\nPLAYERS: ");
                 for (String nickname : freeGames.get(game)) {
                     gameItem.append(nickname).append(", ");
                 }
@@ -345,8 +342,8 @@ public class GuiView extends Application implements View {
         this.submittedEndPoints = submittedEndPoints;
     }
 
-    public List<String> getSubmittedFreeGames() {
-        return submittedFreeGames;
+    public void setSubmittedJoinGameName(String submittedJoinGameName) {
+        this.submittedJoinGameName = submittedJoinGameName;
     }
 
     public Client getClientRmi() {

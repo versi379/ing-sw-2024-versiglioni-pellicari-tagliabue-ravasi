@@ -69,10 +69,10 @@ public class Client {
                 case 2 -> {
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
-                    if (AppClient.getViewType().equals(ViewType.GUI)) {
-                        ((GuiView) view).waitJoinGame();
-                    } else {
-                        if (!freeGames.isEmpty()) {
+                    if (!freeGames.isEmpty()) {
+                        if (AppClient.getViewType().equals(ViewType.GUI)) {
+                            //inGame = joinGame();
+                        } else {
                             inGame = joinGame(view.selectGameName());
                         }
                     }
