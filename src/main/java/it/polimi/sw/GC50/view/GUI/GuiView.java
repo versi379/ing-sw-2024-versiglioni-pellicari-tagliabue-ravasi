@@ -100,8 +100,9 @@ public class GuiView extends Application implements View {
         return submittedGameChoice;
     }
 
-    public void waitJoinGame() {
+    public String selectedJoinGame() {
         waitForButtonPress();
+        return submittedJoinGameName;
     }
 
     // map of game names with associated list of players
@@ -127,7 +128,6 @@ public class GuiView extends Application implements View {
                 if (gameItem.length() > 0) {
                     gameItem.setLength(gameItem.length() - 2);
                 }
-                System.out.println(gameItem.toString());
                 menuController.gameItems2.add(gameItem.toString());
             }
         }

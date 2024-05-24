@@ -71,7 +71,7 @@ public class Client {
                     view.showFreeGames(freeGames);
                     if (!freeGames.isEmpty()) {
                         if (AppClient.getViewType().equals(ViewType.GUI)) {
-                            //inGame = joinGame();
+                            inGame = joinGame(((GuiView) view).selectedJoinGame());
                         } else {
                             inGame = joinGame(view.selectGameName());
                         }
