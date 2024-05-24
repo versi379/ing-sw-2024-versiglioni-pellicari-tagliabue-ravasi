@@ -135,6 +135,11 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showConnected() {
+
+    }
+
+    @Override
     public void showWaitPlayers() {
 
     }
@@ -145,7 +150,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void updateChat(Chat chat) {
+    public void showChatMessage(Chat chat) {
 
     }
 

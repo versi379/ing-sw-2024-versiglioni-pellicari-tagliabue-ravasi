@@ -8,7 +8,6 @@ import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.util.Pair;
 
-import java.lang.constant.Constable;
 import java.util.*;
 
 public class TuiView implements View {
@@ -18,36 +17,32 @@ public class TuiView implements View {
     public static String yellowTxt = "\u001B[33m";
     public static String blueTxt = "\u001B[34m";
 
-    public TuiView() {
-    }
-
     @Override
     public void setClient(Client client) {
         this.client = client;
     }
 
-    private GameView getGameView() {
-        return client.getGameView();
-    }
-
     @Override
-    public void showEndSession() {
-        System.out.println();
-        System.out.println(yellowTxt + "Session ended" + baseTxt);
+    public void showConnected() {
+        System.out.println("Connected to server");
     }
 
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String selectName() {
-        return readString("Insert your player's name:");
+        System.out.println(blueTxt + "Insert your player's name:" + baseTxt);
+
+        return readString();
     }
 
     @Override
     public int selectJoinOrCreate() {
-        return readInt("Do you want to create a new game or join an existing one?" +
-                        "\n1) create a new game" +
-                        "\n2) join a game" +
-                        "\n3) quit",
-                1, 3);
+        System.out.println(blueTxt + "Do you want to create a new game or join an existing one?" + baseTxt);
+        System.out.println("1) create a new game");
+        System.out.println("2) join a game");
+        System.out.println("3) quit");
+
+        return readInt(1, 3);
     }
 
     @Override
@@ -57,7 +52,7 @@ public class TuiView implements View {
         } else {
             System.out.println(yellowTxt + "Free games:" + baseTxt);
             for (String game : freeGames.keySet()) {
-                System.out.print("Game " + game + " -> current players:");
+                System.out.print("Game \"" + game + "\" -> current players:");
                 for (String nickname : freeGames.get(game)) {
                     System.out.print(" " + nickname);
                 }
@@ -68,19 +63,67 @@ public class TuiView implements View {
 
     @Override
     public String selectGameName() {
-        return readString("Insert the game's name:");
+        System.out.println(blueTxt + "Insert the game's name:" + baseTxt);
+        return readString();
     }
 
     @Override
     public int selectNumberOfPlayers() {
-        return readInt("Insert the number of players:",
-                2, 3);
+        System.out.println(blueTxt + "Insert the number of players:" + baseTxt);
+        return readInt(2, 3);
     }
 
     @Override
     public int selectEndScore() {
-        return readInt("Insert the score needed for triggering the game's ending:",
-                0, 51);
+        System.out.println(blueTxt + "Insert the score needed for triggering the game's ending:" + baseTxt);
+        return readInt(0, 51);
+    }
+
+    private static String readString() {
+        Scanner scanner = new Scanner(System.in);
+
+        String read;
+        try {
+            read = scanner.nextLine();
+        } catch (InputMismatchException e) {
+            read = null;
+            scanner.nextLine();
+        }
+        while (read == null || read.trim().isEmpty()) {
+            System.out.println(redTxt + "Invalid input. Please retry" + baseTxt);
+            try {
+                read = scanner.nextLine();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+        }
+        return read;
+    }
+
+    private static int readInt(int min, int range) {
+        Scanner scanner = new Scanner(System.in);
+
+        int read;
+        try {
+            read = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            read = min - 1;
+            scanner.nextLine();
+        }
+        while (read < min || read >= min + range) {
+            System.out.println(redTxt + "Invalid input. Please enter a number between " + min + " and " + (min + range - 1) + baseTxt);
+            try {
+                read = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+        }
+        return read;
+    }
+
+    // GAME ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private GameView getGameView() {
+        return client.getGameView();
     }
 
     @Override
@@ -101,11 +144,16 @@ public class TuiView implements View {
 
     @Override
     public void showSetup() {
+        showHelp();
+
         System.out.println();
-        System.out.println(yellowTxt + "All players joined, beginning game setup" + baseTxt);
+        System.out.println(yellowTxt + "All players joined, beginning game setup!" + baseTxt);
         showCommonObjectives();
         showSecretObjectiveSelection();
         showStarterCardSelection();
+
+        System.out.println();
+        System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
     }
 
     @Override
@@ -118,8 +166,8 @@ public class TuiView implements View {
         }
     }
 
-    public void showSecretObjectiveSelection() {
-        System.out.println(yellowTxt + "Secret objective cards:" + baseTxt);
+    private void showSecretObjectiveSelection() {
+        System.out.println(yellowTxt + "Secret objective cards selection:" + baseTxt);
         List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
         for (int i = 0; i < objectiveCards.size(); i++) {
             System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
@@ -127,27 +175,9 @@ public class TuiView implements View {
         }
     }
 
-    public void showStarterCardSelection() {
+    private void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
-        String[][] cardTUI;
-
-        System.out.println("1) Front");
-        cardTUI = getGameView().getStarterCard().getFront().toStringTUI();
-        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
-            for (int j = 0; j < cardTUI.length; j++) {
-                System.out.print(cardTUI[j][i]);
-            }
-            System.out.println();
-        }
-
-        System.out.println("2) Back");
-        cardTUI = getGameView().getStarterCard().getBack().toStringTUI();
-        for (int i = cardTUI[0].length - 1; i >= 0; i--) {
-            for (int j = 0; j < cardTUI.length; j++) {
-                System.out.print(cardTUI[j][i]);
-            }
-            System.out.println();
-        }
+        TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
     }
 
     @Override
@@ -159,11 +189,13 @@ public class TuiView implements View {
     public void showStart() {
         System.out.println();
         System.out.println(yellowTxt + "Game started" + baseTxt);
+        showCurrentPlayer();
     }
 
     @Override
     public void showCurrentPlayer() {
-        System.out.println(yellowTxt + "Player " + getGameView().getCurrentPlayer() + " turn" + baseTxt);
+        System.out.println();
+        System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
     }
 
     /*
@@ -190,7 +222,7 @@ public class TuiView implements View {
 
     @Override
     public void showPlayerArea(String nickname) {
-        ModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
     }
 
     /*
@@ -207,7 +239,7 @@ public class TuiView implements View {
 
     @Override
     public void showDecks() {
-        ModelPrinter.printDecks(getGameView().getDecks());
+        TuiModelPrinter.printDecks(getGameView().getDecks());
     }
 
     @Override
@@ -216,7 +248,7 @@ public class TuiView implements View {
         for (String nickname : getGameView().getPlayerList()) {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
         }
-        ModelPrinter.printScores(scores);
+        TuiModelPrinter.printScores(scores);
     }
 
     @Override
@@ -236,7 +268,13 @@ public class TuiView implements View {
     }
 
     @Override
-    public void updateChat(Chat chat) {
+    public void showChatMessage(Chat chat) {
+    }
+
+    @Override
+    public void showEndSession() {
+        System.out.println();
+        System.out.println(yellowTxt + "Session ended" + baseTxt);
     }
 
     @Override
@@ -256,53 +294,8 @@ public class TuiView implements View {
         System.out.println(redTxt + "Error: " + content + baseTxt);
     }
 
-    private static String readString(String message) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(blueTxt + message + baseTxt);
-
-        String read;
-        try {
-            read = scanner.nextLine();
-        } catch (InputMismatchException e) {
-            read = null;
-            scanner.nextLine();
-        }
-        while (read == null) {
-            System.out.println(redTxt + "Invalid input. Please retry" + baseTxt);
-            try {
-                read = scanner.nextLine();
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-            }
-        }
-        return read;
-    }
-
-    private static int readInt(String message, int min, int range) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(blueTxt + message + baseTxt);
-
-        int read;
-        try {
-            read = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            read = min - 1;
-            scanner.nextLine();
-        }
-        while (read < min || read >= min + range) {
-            System.out.println(redTxt + "Invalid input. Please enter a number between " + min + " and " + (min + range - 1) + baseTxt);
-            try {
-                read = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-            }
-        }
-        return read;
-    }
-
     @Override
     public void showMessage(String message) {
-        System.out.println();
         System.out.println(message);
     }
 

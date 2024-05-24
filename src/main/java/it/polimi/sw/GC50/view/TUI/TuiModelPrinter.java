@@ -3,18 +3,47 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
+import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import trash.PrintBoardTUI2;
 import it.polimi.sw.GC50.view.PlayerDataView;
 
 import java.util.List;
 import java.util.Map;
 
-public abstract class ModelPrinter {
+public abstract class TuiModelPrinter {
+    public static void printObjectiveList(List<ObjectiveCard> objectives) {
+
+    }
+
+    public static void printStarterCard(PhysicalCard starterCard) {
+        String[][] starterMatrix = new String[3 * 2 + 1][7 + 1];
+
+        starterMatrix[0][7] = "1) Fron";
+        starterMatrix[1][7] = "t      ";
+        starterMatrix[3 + 1][7] = "2) Back";
+
+        String[][] cardTUI = starterCard.getFront().toStringTUI();
+        for (int i = 0; i < cardTUI.length; i++) {
+            int matrixX = i;
+            for (int j = 0; j < cardTUI[i].length; j++) {
+                int matrixY = j;
+                starterMatrix[matrixX][matrixY] = cardTUI[i][j];
+            }
+        }
+
+        cardTUI = starterCard.getBack().toStringTUI();
+        for (int i = 0; i < cardTUI.length; i++) {
+            int matrixX = i + 3 + 1;
+            for (int j = 0; j < cardTUI[i].length; j++) {
+                int matrixY = j;
+                starterMatrix[matrixX][matrixY] = cardTUI[i][j];
+            }
+        }
+
+        printMatrix(starterMatrix);
+    }
 
     public static void printHand(List<PhysicalCard> hand) {
-        System.out.println();
-        System.out.println("Cards in hand:");
-
         String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
         handMatrix[0][7 * 2] = "   Inde";
@@ -49,56 +78,9 @@ public abstract class ModelPrinter {
         printMatrix(handMatrix);
     }
 
-    public static void printDecks(PlayableCard[] decks) {
-        System.out.println();
-        System.out.println("Center of the table:");
-
-        String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
-
-        decksMatrix[0][11] = " Resour";
-        decksMatrix[1][11] = "ce:    ";
-        decksMatrix[0][3] = "     Go";
-        decksMatrix[1][3] = "ld:    ";
-
-        for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
-
-            decksMatrix[4 * cardsCounter + 3][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
-            String[][] cardTUI = decks[cardsCounter].toStringTUI();
-            if (cardTUI != null) {
-                for (int i = 0; i < cardTUI.length; i++) {
-                    int matrixX = i + 4 * cardsCounter + 2;
-                    for (int j = 0; j < cardTUI[i].length; j++) {
-                        int matrixY = j + 7 + 1;
-                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
-                    }
-                }
-            } else {
-                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Empty ";
-            }
-
-            decksMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
-            cardTUI = decks[cardsCounter + 3].toStringTUI();
-            if (cardTUI != null) {
-                for (int i = 0; i < cardTUI.length; i++) {
-                    int matrixX = i + 4 * cardsCounter + 2;
-                    for (int j = 0; j < cardTUI[i].length; j++) {
-                        int matrixY = j;
-                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
-                    }
-                }
-            } else {
-                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Empty ";
-            }
-        }
-
-        printMatrix(decksMatrix);
-    }
-
     public static void printPlayerArea(String nickname, PlayerDataView playerArea) {
-        System.out.println();
-        System.out.println("Player " + nickname + " cards area:");
-
         String[][] boardMatrix;
+
         CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
         int minX = cardsMatrix.getMinX();
         int maxX = cardsMatrix.getMaxX();
@@ -143,12 +125,52 @@ public abstract class ModelPrinter {
     }
 
     public static void printScores(Map<String, Integer> scores) {
-        System.out.println();
-        System.out.println("Scores:");
-
-        for (String nickname : scores.keySet()) {
+       for (String nickname : scores.keySet()) {
             System.out.println("Player " + nickname + " -> " + scores.get(nickname));
         }
+    }
+
+
+    public static void printDecks(PlayableCard[] decks) {
+        String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
+
+        decksMatrix[0][11] = " Resour";
+        decksMatrix[1][11] = "ce:    ";
+        decksMatrix[0][3] = "     Go";
+        decksMatrix[1][3] = "ld:    ";
+
+        for (int cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
+
+            decksMatrix[4 * cardsCounter + 3][7 * 2 + 1] = "  " + (cardsCounter + 1) + ")   ";
+            String[][] cardTUI = decks[cardsCounter].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j + 7 + 1;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
+                }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 * 2 - 1] = " Empty ";
+            }
+
+            decksMatrix[4 * cardsCounter + 3][7] = "  " + (cardsCounter + 3 + 1) + ")   ";
+            cardTUI = decks[cardsCounter + 3].toStringTUI();
+            if (cardTUI != null) {
+                for (int i = 0; i < cardTUI.length; i++) {
+                    int matrixX = i + 4 * cardsCounter + 2;
+                    for (int j = 0; j < cardTUI[i].length; j++) {
+                        int matrixY = j;
+                        decksMatrix[matrixX][matrixY] = cardTUI[i][j];
+                    }
+                }
+            } else {
+                decksMatrix[4 * cardsCounter + 3][7 - 1] = " Empty ";
+            }
+        }
+
+        printMatrix(decksMatrix);
     }
 
     private static void printMatrix(String[][] stringMatrix) {
@@ -162,10 +184,5 @@ public abstract class ModelPrinter {
             }
             System.out.println();
         }
-    }
-
-    private static String centerString(int width, String s) {
-        return String.format("%-" + width + "s",
-                String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }

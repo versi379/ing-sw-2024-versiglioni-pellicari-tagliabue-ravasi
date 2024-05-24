@@ -39,23 +39,23 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         view.setClient(this);
     }
 
-    // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void connect() throws GameException {
-        try {
-            serverRmi = (ServerRmiRemote) Naming.lookup(serverName + "/server");
-            serverRmi.addClient(this);
-            System.err.println("Connected to server");
-        } catch (RemoteException | NotBoundException | MalformedURLException e) {
-            throw new GameException("Error in connection to the server", e.getCause());
-        }
-    }
-
     public synchronized void run() {
         try {
             connect();
             lobby();
         } catch (GameException | InterruptedException e) {
-            System.err.println(e.getMessage());
+            System.err.println("> " + e.getMessage());
+        }
+    }
+
+    // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void connect() throws GameException {
+        try {
+            serverRmi = (ServerRmiRemote) Naming.lookup(serverName + "/server");
+            serverRmi.addClient(this);
+            view.showConnected();
+        } catch (RemoteException | NotBoundException | MalformedURLException e) {
+            throw new GameException("Error in connection to the server", e.getCause());
         }
     }
 
@@ -68,8 +68,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    System.out.println("scelta 1");
-                    if(AppClient.getViewType().equals(ViewType.GUI)) {
+                    if (AppClient.getViewType().equals(ViewType.GUI)) {
                         ((GuiView) view).waitGameParams();
                     }
                     createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
@@ -213,7 +212,6 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void setupPhase() throws GameException {
         view.showSetup();
-        view.showHelp();
 
         while (gameView.getGameStatus().equals(GameStatus.SETUP)) {
             try {
@@ -262,25 +260,21 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     private void playTurn() throws GameException {
-        do {
-            while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    throw new GameException("Interruption error", e.getCause());
-                }
+        while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new GameException("Interruption error", e.getCause());
             }
-        } while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING));
+        }
 
-        do {
-            while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    throw new GameException("Interruption error", e.getCause());
-                }
+        while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new GameException("Interruption error", e.getCause());
             }
-        } while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING));
+        }
     }
 
     private void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
@@ -332,7 +326,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
     }
 
     private void switchRequest(Request request, Message message) {
-        System.err.println("Update from server: " + request);
+        System.err.println("> Update from server: " + request);
         switch (request) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 String player = ((PlayerMex) message).getNickname();
@@ -440,159 +434,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return gameView;
     }
 
-// FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    public Object getModel() {
-        try {
-            modelMex = (ModelMex) gameController.getModel(this);
-        } catch (RemoteException e) {
-            return null;
-        }
-        view.addModel(modelMex);
-        myTurn = modelMex.getCurrentPlayer().equals(nickname);
-        return modelMex;
-    }
-
-
-    @Override
-    public void onUpdate(Message mex) throws RemoteException {
-        thread2 = new Thread(() -> {
-            synchronized (this) {
-                switchMex(mex);
-                notifyAll();
-            }
-        });
-        thread2.start();
-    }
-
-
-    private void switchMex(Message mex) {
-        switch (mex.getRequest()) {
-            case NOTIFY_PLAYER_JOINED_GAME -> {
-                view.printMessage("Giocatore " + mex.getObject() + " è entrato in partita");
-            }
-
-            case NOTIFY_PLAYER_LEFT_GAME -> {
-                view.printMessage("Giocatore " + mex.getObject() + " ha abbandonato la partita");
-            }
-
-            case NOTIFY_GAME_SETUP -> {
-
-            }
-
-            case NOTIFY_PLAYER_READY -> {
-                view.printMessage("Giocatore " + mex.getObject() + " pronto");
-            }
-
-            case NOTIFY_CARD_PLACED, NOTIFY_NEXT_TURN, NOTIFY_CARD_DRAWN -> {
-                notify = true;
-                error = false;
-                notifyAll();
-                /*
-                synchronized (lock2) {
-                    while (thread2pause) {
-                        try {
-                            lock2.wait();
-                        } catch (InterruptedException e) {
-                        }
-                    }
-                }
-                synchronized (lock) {
-                    notify = true;
-                    error = false;
-                    lock.notifyAll();
-                }
-
-
-            }
-
-            case NOTIFY_GAME_STARTED -> {
-                gameStatus = GameStatus.PLAYING;
-
-                System.out.println("Partita iniziata");
-                notifyAll();
-            }
-
-            case NOTIFY_CHAT_MESSAGE -> {
-                notifyUpdateChat = true;
-            }
-
-            case NOTIFY_CARD_NOT_FOUND, NOTIFY_DRAWING_POSITION_NOT_AVAILABLE, NOTIFY_INVALID_INDEX,
-                    NOTIFY_OPERATION_NOT_AVAILABLE, NOTIFY_NOT_YOUR_PLACING_PHASE, NOTIFY_CARD_NOT_PLACEABLE -> {
-                if (mex.getObject().equals(nickname)) {
-
-                    synchronized (lock2) {
-                        while (thread2pause) {
-                            try {
-                                lock2.wait();
-                            } catch (InterruptedException e) {
-                            }
-                        }
-                    }
-
-                    synchronized (lock) {
-                        error = true;
-                        notify = true;
-                        lock.notifyAll();
-                    }
-
-
-
-                    error = true;
-                    notify = true;
-                }
-            }
-
-            case GET_CHAT_MODEL_RESPONSE -> {
-                System.out.println("chat");
-            }
-
-            default -> {
-            }
-
-        }
-        //thread2.interrupt();
-    }
-
-    private void waitNotifyFromServer() {
-        synchronized (lock2) {
-            thread2pause = false;
-            lock2.notifyAll();
-        }
-        synchronized (lock) {
-            while (!notify) {
-                try {
-                    lock.wait();
-
-                } catch (InterruptedException e) {
-
-                }
-
-            }
-        }
-        System.out.println("notify from server");
-        if (!error) {
-            getModel();
-        }
-        error = false;
-        notify = false;
-        thread2pause = true;
-    }
-
-
-    private void waitMyTurn() {
-        while (!myTurn) {
-            waitNotifyFromServer();
-            if (!error) {
-                getModel();
-            }
-            error = false;
-        }
-    }
-
-     */
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     @Override
     public String getNickname() {
