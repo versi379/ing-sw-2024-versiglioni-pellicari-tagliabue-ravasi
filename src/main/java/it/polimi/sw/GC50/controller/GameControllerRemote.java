@@ -1,18 +1,20 @@
 package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface GameControllerRemote extends Remote {
+    void selectObjectiveCard(ClientInterface clientInterface, int index) throws RemoteException;
+    void selectStarterFace(ClientInterface clientInterface, int face) throws RemoteException;
+    void placeCard(ClientInterface clientInterface, PlaceCardRequest placeCardRequest) throws RemoteException;
+    void drawCard(ClientInterface clientInterface, int position) throws RemoteException;
+    void sendChatMessage(ClientInterface clientInterface, String message) throws RemoteException;
 
-    // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
-    void updateController(Request request, Object update, ClientInterface clientInterface) throws RemoteException;
+    // INUTILE ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //void updateController(ClientInterface clientInterface, Object update, Request request) throws RemoteException;
 
-    void updateChat(String message, ClientInterface clientInterface) throws RemoteException;
-
-    // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
     //Object getModel(ClientInterface clientInterface) throws RemoteException;
 }

@@ -2,12 +2,14 @@ package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
-import it.polimi.sw.GC50.model.game.*;
+import it.polimi.sw.GC50.model.game.DrawingPosition;
+import it.polimi.sw.GC50.model.game.Game;
+import it.polimi.sw.GC50.model.game.GameStatus;
+import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -29,20 +31,20 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public String getGameId() {
+    public synchronized String getGameId() {
         return game.getId();
     }
 
-    public List<String> getPlayerList() {
+    public synchronized List<String> getPlayerList() {
         return game.getPlayerList().stream().map(Player::getNickname).toList();
     }
 
-    public boolean isFree() {
+    public synchronized boolean isFree() {
         return isWaiting();
     }
 
     // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean addPlayer(ClientInterface clientInterface, String nickname) {
+    public synchronized boolean addPlayer(ClientInterface clientInterface, String nickname) {
         if (isFree()) {
             Player player = new Player(nickname);
             game.addObserver(clientInterface, player);
@@ -53,7 +55,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         return false;
     }
 
-    public void removePlayer(ClientInterface clientInterface) {
+    public synchronized void removePlayer(ClientInterface clientInterface) {
         if (playerMap.containsKey(clientInterface)) {
             Player player = playerMap.get(clientInterface);
             game.removePlayer(player);
@@ -61,47 +63,21 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
-    synchronized public void updateController(Request request, Object update, ClientInterface clientInterface) throws RemoteException {
-        if (!playerMap.containsKey(clientInterface)) {
-            return;
-        }
-        System.out.println(request + " from player " + playerMap.get(clientInterface));
-        Player player = playerMap.get(clientInterface);
-        switch (request) {
-            case SELECT_OBJECTIVE_CARD -> {
-                chooseObjective(player, (Integer) update);
-            }
-            case SELECT_STARTER_FACE -> {
-                chooseStarterFace(player, (Integer) update);
-            }
-            case PLACE_CARD -> {
-                placeCard(player, (PlaceCardRequest) update);
-            }
-            case DRAW_CARD -> {
-                drawCard(player, (Integer) update);
-            }
-            default -> {
-            }
+    private Player getPlayer(ClientInterface clientInterface) throws RemoteException {
+        if (playerMap.containsKey(clientInterface)) {
+            return playerMap.get(clientInterface);
+        } else {
+            throw new RemoteException();
         }
     }
 
-    synchronized public void updateChat(String message, ClientInterface clientInterface) throws RemoteException {
-        if (!playerMap.containsKey(clientInterface)) {
-            return;
-        }
-        Player player = playerMap.get(clientInterface);
-        updateChat(player, message);
-        System.out.println("chat updated");
-    }
+    // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // UPDATE MODEL ////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public synchronized void selectObjectiveCard(ClientInterface clientInterface, int index) throws RemoteException {
+        Player player = getPlayer(clientInterface);
 
-    /**
-     * @param player
-     * @param index
-     */
-    public void chooseObjective(Player player, int index) {
         if (isStarting()) {
             List<ObjectiveCard> secretObjectivesList = game.getSecretObjectivesList(player);
             if (index >= 0 && index < secretObjectivesList.size()) {
@@ -114,11 +90,10 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    /**
-     * @param player
-     * @param face
-     */
-    public void chooseStarterFace(Player player, int face) {
+    @Override
+    public synchronized void selectStarterFace(ClientInterface clientInterface, int face) throws RemoteException {
+        Player player = getPlayer(clientInterface);
+
         if (isStarting()) {
             if (face >= 0 && face < 2) {
                 PhysicalCard starterCard = game.getStarterCard(player);
@@ -131,19 +106,15 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    public void placeCard(Player player, PlaceCardRequest placeCardRequest) {
+    @Override
+    public synchronized void placeCard(ClientInterface clientInterface, PlaceCardRequest placeCardRequest) throws RemoteException {
+        Player player = getPlayer(clientInterface);
+
         placeCard(player, placeCardRequest.getIndex(), placeCardRequest.getFace(),
                 placeCardRequest.getX(), placeCardRequest.getY());
     }
 
-    /**
-     * @param player
-     * @param index
-     * @param face
-     * @param x
-     * @param y
-     */
-    public void placeCard(Player player, int index, int face, int x, int y) {
+    private void placeCard(Player player, int index, int face, int x, int y) {
         if (isPlacingPhase(player)) {
             List<PhysicalCard> playerHand = game.getHand(player);
             if (index >= 0 && index < playerHand.size()) {
@@ -166,11 +137,10 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    /**
-     * @param player
-     * @param position
-     */
-    public void drawCard(Player player, int position) {
+    @Override
+    public synchronized void drawCard(ClientInterface clientInterface, int position) throws RemoteException {
+        Player player = getPlayer(clientInterface);
+
         if (isDrawingPhase(player)) {
             if (position >= 0 && position < DrawingPosition.values().length) {
                 PhysicalCard card = game.pickCard(DrawingPosition.values()[position]);
@@ -187,12 +157,39 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         }
     }
 
-    public void updateChat(Player player, String message) {
-        game.sendMessageInChat(player, message);
+    @Override
+    public synchronized void sendChatMessage(ClientInterface clientInterface, String message) throws RemoteException {
+        Player player = getPlayer(clientInterface);
+
+        game.addChatMessage(player, message);
     }
 
-    // MODEL MEX ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
+    synchronized public void updateController(ClientInterface clientInterface, Object update, Request request) throws RemoteException {
+        if (!playerMap.containsKey(clientInterface)) {
+            return;
+        }
+        System.out.println(request + " from player " + playerMap.get(clientInterface));
+        Player player = playerMap.get(clientInterface);
+        switch (request) {
+            case SELECT_OBJECTIVE_CARD -> {
+                selectObjectiveCard(player, (Integer) update);
+            }
+            case SELECT_STARTER_FACE -> {
+                selectStarterFace(player, (Integer) update);
+            }
+            case PLACE_CARD -> {
+                placeCard(player, (PlaceCardRequest) update);
+            }
+            case DRAW_CARD -> {
+                drawCard(player, (Integer) update);
+            }
+            default -> {
+            }
+        }
+    }
+
     synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
         return new GameView(game, playerMap.get(clientInterface));
     }
@@ -259,15 +256,5 @@ public class GameController extends UnicastRemoteObject implements GameControlle
 
     public Game getGame() {
         return game;
-    }
-
-    public Player getPlayer(String nickname) {
-
-        for (Player p : game.getPlayerList()) {
-            if (p.getNickname().equals(nickname)) {
-                return p;
-            }
-        }
-        return null;
     }
 }

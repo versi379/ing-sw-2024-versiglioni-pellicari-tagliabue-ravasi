@@ -65,13 +65,8 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             view.showError("Player name not valid");
         }
 
-        Map<String, List<String>> freeGames = getFreeGames();
-        if (AppClient.getViewType().equals(ViewType.GUI)) {
-            view.showFreeGames(freeGames);
-        }
         while (true) {
             switch (view.selectJoinOrCreate()) {
-
                 case 1 -> {
                     if (AppClient.getViewType().equals(ViewType.GUI)) {
                         ((GuiView) view).waitGameParams();
@@ -81,16 +76,15 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
 
                 case 2 -> {
                     System.out.println("scelta 2");
-                    if(AppClient.getViewType().equals(ViewType.TUI)){
-                        view.showFreeGames(freeGames);
+                    Map<String, List<String>> freeGames = getFreeGames();
+                    view.showFreeGames(freeGames);
+                    if (AppClient.getViewType().equals(ViewType.GUI)) {
+                        ((GuiView) view).waitJoinGame();
+                    } else {
+                        if (!freeGames.isEmpty()) {
+                            joinGame(view.selectGameName());
+                        }
                     }
-//                    if (AppClient.getViewType().equals(ViewType.GUI)) {
-//                        ((GuiView) view).waitJoinGame();
-//                    } else {
-//                        if (!freeGames.isEmpty()) {
-//                            joinGame(view.selectGameName());
-//                        }
-//                    }
                 }
 
                 case 3 -> {
@@ -146,7 +140,7 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         }
     }
 
-    public Map<String, List<String>> getFreeGames() throws GameException {
+    private Map<String, List<String>> getFreeGames() throws GameException {
         try {
             return serverRmi.getFreeGames();
         } catch (RemoteException e) {

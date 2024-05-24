@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.app;
 
-import it.polimi.sw.GC50.net.RMI.ClientRmi;
+import it.polimi.sw.GC50.net.util.Client;
+import it.polimi.sw.GC50.net.util.ConnectionType;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.View;
@@ -8,7 +9,6 @@ import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,6 +16,9 @@ import java.util.Scanner;
 public class AppClient {
     private static View view;
     private static ViewType viewType;
+    private static ConnectionType connectionType;
+    private static String serverIp = "localhost";
+    private static String serverPort;
     private static Thread clientThread;
 
     public static void main(String[] args) {
@@ -41,24 +44,35 @@ public class AppClient {
             System.out.println("2) RMI");
 
             if (readBinaryChoice() == 1) {
-                setupSocket(view, viewType);
+                //setupSocket(view, viewType);
+                connectionType = ConnectionType.SOCKET;
+                serverPort = "2012";
             } else {
-                setupRMI(view, viewType);
+                //setupRMI(view, viewType);
+                connectionType = ConnectionType.RMI;
+                serverPort = "1099";
             }
         } else { // GUI
             while (((GuiView) view).getNetController() == null) {
                 System.out.println("ATTENDO SCHERMATA NET");
             }
-            while(!((GuiView) view).getNetController().isnetSetted()) {
+            while (!((GuiView) view).getNetController().isnetSetted()) {
                 System.out.println("ATTENDO SCELTA NET");
             }
             if (((GuiView) view).getNetController().getNetSelected() == 1) {
                 System.out.println("LANCIO SOCKET");
-                setupSocket(view, viewType);
+                connectionType = ConnectionType.SOCKET;
+                serverPort = "2012";
             } else {
                 System.out.println("LANCIO RMI");
-                setupRMI(view, viewType);
+                connectionType = ConnectionType.RMI;
+                serverPort = "1099";
             }
+        }
+        try {
+            new Client(serverIp, serverPort, connectionType, view).run();
+        } catch (Exception e) {
+            System.err.println("Error in connection");
         }
         System.err.println("Bye");
     }
@@ -79,16 +93,19 @@ public class AppClient {
          */
     }
 
+
     public static void setupRMI(View view, ViewType viewType) {
+        /*
         try {
             System.out.println("Connecting to server...");
             String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name, view);
-            view.setClient(client);
             client.run();
         } catch (RemoteException e) {
             System.err.println("Error in connection");
         }
+
+         */
     }
 
     private static int readBinaryChoice() {
