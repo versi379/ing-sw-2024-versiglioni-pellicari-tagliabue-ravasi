@@ -28,8 +28,11 @@ public interface View extends Serializable {
     void showCommonObjectives();
     void showPlayerReady(String nickname);
     void showStart();
+    void showPlacingPhase();
+    void showDrawingPhase();
     void showCurrentPlayer();
-    void showPlayerArea(String nickname);
+    void showCardsArea(String nickname);
+    void showHand();
     void showDecks();
     void showScores();
     void showEnd();
