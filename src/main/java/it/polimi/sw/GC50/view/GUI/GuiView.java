@@ -1,11 +1,7 @@
 package it.polimi.sw.GC50.view.GUI;
 
-import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
-import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.View;
@@ -13,23 +9,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import javafx.util.Pair;
-import javafx.application.Platform;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 public class GuiView extends Application implements View {
 
     private Stage primaryStage;
 
     // RIF client
-    private ClientRmi clientRmi;
+    private Client client;
 
     private String submittedPlayerNickname;
     private int submittedGameChoice;
@@ -295,8 +285,8 @@ public class GuiView extends Application implements View {
         return joinGameController;
     }
 
-    public void setClientRmi(ClientRmi clientRmi) {
-        this.clientRmi = clientRmi;
+    public void setClientRmi(Client client) {
+        this.client = client;
     }
 
 
@@ -345,7 +335,7 @@ public class GuiView extends Application implements View {
         return submittedFreeGames;
     }
 
-    public ClientRmi getClientRmi() {
-        return clientRmi;
+    public Client getClientRmi() {
+        return client;
     }
 }
