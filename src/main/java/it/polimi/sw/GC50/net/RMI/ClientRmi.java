@@ -69,17 +69,22 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
                     System.out.println("scelta 1");
-                    if(AppClient.getViewType().equals(ViewType.GUI)) {
+                    if (AppClient.getViewType().equals(ViewType.GUI)) {
                         ((GuiView) view).waitGameParams();
                     }
                     createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
                 }
 
                 case 2 -> {
+                    System.out.println("scelta 2");
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
-                    if (!freeGames.isEmpty()) {
-                        joinGame(view.selectGameName());
+                    if (AppClient.getViewType().equals(ViewType.GUI)) {
+                        ((GuiView) view).waitJoinGame();
+                    } else {
+                        if (!freeGames.isEmpty()) {
+                            joinGame(view.selectGameName());
+                        }
                     }
                 }
 

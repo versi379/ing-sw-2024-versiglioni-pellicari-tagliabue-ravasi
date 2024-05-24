@@ -42,6 +42,7 @@ public class MenuController {
         stage.setScene(userScene);
     }
 
+    // deve essere lanciato quando i free games sono aggiornati (showfreegames)
     public void showJoinGameView() throws Exception {
         Stage stage = (Stage) joinGameButton.getScene().getWindow();
         FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
@@ -61,9 +62,9 @@ public class MenuController {
     @FXML
     public void handleJoinGameButton(ActionEvent event) throws Exception {
         gameChoice = 2;
-        showJoinGameView();
         guiView.setSubmittedGameChoice(gameChoice);
         guiView.resumeExecution();
+        showJoinGameView();
     }
 
     @FXML

@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.application.Platform;
@@ -33,6 +34,7 @@ public class GuiView extends Application implements View {
     private String submittedGameName;
     private int submittedNumPlayers;
     private int submittedEndPoints;
+    private List<String> submittedFreeGames;
 
     // GUI Controllers
     private NetController netController;
@@ -106,12 +108,31 @@ public class GuiView extends Application implements View {
         return submittedGameChoice;
     }
 
+    public void waitJoinGame() {
+        while(joinGameController == null) {
+            System.out.println("Attendo caricamento join game page.");
+        }
+        //waitForButtonPress();
+    }
+
+    // map of game names with associated list of players
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
+        while(joinGameController == null) {
+            System.out.println("Attendo caricamento join game page.");
+        }
+        if (!freeGames.isEmpty()) {
+            for (String game : freeGames.keySet()) {
+                StringBuilder gameItem = new StringBuilder("GAME: " + game + "\nPLAYERS: ");
+                for (String nickname : freeGames.get(game)) {
+                    gameItem.append(nickname).append(", ");
+                }
+                joinGameController.setFreeGames(gameItem.toString());
+            }
+        }
 
     }
 
-    // metodo creazione gioco
     public void waitGameParams() {
         while(createGameController == null) {
             System.out.println("Attendo caricamento create game page.");
@@ -240,6 +261,14 @@ public class GuiView extends Application implements View {
         return gameController;
     }
 
+    public CreateGameController getCreateGameController() {
+        return createGameController;
+    }
+
+    public JoinGameController getJoinGameController() {
+        return joinGameController;
+    }
+
     public void setClientRmi(ClientRmi clientRmi) {
         this.clientRmi = clientRmi;
     }
@@ -286,4 +315,7 @@ public class GuiView extends Application implements View {
         this.submittedEndPoints = submittedEndPoints;
     }
 
+    public List<String> getSubmittedFreeGames() {
+        return submittedFreeGames;
+    }
 }

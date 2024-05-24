@@ -6,17 +6,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="gameName" layoutX="220.0" layoutY="146.0" promptText="nome partita" />
-            <TextField fx:id="finalScore" layoutX="219.0" layoutY="245.0" promptText="punteggio finale" />
-            <RadioButton fx:id="twoPlayersButton" layoutX="174.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
-            <RadioButton fx:id="threePlayersButton" layoutX="287.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
-            <RadioButton fx:id="fourPlayersButton" layoutX="406.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
-            <Button fx:id="createGameButton" layoutX="271.0" layoutY="337.0" mnemonicParsing="false" onAction="#handleCreateGameButton" text="Button" />
+            <TextField fx:id="gameName" layoutX="218.0" layoutY="174.0" promptText="nome partita" />
+            <TextField fx:id="finalScore" layoutX="220.0" layoutY="217.0" promptText="punteggio finale" />
+            <RadioButton fx:id="twoPlayersButton" layoutX="129.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
+            <RadioButton fx:id="threePlayersButton" layoutX="252.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
+            <RadioButton fx:id="fourPlayersButton" layoutX="379.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
+            <Button fx:id="createGameButton" layoutX="273.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleCreateGameButton" text="Button" />
          </children>
       </Pane>
    </children>
