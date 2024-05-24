@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.application.Platform;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -112,7 +114,7 @@ public class GuiView extends Application implements View {
         while(joinGameController == null) {
             System.out.println("Attendo caricamento join game page.");
         }
-        //waitForButtonPress();
+        waitForButtonPress();
     }
 
     // map of game names with associated list of players
@@ -127,10 +129,10 @@ public class GuiView extends Application implements View {
                 for (String nickname : freeGames.get(game)) {
                     gameItem.append(nickname).append(", ");
                 }
+                System.out.println(gameItem.toString());
                 joinGameController.setFreeGames(gameItem.toString());
             }
         }
-
     }
 
     public void waitGameParams() {
@@ -266,6 +268,10 @@ public class GuiView extends Application implements View {
         return gameController;
     }
 
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
     public CreateGameController getCreateGameController() {
         return createGameController;
     }
@@ -322,5 +328,9 @@ public class GuiView extends Application implements View {
 
     public List<String> getSubmittedFreeGames() {
         return submittedFreeGames;
+    }
+
+    public ClientRmi getClientRmi() {
+        return clientRmi;
     }
 }

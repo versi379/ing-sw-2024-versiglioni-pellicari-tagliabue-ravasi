@@ -76,10 +76,15 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
                 }
 
                 case 2 -> {
+                    System.out.println("scelta 2");
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
-                    if (!freeGames.isEmpty()) {
-                        joinGame(view.selectGameName());
+                    if (AppClient.getViewType().equals(ViewType.GUI)) {
+                        ((GuiView) view).waitJoinGame();
+                    } else {
+                        if (!freeGames.isEmpty()) {
+                            joinGame(view.selectGameName());
+                        }
                     }
                 }
 
@@ -440,7 +445,11 @@ public class ClientRmi extends UnicastRemoteObject implements Serializable, Clie
         return gameView;
     }
 
-// FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ServerRmiRemote getServerRmi() {
+        return serverRmi;
+    }
+
+    // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     public Object getModel() {
         try {
