@@ -21,9 +21,11 @@ public class AppClient {
     public static void main(String[] args) {
         printBanner();
 
-        if (readBinaryChoice("Select the desired interface style:" +
-                "\n1) command line interface" +
-                "\n2) graphic interface") == 1) {
+        System.out.println(TuiView.blueTxt + "Select the desired interface style:" + TuiView.baseTxt);
+        System.out.println("1) command line interface");
+        System.out.println("2) graphic interface");
+
+        if (readBinaryChoice() == 1) {
             view = new TuiView();
             viewType = ViewType.TUI;
         } else {
@@ -34,9 +36,11 @@ public class AppClient {
 
         // setup connection (only TUI)
         if (viewType.equals(ViewType.TUI)) {
-            if (readBinaryChoice("Select the desired connection technology:" +
-                    "\n1) Socket" +
-                    "\n2) RMI") == 1) {
+            System.out.println(TuiView.blueTxt + "Select the desired connection technology:" + TuiView.baseTxt);
+            System.out.println("1) socket");
+            System.out.println("2) RMI");
+
+            if (readBinaryChoice() == 1) {
                 setupSocket(view, viewType);
             } else {
                 setupRMI(view, viewType);
@@ -86,9 +90,8 @@ public class AppClient {
         }
     }
 
-    private static int readBinaryChoice(String message) {
+    private static int readBinaryChoice() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(TuiView.blueTxt + message + TuiView.baseTxt);
 
         int read;
         try {
