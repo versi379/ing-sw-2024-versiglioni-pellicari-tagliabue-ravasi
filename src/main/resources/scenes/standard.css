@@ -1,0 +1,131 @@
+/* BUTTONS */
+
+.orange-button {
+    -fx-padding: 8 15 15 15;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 8;
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+.orange-button:text {
+    -fx-font-family: "Futura";
+    -fx-font-weight: bold;
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+}
+.orange-button:hover {
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+}
+.orange-button:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+.pocket-button {
+    -fx-background-color: transparent;
+}
+
+.sounds-button {
+    -fx-background-color: transparent;
+}
+
+/*LABELS */
+
+.label {
+    -fx-background-color: #172d44;
+    -fx-background-radius: 10;
+    -fx-font-family: "Futura";
+}
+
+.scoreboard {
+    -fx-font-size: 20px;
+} 
+
+.foulboard {
+    -fx-background-color: transparent;
+    -fx-font-size: 20px;
+}
+
+.centralboard {
+    -fx-background-color: transparent;
+    -fx-font-size: 40px;
+}
+
+.settings {
+    -fx-font-size: 20px;
+}
+
+.win {
+    -fx-background-color: transparent;
+    -fx-font-size: 40px;
+}
+
+
+/* PAGINATIONS */
+
+.pagination{
+    -fx-page-information-visible: false;
+}
+.pagination .button {
+    -fx-background-radius: 5;
+    -fx-background-color: 
+        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+        #9d4024,
+        #d86e3a,
+        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+}
+.pagination .toggle-button {
+    -fx-background-color: gray;
+    -fx-text-fill: transparent;
+	-fx-background-radius:15px;
+    -fx-scale-x: 0.3;
+    -fx-scale-y: 0.3;
+}
+.pagination .pagination-control .toggle-button:selected {
+    -fx-background-color: #d86e3a;
+}
+
+/* PROGRESS BAR */
+
+.progress-bar {
+    -fx-accent: rgba(0, 138, 230, 0.85);
+}
+.progress-bar .bar {
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 25;
+    -fx-background-color: #c54e2c;
+}
+.progress-bar > .track {
+    -fx-background-radius: 25;
+    -fx-text-box-border: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* TEXT FIELDS */
+
+.text-field {
+    -fx-border-color: grey;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-font-family: "Futura";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+/* SLIDER */
+
+.slider .thumb {
+    -fx-background-color: white;
+}
