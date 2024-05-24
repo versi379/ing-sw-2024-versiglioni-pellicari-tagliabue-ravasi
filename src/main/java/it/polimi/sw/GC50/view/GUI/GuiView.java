@@ -69,6 +69,7 @@ public class GuiView extends Application implements View {
         joinGameController = joinGameLoader.getController();
 
         Scene scene = new Scene(netRoot);
+        scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
