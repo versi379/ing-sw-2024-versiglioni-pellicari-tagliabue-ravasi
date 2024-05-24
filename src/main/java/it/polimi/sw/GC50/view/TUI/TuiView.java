@@ -188,7 +188,6 @@ public class TuiView implements View {
     public void showStart() {
         System.out.println();
         System.out.println(yellowTxt + "Game started" + baseTxt);
-        showCurrentPlayer();
     }
 
     @Override

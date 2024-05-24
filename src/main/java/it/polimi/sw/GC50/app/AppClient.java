@@ -84,7 +84,6 @@ public class AppClient {
             System.out.println("Connecting to server...");
             String name = "rmi://localhost:1099";
             ClientRmi client = new ClientRmi(name, view);
-            view.setClient(client);
             client.run();
         } catch (RemoteException e) {
             System.err.println("Error in connection");
