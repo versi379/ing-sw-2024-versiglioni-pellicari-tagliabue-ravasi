@@ -70,7 +70,7 @@ public class AppClient {
             }
         }
         try {
-            new Client(serverIp, serverPort, connectionType, view).run();
+            new Client(serverIp, serverPort, connectionType, view).start();
         } catch (Exception e) {
             System.err.println("Error in connection");
         }

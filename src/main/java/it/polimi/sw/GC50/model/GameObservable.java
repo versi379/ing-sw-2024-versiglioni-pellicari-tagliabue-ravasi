@@ -2,9 +2,8 @@ package it.polimi.sw.GC50.model;
 
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.net.Messages.Message;
-import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.net.util.Notify;
 import it.polimi.sw.GC50.view.GameObserver;
-import it.polimi.sw.GC50.view.GameView;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -67,7 +66,7 @@ public class GameObservable {
      * @param message@see java.util.Observable#hasChanged()
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
-    public void notifyObservers(Request request, Message message) {
+    public void notifyObservers(Notify notify, Message message) {
 
         synchronized (this) {
             /* We don't want the Observer doing callbacks into
@@ -88,11 +87,11 @@ public class GameObservable {
             clearChanged();
         }
 
-        System.out.println(request.toString());
+        System.out.println(notify.toString());
         synchronized (obs) {
             for (GameObserver o : obs.keySet()) {
                 try {
-                    o.update(request, message);
+                    o.update(notify, message);
                 } catch (RemoteException e) {
                     System.out.println("Error in notifyObservers");
                 }

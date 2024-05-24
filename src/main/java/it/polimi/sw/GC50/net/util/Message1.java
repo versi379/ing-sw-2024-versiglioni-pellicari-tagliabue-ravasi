@@ -4,22 +4,22 @@ package it.polimi.sw.GC50.net.util;
 import java.io.Serializable;
 
 public class Message1 implements Serializable {
-    private final Request request;
+    private final Notify notify;
     private final Object object;
 
 
-    public Message1(Request request, Object object) {
-        this.request = request;
+    public Message1(Notify notify, Object object) {
+        this.notify = notify;
         this.object = object;
     }
 
-    public Message1(Request request, String string) {
-        this.request = request;
+    public Message1(Notify notify, String string) {
+        this.notify = notify;
         this.object = string;
     }
 
-    public Request getRequest() {
-        return request;
+    public Notify getRequest() {
+        return notify;
     }
 
     public Object getObject() {
@@ -30,8 +30,8 @@ public class Message1 implements Serializable {
     public static class Message1ClientToServer extends Message1 {
         private final String matchName, nickName;
 
-        public Message1ClientToServer(Request request, Object ob, String matchName, String nickName) {
-            super(request, ob);
+        public Message1ClientToServer(Notify notify, Object ob, String matchName, String nickName) {
+            super(notify, ob);
             this.matchName = matchName;
             this.nickName = nickName;
         }

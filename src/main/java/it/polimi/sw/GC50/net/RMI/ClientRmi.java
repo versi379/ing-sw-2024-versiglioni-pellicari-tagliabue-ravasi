@@ -128,8 +128,8 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     @Override
-    public void update(Request request, Message message) {
-        client.update(request, message);
+    public void update(Notify notify, Message message) {
+        client.update(notify, message);
     }
 
     /*

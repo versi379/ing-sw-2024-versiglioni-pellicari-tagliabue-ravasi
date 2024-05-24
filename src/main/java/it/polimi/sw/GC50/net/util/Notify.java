@@ -1,32 +1,6 @@
 package it.polimi.sw.GC50.net.util;
 
-public enum Request {
-    //////////////////////////////////////////
-    //Client to Server
-    ///////////////////////////////////////////
-
-    //LOBBY
-    CREATE_GAME,
-    ENTER_GAME,
-    GET_FREE_MATCH,
-    SET_NAME,
-
-    //ACTIVE GAME
-    MEX_CHAT,
-    GET_MODEL,
-    DRAW_CARD,
-    SET_NAME_RESPONSE,
-    ENTER_GAME_RESPONSE,
-    CREATE_GAME_RESPONSE,
-    GET_FREE_MATCH_RESPONSE,
-    PLACE_CARD,
-    SELECT_STARTER_FACE,
-    SELECT_OBJECTIVE_CARD,
-
-    //////////////////////////////////////////
-    //Server to Client
-    ///////////////////////////////////////////
-
+public enum Notify {
     // PLAYER //////////////////////////////////////////////////////////////////////////////////////////////////////////
     NOTIFY_PLAYER_JOINED_GAME,
     NOTIFY_PLAYER_LEFT_GAME,

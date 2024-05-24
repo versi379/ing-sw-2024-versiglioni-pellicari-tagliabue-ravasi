@@ -12,7 +12,7 @@ import it.polimi.sw.GC50.model.objective.Objective;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.model.GameObservable;
 import it.polimi.sw.GC50.net.Messages.*;
-import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.net.util.Notify;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -188,7 +188,7 @@ public class Game extends GameObservable implements Serializable {
         playerAreas.put(player, new PlayerData(deckSize));
         player.setCurrentGame(this);
         setChanged();
-        notifyObservers(Request.NOTIFY_PLAYER_JOINED_GAME, new PlayerMex(player));
+        notifyObservers(Notify.NOTIFY_PLAYER_JOINED_GAME, new PlayerMex(player));
 
         if (playerList.size() >= getNumPlayers()) {
             setup();
@@ -203,7 +203,7 @@ public class Game extends GameObservable implements Serializable {
                 currentIndex = 0;
             }
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_LEFT_GAME, new PlayerMex(player));
+            notifyObservers(Notify.NOTIFY_PLAYER_LEFT_GAME, new PlayerMex(player));
         }
     }
 
@@ -245,7 +245,7 @@ public class Game extends GameObservable implements Serializable {
             setStartingChoices(player, pickStarterCard(), pickObjectivesList(2));
         }
         setChanged();
-        notifyObservers(Request.NOTIFY_GAME_SETUP, new SetupMex(this));
+        notifyObservers(Notify.NOTIFY_GAME_SETUP, new SetupMex(this));
     }
 
     /**
@@ -362,7 +362,7 @@ public class Game extends GameObservable implements Serializable {
         checkPreparation(player);
         if (isReady(player)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_READY, new PlayerReadyMex(this, player));
+            notifyObservers(Notify.NOTIFY_PLAYER_READY, new PlayerReadyMex(this, player));
             checkSetupStatus();
         }
     }
@@ -372,7 +372,7 @@ public class Game extends GameObservable implements Serializable {
         checkPreparation(player);
         if (isReady(player)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_PLAYER_READY, new PlayerReadyMex(this, player));
+            notifyObservers(Notify.NOTIFY_PLAYER_READY, new PlayerReadyMex(this, player));
             checkSetupStatus();
         }
     }
@@ -401,7 +401,7 @@ public class Game extends GameObservable implements Serializable {
         status = GameStatus.PLAYING;
         System.err.println("Game \"" + id + "\" has started");
         setChanged();
-        notifyObservers(Request.NOTIFY_GAME_STARTED, new PlayerMex(getCurrentPlayer()));
+        notifyObservers(Notify.NOTIFY_GAME_STARTED, new PlayerMex(getCurrentPlayer()));
     }
 
     public PlayingPhase getCurrentPhase() {
@@ -419,7 +419,7 @@ public class Game extends GameObservable implements Serializable {
             currentIndex = (currentIndex + 1) % playerList.size();
             currentPhase = PlayingPhase.PLACING;
             setChanged();
-            notifyObservers(Request.NOTIFY_NEXT_TURN, new PlayerMex(getCurrentPlayer()));
+            notifyObservers(Notify.NOTIFY_NEXT_TURN, new PlayerMex(getCurrentPlayer()));
         }
     }
 
@@ -520,7 +520,7 @@ public class Game extends GameObservable implements Serializable {
         }
         if (status.equals(GameStatus.PLAYING)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_CARD_PLACED, new BoardUpdateMex(this, player));
+            notifyObservers(Notify.NOTIFY_CARD_PLACED, new BoardUpdateMex(this, player));
             drawingPhase();
         }
     }
@@ -533,7 +533,7 @@ public class Game extends GameObservable implements Serializable {
         getPlayerData(player).addCard(card);
         if (status.equals(GameStatus.PLAYING)) {
             setChanged();
-            notifyObservers(Request.NOTIFY_CARD_DRAWN, new DecksUpdateMex(this, player));
+            notifyObservers(Notify.NOTIFY_CARD_DRAWN, new DecksUpdateMex(this, player));
             nextPlayer();
         }
     }
@@ -550,7 +550,7 @@ public class Game extends GameObservable implements Serializable {
         ChatMessage chatMessage = new ChatMessage(player, message, LocalTime.now());
         chat.addMessage(chatMessage);
         setChanged();
-        notifyObservers(Request.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
+        notifyObservers(Notify.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
     }
 
     // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -595,7 +595,7 @@ public class Game extends GameObservable implements Serializable {
             }
         }
         setChanged();
-        notifyObservers(Request.NOTIFY_GAME_ENDED, new EndMex(this));
+        notifyObservers(Notify.NOTIFY_GAME_ENDED, new EndMex(this));
     }
 
     public List<Player> getWinnerList() {
@@ -613,7 +613,7 @@ public class Game extends GameObservable implements Serializable {
     // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
     public void error(Player player, String content) {
         setChanged();
-        notifyObservers(Request.NOTIFY_ERROR, new ErrorMex(player, content));
+        notifyObservers(Notify.NOTIFY_ERROR, new ErrorMex(player, content));
     }
 
     /*

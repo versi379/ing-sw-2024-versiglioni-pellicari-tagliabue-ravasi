@@ -16,7 +16,7 @@ public class MockClient implements ClientInterface {
     }
 
     @Override
-    public void update(Request request, Message message) throws RemoteException {
+    public void update(Notify notify, Message message) throws RemoteException {
 
     }
 }

@@ -10,7 +10,7 @@ public interface ClientInterface extends Remote, GameObserver {
     public void ping() throws RemoteException;
 
     @Override
-    public void update(Request request, Message message) throws RemoteException;
+    public void update(Notify notify, Message message) throws RemoteException;
 
     /*
     @Override

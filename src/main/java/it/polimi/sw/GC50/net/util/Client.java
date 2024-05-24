@@ -12,7 +12,6 @@ import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ public class Client {
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
-    public synchronized void run() {
+    public synchronized void start() {
         try {
             connect();
             lobby();
@@ -263,18 +262,18 @@ public class Client {
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void update(Request request, Message message) {
+    public void update(Notify notify, Message message) {
         new Thread(() -> {
             synchronized (this) {
-                switchRequest(request, message);
+                switchRequest(notify, message);
                 notifyAll();
             }
         }).start();
     }
 
-    private void switchRequest(Request request, Message message) {
-        System.err.println("> Update from server: " + request);
-        switch (request) {
+    private void switchRequest(Notify notify, Message message) {
+        System.err.println("> Update from server: " + notify);
+        switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 String player = ((PlayerMex) message).getNickname();
                 gameView.setPlayerArea(player, null, 0, 0);

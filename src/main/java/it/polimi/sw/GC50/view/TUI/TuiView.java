@@ -201,7 +201,6 @@ public class TuiView implements View {
 
     @Override
     public void showPlacingPhase() {
-        System.out.println();
         System.out.println(yellowTxt + "Placing phase" + baseTxt);
         showCardsArea(getGameView().getNickname());
         showHand();
@@ -210,7 +209,6 @@ public class TuiView implements View {
 
     @Override
     public void showDrawingPhase() {
-        System.out.println();
         System.out.println(yellowTxt + "Drawing phase" + baseTxt);
         showDecks();
         System.out.println(blueTxt + "Draw a card:" + baseTxt);

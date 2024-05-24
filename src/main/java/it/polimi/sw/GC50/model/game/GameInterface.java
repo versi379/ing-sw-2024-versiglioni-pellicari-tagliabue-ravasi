@@ -4,7 +4,7 @@ import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.util.Request;
+import it.polimi.sw.GC50.net.util.Notify;
 
 import java.util.List;
 
@@ -80,7 +80,7 @@ public interface GameInterface {
     int getObjectivesScore(Player player);
 
     // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
-    void error(Request request, Object arg);
+    void error(Notify notify, Object arg);
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
     List<ObjectiveCard> getObjectives(int quantity);

@@ -1,26 +1,5 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.GameStatus;
-import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
-import it.polimi.sw.GC50.net.util.Message1;
-import it.polimi.sw.GC50.net.util.Request;
-import it.polimi.sw.GC50.view.GameView;
-import it.polimi.sw.GC50.view.View;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /*
 public class ClientSCK implements Runnable {
     private View view;
