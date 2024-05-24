@@ -15,9 +15,9 @@
                   <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
                </image>
             </ImageView>
-            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCreateNewGameButton" text=" Create New Game" />
-            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleJoinGameButton" text="Join Game" />
-            <Button fx:id="quitButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Quit" />
+            <Button fx:id="createNewGameButton" layoutX="26.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleCreateNewGameButton" styleClass="orange-button" text=" Create New Game" />
+            <Button fx:id="joinGameButton" layoutX="26.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleJoinGameButton" styleClass="orange-button" text="Join Game" />
+            <Button fx:id="quitButton" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleQuitButton" styleClass="orange-button" text="Quit" />
          </children>
       </Pane>
    </children>

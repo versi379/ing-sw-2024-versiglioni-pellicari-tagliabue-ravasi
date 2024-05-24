@@ -10,7 +10,7 @@
       <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dfd7b0 #dfd7b0;">
          <children>
             <ListView fx:id="freeGames" layoutX="200.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" />
-            <Button fx:id="enterGameButton" layoutX="273.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleEnterGameButton" text="Button" />
+            <Button fx:id="enterGameButton" layoutX="273.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleEnterGameButton" styleClass="orange-button" text="Button" />
          </children>
       </Pane>
    </children>

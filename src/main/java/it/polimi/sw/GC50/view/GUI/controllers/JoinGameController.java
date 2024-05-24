@@ -56,10 +56,11 @@ public class JoinGameController {
 
     public void showGameView() throws Exception {
         Stage stage = (Stage) enterGameButton.getScene().getWindow();
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
-        stage.setScene(userScene);
+        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+        Parent gameRoot = gameLoader.load();
+        Scene gameScene = new Scene(gameRoot);
+        gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(gameScene);
     }
 
     public ListView<String> getFreeGamesListView() {

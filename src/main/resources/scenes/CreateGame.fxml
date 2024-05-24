@@ -15,7 +15,7 @@
             <RadioButton fx:id="twoPlayersButton" layoutX="129.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
             <RadioButton fx:id="threePlayersButton" layoutX="252.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
             <RadioButton fx:id="fourPlayersButton" layoutX="379.0" layoutY="200.0" mnemonicParsing="false" text="RadioButton" />
-            <Button fx:id="createGameButton" layoutX="273.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleCreateGameButton" text="Button" />
+            <Button fx:id="createGameButton" layoutX="273.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleCreateGameButton" styleClass="orange-button" text="Button" />
          </children>
       </Pane>
    </children>

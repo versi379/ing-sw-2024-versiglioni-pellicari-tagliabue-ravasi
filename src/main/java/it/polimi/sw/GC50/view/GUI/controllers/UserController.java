@@ -37,10 +37,11 @@ public class UserController {
 
     public void showMenuView() throws Exception{
         Stage stage = (Stage) menuButton.getScene().getWindow();
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
-        stage.setScene(userScene);
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent menuRoot = menuLoader.load();
+        Scene menuScene = new Scene(menuRoot);
+        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(menuScene);
     }
 
     @FXML

@@ -52,32 +52,9 @@ public class NetController {
         FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
         Parent userRoot = userLoader.load();
         Scene userScene = new Scene(userRoot);
+        userScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(userScene);
     }
-
-//    @FXML
-//    public void handleSocketButton(ActionEvent event) throws Exception {
-//        Stage stage;
-//        Scene scene;
-//        Parent root;
-//        stage = (Stage) socketButton.getScene().getWindow();
-//        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
-
-//    @FXML
-//    public void handleRmiButton(ActionEvent event) throws Exception {
-//        Stage stage;
-//        Scene scene;
-//        Parent root;
-//        stage = (Stage) rmiButton.getScene().getWindow();
-//        root = FXMLLoader.load(getClass().getResource(ScenePath.USER.getPath()));
-//        scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
 
     public Button getSocketButton() {
         return socketButton;

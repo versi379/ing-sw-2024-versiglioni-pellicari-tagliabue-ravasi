@@ -71,6 +71,7 @@ public class GuiView extends Application implements View {
         Scene scene = new Scene(netRoot);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(scene);
+        stage.setTitle("Codex Naturalis");
         stage.show();
     }
 

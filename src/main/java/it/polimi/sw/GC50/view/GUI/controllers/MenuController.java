@@ -44,19 +44,21 @@ public class MenuController {
 
     public void showCreateGameView() throws Exception {
         Stage stage = (Stage) createNewGameButton.getScene().getWindow();
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
-        stage.setScene(userScene);
+        FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
+        Parent createGameRoot = createGameLoader.load();
+        Scene createGameScene = new Scene(createGameRoot);
+        createGameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(createGameScene);
     }
 
     // deve essere lanciato quando i free games sono aggiornati (showfreegames)
     public void showJoinGameView() throws Exception {
         Stage stage = (Stage) joinGameButton.getScene().getWindow();
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
-        stage.setScene(userScene);
+        FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
+        Parent joinGameRoot = joinGameLoader.load();
+        Scene joinGameScene = new Scene(joinGameRoot);
+        joinGameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(joinGameScene);
     }
 
     @FXML
