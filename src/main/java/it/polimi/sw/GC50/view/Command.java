@@ -6,6 +6,7 @@ public enum Command {
     PLACE_CARD,
     DRAW_CARD,
     CHAT,
+    CHAT_PRIVATE,
     HELP,
     NOT_A_COMMAND
 }

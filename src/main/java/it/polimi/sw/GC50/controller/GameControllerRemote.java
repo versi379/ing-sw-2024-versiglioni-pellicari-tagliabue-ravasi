@@ -12,6 +12,7 @@ public interface GameControllerRemote extends Remote {
     void placeCard(ClientInterface clientInterface, PlaceCardRequest placeCardRequest) throws RemoteException;
     void drawCard(ClientInterface clientInterface, int position) throws RemoteException;
     void sendChatMessage(ClientInterface clientInterface, String message) throws RemoteException;
+    void sendPrivateChatMessage(ClientInterface clientInterface, String receiver, String message) throws RemoteException;
 
     // INUTILE ///////////////////////////////////////////////////////////////////////////////////////////////////////
     //void updateController(ClientInterface clientInterface, Object update, Request request) throws RemoteException;

@@ -180,7 +180,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showChatMessage(String sender, String content, String time) {
     }
 
     @Override

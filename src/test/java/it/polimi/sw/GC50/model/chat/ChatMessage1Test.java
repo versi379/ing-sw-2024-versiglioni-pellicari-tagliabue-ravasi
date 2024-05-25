@@ -24,7 +24,7 @@ public class ChatMessage1Test {
       Player player1 = new Player("XXX");
       Player player2 = new Player("YYY");
       LocalTime time = LocalTime.of(8,20,45);
-      ChatMessage chatMessage = new ChatMessage(player1,"Message 1",time,player2);
+      ChatMessage chatMessage = new ChatMessage(player1, player2, time, "Message 1");
       assertEquals(player1.getNickname(),"XXX");
       assertEquals(player2.getNickname(),"YYY");
       assertEquals(chatMessage.getContent(),"Message 1");

@@ -39,7 +39,7 @@ public interface View extends Serializable {
     void showEndSession();
     void showHelp();
     void showError(String content);
-    void showMessage(String message);
+    void showChatMessage(String sender, String content, String time);
     // ????
     void showChatMessage(Chat chat);
 }
