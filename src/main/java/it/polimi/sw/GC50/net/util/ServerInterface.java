@@ -18,7 +18,7 @@ public interface ServerInterface {
     Map<String, List<String>> getFreeGames() throws GameException;
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    void selectObjectiveCard(int index) throws GameException;
+    void selectSecretObjective(int index) throws GameException;
 
     void selectStarterFace(int face) throws GameException;
 

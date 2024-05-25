@@ -1,388 +1,305 @@
 package it.polimi.sw.GC50.controller;
 
+import it.polimi.sw.GC50.net.Messages.*;
+import it.polimi.sw.GC50.net.util.MockClient;
+import it.polimi.sw.GC50.net.util.Notify;
+import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import org.junit.jupiter.api.Test;
+
+import java.rmi.RemoteException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 public class GameControllerTest {
-
-    /*
     @Test
-    void testGameControllerConstructor() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
+    void testGameControllerConstructor() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 2, 20, "Player");
 
-        assertEquals(game, controller.getGame());
+        assertEquals("Game", controller.getGameId());
+        assertEquals(List.of("Player"), controller.getPlayerList());
+        assertEquals(Notify.NOTIFY_PLAYER_JOINED_GAME, client.getNotify());
+        assertEquals("Player", ((PlayerMex) client.getMessage()).getNickname());
     }
 
     @Test
-    void testAddPlayerNotWaiting() {
-        Player player1 = new Player("Player1");
-        Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 1, 20, player1);
-        GameController controller = new GameController(game);
+    void testAddPlayerNotWaiting() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 1, 20, "Player1");
 
-        /*
-        controller.addPlayer(player2);
-
-        assertEquals("Partita già iniziata", player2.getLatestError());
-
-
+        assertFalse(controller.addPlayer(client2, "Player2"));
+        assertEquals(List.of("Player1"), controller.getPlayerList());
     }
 
     @Test
-    void testAddPlayer() {
-        Player player1 = new Player("Player1");
-        Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20, player1);
-        GameController controller = new GameController(game);
-        controller.addPlayer(player2);
+    void testAddPlayer() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 3, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
 
-        assertEquals(2, game.getPlayerList().size());
-        assertEquals(player2, game.getPlayerList().get(1));
+        assertEquals(List.of("Player1", "Player2"), controller.getPlayerList());
+        assertEquals(Notify.NOTIFY_PLAYER_JOINED_GAME, client1.getNotify());
+        assertEquals("Player2", ((PlayerMex) client1.getMessage()).getNickname());
     }
 
     @Test
-    void testRemovePlayer() {
-        Player player1 = new Player("Player1");
-        Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20, player1);
-        GameController controller = new GameController(game);
-        controller.addPlayer(player2);
-        controller.removePlayer(player2);
+    void testAllPlayersJoined() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
 
-        assertEquals(1, game.getPlayerList().size());
+        assertEquals(Notify.NOTIFY_GAME_SETUP, client1.getNotify());
     }
 
     @Test
-    void testChooseStarterFaceNotStarting() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 2, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
+    void testRemovePlayer() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 3, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.removePlayer(client1);
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(List.of("Player2"), controller.getPlayerList());
+        assertEquals(Notify.NOTIFY_PLAYER_LEFT_GAME, client2.getNotify());
+        assertEquals("Player1", ((PlayerMex) client2.getMessage()).getNickname());
     }
 
     @Test
-    void testChooseStarterFace() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        PhysicalCard starterCard = game.getStarterCard(player);
-        controller.chooseStarterFace(player, true);
+    void testChooseStarterFaceNotStarting() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 2, 20, "Player");
+        controller.selectStarterFace(client, 0);
 
-        assertEquals(starterCard.getFront(), game.getPlayerData(player).getCard(40, 40));
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testChooseObjectiveNotStarting() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 2, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseObjective(player, 0);
+    void testChooseStarterFaceInvalidIndex() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectStarterFace(client, 10);
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testChooseObjectiveInvalidIndex() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseObjective(player, 100);
+    void testChooseStarterFace() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectStarterFace(client, 0);
 
-        assertEquals("Indice non valido", player.getLatestError());
+        assertEquals(Notify.NOTIFY_GAME_SETUP, client.getNotify());
     }
 
     @Test
-    void testChooseObjective() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        ObjectiveCard secretObjective = game.getSecretObjectivesList(player).getFirst();
-        controller.chooseObjective(player, 0);
+    void testChooseObjectiveNotStarting() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 2, 20, "Player");
+        controller.selectSecretObjective(client, 0);
 
-        assertEquals(secretObjective, game.getPlayerData(player).getSecretObjective());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testPlaceCardNotPlaying() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 2, 20, player);
-        GameController controller = new GameController(game);
-        controller.placeCard(player, 0, true, 41, 41);
+    void testChooseObjectiveInvalidIndex() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 10);
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testPlaceCardNotPlayerTurn() {
-        Player player1 = new Player("Player1");
-        Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20, player1);
-        GameController controller = new GameController(game);
-        controller.addPlayer(player2);
-        controller.chooseStarterFace(player1, true);
-        controller.chooseObjective(player1, 0);
-        controller.chooseStarterFace(player2, true);
-        controller.chooseObjective(player2, 0);
-        controller.placeCard(player2, 0, true, 41, 41);
+    void testChooseObjective() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
 
-        assertEquals("Operazione non disponibile", player2.getLatestError());
+        assertEquals(Notify.NOTIFY_GAME_SETUP, client.getNotify());
     }
 
     @Test
-    void testPlaceCardInvalidIndex() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.placeCard(player, 100, true, 41, 41);
+    void testAllPlayersReady() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.selectSecretObjective(client1, 0);
+        controller.selectStarterFace(client1, 0);
 
-        assertEquals("Indice non valido", player.getLatestError());
+        assertEquals(Notify.NOTIFY_PLAYER_READY, client1.getNotify());
+        assertEquals("Player1", ((PlayerReadyMex) client1.getMessage()).getNickname());
+
+
+        controller.selectSecretObjective(client2, 0);
+        controller.selectStarterFace(client2, 0);
+
+        assertEquals(Notify.NOTIFY_GAME_STARTED, client1.getNotify());
+        assertEquals("Player1", ((PlayerMex) client1.getMessage()).getNickname());
     }
 
     @Test
-    void testPlaceCardInvalidPosition() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.placeCard(player, 0, true, 100, 100);
+    void testPlaceCardNotPlaying() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 41));
 
-        assertEquals("Carta non piazzabile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testPlaceCard() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        PhysicalCard card = game.getHand(player).getFirst();
-        controller.placeCard(player, 0, true, 41, 41);
+    void testPlaceCardNotPlayerTurn() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.selectSecretObjective(client1, 0);
+        controller.selectStarterFace(client1, 0);
+        controller.selectSecretObjective(client2, 0);
+        controller.selectStarterFace(client2, 0);
+        controller.placeCard(client2, new PlaceCardRequest(0, 0, 41, 41));
 
-        assertEquals(card.getFront(), game.getPlayerData(player).getCard(41, 41));
+        assertEquals(Notify.NOTIFY_ERROR, client2.getNotify());
     }
 
     @Test
-    void testPlaceCardNotPlacingPhase() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.placeCard(player, 0, true, 41, 41);
-        controller.placeCard(player, 0, true, 42, 42);
+    void testPlaceCardNotPlacingPhase() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 41));
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 42, 42));
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testDrawCardNotPlaying() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 2, 20, player);
-        GameController controller = new GameController(game);
-        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+    void testPlaceCardInvalidCardIndex() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(10, 0, 41, 41));
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testDrawCardNotPlayerTurn() {
-        Player player1 = new Player("Player1");
-        Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20, player1);
-        GameController controller = new GameController(game);
-        controller.addPlayer(player2);
-        controller.chooseStarterFace(player1, true);
-        controller.chooseObjective(player1, 0);
-        controller.chooseStarterFace(player2, true);
-        controller.chooseObjective(player2, 0);
-        controller.drawCard(player2, DrawingPosition.RESOURCEDECK);
+    void testPlaceCardInvalidFaceIndex() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 10, 41, 41));
 
-        assertEquals("Operazione non disponibile", player2.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testDrawCardNotDrawingPhase() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+    void testPlaceCardInvalidPosition() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 100, 100));
 
-        assertEquals("Operazione non disponibile", player.getLatestError());
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testDrawCardInvalidPosition() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.placeCard(player, 0, false, 41, 39);
-        int i = 0;
-        while (game.resourceDeckSize() > 0) {
-            int position = (i % 2 == 0) ? (40 + ((i / 2) + 1)) : (40 - ((i / 2) + 1));
-            controller.drawCard(player, DrawingPosition.RESOURCEDECK);
-            controller.placeCard(player, 2, false, position, position);
-            i++;
+    void testPlaceCard() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 41));
+
+        assertEquals(Notify.NOTIFY_CARD_PLACED, client.getNotify());
+        assertEquals("Player", ((BoardUpdateMex) client.getMessage()).getNickname());
+    }
+
+    @Test
+    void testDrawCardNotPlaying() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.drawCard(client, 0);
+
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
+    }
+
+    @Test
+    void testDrawCardNotPlayerTurn() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.selectSecretObjective(client1, 0);
+        controller.selectStarterFace(client1, 0);
+        controller.selectSecretObjective(client2, 0);
+        controller.selectStarterFace(client2, 0);
+        controller.drawCard(client2, 0);
+
+        assertEquals(Notify.NOTIFY_ERROR, client2.getNotify());
+    }
+
+    @Test
+    void testDrawCardNotDrawingPhase() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.drawCard(client, 0);
+
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
+    }
+
+    @Test
+    void testDrawCardInvalidPosition() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 39));
+        controller.drawCard(client, 10);
+
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
+
+
+        for (int i = 0; i < 36; i++) {
+            int x = (i % 2 == 0) ? (40 + ((i / 2) + 1)) : (40 - ((i / 2) + 1));
+            controller.drawCard(client, 0);
+            controller.placeCard(client, new PlaceCardRequest(2, 1, x, x));
         }
-        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+        controller.drawCard(client, 0);
 
-        assertEquals("Posizione non disponibile", player.getLatestError());
-
-
-        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getPlayerData(player).getCardsArea());
-        ob.print();
+        assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
 
     @Test
-    void testDrawCard() {
-        Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-        controller.placeCard(player, 0, true, 41, 41);
-        controller.drawCard(player, DrawingPosition.RESOURCEDECK);
+    void testDrawCard() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.selectSecretObjective(client, 0);
+        controller.selectStarterFace(client, 0);
+        controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 39));
+        controller.drawCard(client, 0);
 
-        assertEquals(3, game.getHand(player).size());
-        assertEquals(CardType.RESOURCE, game.getHand(player).getLast().getCardType());
-    }
-
-    // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Test
-    void testCardsVisualization() {
-        Player player = new Player("Francesco");
-        Game game = new Game("Partita", 1, 20, player);
-
-        for (int i = 0; i < game.resourceDeckSize(); i++) {
-            System.out.println(i);
-            PhysicalCard card = game.pickCard(DrawingPosition.RESOURCEDECK);
-            printPhysicalCard(card);
-        }
-        for (int i = 0; i < game.goldDeckSize(); i++) {
-            System.out.println(i);
-            PhysicalCard card = game.pickCard(DrawingPosition.GOLDDECK);
-            printPhysicalCard(card);
-        }
-        game.getObjectives(20).stream()
-                .map(ObjectiveCard::getPointsPerCompletion)
-                .forEach(System.out::println);
+        assertEquals(Notify.NOTIFY_NEXT_TURN, client.getNotify());
     }
 
     @Test
-    void testCardsPlacement() {
-        Player player = new Player("Francesco");
-        Game game = new Game("Partita", 1, 20, player);
-        GameController controller = new GameController(game);
+    void testChatMessage() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 1, 20, "Player");
+        controller.sendChatMessage(client, "Hello world");
 
-        PlayerData board = game.getPlayerData(player);
-
-        for (PhysicalCard card : board.getHand()) {
-            printPhysicalCard(card);
-        }
-        board.printCornersArea();
-        board.getCardsArea().printCardsArea();
-
-        controller.chooseStarterFace(player, true);
-        controller.chooseObjective(player, 0);
-
-        System.out.println("\nLISTA GIOCATORI:");
-        game.getPlayerList().forEach(System.out::println);
-
-        System.out.println("\nPIAZZA CARTA 1");
-        controller.placeCard(player, 1, true, 41, 41);
-        board.printCornersArea();
-        board.getCardsArea().printCardsArea();
-
-        System.out.println("\nPESCA CARTA");
-        controller.drawCard(player, DrawingPosition.RESOURCE1);
-        for (PhysicalCard card : board.getHand()) {
-            printPhysicalCard(card);
-        }
-
-        System.out.println("\nPIAZZA CARTA 2");
-        controller.placeCard(player, 2, true, 42, 40);
-        board.printCornersArea();
-        board.getCardsArea().printCardsArea();
+        assertEquals(Notify.NOTIFY_CHAT_MESSAGE, client.getNotify());
+        assertEquals("Hello world", ((ChatMex) client.getMessage()).getChatMessage().getContent());
     }
-
-
-    @Test
-    void testMultiplayer() {
-        Player player1 = new Player("Francesco");
-        Game game = new Game("Partita", 2, 20, player1);
-        GameController controller = new GameController(game);
-
-        Player player2 = new Player("Pietro");
-        controller.addPlayer(player2);
-
-        PlayerData board1 = game.getPlayerData(player1);
-        PlayerData board2 = game.getPlayerData(player2);
-
-        System.out.println("\nLISTA GIOCATORI:");
-        game.getPlayerList().forEach(System.out::println);
-
-        System.out.println("\nCARTE FRANCESCO:");
-        for (PhysicalCard card : board1.getHand()) {
-            printPhysicalCard(card);
-        }
-
-        System.out.println("\nCARTE PIETRO:");
-        for (PhysicalCard card : board2.getHand()) {
-            printPhysicalCard(card);
-        }
-
-        controller.chooseStarterFace(player1, true);
-        controller.chooseObjective(player1, 0);
-
-        controller.chooseStarterFace(player2, true);
-        controller.chooseObjective(player2, 0);
-
-        System.out.println("\nAREA FRANCESCO:");
-        board1.printCornersArea();
-        board1.getCardsArea().printCardsArea();
-
-        System.out.println("\nAREA PIETRO:");
-        board2.printCornersArea();
-        board2.getCardsArea().printCardsArea();
-
-        controller.placeCard(player1, 0, true, 41, 41);
-
-        System.out.println("\nAREA FRANCESCO:");
-        board1.printCornersArea();
-        board1.getCardsArea().printCardsArea();
-
-        System.out.println("\nFINE GIOCO");
-        game.forceEnd();
-    }
-
-    // TEST METHODS ____________________________________________________________________________________________________
-    private void printPhysicalCard(PhysicalCard card) {
-        System.out.println("______________________________________________________");
-        System.out.println(card.getCardType());
-        System.out.println(card.getFront().getPoints());
-        System.out.println(card.getFront().getColor());
-        for (Corner x : card.getFront().getCorners()) {
-            if (x != null) {
-                if (x.isFull()) {
-                    System.out.println(x.getResource().toString());
-                } else if (x.isVisible()) {
-                    System.out.println("EMPTY");
-                } else {
-                    System.out.println("HIDDEN");
-                }
-            } else {
-                System.out.println("null");
-            }
-        }
-    }
-
-     */
 }

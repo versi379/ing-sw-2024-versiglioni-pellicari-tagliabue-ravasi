@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  *
  */
-public class Player implements Serializable {
+public class Player {
 
     /**
      * Player's unique nickname

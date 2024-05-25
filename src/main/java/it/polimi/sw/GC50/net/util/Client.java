@@ -144,7 +144,7 @@ public class Client {
     private void switchCommand(Command command, String[] args) throws GameException {
         switch (command) {
             case CHOOSE_OBJECTIVE -> {
-                selectObjectiveCard(Integer.parseInt(args[0]));
+                selectSecretObjective(Integer.parseInt(args[0]));
             }
             case CHOOSE_STARTER_FACE -> {
                 selectStarterFace(Integer.parseInt(args[0]));
@@ -198,8 +198,8 @@ public class Client {
         playingPhase();
     }
 
-    private void selectObjectiveCard(int index) throws GameException {
-        serverInterface.selectObjectiveCard(index);
+    private void selectSecretObjective(int index) throws GameException {
+        serverInterface.selectSecretObjective(index);
     }
 
     private void selectStarterFace(int face) throws GameException {

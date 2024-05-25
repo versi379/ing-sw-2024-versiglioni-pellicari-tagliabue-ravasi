@@ -81,9 +81,9 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void selectObjectiveCard(int index) throws GameException {
+    public void selectSecretObjective(int index) throws GameException {
         try {
-            gameController.selectObjectiveCard(this, index);
+            gameController.selectSecretObjective(this, index);
         } catch (RemoteException e) {
             throw new GameException("Connection error", e.getCause());
         }

@@ -75,7 +75,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
 
     // UPDATE MODEL ////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public synchronized void selectObjectiveCard(ClientInterface clientInterface, int index) throws RemoteException {
+    public synchronized void selectSecretObjective(ClientInterface clientInterface, int index) throws RemoteException {
         Player player = getPlayer(clientInterface);
 
         if (isStarting()) {
@@ -246,15 +246,5 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     private boolean isDrawingPhase(Player player) {
         return isPlayerTurn(player) &&
                 game.getCurrentPhase().equals(PlayingPhase.DRAWING);
-    }
-
-    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public GameController(Game game) throws RemoteException {
-        this.game = game;
-        playerMap = new HashMap<>();
-    }
-
-    public Game getGame() {
-        return game;
     }
 }
