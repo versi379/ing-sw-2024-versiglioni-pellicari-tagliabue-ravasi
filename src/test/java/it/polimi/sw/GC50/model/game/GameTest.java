@@ -473,27 +473,6 @@ public class GameTest {
 
     // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Test
-    void testEqualsFalse() {
-        Game game1 = new Game("Partita1", 1, 20);
-        Game game2 = new Game("Partita2", 1, 20);
-
-        assertFalse(game1.equals(game2));
-        assertNotEquals(game1.hashCode(), game2.hashCode());
-    }
-
-    @Test
-    void testEqualsTrue() {
-        Game game1 = new Game("Partita", 1, 20);
-        Game game2 = new Game("Partita", 3, 15);
-        Game game3 = new Game("Partita", 1, 20);
-
-        assertTrue(game1.equals(game2));
-        assertEquals(game1.hashCode(), game2.hashCode());
-        assertTrue(game1.equals(game3));
-        assertEquals(game1.hashCode(), game3.hashCode());
-    }
-
-    @Test
     void testToString() {
         Player player = new Player("Player");
         String gameId = "Partita";

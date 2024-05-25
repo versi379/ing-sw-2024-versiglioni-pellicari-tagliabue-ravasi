@@ -361,7 +361,8 @@ public class TuiView implements View {
             }
 
             case "-chat", "-c" -> {
-                return new Pair<>(Command.CHAT, new String[]{removeFirstWord(read)});
+                String arg = removeFirstWord(read);
+                return new Pair<>(Command.CHAT, new String[]{arg});
             }
 
             case "-chat_private", "-cp" -> {

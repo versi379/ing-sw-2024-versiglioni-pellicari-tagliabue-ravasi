@@ -841,22 +841,6 @@ public class Game extends GameObservable {
      */
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Game game)) {
-            return false;
-        }
-        return getId().equals(game.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
-
-    @Override
     public String toString() {
         return getId();
     }
