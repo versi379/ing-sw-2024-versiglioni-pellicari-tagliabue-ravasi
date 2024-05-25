@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.MenuController">
    <children>
-      <ImageView fitHeight="436.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imgs/CodexNaturalisWallpaper.jpeg" />
-         </image>
-      </ImageView>
-      <Button fx:id="createNewGameButton" mnemonicParsing="false" onAction="#handleCreateNewGameButton" styleClass="orange-button" text=" Create New Game" />
-      <Button fx:id="joinGameButton" mnemonicParsing="false" onAction="#handleJoinGameButton" styleClass="orange-button" text="Join Game" />
-      <Button fx:id="quitButton" mnemonicParsing="false" onAction="#handleQuitButton" styleClass="orange-button" text="Quit" />
+      <Button fx:id="createNewGameButton" mnemonicParsing="false" onAction="#handleCreateNewGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text=" Create New Game" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="150.0" />
+      <Button fx:id="joinGameButton" layoutX="60.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleJoinGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Join Game" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="225.0" />
+      <Button fx:id="quitButton" layoutX="123.0" layoutY="374.0" mnemonicParsing="false" onAction="#handleQuitButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Quit" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="50.0" />
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.UserController">
    <children>
-      <TextField fx:id="playerNickname" layoutX="270.0" layoutY="301.0" promptText="Player Name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="300.0" />
-      <Button fx:id="menuButton" layoutX="250.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="100.0" styleClass="orange-button" text="PLAY" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="350.0" />
+      <TextField fx:id="playerNickname" alignment="CENTER" layoutX="270.0" layoutY="301.0" promptText="Player Name" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="300.0" />
+      <Button fx:id="menuButton" layoutX="250.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="100.0" styleClass="orange-button" text="Play" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="350.0" />
    </children>
 </AnchorPane>

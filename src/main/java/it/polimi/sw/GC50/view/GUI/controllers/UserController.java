@@ -30,7 +30,6 @@ public class UserController {
 
     @FXML
     public void initialize() throws Exception {
-        playerNickname.setText("Giocatore");
         nameSetted = false;
         guiView = (GuiView) AppClient.getView();
     }
