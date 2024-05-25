@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.chat.server;
+package trash.chatNet.server;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

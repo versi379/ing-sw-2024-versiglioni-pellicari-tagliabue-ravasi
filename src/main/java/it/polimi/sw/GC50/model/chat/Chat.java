@@ -41,5 +41,4 @@ public class Chat implements Serializable {
         copyChatMessages.addAll(this.chatMessages.stream().filter(t->(t.getReceiver() != null && t.getReceiver().equals(player))).toList());
         return copyChatMessages;
     }
-    
 }

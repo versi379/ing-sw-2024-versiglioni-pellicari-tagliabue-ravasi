@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.net.util.ChatMessageRequest;
 import it.polimi.sw.GC50.net.util.ClientInterface;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 
@@ -158,27 +159,24 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     }
 
     @Override
-    public synchronized void sendChatMessage(ClientInterface clientInterface, String message) throws RemoteException {
+    public synchronized void sendChatMessage(ClientInterface clientInterface, ChatMessageRequest message) throws RemoteException {
         Player player = getPlayer(clientInterface);
 
-        game.addChatMessage(player, message);
-    }
-
-    @Override
-    public synchronized void sendPrivateChatMessage(ClientInterface clientInterface, String receiver, String message) throws RemoteException {
-        Player player = getPlayer(clientInterface);
-
-        if (!player.getNickname().equals(receiver) &&
-                playerMap.values().stream()
-                        .anyMatch(x -> x.getNickname().equals(receiver))) {
-            game.addChatMessage(player,
-                    playerMap.values().stream()
-                            .filter(x -> x.getNickname().equals(receiver))
-                            .findFirst()
-                            .orElse(null),
-                    message);
+        if (message.getReceiver() == null) {
+            game.addChatMessage(player, message.getContent());
         } else {
-            game.error(player, "Invalid receiver");
+            if (!player.getNickname().equals(message.getReceiver()) &&
+                    playerMap.values().stream()
+                            .anyMatch(x -> x.getNickname().equals(message.getReceiver()))) {
+                game.addChatMessage(player,
+                        playerMap.values().stream()
+                                .filter(x -> x.getNickname().equals(message.getReceiver()))
+                                .findFirst()
+                                .orElse(null),
+                        message.getContent());
+            } else {
+                game.error(player, "Invalid receiver");
+            }
         }
     }
 

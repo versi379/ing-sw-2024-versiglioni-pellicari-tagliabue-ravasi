@@ -118,8 +118,8 @@ public class CardsMatrix implements Serializable {
      */
     public PlayableCard[] getNearCards(int x, int y) {
         CardsMatrix rotatedMatrix = rotate45();
-        int rotatedX = cornersToCardsX(x, y);
-        int rotatedY = cornersToCardsY(x, y);
+        int rotatedX = rotateX(x, y);
+        int rotatedY = rotateY(x, y);
 
         PlayableCard[] result = new PlayableCard[4];
         result[0] = (rotatedX > 0) ? rotatedMatrix.get(rotatedX - 1, rotatedY) : null;
@@ -163,8 +163,8 @@ public class CardsMatrix implements Serializable {
      */
     public boolean isCornerUncovered(int x, int y, int position) {
         CardsMatrix rotatedMatrix = rotate45();
-        int rotatedX = cornersToCardsX(x, y);
-        int rotatedY = cornersToCardsY(x, y);
+        int rotatedX = rotateX(x, y);
+        int rotatedY = rotateY(x, y);
 
         return switch (position) {
             case 0 -> rotatedX <= 0 ||
@@ -182,11 +182,11 @@ public class CardsMatrix implements Serializable {
     /**
      * methods used for matrix rotation
      */
-    private int cornersToCardsX(int x, int y) {
+    private int rotateX(int x, int y) {
         return (x + y) / 2;
     }
 
-    private int cornersToCardsY(int x, int y) {
+    private int rotateY(int x, int y) {
         return (length() - x + y) / 2;
     }
 
@@ -202,7 +202,7 @@ public class CardsMatrix implements Serializable {
             int x = coordinates / length();
             int y = coordinates % length();
             result.insert
-                    (get(x, y), cornersToCardsX(x, y), cornersToCardsY(x, y));
+                    (get(x, y), rotateX(x, y), rotateY(x, y));
         }
         return result;
     }
@@ -237,21 +237,5 @@ public class CardsMatrix implements Serializable {
             result.insert(get(x, y), length() - 1 - y, length() - 1 - x);
         }
         return result;
-    }
-
-    // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void printCardsArea() {
-        System.out.println("_____________________________________________________________________________________________");
-        for (int j = 47; j > 35; j--) {
-            for (int i = 35; i < 47; i++) {
-                PlayableCard x = get(i, j);
-                if (x != null) {
-                    System.out.print((x.getColor() + "\t"));
-                } else {
-                    System.out.print("null\t");
-                }
-            }
-            System.out.print("\n");
-        }
     }
 }

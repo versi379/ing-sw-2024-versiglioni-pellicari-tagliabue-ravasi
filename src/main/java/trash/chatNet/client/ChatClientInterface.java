@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.chat.client;
+package trash.chatNet.client;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

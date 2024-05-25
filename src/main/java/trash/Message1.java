@@ -1,5 +1,7 @@
-package it.polimi.sw.GC50.net.util;
+package trash;
 
+
+import it.polimi.sw.GC50.net.util.Notify;
 
 import java.io.Serializable;
 

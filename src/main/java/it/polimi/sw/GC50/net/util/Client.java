@@ -257,11 +257,11 @@ public class Client {
     }
 
     private void sendChatMessage(String message) throws GameException {
-        serverInterface.sendChatMessage(message);
+        serverInterface.sendChatMessage(new ChatMessageRequest(message));
     }
 
     private void sendPrivateChatMessage(String receiver, String message) throws GameException {
-        serverInterface.sendPrivateChatMessage(receiver, message);
+        serverInterface.sendChatMessage(new ChatMessageRequest(receiver, message));
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////

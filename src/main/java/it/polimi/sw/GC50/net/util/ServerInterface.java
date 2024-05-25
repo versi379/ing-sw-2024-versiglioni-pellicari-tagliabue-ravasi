@@ -27,7 +27,5 @@ public interface ServerInterface {
 
     void drawCard(int position) throws GameException;
 
-    void sendChatMessage(String message) throws GameException;
-
-    void sendPrivateChatMessage(String receiver, String message) throws GameException;
+    void sendChatMessage(ChatMessageRequest message) throws GameException;
 }
