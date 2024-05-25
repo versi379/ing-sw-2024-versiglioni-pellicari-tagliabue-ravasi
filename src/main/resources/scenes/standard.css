@@ -32,7 +32,7 @@
 /*LABELS */
 
 .label {
-    -fx-background-color: #172d44;
+    -fx-background-color: transparent;
     -fx-background-radius: 10;
     -fx-font-family: "Futura";
 }

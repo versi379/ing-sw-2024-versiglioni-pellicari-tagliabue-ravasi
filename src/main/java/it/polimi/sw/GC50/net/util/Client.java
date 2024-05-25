@@ -182,6 +182,10 @@ public class Client {
                 throw new GameException("Interruption error", e.getCause());
             }
         }
+        if(AppClient.getViewType().equals(ViewType.GUI)) {
+            ((GuiView) view).stopWaitingPlayersIndicator();
+        }
+        System.out.println("setup phase -> players at least twooo (VVV)");
         setupPhase();
     }
 
