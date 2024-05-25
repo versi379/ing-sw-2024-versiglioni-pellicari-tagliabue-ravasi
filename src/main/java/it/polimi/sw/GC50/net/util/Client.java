@@ -162,6 +162,9 @@ public class Client {
             case CHAT -> {
                 sendChatMessage(args[0]);
             }
+            case CHAT_PRIVATE -> {
+                sendPrivateChatMessage(args[0], args[1]);
+            }
             case HELP -> {
                 view.showHelp();
             }
@@ -259,6 +262,10 @@ public class Client {
 
     private void sendChatMessage(String message) throws GameException {
         serverInterface.sendChatMessage(message);
+    }
+
+    private void sendPrivateChatMessage(String receiver, String message) throws GameException {
+        serverInterface.sendPrivateChatMessage(receiver, message);
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -364,7 +371,11 @@ public class Client {
 
             case NOTIFY_CHAT_MESSAGE -> {
                 ChatMex chatMex = (ChatMex) message;
-                view.showMessage(chatMex.getChatMessage().getSender().getNickname() + " : " + chatMex.getChatMessage().getContent());
+                if (chatMex.getReceiver() == null ||
+                        gameView.getNickname().equals(chatMex.getSender()) ||
+                        gameView.getNickname().equals(chatMex.getReceiver())) {
+                    view.showChatMessage(chatMex.getSender(), chatMex.getContent(), chatMex.getTime());
+                }
             }
 
             case NOTIFY_ERROR -> {

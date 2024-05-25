@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
  * This class defines messages that players can send to each other
  */
 public class ChatMessage implements Serializable {
-
     private final Player sender;
     private final String content;
     private final String time;
@@ -32,16 +31,15 @@ public class ChatMessage implements Serializable {
     }
 
     /**
-     *  This constructor creates a message between sender and receiver
+     * This constructor creates a message between sender and receiver
      *
-     * @param sender    identify the sender of the message
-     * @param content   contains the text of the message
-     * @param time      specify when the message is sent
-     * @param receiver  identify the sender of the message
+     * @param sender   identify the sender of the message
+     * @param receiver identify the sender of the message
+     * @param time     specify when the message is sent
+     * @param content  contains the text of the message
      * @throws UnsupportedOperationException if someone tries to send a message to itself
      */
-    public ChatMessage(Player sender, String content, LocalTime time, Player receiver) throws UnsupportedOperationException {
-        if(sender.equals(receiver)) throw new UnsupportedOperationException("You can't send a message to yourself!");
+    public ChatMessage(Player sender, Player receiver, LocalTime time, String content) {
         this.sender = sender;
         this.content = content;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");

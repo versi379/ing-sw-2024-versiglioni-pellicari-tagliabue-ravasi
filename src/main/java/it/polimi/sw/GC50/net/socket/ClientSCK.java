@@ -80,6 +80,11 @@ public class ClientSCK implements ServerInterface {
 
     }
 
+    @Override
+    public void sendPrivateChatMessage(String receiver, String message) throws GameException {
+
+    }
+
     //////////////////////////////////////////
     //COMUNICATION WITH SERVER
     ///////////////////////////////////////////

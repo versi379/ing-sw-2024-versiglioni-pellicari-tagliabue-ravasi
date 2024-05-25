@@ -17,7 +17,6 @@ public class Player {
      * Player's unique nickname
      */
     private final String nickname;
-    private Game currentGame;
 
     //Status of the connection to the server of the player
     private PlayerStatus status;
@@ -30,14 +29,6 @@ public class Player {
 
     public String getNickname() {
         return nickname;
-    }
-
-    public void setCurrentGame(Game game) {
-        currentGame = game;
-    }
-
-    public Game getCurrentGame() {
-        return currentGame;
     }
 
     public void setStatus(PlayerStatus status) {

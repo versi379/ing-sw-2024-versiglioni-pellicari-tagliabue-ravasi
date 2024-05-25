@@ -164,6 +164,24 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         game.addChatMessage(player, message);
     }
 
+    @Override
+    public synchronized void sendPrivateChatMessage(ClientInterface clientInterface, String receiver, String message) throws RemoteException {
+        Player player = getPlayer(clientInterface);
+
+        if (!player.getNickname().equals(receiver) &&
+                playerMap.values().stream()
+                        .anyMatch(x -> x.getNickname().equals(receiver))) {
+            game.addChatMessage(player,
+                    playerMap.values().stream()
+                            .filter(x -> x.getNickname().equals(receiver))
+                            .findFirst()
+                            .orElse(null),
+                    message);
+        } else {
+            game.error(player, "Invalid receiver");
+        }
+    }
+
     // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
     synchronized public void updateController(ClientInterface clientInterface, Object update, Request request) throws RemoteException {

@@ -122,6 +122,14 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    public void sendPrivateChatMessage(String receiver, String message) throws GameException {
+        try {
+            gameController.sendPrivateChatMessage(this, receiver, message);
+        } catch (RemoteException e) {
+            throw new GameException("Connection error", e.getCause());
+        }
+    }
+
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void ping() throws RemoteException {
