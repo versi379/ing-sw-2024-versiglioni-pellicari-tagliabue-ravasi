@@ -29,24 +29,46 @@ public class CaveObjective implements Objective , Serializable {
      */
     private final CaveOrientation orientation;
 
+    /**
+     * Constructs an instance of CaveObjective
+     * @param targetColor1  Represents the color of the two vertical cards
+     * @param targetColor2  Represents the color of the remaining card
+     * @param orientation   Represents the orientation of the pattern required
+     */
     public CaveObjective(Color targetColor1, Color targetColor2, CaveOrientation orientation) {
         this.targetColor1 = targetColor1;
         this.targetColor2 = targetColor2;
         this.orientation = orientation;
     }
 
+    /**
+     * @return the color of the two vertical cards
+     */
     public Color getTargetColor1() {
         return targetColor1;
     }
 
+    /**
+     * @return the color of the remaining card
+     */
     public Color getTargetColor2() {
         return targetColor2;
     }
 
+    /**
+     * @return the orientation of the pattern required
+     */
     public CaveOrientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * To check L-shaped patterns, cards can't be repeated
+     * when a pattern is found (going in the best order) set to NULL cards that compose it and continue
+     * this method works on a copy on Card Matrix not on the original one
+     * @param playerData
+     * @return
+     */
     @Override
     public int checkCondition(PlayerData playerData) {
         CardsMatrix cardsArea = adjustOrientation(playerData.getCardsArea());
@@ -79,6 +101,13 @@ public class CaveObjective implements Objective , Serializable {
                 ", orientation: " + getOrientation();
     }
 
+    /**
+     * if CaveOrientation is UPRIGHTJ ->  Flips matrix over its primary diagonal
+     * if CaveOrientation is INVERTEDL ->  Flips matrix over its secondary diagonal
+     * if CaveOrientation is INVERTEDJ ->  Flips matrix over its primary diagonal then over its secondary diagonal
+     * @param matrix
+     * @return
+     */
     public CardsMatrix adjustOrientation(CardsMatrix matrix) {
         switch (orientation) {
             case CaveOrientation.UPRIGHTJ -> {

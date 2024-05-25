@@ -114,6 +114,12 @@ public class Game extends GameObservable implements Serializable {
      */
     private final Chat chat;
 
+    /**
+     * constructs a new Game instance
+     * @param id            identifier of the game
+     * @param numPlayers    number of players in the game
+     * @param endScore      shows final score
+     */
     public Game(String id, int numPlayers, int endScore) {
         this.id = id;
         this.numPlayers = numPlayers;
@@ -140,10 +146,19 @@ public class Game extends GameObservable implements Serializable {
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return id game unique identifier
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Returns visible PlayebleCard in the center of the board during game,
+     * then backs of the decks and fronts of the four face up cards
+     *
+     */
     public PlayableCard[] getDecksTop() {
         if(status.equals(GameStatus.WAITING)) {
             return null;
@@ -159,30 +174,54 @@ public class Game extends GameObservable implements Serializable {
         return drawableCards;
     }
 
+    /**
+     * @return transcription of chat
+     */
     public Chat getChat() {
         return chat;
     }
 
+    /**
+     *
+     * @return number of players
+     */
     public int getNumPlayers() {
         return numPlayers;
     }
 
+    /**
+     * @return game status
+     */
     public GameStatus getStatus() {
         return status;
     }
 
     // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Verify if a player is in the game
+     * @param player    player searched
+     * @return  a boolean ( true if is present)
+     */
     public boolean containsPlayer(Player player) {
         return playerList.stream()
                 .anyMatch(player::equals);
     }
-
+    /**
+     * Verify if a player is in the game using nickname
+     * @param nickname    player searched
+     * @return  a boolean ( true if is present)
+     */
     public boolean containsPlayer(String nickname) {
         return playerList.stream()
                 .map(Player::getNickname)
                 .anyMatch(nickname::equals);
     }
 
+    /**
+     * adds a new player to the game
+     * @param player    added player
+     */
     public void addPlayer(Player player) {
         playerList.add(player);
         playerAreas.put(player, new PlayerData(deckSize));
@@ -195,6 +234,10 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * Removes a player from the game
+     * @param player player removed
+     */
     public void removePlayer(Player player) {
         if (playerList.contains(player)) {
             playerList.remove(player);
@@ -207,18 +250,35 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return an array list with all players in the game
+     */
     public List<Player> getPlayerList() {
         return new ArrayList<>(playerList);
     }
 
+    /**
+     *
+     * @return who is the current player
+     */
     public Player getCurrentPlayer() {
         return playerList.get(currentIndex);
     }
 
+    /**
+     * Given a player returns his/her data
+     * @param player    player searched
+     * @return player's infos
+     */
     public PlayerData getPlayerData(Player player) {
         return playerAreas.get(player);
     }
-
+    /**
+     * Given a nickname returns his/her data
+     * @param nickname    player searched
+     * @return player's infos
+     */
     public PlayerData getPlayerData(String nickname) {
         for (Player player : playerList) {
             if (player.equals(new Player(nickname))) {
@@ -229,6 +289,10 @@ public class Game extends GameObservable implements Serializable {
     }
 
     // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Prepares game
+     */
     private void setup() {
         status = GameStatus.SETUP;
         initDecks();
@@ -325,6 +389,11 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * choose a list of objective
+     * @param quantity
+     * @return
+     */
     private List<ObjectiveCard> pickObjectivesList(int quantity) {
         List<ObjectiveCard> objectives = new ArrayList<>();
         for (int i = 0; i < quantity && !objectiveDeck.isEmpty(); i++) {
@@ -333,30 +402,63 @@ public class Game extends GameObservable implements Serializable {
         return objectives;
     }
 
+    /**
+     * Given a quantity sets a common objective
+     * @param quantity
+     */
     private void setCommonObjectives(int quantity) {
         commonObjectives.addAll(pickObjectivesList(quantity));
     }
 
+    /**
+     * returns common objective
+     * @return an array list of common objective
+     */
     public List<ObjectiveCard> getCommonObjectives() {
         return new ArrayList<>(commonObjectives);
     }
 
+    /**
+     * picks the first card from the deck
+     * @return
+     */
     public PhysicalCard pickStarterCard() {
         return starterDeck.pop();
     }
 
+    /**
+     * Given a player sets the starting choices
+     * @param player
+     * @param starterCard           starter card selected
+     * @param secretObjectivesList  list of secret objectives
+     */
     private void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
     }
 
+    /**
+     * Picks a starter card given a player
+     * @param player who choose the starter card
+     * @return
+     */
     public PhysicalCard getStarterCard(Player player) {
         return getPlayerData(player).getStarterCard();
     }
 
+    /**
+     * Given a player returns the list of secret objectives
+     * @param player
+     * @return
+     */
     public List<ObjectiveCard> getSecretObjectivesList(Player player) {
         return getPlayerData(player).getSecretObjectivesList();
     }
 
+    /**
+     *  Given a player sets the starter card
+     * @param player
+     * @param starterCard
+     */
     public void setStarterCard(Player player, PlayableCard starterCard) {
         placeCard(player, starterCard, deckSize, deckSize);
         checkPreparation(player);
@@ -367,6 +469,11 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * Given a player sets the secret objective
+     * @param player
+     * @param secretObjective
+     */
     public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
         getPlayerData(player).setSecretObjective(secretObjective);
         checkPreparation(player);
@@ -377,18 +484,35 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * Returns the secret objective given a player
+     * @param player
+     * @return
+     */
     public ObjectiveCard getSecretObjective(Player player) {
         return getPlayerData(player).getSecretObjective();
     }
 
+    /**
+     * Verify if player status is ready
+     * @param player
+     * @return
+     */
     public boolean isReady(Player player) {
         return getPlayerData(player).isReady();
     }
 
+    /**
+     * * Verify if a player has chosen both objective secret and starter card
+     * @param player
+     */
     private void checkPreparation(Player player) {
         getPlayerData(player).checkPreparation();
     }
 
+    /**
+     * verify if check up status is ready
+     */
     private void checkSetupStatus() {
         if (playerList.stream()
                 .allMatch(this::isReady)) {
@@ -397,6 +521,10 @@ public class Game extends GameObservable implements Serializable {
     }
 
     // PLAYING PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * starts game
+     */
     private void start() {
         status = GameStatus.PLAYING;
         System.err.println("Game \"" + id + "\" has started");
@@ -404,14 +532,24 @@ public class Game extends GameObservable implements Serializable {
         notifyObservers(Notify.NOTIFY_GAME_STARTED, new PlayerMex(getCurrentPlayer()));
     }
 
+    /**
+     *
+     * @return current phase of the game
+     */
     public PlayingPhase getCurrentPhase() {
         return currentPhase;
     }
 
+    /**
+     phase in which player pick a card from deck
+     */
     private void drawingPhase() {
         currentPhase = PlayingPhase.DRAWING;
     }
 
+    /**
+     * Returns next player
+     */
     private void nextPlayer() {
         if (lastRound && currentIndex == playerList.size() - 1) {
             end();
@@ -423,14 +561,26 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * Verify if the current round is the last
+     * @return
+     */
     public boolean isLastRound() {
         return lastRound;
     }
 
+    /**
+     * Sets last round = true
+     */
     private void setLastTurn() {
         lastRound = true;
     }
 
+    /**
+     * Select pick card from the decks
+     * @param position
+     * @return
+     */
     private PlayableCard peekCard(DrawingPosition position) {
         return switch (position) {
             case DrawingPosition.RESOURCEDECK -> (!resourceDeck.isEmpty()) ? resourceDeck.peek().getBack() : null;
@@ -442,6 +592,11 @@ public class Game extends GameObservable implements Serializable {
         };
     }
 
+    /**
+     * Pick a card from the deck
+     * @param position
+     * @return
+     */
     public PhysicalCard pickCard(DrawingPosition position) {
         PhysicalCard card = null;
         switch (position) {
@@ -513,6 +668,13 @@ public class Game extends GameObservable implements Serializable {
         return card;
     }
 
+    /**
+     * Places a card on the board
+     * @param player player who puts the card
+     * @param card   card played
+     * @param x      X coordinates
+     * @param y      Y coordinates
+     */
     public void placeCard(Player player, PlayableCard card, int x, int y) {
         getPlayerData(player).placeCard(card, x, y);
         if (getTotalScore(player) >= endScore) {
@@ -525,10 +687,20 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * Returns cards area of a player
+     * @param player
+     * @return
+     */
     public CardsMatrix getCardsArea(Player player) {
         return getPlayerData(player).getCardsArea();
     }
 
+    /**
+     * Adds a card in a player area
+     * @param player
+     * @param card
+     */
     public void addCard(Player player, PhysicalCard card) {
         getPlayerData(player).addCard(card);
         if (status.equals(GameStatus.PLAYING)) {
@@ -538,14 +710,29 @@ public class Game extends GameObservable implements Serializable {
         }
     }
 
+    /**
+     * removes a card from a player area
+     * @param player
+     * @param index
+     */
     public void removeCard(Player player, int index) {
         getPlayerData(player).removeCard(index);
     }
 
+    /**
+     * returns a player hand
+     * @param player
+     * @return
+     */
     public List<PhysicalCard> getHand(Player player) {
         return getPlayerData(player).getHand();
     }
 
+    /**
+     * add a message in the chat
+     * @param player    who send the message
+     * @param message   content of the message
+     */
     public void addChatMessage(Player player, String message) {
         ChatMessage chatMessage = new ChatMessage(player, message, LocalTime.now());
         chat.addMessage(chatMessage);
@@ -554,6 +741,10 @@ public class Game extends GameObservable implements Serializable {
     }
 
     // END PHASE ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Finishes the game
+     */
     private void end() {
         status = GameStatus.ENDED;
         playerList.stream()
@@ -598,19 +789,39 @@ public class Game extends GameObservable implements Serializable {
         notifyObservers(Notify.NOTIFY_GAME_ENDED, new EndMex(this));
     }
 
+    /**
+     * Returns player who win the game
+     * @return an array list
+     */
     public List<Player> getWinnerList() {
         return new ArrayList<>(winnerList);
     }
 
+    /**
+     * Returns the total score of a player
+     * @param player
+     * @return
+     */
     public int getTotalScore(Player player) {
         return getPlayerData(player).getTotalScore();
     }
 
+    /**
+     * Returns score from objective given a player
+     * @param player
+     * @return
+     */
     public int getObjectivesScore(Player player) {
         return getPlayerData(player).getObjectivesScore();
     }
 
     // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Notifies an error
+     * @param player
+     * @param content
+     */
     public void error(Player player, String content) {
         setChanged();
         notifyObservers(Notify.NOTIFY_ERROR, new ErrorMex(player, content));

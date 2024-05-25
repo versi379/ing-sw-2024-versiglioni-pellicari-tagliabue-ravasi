@@ -17,19 +17,37 @@ public class MonolithObjective implements Objective , Serializable {
     private final Color targetColor;
     private final MonolithOrientation orientation;
 
+    /**
+     * Constructs an instance of MonolithObjective
+     * @param targetColor
+     * @param orientation
+     */
     public MonolithObjective(Color targetColor, MonolithOrientation orientation) {
         this.targetColor = targetColor;
         this.orientation = orientation;
     }
 
+    /**
+     * @return target color
+     */
     public Color getTargetColor() {
         return targetColor;
     }
 
+    /**
+     * @return card orientation
+     */
     public MonolithOrientation getOrientation() {
         return orientation;
     }
 
+    /**
+     * To check diagonal patterns, cards can't be repeated
+     * when a pattern is found (going in the best order) set to NULL cards that compose it and continue
+     * this method works on a copy on Card Matrix not on the original one
+     * @param playerData
+     * @return
+     */
     @Override
     public int checkCondition(PlayerData playerData) {
         CardsMatrix cardsArea = adjustOrientation(playerData.getCardsArea());
@@ -59,6 +77,11 @@ public class MonolithObjective implements Objective , Serializable {
                 ", orientation: " + getOrientation();
     }
 
+    /**
+     * rotate the matrix 45°
+     * @param matrix
+     * @return
+     */
     private CardsMatrix adjustOrientation(CardsMatrix matrix) {
         if (orientation == MonolithOrientation.LEFTDIAGONAL) {
             return matrix.rotate45().transposePrimary();

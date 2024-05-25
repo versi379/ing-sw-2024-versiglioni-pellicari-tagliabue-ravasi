@@ -12,10 +12,17 @@ import java.util.Set;
 public class DifferentResourcesObjective implements Objective , Serializable {
     private final Set<Resource> targetResources;
 
+    /**
+     * Constructs an instance of DifferentResourcesObjective
+     * @param targetResources
+     */
     public DifferentResourcesObjective(Set<Resource> targetResources) {
         this.targetResources = targetResources;
     }
 
+    /**
+     * @return  target resource
+     */
     public Set<Resource> getTargetResources() {
         return targetResources;
     }

@@ -35,8 +35,7 @@ public class PlayerData implements Serializable {
 
     /**
      * Constructor to build player area
-     *
-     * @param deckSize
+     * @param deckSize size of the deck
      */
     public PlayerData(int deckSize) {
         boardSize = (deckSize * 2) + 2;
@@ -60,48 +59,92 @@ public class PlayerData implements Serializable {
     }
 
     // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * given a starter card and a list of secret objective sets a starting choice
+     * @param starterCard
+     * @param secretObjectivesList
+     */
     public void setStartingChoices(PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         ready = false;
         this.starterCard = starterCard;
         this.secretObjectivesList = secretObjectivesList;
     }
 
+    /**
+     * @return a starter card
+     */
     public PhysicalCard getStarterCard() {
         return starterCard;
     }
 
+    /*
+     * @return a secret objective list
+     */
     public List<ObjectiveCard> getSecretObjectivesList() {
         return secretObjectivesList;
     }
 
+    /**
+     * Sets a secret objective list
+     * @param secretObjective
+     */
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
     }
 
+    /**
+     * verify when a player become ready
+     * (a player is ready when choose a starter card or an objective)
+     */
     public void checkPreparation() {
         if (getCard((boardSize() / 2) - 1, (boardSize() / 2) - 1) != null && secretObjective != null) {
             ready = true;
         }
     }
 
+    /**
+     * Verify if a player is ready
+     * @return a boolean ( true if is ready)
+     */
     public boolean isReady() {
         return ready;
     }
 
     // BOARD MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     *
+     * @return board size
+     */
     public int boardSize() {
         return boardSize;
     }
 
+    /**
+     *
+     * @return a copy of card area
+     */
     public CardsMatrix getCardsArea() {
         return cardsArea.copy();
     }
 
-
+    /**
+     * given x, y coordinates shows where a card is placed
+     * @param x X coordinates
+     * @param y Y coordinates
+     * @return the place of a card
+     */
     public PlayableCard getCard(int x, int y) {
         return cardsArea.get(x, y);
     }
 
+    /**
+     *
+     * @param x X coordinates
+     * @param y Y coordinates
+     * @return card's corner
+     */
     public CornerPointer[] getTargetCorners(int x, int y) {
         CornerPointer[] result = new CornerPointer[4];
 
@@ -112,6 +155,12 @@ public class PlayerData implements Serializable {
         return result;
     }
 
+    /**
+     * Given x, y coordinates verify if the card is placed correctly
+     * @param x X coordinates
+     * @param y Y coordinates
+     * @return
+     */
     public boolean isPositionValid(int x, int y) {
         if (x < 0 || x >= boardSize() - 1 || y < 0 || y >= boardSize() - 1) {
             return false;
@@ -131,6 +180,12 @@ public class PlayerData implements Serializable {
         return false;
     }
 
+    /**
+     * Puts a card in a specific position
+     * @param card  card played
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     public void placeCard(PlayableCard card, int x, int y) {
         totalScore += card.scoreIncrement(this, x, y);
 
@@ -151,50 +206,96 @@ public class PlayerData implements Serializable {
         }
     }
 
+    /**
+     * Given a specific resource returns number of that resource
+     * @param resource
+     * @return
+     */
     public int numOfResource(Resource resource) {
         return numOfResources.get(resource);
     }
 
+    /**
+     * Subtract 1 to numOfResource
+     * @param resource
+     */
     private void unitaryDecrement(Resource resource) {
         numOfResources.replace(resource, numOfResources.get(resource) - 1);
     }
 
     // HAND MANAGEMENT /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * add a Card to a hand
+     * @param card
+     */
     public void addCard(PhysicalCard card) {
         hand.add(card);
     }
 
+    /**
+     * remove a card from a hand
+     * @param index index of the card that be removed
+     */
     public void removeCard(int index) {
         hand.remove(index);
     }
 
+    /**
+     *
+     * @return a list of card from a hand
+     */
     public List<PhysicalCard> getHand() {
         return hand;
     }
 
     // SCORE MANAGEMENT ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return total score
+     */
     public int getTotalScore() {
         return totalScore;
     }
 
+    /**
+     * @return objective score
+     */
     public int getObjectivesScore() {
         return objectivesScore;
     }
 
+    /**
+
+     * @return secret objective
+     */
     public ObjectiveCard getSecretObjective() {
         return secretObjective;
     }
 
+    /**
+     * Given a objective card return incremented score
+     * @param objectiveCard
+     * @return
+     */
     public int objectiveIncrement(ObjectiveCard objectiveCard) {
         return objectiveCard.checkObjective(this);
     }
 
+    /**
+     * Given common objectives set the final score
+     * @param commonObjectives
+     */
     public void setFinalScore(List<ObjectiveCard> commonObjectives) {
         commonObjectives.add(secretObjective);
         setObjectivesScore(commonObjectives);
         totalScore += getObjectivesScore();
     }
 
+    /**
+     * Given objectives set the objective score
+     * @param objectives
+     */
     public void setObjectivesScore(List<ObjectiveCard> objectives) {
         objectivesScore = 0;
 
