@@ -1,9 +1,6 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.net.util.GameException;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
-import it.polimi.sw.GC50.net.util.ServerInterface;
+import it.polimi.sw.GC50.net.util.*;
 
 import java.util.List;
 import java.util.Map;
@@ -76,7 +73,7 @@ public class ClientSCK implements ServerInterface {
     }
 
     @Override
-    public void sendChatMessage(String message) throws GameException {
+    public void sendChatMessage(ChatMessageRequest message) throws GameException {
 
     }
 

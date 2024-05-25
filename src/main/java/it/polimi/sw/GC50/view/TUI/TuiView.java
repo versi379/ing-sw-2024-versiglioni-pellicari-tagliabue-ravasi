@@ -281,6 +281,7 @@ public class TuiView implements View {
         System.out.println("Place card -> \"-place_card\", \"-p\" [card index] [face index] [x] [y]");
         System.out.println("Draw card -> \"-draw_card\", \"-d\" [index]");
         System.out.println("Send message in chat -> \"-chat\", \"-c\" [message]");
+        System.out.println("Send private message in chat -> \"-chat_private\", \"-cp\" [receiver] [message]");
         System.out.println("Help -> \"-help\", \"-h\"");
         System.out.println();
     }
@@ -291,8 +292,14 @@ public class TuiView implements View {
     }
 
     @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void showChatMessage(String sender, String content, String time) {
+        if (getGameView().getNickname().equals(sender)) {
+            System.out.print("Message sent: ");
+        } else {
+            System.out.print("Message received from player \"" + sender + "\": ");
+        }
+        System.out.println(content);
+        System.out.println("Sent at time " + time);
     }
 
     @Override
@@ -355,6 +362,17 @@ public class TuiView implements View {
 
             case "-chat", "-c" -> {
                 return new Pair<>(Command.CHAT, new String[]{removeFirstWord(read)});
+            }
+
+            case "-chat_private", "-cp" -> {
+                String[] args = new String[2];
+                read = removeFirstWord(read);
+                if (read.isEmpty()) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+                args[0] = getFirstWord(read);
+                args[1] = removeFirstWord(read);
+                return new Pair<>(Command.CHAT_PRIVATE, args);
             }
 
             case "-help", "-h" -> {

@@ -1,6 +1,6 @@
-package it.polimi.sw.GC50.net.chat.server;
+package trash.chatNet.server;
 
-import it.polimi.sw.GC50.net.chat.client.ChatClientInterface;
+import trash.chatNet.client.ChatClientInterface;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

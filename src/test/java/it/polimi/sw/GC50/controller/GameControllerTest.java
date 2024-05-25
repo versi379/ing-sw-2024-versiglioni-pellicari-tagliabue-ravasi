@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.net.Messages.*;
+import it.polimi.sw.GC50.net.util.ChatMessageRequest;
 import it.polimi.sw.GC50.net.util.MockClient;
 import it.polimi.sw.GC50.net.util.Notify;
 import it.polimi.sw.GC50.net.util.PlaceCardRequest;
@@ -297,9 +298,9 @@ public class GameControllerTest {
     void testChatMessage() throws RemoteException {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
-        controller.sendChatMessage(client, "Hello world");
+        controller.sendChatMessage(client, new ChatMessageRequest("Hello world"));
 
         assertEquals(Notify.NOTIFY_CHAT_MESSAGE, client.getNotify());
-        assertEquals("Hello world", ((ChatMex) client.getMessage()).getChatMessage().getContent());
+        assertEquals("Hello world", ((ChatMex) client.getMessage()).getContent());
     }
 }

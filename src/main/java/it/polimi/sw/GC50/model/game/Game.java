@@ -16,12 +16,11 @@ import it.polimi.sw.GC50.net.util.Notify;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Game extends GameObservable implements Serializable {
+public class Game extends GameObservable {
 
     /**
      * Game's unique identifier
@@ -225,7 +224,6 @@ public class Game extends GameObservable implements Serializable {
     public void addPlayer(Player player) {
         playerList.add(player);
         playerAreas.put(player, new PlayerData(deckSize));
-        player.setCurrentGame(this);
         setChanged();
         notifyObservers(Notify.NOTIFY_PLAYER_JOINED_GAME, new PlayerMex(player));
 
@@ -681,9 +679,9 @@ public class Game extends GameObservable implements Serializable {
             setLastTurn();
         }
         if (status.equals(GameStatus.PLAYING)) {
+            drawingPhase();
             setChanged();
             notifyObservers(Notify.NOTIFY_CARD_PLACED, new BoardUpdateMex(this, player));
-            drawingPhase();
         }
     }
 
@@ -735,6 +733,13 @@ public class Game extends GameObservable implements Serializable {
      */
     public void addChatMessage(Player player, String message) {
         ChatMessage chatMessage = new ChatMessage(player, message, LocalTime.now());
+        chat.addMessage(chatMessage);
+        setChanged();
+        notifyObservers(Notify.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
+    }
+
+    public void addChatMessage(Player player, Player receiver, String message) {
+        ChatMessage chatMessage = new ChatMessage(player, receiver, LocalTime.now(), message);
         chat.addMessage(chatMessage);
         setChanged();
         notifyObservers(Notify.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Comprises game info with respect to a player, e.g. board, hand, score
  */
-public class PlayerData implements Serializable {
+public class PlayerData {
 
     private final int boardSize;
     private final CornerPointer[][] cornersArea;

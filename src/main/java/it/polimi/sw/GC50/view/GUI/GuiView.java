@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,7 +33,7 @@ public class GuiView extends Application implements View {
     private NetController netController;
     private UserController userController;
     private MenuController menuController;
-    private GameControllerGUI gameController;
+    private GameControllerGUI gameControllerGUI;
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
 
@@ -58,7 +59,7 @@ public class GuiView extends Application implements View {
 
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
         Parent gameRoot = gameLoader.load();
-        gameController = gameLoader.getController();
+        gameControllerGUI = gameLoader.getController();
 
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
         Parent createGameRoot = createGameLoader.load();
@@ -160,12 +161,19 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showConnected() {
+    public void showWaitPlayers() {
+        // niente
+    }
 
+    public void stopWaitingPlayersIndicator() {
+        Platform.runLater(() -> {
+            gameControllerGUI.getWaitingPlayersIndicator().setVisible(false);
+            gameControllerGUI.getWaitingPlayersLabel().setVisible(false);
+        });
     }
 
     @Override
-    public void showWaitPlayers() {
+    public void showConnected() {
 
     }
 
@@ -180,7 +188,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showMessage(String message) {
+    public void showChatMessage(String sender, String content, String time) {
     }
 
     @Override
@@ -282,7 +290,7 @@ public class GuiView extends Application implements View {
     }
 
     public GameControllerGUI getGameController() {
-        return gameController;
+        return gameControllerGUI;
     }
 
     public MenuController getMenuController() {

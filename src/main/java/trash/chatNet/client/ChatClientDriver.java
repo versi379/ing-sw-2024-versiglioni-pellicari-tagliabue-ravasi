@@ -1,6 +1,6 @@
-package it.polimi.sw.GC50.net.chat.client;
+package trash.chatNet.client;
 
-import it.polimi.sw.GC50.net.chat.server.ChatServerInterface;
+import trash.chatNet.server.ChatServerInterface;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;

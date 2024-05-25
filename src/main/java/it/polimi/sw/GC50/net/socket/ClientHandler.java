@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.Messages.Message;
 import it.polimi.sw.GC50.net.util.*;
+import trash.Message1;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
