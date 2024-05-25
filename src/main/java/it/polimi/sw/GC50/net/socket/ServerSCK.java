@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-/*
+
 public class ServerSCK extends UnicastRemoteObject implements Runnable {
     private final Lobby lobby;
     private final int port;
@@ -45,6 +45,3 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
         }
     }
 }
-
-
- */

@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.net.socket;
 
-
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
 import it.polimi.sw.GC50.net.Messages.Message;
@@ -13,9 +12,8 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-/*
-public class ClientHandler implements Runnable, ClientInterface {
 
+public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
     private final ServerSCK serverSCK;
     //////////////////////////////////////////
@@ -63,8 +61,8 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     private synchronized void switchMex(Message1.Message1ClientToServer message) throws RemoteException {
-        //System.out.println(message.getRequest());
 
+        /*
         switch (message.getRequest()) {
             case Request.MEX_CHAT:
                 match.updateChat((String) message.getObject(), this);
@@ -118,6 +116,8 @@ public class ClientHandler implements Runnable, ClientInterface {
             default:
                 setMessageout(new Message1(Request.REQUEST_NOT_AVAILABLE, null));
         }
+
+         */
     }
 
     synchronized private void setMessageout(Message1 messageout) {
@@ -156,10 +156,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //OBSERVER
     ///////////////////////////////////////////
     @Override
-    public void update(Request request, Message message) {
+    public void update(Notify notify, Message message) {
 
     }
-
-    }
- */
-
+}

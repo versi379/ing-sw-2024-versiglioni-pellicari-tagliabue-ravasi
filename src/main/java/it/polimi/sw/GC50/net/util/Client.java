@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
+import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
@@ -26,7 +27,7 @@ public class Client {
                 this.serverInterface = new ClientRmi(this, serverIp, serverPort);
             }
             case SOCKET -> {
-                this.serverInterface = null;
+                this.serverInterface = new ClientSCK(this, serverIp, serverPort);
             }
             default -> {
                 this.serverInterface = null;
