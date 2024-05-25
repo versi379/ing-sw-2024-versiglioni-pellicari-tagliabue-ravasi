@@ -79,7 +79,17 @@ public class MenuController {
 
     @FXML
     public void handleQuitButton(ActionEvent event) {
+        gameChoice = 3;
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
+        closeApp();
+    }
 
+    public void closeApp() {
+        Stage stage;
+        stage = (Stage) quitButton.getScene().getWindow();
+        stage.close();
+        stage.setOnCloseRequest(e -> System.exit(0));
     }
 
     public int getGameChoice() {
