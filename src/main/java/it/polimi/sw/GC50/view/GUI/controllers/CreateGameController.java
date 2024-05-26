@@ -36,6 +36,8 @@ public class CreateGameController {
 
     private GuiView guiView;
 
+    public boolean waitingPlayers = true;
+
     @FXML
     public void initialize() {
         numPlayersGroup = new ToggleGroup();
@@ -60,13 +62,20 @@ public class CreateGameController {
         } else {
             // tell user he must choose num players
         }
-        showGameView();
         String submittedGameName = gameName.getText();
         int submittedEndPoints = Integer.parseInt(finalScore.getText());
         guiView.setSubmittedGameName(submittedGameName);
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
+        // prima di entrare nella game view attendo
+
+        while(waitingPlayers) {
+            System.out.println("attendo giocatori");
+        }
+        // finito waiting entro
+
+        showGameView();
     }
 
     public void showGameView() throws Exception {

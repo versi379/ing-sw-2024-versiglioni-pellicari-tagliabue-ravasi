@@ -4,9 +4,9 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI">
    <children>
-      <ProgressIndicator fx:id="waitingPlayersIndicator" layoutX="287.0" layoutY="180.0" />
-      <Label fx:id="waitingPlayersLabel" layoutX="211.0" layoutY="231.0" prefHeight="17.0" prefWidth="206.0" text="Label" />
+      <ProgressIndicator fx:id="waitingPlayersIndicator" layoutX="314.0" layoutY="205.0" prefHeight="91.0" prefWidth="101.0" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
+      <Label fx:id="waitingPlayersLabel" alignment="CENTER" layoutX="253.0" layoutY="309.0" prefHeight="53.0" prefWidth="200.0" text="Waiting for players..." AnchorPane.bottomAnchor="150.0" AnchorPane.topAnchor="300.0" />
    </children>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -162,14 +163,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showWaitPlayers() {
-        // niente
-    }
 
-    public void stopWaitingPlayersIndicator() {
-        Platform.runLater(() -> {
-            gameControllerGUI.getWaitingPlayersIndicator().setVisible(false);
-            gameControllerGUI.getWaitingPlayersLabel().setVisible(false);
-        });
     }
 
     @Override
@@ -305,9 +299,6 @@ public class GuiView extends Application implements View {
         return joinGameController;
     }
 
-    public void setClientRmi(Client client) {
-        this.client = client;
-    }
 
     public Stage getPrimaryStage() {
         return primaryStage;
@@ -329,7 +320,7 @@ public class GuiView extends Application implements View {
     public void resumeExecution() {
         synchronized (lock) {
             waitingForButton = false; // Reset the flag
-            lock.notify(); // Notify to resume execution
+            lock.notifyAll(); // Notify to resume execution
         }
     }
 

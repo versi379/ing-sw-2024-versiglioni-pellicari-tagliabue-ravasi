@@ -141,7 +141,6 @@ public class AppClient {
     }
 
     private static void launchGui(GuiView view) {
-        new Thread(() -> {
             try {
                 // Ensure JavaFX is initialized
                 Platform.startup(() -> {
@@ -156,7 +155,6 @@ public class AppClient {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
     }
 
     public static View getView() {

@@ -11,6 +11,7 @@ import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
+import javafx.application.Platform;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -176,7 +177,12 @@ public class Client {
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void waitingPhase() throws GameException {
-        view.showWaitPlayers();
+
+        System.out.println("waiting phase entered");
+
+        if(AppClient.getViewType().equals(ViewType.TUI)) {
+            view.showWaitPlayers();
+        }
 
         while (gameView.getGameStatus().equals(GameStatus.WAITING)) {
             try {
@@ -185,10 +191,11 @@ public class Client {
                 throw new GameException("Interruption error", e.getCause());
             }
         }
-        if(AppClient.getViewType().equals(ViewType.GUI)) {
-            ((GuiView) view).stopWaitingPlayersIndicator();
-        }
-        System.out.println("setup phase -> players at least twooo (VVV)");
+
+        ((GuiView) view).getCreateGameController().waitingPlayers = false;
+        ((GuiView) view).getJoinGameController().waitingPlayers = false;
+
+        System.out.println("setup completed -> min num of players reached!");
         setupPhase();
     }
 

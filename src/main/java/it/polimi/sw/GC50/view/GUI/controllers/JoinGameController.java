@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
+import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.application.Platform;
@@ -36,6 +37,9 @@ public class JoinGameController {
 
     private String submittedJoinGameName;
 
+    public boolean waitingPlayers = true;
+
+
     @FXML
     public void initialize() throws InterruptedException {
         guiView = (GuiView) AppClient.getView();
@@ -49,9 +53,16 @@ public class JoinGameController {
 
     @FXML
     public void handleEnterGameButton(ActionEvent event) throws Exception {
-        showGameView();
         guiView.setSubmittedJoinGameName(submittedJoinGameName);
         guiView.resumeExecution();
+        // prima di entrare nella game view attendo
+
+        while(waitingPlayers) {
+            System.out.println("attendo giocatori");
+        }
+        // finito waiting entro
+
+        showGameView();
     }
 
     public void showGameView() throws Exception {
