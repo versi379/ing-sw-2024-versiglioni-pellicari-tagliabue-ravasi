@@ -12,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -39,6 +36,8 @@ public class JoinGameController {
 
     public boolean waitingPlayers = true;
 
+    @FXML
+    private ProgressIndicator waitingPlayersBuffer;
 
     @FXML
     public void initialize() throws InterruptedException {
@@ -53,13 +52,6 @@ public class JoinGameController {
 
     @FXML
     public void handleEnterGameButton(ActionEvent event) throws Exception {
-//        guiView.setSubmittedJoinGameName(submittedJoinGameName);
-//        guiView.resumeExecution();
-        showGameView();
-    }
-
-    @FXML
-    public void handleSubmitJoinButton(ActionEvent event) throws Exception {
         guiView.setSubmittedJoinGameName(submittedJoinGameName);
         guiView.resumeExecution();
     }
