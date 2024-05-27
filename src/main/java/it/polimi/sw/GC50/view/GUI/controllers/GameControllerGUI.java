@@ -18,10 +18,15 @@ public class GameControllerGUI {
     @FXML
     public Label waitingPlayersLabel;
 
-//    @FXML
-//    public void initialize() {
-//        guiView = (GuiView) AppClient.getView();
-//
-//    }
+    private GuiView guiView;
+
+    @FXML
+    public void initialize() {
+        //guiView = (GuiView) AppClient.getView();
+        //System.out.println("waiting players create: "+guiView.getCreateGameController().waitingPlayers);
+        //System.out.println("waiting players join: "+guiView.getJoinGameController().waitingPlayers);
+        //guiView.waitForButtonPress();
+        System.out.println("prova");
+    }
 
 }

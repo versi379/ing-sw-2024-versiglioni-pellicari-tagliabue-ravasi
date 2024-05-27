@@ -192,8 +192,9 @@ public class Client {
             }
         }
 
-        ((GuiView) view).getCreateGameController().waitingPlayers = false;
-        ((GuiView) view).getJoinGameController().waitingPlayers = false;
+
+
+        ((GuiView) view).stopWaitBuffer();
 
         System.out.println("setup completed -> min num of players reached!");
         setupPhase();

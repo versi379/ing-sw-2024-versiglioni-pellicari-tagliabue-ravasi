@@ -53,16 +53,15 @@ public class JoinGameController {
 
     @FXML
     public void handleEnterGameButton(ActionEvent event) throws Exception {
+//        guiView.setSubmittedJoinGameName(submittedJoinGameName);
+//        guiView.resumeExecution();
+        showGameView();
+    }
+
+    @FXML
+    public void handleSubmitJoinButton(ActionEvent event) throws Exception {
         guiView.setSubmittedJoinGameName(submittedJoinGameName);
         guiView.resumeExecution();
-        // prima di entrare nella game view attendo
-
-        while(waitingPlayers) {
-            System.out.println("attendo giocatori");
-        }
-        // finito waiting entro
-
-        showGameView();
     }
 
     public void showGameView() throws Exception {

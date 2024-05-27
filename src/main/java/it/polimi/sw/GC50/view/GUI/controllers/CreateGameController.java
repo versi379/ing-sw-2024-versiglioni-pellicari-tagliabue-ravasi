@@ -49,6 +49,30 @@ public class CreateGameController {
 
     @FXML
     public void handleCreateGameButton(ActionEvent event) throws Exception {
+//        RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
+//        int submittedNumPlayers = 2;
+//        if (selectedRadioButton != null) {
+//            if (selectedRadioButton == twoPlayersButton) {
+//                submittedNumPlayers = 2;
+//            } else if (selectedRadioButton == threePlayersButton) {
+//                submittedNumPlayers = 3;
+//            } else {
+//                submittedNumPlayers = 4;
+//            }
+//        } else {
+//            // tell user he must choose num players
+//        }
+//        String submittedGameName = gameName.getText();
+//        int submittedEndPoints = Integer.parseInt(finalScore.getText());
+//        guiView.setSubmittedGameName(submittedGameName);
+//        guiView.setSubmittedNumPlayers(submittedNumPlayers);
+//        guiView.setSubmittedEndPoints(submittedEndPoints);
+//        guiView.resumeExecution();
+        showGameView();
+    }
+
+    @FXML
+    public void handleSubmitCreateButton(ActionEvent event) throws Exception {
         RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
         int submittedNumPlayers = 2;
         if (selectedRadioButton != null) {
@@ -68,14 +92,6 @@ public class CreateGameController {
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
-        // prima di entrare nella game view attendo
-
-        while(waitingPlayers) {
-            System.out.println("attendo giocatori");
-        }
-        // finito waiting entro
-
-        showGameView();
     }
 
     public void showGameView() throws Exception {
