@@ -8,10 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class CreateGameController {
@@ -37,6 +34,9 @@ public class CreateGameController {
     private GuiView guiView;
 
     public boolean waitingPlayers = true;
+
+    @FXML
+    private ProgressIndicator waitingPlayersBuffer;
 
     @FXML
     public void initialize() {
@@ -92,9 +92,13 @@ public class CreateGameController {
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
+        createGameButton.setVisible(false);
+        waitingPlayersBuffer.setVisible(true);
+
     }
 
     public void showGameView() throws Exception {
+        System.out.println("carico game --- --- ---");
         Stage stage = (Stage) createGameButton.getScene().getWindow();
         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
         Parent gameRoot = gameLoader.load();

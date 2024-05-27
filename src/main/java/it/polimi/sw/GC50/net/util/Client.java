@@ -8,11 +8,17 @@ import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.GuiView;
+import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +51,8 @@ public class Client {
             lobby();
         } catch (GameException | InterruptedException e) {
             System.err.println(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -53,7 +61,7 @@ public class Client {
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void lobby() throws GameException, InterruptedException {
+    private void lobby() throws Exception {
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
@@ -176,7 +184,7 @@ public class Client {
     }
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void waitingPhase() throws GameException {
+    private void waitingPhase() throws Exception {
 
         System.out.println("waiting phase entered");
 
@@ -192,9 +200,25 @@ public class Client {
             }
         }
 
+        System.out.println("mostra game viewww");
 
+        // okay cosi funziona V
 
-        ((GuiView) view).stopWaitBuffer();
+        if(AppClient.getViewType().equals(ViewType.GUI)) {
+            Platform.runLater(() -> {
+                Stage stage = ((GuiView) view).getPrimaryStage();
+                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+                Parent gameRoot = null;
+                try {
+                    gameRoot = gameLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Scene gameScene = new Scene(gameRoot);
+                gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+                stage.setScene(gameScene);
+            });
+        }
 
         System.out.println("setup completed -> min num of players reached!");
         setupPhase();

@@ -166,13 +166,6 @@ public class GuiView extends Application implements View {
 
     }
 
-    public void stopWaitBuffer() {
-        createGameController.waitingPlayers = false;
-        System.out.println("waiting player create non più in attesa");
-        joinGameController.waitingPlayers = false;
-        System.out.println("waiting player join non più in attesa");
-    }
-
     @Override
     public void showConnected() {
 
