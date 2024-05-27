@@ -27,4 +27,6 @@ public class GameControllerGUI {
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
     }
 
+
+
 }

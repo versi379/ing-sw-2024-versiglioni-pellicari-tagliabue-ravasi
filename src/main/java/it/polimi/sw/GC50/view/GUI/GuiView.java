@@ -195,7 +195,7 @@ public class GuiView extends Application implements View {
     @Override
     public void showCommonObjectives() {
         List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
-        StringBuilder commonObjectiveStringBuilder = new StringBuilder("");
+        StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
         for (ObjectiveCard commonObjective : commonObjectives) {
             commonObjectiveStringBuilder.append(commonObjective.toStringTUI()).append("\n");
         }
@@ -204,7 +204,7 @@ public class GuiView extends Application implements View {
 
     private void showSecretObjectiveSelection() {
         List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
-        StringBuilder secretObjectiveStringBuilder = new StringBuilder("");
+        StringBuilder secretObjectiveStringBuilder = new StringBuilder("Secret Objective Cards");
         for (int i = 0; i < objectiveCards.size(); i++) {
             secretObjectiveStringBuilder.append((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
         }
@@ -212,8 +212,7 @@ public class GuiView extends Application implements View {
     }
 
     private void showStarterCardSelection() {
-//        System.out.println(yellowTxt + "Starter card:" + baseTxt);
-//        TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
+        TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
     }
 
     @Override
