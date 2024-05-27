@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
@@ -212,7 +213,8 @@ public class GuiView extends Application implements View {
     }
 
     private void showStarterCardSelection() {
-        TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
+        PlayableCard starterFront = getGameView().getStarterCard().getFront();
+        PlayableCard starterBack = getGameView().getStarterCard().getBack();
     }
 
     @Override
