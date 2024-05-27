@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
+import it.polimi.sw.GC50.view.GUI.scenes.GuiModelPrinter;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
@@ -213,8 +214,10 @@ public class GuiView extends Application implements View {
     }
 
     private void showStarterCardSelection() {
+        TuiModelPrinter.printStarterCard(getGameView().getStarterCard()); //
         PlayableCard starterFront = getGameView().getStarterCard().getFront();
         PlayableCard starterBack = getGameView().getStarterCard().getBack();
+        System.out.println(GuiModelPrinter.identifyPlayableCard(starterFront));
     }
 
     @Override
