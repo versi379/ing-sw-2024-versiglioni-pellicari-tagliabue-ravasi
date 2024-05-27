@@ -41,7 +41,8 @@ public class GuiView extends Application implements View {
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
 
-    public String prova = "ciao";
+    public String setupCommonObjectives;
+    public String setupSecretObjectives;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -194,19 +195,20 @@ public class GuiView extends Application implements View {
     @Override
     public void showCommonObjectives() {
         List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
+        StringBuilder commonObjectiveStringBuilder = new StringBuilder("");
         for (ObjectiveCard commonObjective : commonObjectives) {
-            gameControllerGUI.setCommonObjectivesLabel(commonObjective.toStringTUI());
-            prova = "giovanni";
+            commonObjectiveStringBuilder.append(commonObjective.toStringTUI()).append("\n");
         }
+        setupCommonObjectives = commonObjectiveStringBuilder.toString();
     }
 
     private void showSecretObjectiveSelection() {
-//        System.out.println(yellowTxt + "Secret objective cards selection:" + baseTxt);
-//        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
-//        for (int i = 0; i < objectiveCards.size(); i++) {
-//            System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
-//            System.out.println();
-//        }
+        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
+        StringBuilder secretObjectiveStringBuilder = new StringBuilder("");
+        for (int i = 0; i < objectiveCards.size(); i++) {
+            secretObjectiveStringBuilder.append((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
+        }
+        setupSecretObjectives = secretObjectiveStringBuilder.toString();
     }
 
     private void showStarterCardSelection() {
