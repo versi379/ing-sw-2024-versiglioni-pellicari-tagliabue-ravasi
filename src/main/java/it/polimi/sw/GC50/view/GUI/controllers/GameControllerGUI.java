@@ -14,6 +14,17 @@ public class GameControllerGUI {
 
     private GuiView guiView;
 
+    @FXML
+    private Label commonObjectivesLabel;
 
+    @FXML
+    public void initialize() {
+        guiView = (GuiView) AppClient.getView();
+        commonObjectivesLabel.setText(guiView.prova);
+        System.out.println("schermata game inizializzata");
+    }
 
+    public void setCommonObjectivesLabel(String text) {
+        this.commonObjectivesLabel.setText(text);
+    }
 }

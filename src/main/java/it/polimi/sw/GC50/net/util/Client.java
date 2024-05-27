@@ -200,10 +200,6 @@ public class Client {
             }
         }
 
-        System.out.println("mostra game viewww");
-
-        // okay cosi funziona V
-
         if(AppClient.getViewType().equals(ViewType.GUI)) {
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
@@ -226,6 +222,9 @@ public class Client {
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void setupPhase() throws GameException {
+
+        System.out.println("setup phase entered");
+
         view.showSetup();
 
         while (gameView.getGameStatus().equals(GameStatus.SETUP)) {
@@ -235,6 +234,9 @@ public class Client {
                 throw new GameException("Interruption error", e.getCause());
             }
         }
+
+        System.out.println("setup finished");
+
         playingPhase();
     }
 

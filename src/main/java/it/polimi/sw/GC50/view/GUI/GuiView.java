@@ -2,9 +2,12 @@ package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.GameStatus;
+import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
+import it.polimi.sw.GC50.view.GameView;
+import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -37,6 +40,8 @@ public class GuiView extends Application implements View {
     private GameControllerGUI gameControllerGUI;
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
+
+    public String prova = "ciao";
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -84,7 +89,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void setClient(Client client) {
-
+        this.client = client;
     }
 
     @Override
@@ -171,9 +176,42 @@ public class GuiView extends Application implements View {
 
     }
 
+    private GameView getGameView() {
+        return client.getGameView();
+    }
+
     @Override
     public void showSetup() {
 
+        showCommonObjectives();
+        showSecretObjectiveSelection();
+        showStarterCardSelection();
+
+//        System.out.println();
+//        System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
+    }
+
+    @Override
+    public void showCommonObjectives() {
+        List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
+        for (ObjectiveCard commonObjective : commonObjectives) {
+            gameControllerGUI.setCommonObjectivesLabel(commonObjective.toStringTUI());
+            prova = "giovanni";
+        }
+    }
+
+    private void showSecretObjectiveSelection() {
+//        System.out.println(yellowTxt + "Secret objective cards selection:" + baseTxt);
+//        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
+//        for (int i = 0; i < objectiveCards.size(); i++) {
+//            System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
+//            System.out.println();
+//        }
+    }
+
+    private void showStarterCardSelection() {
+//        System.out.println(yellowTxt + "Starter card:" + baseTxt);
+//        TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
     }
 
     @Override
@@ -235,11 +273,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showError(String content) {
-
-    }
-
-    @Override
-    public void showCommonObjectives() {
 
     }
 
