@@ -2,17 +2,14 @@ package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
-import it.polimi.sw.GC50.view.GUI.scenes.GuiModelPrinter;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

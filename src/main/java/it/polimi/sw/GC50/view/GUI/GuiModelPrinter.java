@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view.GUI.scenes;
+package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.card.*;
 
