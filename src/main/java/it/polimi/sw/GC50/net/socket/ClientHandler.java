@@ -115,6 +115,9 @@ public class ClientHandler implements Runnable, ClientInterface {
                     ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
                     this.setPlayer((String) objectMessage.getObject());
                 }
+                case RESET_PLAYER -> {
+                    lobby.removePlayer(this);
+                }
             }
         }
     }
@@ -196,6 +199,8 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+
+
     private void drawCard(int position) {
         try {
             gameController.drawCard(this, position);
@@ -216,7 +221,6 @@ public class ClientHandler implements Runnable, ClientInterface {
     public void ping() throws RemoteException {
 
     }
-
 
     @Override
     public void run() {

@@ -207,7 +207,7 @@ public class ClientSCK implements Runnable, ServerInterface {
 
     @Override
     public void resetPlayer() throws GameException {
-
+        setMessageout(new SocketMessage(null, LobbyCommand.RESET_PLAYER));
     }
 
     @Override
