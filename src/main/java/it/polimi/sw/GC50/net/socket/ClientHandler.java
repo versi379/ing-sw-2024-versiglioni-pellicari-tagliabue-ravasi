@@ -67,7 +67,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     private synchronized void switchMex(SocketMessage message) {
-        System.out.println(message.getCommand());
+
         if (message.getCommand() != null) {
             switch (message.getCommand()) {
                 case CHOOSE_OBJECTIVE -> {
@@ -79,7 +79,8 @@ public class ClientHandler implements Runnable, ClientInterface {
                     this.selectStarterFace((int) objectMessage.getObject());
                 }
                 case PLACE_CARD -> {
-                    PlaceCardRequest placeCardRequest = (PlaceCardRequest) message.getMessage();
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    PlaceCardRequest placeCardRequest = objectMessage.getPlaceCardRequest();
                     this.placeCard(placeCardRequest);
                 }
                 case DRAW_CARD -> {
@@ -104,7 +105,6 @@ public class ClientHandler implements Runnable, ClientInterface {
                     this.joinGame((String) objectMessage.getObject());
                 }
                 case CREATE_GAME -> {
-
                     CreateGameMessage game = (CreateGameMessage) message.getMessage();
                     this.createGame(game.getGameId(), game.getNumPlayers(), game.getEndScore());
                 }
