@@ -140,10 +140,6 @@ public class ClientHandler implements Runnable, ClientInterface {
         setMessageout(new SocketMessage(Notify.NOTIFY_NAME_SET, new ObjectMessage(name)));
     }
 
-    private void resetPlayer() {
-        lobby.removePlayer(this);
-    }
-
     private void createGame(String gameId, int numPlayers, int endScore) {
         try {
             gameController = lobby.createGame(this, gameId, numPlayers, endScore);
