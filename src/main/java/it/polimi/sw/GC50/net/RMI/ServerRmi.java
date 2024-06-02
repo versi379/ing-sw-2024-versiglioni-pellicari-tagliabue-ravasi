@@ -21,6 +21,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
 
     @Override
     public void start() throws RemoteException {
+
         try {
             LocateRegistry.createRegistry(this.port).rebind("server", this);
             System.out.println("Server RMI ready");

@@ -125,6 +125,7 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void ping() throws RemoteException {
+
     }
 
     @Override
@@ -141,7 +142,6 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
 
     @Override
     public void playerJoined(String nickname) {
-
         view.playerJoined(String nickname);
     }
 

@@ -34,7 +34,17 @@ public class Client {
                 this.serverInterface = new ClientRmi(this, serverIp, serverPort);
             }
             case SOCKET -> {
-                this.serverInterface = new ClientSCK(this, serverIp, serverPort);
+                ClientSCK clientSCK = null;
+                try {
+                    clientSCK = new ClientSCK(this, serverPort, serverIp);
+                    Thread clientThread = new Thread(clientSCK);
+                    clientThread.start();
+
+                } catch (IOException e) {
+                    System.err.println(e.getMessage());
+                }
+                System.out.println("ClientSCK");
+                this.serverInterface = clientSCK;
             }
             default -> {
                 this.serverInterface = null;
@@ -70,7 +80,8 @@ public class Client {
             boolean inGame = false;
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    if (AppClient.getViewType().equals(ViewType.GUI)) {
+                    System.out.println();
+                    if (view.getClass().getSimpleName().equals("GuiView")) {
                         ((GuiView) view).waitGameParams();
                     }
                     inGame = createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
@@ -80,7 +91,7 @@ public class Client {
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
                     if (!freeGames.isEmpty()) {
-                        if (AppClient.getViewType().equals(ViewType.GUI)) {
+                        if (view.getClass().getSimpleName().equals("GuiView")) {
                             inGame = joinGame(((GuiView) view).selectedJoinGame());
                         } else {
                             inGame = joinGame(view.selectGameName());
@@ -188,7 +199,7 @@ public class Client {
 
         System.out.println("waiting phase entered");
 
-        if(AppClient.getViewType().equals(ViewType.TUI)) {
+        if (!view.getClass().getSimpleName().equals("GuiView")) {
             view.showWaitPlayers();
         }
 
@@ -200,7 +211,7 @@ public class Client {
             }
         }
 
-        if(AppClient.getViewType().equals(ViewType.GUI)) {
+        if (view.getClass().getSimpleName().equals("GuiView")) {
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
                 FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));

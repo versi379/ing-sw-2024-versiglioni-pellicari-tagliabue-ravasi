@@ -2,7 +2,10 @@ package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
+import it.polimi.sw.GC50.net.Messages.CreateGameMessage;
 import it.polimi.sw.GC50.net.Messages.Message;
+import it.polimi.sw.GC50.net.Messages.ObjectMessage;
+import it.polimi.sw.GC50.net.Messages.SocketMessage;
 import it.polimi.sw.GC50.net.util.*;
 import trash.Message1;
 
@@ -11,6 +14,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,7 +30,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     //////////////////////////////////////////
     private final Lobby lobby;
-    private GameControllerRemote match;
+    private GameControllerRemote gameController;
     private String nickname;
     //////////////////////////////////////////
     private final ExecutorService executorService;
@@ -49,10 +54,10 @@ public class ClientHandler implements Runnable, ClientInterface {
     private void inputThread() {
         System.out.println("server socket listener client");
         executorService.execute(() -> {
-            while (!executorService.isShutdown()) {
+            while (true) {
                 try {
-                    Object object = input.readObject();
-                    Message1.Message1ClientToServer message = (Message1.Message1ClientToServer) object;
+                    SocketMessage message = (SocketMessage) input.readObject();
+                    System.out.println(message.getCommand());
                     switchMex(message);
                 } catch (IOException | ClassNotFoundException e) {
 
@@ -61,70 +66,62 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
-    private synchronized void switchMex(Message1.Message1ClientToServer message) throws RemoteException {
+    private synchronized void switchMex(SocketMessage message) {
+        System.out.println(message.getCommand());
+        if (message.getCommand() != null) {
+            switch (message.getCommand()) {
+                case CHOOSE_OBJECTIVE -> {
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    this.selectSecretObjective((int) objectMessage.getObject());
+                }
+                case CHOOSE_STARTER_FACE -> {
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    this.selectStarterFace((int) objectMessage.getObject());
+                }
+                case PLACE_CARD -> {
+                    PlaceCardRequest placeCardRequest = (PlaceCardRequest) message.getMessage();
+                    this.placeCard(placeCardRequest);
+                }
+                case DRAW_CARD -> {
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    this.drawCard((int) objectMessage.getObject());
+                }
+                case CHAT, CHAT_PRIVATE -> {
+                    ChatMessageRequest chatMessageRequest = (ChatMessageRequest) message.getMessage();
+                    this.sendChatMessage(chatMessageRequest);
+                }
+                case HELP -> {
 
-        /*
-        switch (message.getRequest()) {
-            case Request.MEX_CHAT:
-                match.updateChat((String) message.getObject(), this);
-                break;
-            case Request.GET_MODEL: {
-                Object object = match.getModel(this);
-                System.out.println(object.toString());
-                setMessageout(new Message1(Request.GET_MODEL_RESPONSE, object));
-                break;
+                }
+                case NOT_A_COMMAND -> {
+
+                }
             }
-            case Request.PLACE_CARD:
-                match.updateController(Request.PLACE_CARD, message.getObject(), this);
-                break;
-            case Request.SELECT_STARTER_FACE:
-                match.updateController(Request.SELECT_STARTER_FACE, message.getObject(), this);
-                break;
-            case Request.SELECT_OBJECTIVE_CARD:
-                match.updateController(Request.SELECT_OBJECTIVE_CARD, message.getObject(), this);
-                break;
-            case Request.DRAW_CARD:
-                match.updateController(Request.DRAW_CARD, message.getObject(), this);
-                break;
-            case Request.CREATE_GAME:
-                System.out.println(message.getMatchName());
-                System.out.println(message.getNickName());
-                this.match = lobby.createGame(this, message.getMatchName(), (int) message.getObject(), message.getNickName());
-                if (match != null) {
-                    setMessageout(new Message1(Request.CREATE_GAME_RESPONSE, true));
-                } else {
-                    setMessageout(new Message1(Request.CREATE_GAME_RESPONSE, false));
+        } else if (message.getLobbyCommand() != null) {
+            switch (message.getLobbyCommand()) {
+                case JOIN_GAME -> {
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    this.joinGame((String) objectMessage.getObject());
                 }
-                break;
-            case Request.ENTER_GAME:
-                this.match = lobby.joinGame(this, message.getMatchName(), message.getNickName());
-                if (match != null) {
-                    setMessageout(new Message1(Request.ENTER_GAME_RESPONSE, true));
-                } else {
-                    setMessageout(new Message1(Request.ENTER_GAME_RESPONSE, false));
-                }
-                break;
-            case Request.GET_FREE_MATCH:
-                setMessageout(new Message1(Request.GET_FREE_MATCH_RESPONSE, lobby.getFreeGames()));
-                break;
-            case Request.SET_NAME:
-                boolean resp = lobby.addPlayer(this, message.getNickName());
-                setMessageout(new Message1(Request.SET_NAME_RESPONSE, resp));
-                break;
-            case null:
+                case CREATE_GAME -> {
 
-                break;
-            default:
-                setMessageout(new Message1(Request.REQUEST_NOT_AVAILABLE, null));
+                    CreateGameMessage game = (CreateGameMessage) message.getMessage();
+                    this.createGame(game.getGameId(), game.getNumPlayers(), game.getEndScore());
+                }
+                case LIST_FREE_GAMES -> {
+                    this.getFreeGames();
+                }
+                case SET_PLAYER_NAME -> {
+                    ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
+                    this.setPlayer((String) objectMessage.getObject());
+                }
+            }
         }
-
-         */
     }
 
-    synchronized private void setMessageout(Message1 messageout) {
+    synchronized private void setMessageout(SocketMessage messageout) {
         try {
             if (messageout != null) {
-                // System.out.println(messageout.getRequest());
                 output.writeObject(messageout);
                 output.flush();
                 output.reset();
@@ -134,9 +131,89 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void setPlayer(String nickname) {
+        String name = lobby.addPlayer(this, nickname);
+        setMessageout(new SocketMessage(Notify.NOTIFY_NAME_SET, new ObjectMessage(name)));
+    }
+
+    private void resetPlayer() {
+        lobby.removePlayer(this);
+    }
+
+    private void createGame(String gameId, int numPlayers, int endScore) {
+        try {
+            gameController = lobby.createGame(this, gameId, numPlayers, endScore);
+            if (gameController != null) {
+                setMessageout(new SocketMessage(Notify.NOTIFY_GAME_CREATED, new ObjectMessage(gameId)));
+                System.out.println("Game " + gameId + " created");
+            } else {
+                setMessageout(new SocketMessage(Notify.NOTIFY_GAME_CREATED, new ObjectMessage(null)));
+                System.out.println("Game " + gameId + " not created");
+            }
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    private void joinGame(String gameId) {
+        gameController = lobby.joinGame(this, gameId);
+        if (gameController != null) {
+            setMessageout(new SocketMessage(Notify.NOTIFY_GAME_JOINED, new ObjectMessage(gameId)));
+        } else {
+            setMessageout(new SocketMessage(Notify.NOTIFY_GAME_JOINED, new ObjectMessage(null)));
+        }
+    }
+
+    private void getFreeGames() {
+        Map<String, List<String>> freeGame = lobby.getFreeGames();
+        setMessageout(new SocketMessage(Notify.NOTIFY_FREE_GAMES, new ObjectMessage(freeGame)));
+    }
+
+    // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void selectSecretObjective(int index) {
+        try {
+            gameController.selectSecretObjective(this, index);
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    private void selectStarterFace(int face) {
+        try {
+            gameController.selectStarterFace(this, face);
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void placeCard(PlaceCardRequest placeCardRequest) {
+        try {
+            gameController.placeCard(this, placeCardRequest);
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    private void drawCard(int position) {
+        try {
+            gameController.drawCard(this, position);
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    private void sendChatMessage(ChatMessageRequest message) {
+        try {
+            gameController.sendChatMessage(this, message);
+        } catch (RemoteException e) {
+
+        }
+    }
+
     @Override
     public void ping() throws RemoteException {
-
 
     }
 
@@ -147,10 +224,6 @@ public class ClientHandler implements Runnable, ClientInterface {
             inputThread();
         });
         thread1.start();
-        //  Thread thread2 = new Thread(() -> {
-        //    outputThread();
-        // });
-        //thread2.start();
     }
 
     //////////////////////////////////////////
@@ -158,6 +231,6 @@ public class ClientHandler implements Runnable, ClientInterface {
     ///////////////////////////////////////////
     @Override
     public void update(Notify notify, Message message) {
-
+        setMessageout(new SocketMessage(notify, message));
     }
 }

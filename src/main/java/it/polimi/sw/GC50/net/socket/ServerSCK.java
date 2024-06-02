@@ -40,7 +40,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 clientThread.start();
                 System.out.println("Client connected");
             } catch (IOException e) {
-                //...
+
             }
         }
     }
