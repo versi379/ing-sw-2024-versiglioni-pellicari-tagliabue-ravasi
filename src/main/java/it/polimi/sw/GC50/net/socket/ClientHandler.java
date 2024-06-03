@@ -19,6 +19,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * class that represents the client handler
+ * it is the class that handles the client socket
+ * it implements the runnable interface
+ * it implements the client interface
+ */
 public class ClientHandler implements Runnable, ClientInterface {
     private final Socket socketClient;
     private final ServerSCK serverSCK;
@@ -36,7 +42,13 @@ public class ClientHandler implements Runnable, ClientInterface {
     private final ExecutorService executorService;
     //////////////////////////////////////////
 
-
+    /**
+     * method that creates a new client handler
+     *
+     * @param socketClient is the socket of the client
+     * @param serverSCK    is the server socket
+     * @param lobby        is the lobby of the server
+     */
     public ClientHandler(Socket socketClient, ServerSCK serverSCK, Lobby lobby) {
         this.socketClient = socketClient;
         this.serverSCK = serverSCK;
@@ -51,6 +63,13 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * Method that waits for a mesaage from the client socket
+     * after it receives the message it calls the switchMex method
+     *
+     * @throws IOException            if an error occurs
+     * @throws ClassNotFoundException if a class cannot be found
+     */
     private void inputThread() {
         System.out.println("server socket listener client");
         executorService.execute(() -> {
@@ -66,6 +85,16 @@ public class ClientHandler implements Runnable, ClientInterface {
         });
     }
 
+    /**
+     * method that switch the message received from the client
+     *
+     * @param message is the message received from the client
+     *                it can be a command or a lobby command
+     *                if it is a command it calls the method related to the command
+     *                if it is a lobby command it calls the method related to the lobby command
+     *                if the message is not a command or a lobby command it does nothing
+     *                if an exception is thrown it does nothing
+     */
     private synchronized void switchMex(SocketMessage message) {
 
         if (message.getCommand() != null) {
@@ -90,12 +119,6 @@ public class ClientHandler implements Runnable, ClientInterface {
                 case CHAT, CHAT_PRIVATE -> {
                     ChatMessageRequest chatMessageRequest = (ChatMessageRequest) message.getMessage();
                     this.sendChatMessage(chatMessageRequest);
-                }
-                case HELP -> {
-
-                }
-                case NOT_A_COMMAND -> {
-
                 }
             }
         } else if (message.getLobbyCommand() != null) {
@@ -122,6 +145,12 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * Method that sends a message to the client socket
+     *
+     * @param messageout is the message that has to be sent to the client
+     */
+
     synchronized private void setMessageout(SocketMessage messageout) {
         try {
             if (messageout != null) {
@@ -134,12 +163,36 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
-    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Method that sets the player in the lobby
+     * it calls the addPlayer method of the lobby
+     * and sends a message to the client socket
+     * with the name of the player
+     * if the player is already in the lobby it does nothing
+     * if an exception is thrown it does nothing
+     *
+     * @param nickname is the nickname of the player
+     *                 it is the name that has to be set in the lobby
+     */
     private void setPlayer(String nickname) {
         String name = lobby.addPlayer(this, nickname);
         setMessageout(new SocketMessage(Notify.NOTIFY_NAME_SET, new ObjectMessage(name)));
     }
 
+    /**
+     * method that creates a game in the lobby
+     * it calls the createGame method of the lobby
+     * and sends a message to the client socket
+     * with the id of the game
+     * if the game is created it sends a message with the id of the game
+     * if the game is not created it sends a message with a null object
+     * if an exception is thrown it does nothing
+     * if the game is already created it does nothing returns null
+     *
+     * @param gameId     is the id of the game
+     * @param numPlayers is the number of players in the game
+     * @param endScore   is the score to reach to end the game
+     */
     private void createGame(String gameId, int numPlayers, int endScore) {
         try {
             gameController = lobby.createGame(this, gameId, numPlayers, endScore);
@@ -155,6 +208,22 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * method that joins a game in the lobby
+     * it calls the joinGame method of the lobby
+     * and sends a message to the client socket
+     * with the id of the game
+     * if the game is joined it sends a message with the id of the game
+     * if the game is not joined it sends a message with a null object
+     * if an exception is thrown it does nothing
+     * if the game is already joined it does nothing returns null
+     * if the game is not found it does nothing returns null
+     * if the game is full it does nothing returns null
+     * if the game is already started it does nothing returns null
+     * if the game is not found it does nothing returns null
+     *
+     * @param gameId is the id of the game
+     */
     private void joinGame(String gameId) {
         gameController = lobby.joinGame(this, gameId);
         if (gameController != null) {
@@ -164,12 +233,29 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * method that gets the free games in the lobby
+     * it calls the getFreeGames method of the lobby
+     * and sends a message to the client socket
+     * with the free games
+     * if an exception is thrown it does nothing
+     * if the free games are not found it does nothing
+     * if the free games are found it sends a message with the free games
+     */
     private void getFreeGames() {
         Map<String, List<String>> freeGame = lobby.getFreeGames();
         setMessageout(new SocketMessage(Notify.NOTIFY_FREE_GAMES, new ObjectMessage(freeGame)));
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that selects the secret objective of the player
+     * it calls the selectSecretObjective method of the gameController
+     * if an exception is thrown it does nothing
+     *
+     * @param index is the index of the secret objective
+     */
     private void selectSecretObjective(int index) {
         try {
             gameController.selectSecretObjective(this, index);
@@ -178,6 +264,13 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * method that selects the starter face of the player
+     * it calls the selectStarterFace method of the gameController
+     * if an exception is thrown it does nothing
+     *
+     * @param face is the face of the starter
+     */
     private void selectStarterFace(int face) {
         try {
             gameController.selectStarterFace(this, face);
@@ -187,6 +280,16 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that places a card in the game
+     * it calls the placeCard method of the gameController
+     * if an exception is thrown it does nothing
+     *
+     * @param placeCardRequest is the request to place the card
+     *                         it contains the card and the position
+     *                         where the card has to be placed
+     */
     private void placeCard(PlaceCardRequest placeCardRequest) {
         try {
             gameController.placeCard(this, placeCardRequest);
@@ -195,8 +298,13 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
-
-
+    /**
+     * method that draws a card in the game
+     * it calls the drawCard method of the gameController
+     * if an exception is thrown it does nothing
+     *
+     * @param position is the position of the card
+     */
     private void drawCard(int position) {
         try {
             gameController.drawCard(this, position);
@@ -205,6 +313,13 @@ public class ClientHandler implements Runnable, ClientInterface {
         }
     }
 
+    /**
+     * method that sends a chat message in the game
+     * it calls the sendChatMessage method of the gameController
+     * if an exception is thrown it does nothing
+     *
+     * @param message is the message that has to be sent
+     */
     private void sendChatMessage(ChatMessageRequest message) {
         try {
             gameController.sendChatMessage(this, message);
@@ -229,6 +344,14 @@ public class ClientHandler implements Runnable, ClientInterface {
     //////////////////////////////////////////
     //OBSERVER
     ///////////////////////////////////////////
+
+    /**
+     * method that updates the client handler
+     * it calls the setMessageout method
+     *
+     * @param notify  is the notify that has to be sent
+     * @param message is the message that has to be sent
+     */
     @Override
     public void update(Notify notify, Message message) {
         setMessageout(new SocketMessage(notify, message));
