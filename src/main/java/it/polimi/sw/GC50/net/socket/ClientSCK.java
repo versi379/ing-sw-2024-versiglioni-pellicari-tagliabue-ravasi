@@ -83,7 +83,7 @@ public class ClientSCK implements Runnable, ServerInterface {
     /**
      * method that listens for messages from the server
      * the method reads an object from the input stream
-     * the object is casted to a SocketMessage
+     * the object is cast to a SocketMessage
      * the message is added to the queue
      * the method notifies the client that a message has been received
      * if an error occurs the method returns
@@ -146,7 +146,6 @@ public class ClientSCK implements Runnable, ServerInterface {
                 notifySetupFase();
             }
         }
-
     }
 
     /**
@@ -169,7 +168,7 @@ public class ClientSCK implements Runnable, ServerInterface {
     }
 
     /**
-     * method that wait for a notify from the unlock method
+     * method that wait for notify from the unlock method
      *
      * @param index is the index of the condition
      */
@@ -212,7 +211,7 @@ public class ClientSCK implements Runnable, ServerInterface {
     }
 
     /**
-     * method that wait for a notify from the method notifyMessageFromServer
+     * method that wait for notify from the method notifyMessageFromServer
      */
     private void waitMessageFromServer() {
         lock(0);
@@ -226,12 +225,11 @@ public class ClientSCK implements Runnable, ServerInterface {
     }
 
     /**
-     * method that wait for a notify from the method notifySetupFase
+     * method that wait for notify from the method notifySetupFase
      */
     private void waitSetupFase() {
         lock(1);
     }
-
 
     //////////////////////////////////////////
     //PASSIVE_GAME_CONTROLLER
@@ -272,7 +270,7 @@ public class ClientSCK implements Runnable, ServerInterface {
 
     /**
      * method that send a message to the server to set the player name
-     * it waits for the notify from the server and returns the nickname of the player
+     * it waits for notify from the server and returns the nickname of the player
      * if the name is not available the method returns null
      *
      * @param nickname is the nickname of the player
@@ -294,7 +292,7 @@ public class ClientSCK implements Runnable, ServerInterface {
 
     /**
      * method that sends a message to the server to create a game
-     * it waits for the notify from the server and returns true if the game is created
+     * it waits for notify from the server and returns true if the game is created
      * if the game is not created the method returns false
      *
      * @param gameId     is the id of the game
@@ -320,7 +318,7 @@ public class ClientSCK implements Runnable, ServerInterface {
 
     /**
      * method that sends a message to the server to join a game
-     * it waits for the notify from the server and returns true if the player joins the game
+     * it waits for notify from the server and returns true if the player joins the game
      * if the player does not join the game the method returns false
      *
      * @param gameId is the id of the game
