@@ -1,5 +1,6 @@
 [
   {
+    "cardCode": "81",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -55,6 +56,7 @@
     }
   },
   {
+    "cardCode": "82",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -110,6 +112,7 @@
     }
   },
   {
+    "cardCode": "83",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -164,6 +167,7 @@
     }
   },
   {
+    "cardCode": "84",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -218,6 +222,7 @@
     }
   },
   {
+    "cardCode": "85",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -273,6 +278,7 @@
     }
   },
   {
+    "cardCode": "86",
     "cardType": "STARTER",
     "front": {
       "color": "WHITE",
@@ -328,6 +334,7 @@
     }
   },
   {
+    "cardCode": "1",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -379,6 +386,7 @@
     }
   },
   {
+    "cardCode": "2",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -430,6 +438,7 @@
     }
   },
   {
+    "cardCode": "3",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -481,6 +490,7 @@
     }
   },
   {
+    "cardCode": "4",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -532,6 +542,7 @@
     }
   },
   {
+    "cardCode": "5",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -584,6 +595,7 @@
     }
   },
   {
+    "cardCode": "6",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -636,6 +648,7 @@
     }
   },
   {
+    "cardCode": "7",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -688,6 +701,7 @@
     }
   },
   {
+    "cardCode": "8",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -738,6 +752,7 @@
     }
   },
   {
+    "cardCode": "9",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -788,6 +803,7 @@
     }
   },
   {
+    "cardCode": "10",
     "cardType": "RESOURCE",
     "front": {
       "color": "RED",
@@ -838,6 +854,7 @@
     }
   },
   {
+    "cardCode": "11",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -889,6 +906,7 @@
     }
   },
   {
+    "cardCode": "12",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -940,6 +958,7 @@
     }
   },
   {
+    "cardCode": "13",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -991,6 +1010,7 @@
     }
   },
   {
+    "cardCode": "14",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1042,6 +1062,7 @@
     }
   },
   {
+    "cardCode": "15",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1094,6 +1115,7 @@
     }
   },
   {
+    "cardCode": "16",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1146,6 +1168,7 @@
     }
   },
   {
+    "cardCode": "17",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1198,6 +1221,7 @@
     }
   },
   {
+    "cardCode": "18",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1248,6 +1272,7 @@
     }
   },
   {
+    "cardCode": "19",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1298,6 +1323,7 @@
     }
   },
   {
+    "cardCode": "20",
     "cardType": "RESOURCE",
     "front": {
       "color": "GREEN",
@@ -1348,6 +1374,7 @@
     }
   },
   {
+    "cardCode": "21",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1399,6 +1426,7 @@
     }
   },
   {
+    "cardCode": "22",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1450,6 +1478,7 @@
     }
   },
   {
+    "cardCode": "23",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1501,6 +1530,7 @@
     }
   },
   {
+    "cardCode": "24",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1552,6 +1582,7 @@
     }
   },
   {
+    "cardCode": "25",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1604,6 +1635,7 @@
     }
   },
   {
+    "cardCode": "26",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1656,6 +1688,7 @@
     }
   },
   {
+    "cardCode": "27",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1708,6 +1741,7 @@
     }
   },
   {
+    "cardCode": "28",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1758,6 +1792,7 @@
     }
   },
   {
+    "cardCode": "29",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1808,6 +1843,7 @@
     }
   },
   {
+    "cardCode": "30",
     "cardType": "RESOURCE",
     "front": {
       "color": "BLUE",
@@ -1858,6 +1894,7 @@
     }
   },
   {
+    "cardCode": "31",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -1909,6 +1946,7 @@
     }
   },
   {
+    "cardCode": "32",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -1960,6 +1998,7 @@
     }
   },
   {
+    "cardCode": "33",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2011,6 +2050,7 @@
     }
   },
   {
+    "cardCode": "34",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2062,6 +2102,7 @@
     }
   },
   {
+    "cardCode": "35",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2114,6 +2155,7 @@
     }
   },
   {
+    "cardCode": "36",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2166,6 +2208,7 @@
     }
   },
   {
+    "cardCode": "37",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2218,6 +2261,7 @@
     }
   },
   {
+    "cardCode": "38",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2268,6 +2312,7 @@
     }
   },
   {
+    "cardCode": "39",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2318,6 +2363,7 @@
     }
   },
   {
+    "cardCode": "40",
     "cardType": "RESOURCE",
     "front": {
       "color": "PURPLE",
@@ -2368,6 +2414,7 @@
     }
   },
   {
+    "cardCode": "41",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2423,6 +2470,7 @@
     }
   },
   {
+    "cardCode": "42",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2478,6 +2526,7 @@
     }
   },
   {
+    "cardCode": "43",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2533,6 +2582,7 @@
     }
   },
   {
+    "cardCode": "44",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2587,6 +2637,7 @@
     }
   },
   {
+    "cardCode": "45",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2641,6 +2692,7 @@
     }
   },
   {
+    "cardCode": "46",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2695,6 +2747,7 @@
     }
   },
   {
+    "cardCode": "47",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2749,6 +2802,7 @@
     }
   },
   {
+    "cardCode": "48",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2803,6 +2857,7 @@
     }
   },
   {
+    "cardCode": "49",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2857,6 +2912,7 @@
     }
   },
   {
+    "cardCode": "50",
     "cardType": "GOLD",
     "front": {
       "color": "RED",
@@ -2912,6 +2968,7 @@
     }
   },
   {
+    "cardCode": "51",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -2967,6 +3024,7 @@
     }
   },
   {
+    "cardCode": "52",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3022,6 +3080,7 @@
     }
   },
   {
+    "cardCode": "53",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3077,6 +3136,7 @@
     }
   },
   {
+    "cardCode": "54",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3131,6 +3191,7 @@
     }
   },
   {
+    "cardCode": "55",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3185,6 +3246,7 @@
     }
   },
   {
+    "cardCode": "56",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3239,6 +3301,7 @@
     }
   },
   {
+    "cardCode": "57",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3293,6 +3356,7 @@
     }
   },
   {
+    "cardCode": "58",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3347,6 +3411,7 @@
     }
   },
   {
+    "cardCode": "59",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3401,6 +3466,7 @@
     }
   },
   {
+    "cardCode": "60",
     "cardType": "GOLD",
     "front": {
       "color": "GREEN",
@@ -3456,6 +3522,7 @@
     }
   },
   {
+    "cardCode": "61",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3511,6 +3578,7 @@
     }
   },
   {
+    "cardCode": "62",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3566,6 +3634,7 @@
     }
   },
   {
+    "cardCode": "63",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3621,6 +3690,7 @@
     }
   },
   {
+    "cardCode": "64",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3675,6 +3745,7 @@
     }
   },
   {
+    "cardCode": "65",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3729,6 +3800,7 @@
     }
   },
   {
+    "cardCode": "66",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3783,6 +3855,7 @@
     }
   },
   {
+    "cardCode": "67",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3837,6 +3910,7 @@
     }
   },
   {
+    "cardCode": "68",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3891,6 +3965,7 @@
     }
   },
   {
+    "cardCode": "69",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -3945,6 +4020,7 @@
     }
   },
   {
+    "cardCode": "70",
     "cardType": "GOLD",
     "front": {
       "color": "BLUE",
@@ -4000,6 +4076,7 @@
     }
   },
   {
+    "cardCode": "71",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4055,6 +4132,7 @@
     }
   },
   {
+    "cardCode": "72",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4110,6 +4188,7 @@
     }
   },
   {
+    "cardCode": "73",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4165,6 +4244,7 @@
     }
   },
   {
+    "cardCode": "74",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4219,6 +4299,7 @@
     }
   },
   {
+    "cardCode": "75",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4273,6 +4354,7 @@
     }
   },
   {
+    "cardCode": "76",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4327,6 +4409,7 @@
     }
   },
   {
+    "cardCode": "77",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4381,6 +4464,7 @@
     }
   },
   {
+    "cardCode": "78",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4435,6 +4519,7 @@
     }
   },
   {
+    "cardCode": "79",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
@@ -4489,6 +4574,7 @@
     }
   },
   {
+    "cardCode": "80",
     "cardType": "GOLD",
     "front": {
       "color": "PURPLE",
