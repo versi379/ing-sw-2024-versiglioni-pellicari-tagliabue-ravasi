@@ -9,17 +9,39 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that represents the server for the socket connection
+ * it extends UnicastRemoteObject and implements Runnable
+ * it implements the run method that waits for the connection of a client
+ */
 public class ServerSCK extends UnicastRemoteObject implements Runnable {
     private final Lobby lobby;
     private final int port;
     private final List<ClientHandler> clients;
 
+    /**
+     * constructor of the class
+     *
+     * @param lobby is the lobby of the game
+     * @param port  is the port number
+     * @throws IOException if an error occurs
+     */
     public ServerSCK(Lobby lobby, int port) throws IOException {
         this.lobby = lobby;
         this.port = port;
         this.clients = new ArrayList<>();
     }
-
+    /**
+     *method that waits for the connection of a client
+     * this method starts the server and waits the connection of a client
+     * it creates a new client handler for each client that connects
+     * and starts a new thread for each client handler
+     * the client handler is added to the list of clients
+     * the method prints a message when a client connects
+     * if an error occurs the method returns
+     * the method is synchronized
+     * the method is an infinite loop
+     */
     @Override
     public void run() {
         ServerSocket serverSocket;
