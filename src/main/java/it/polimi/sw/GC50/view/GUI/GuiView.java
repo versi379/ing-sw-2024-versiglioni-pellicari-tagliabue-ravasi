@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.GUI;
 
+import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
@@ -42,6 +43,7 @@ public class GuiView extends Application implements View {
 
     public String setupCommonObjectives;
     public String setupSecretObjectives;
+    public String starterCardCode;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -63,9 +65,9 @@ public class GuiView extends Application implements View {
         Parent menuRoot = menuLoader.load();
         menuController = menuLoader.getController();
 
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-        Parent gameRoot = gameLoader.load();
-        gameControllerGUI = gameLoader.getController();
+        // FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+        // Parent gameRoot = gameLoader.load();
+        // gameControllerGUI = gameLoader.getController();
 
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
         Parent createGameRoot = createGameLoader.load();
@@ -187,8 +189,6 @@ public class GuiView extends Application implements View {
         showSecretObjectiveSelection();
         showStarterCardSelection();
 
-//        System.out.println();
-//        System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
     }
 
     @Override
@@ -211,10 +211,9 @@ public class GuiView extends Application implements View {
     }
 
     private void showStarterCardSelection() {
-        TuiModelPrinter.printStarterCard(getGameView().getStarterCard()); //
-        PlayableCard starterFront = getGameView().getStarterCard().getFront();
-        PlayableCard starterBack = getGameView().getStarterCard().getBack();
-        System.out.println(GuiModelPrinter.identifyPlayableCard(starterFront));
+        PhysicalCard starterCard = getGameView().getStarterCard();
+        TuiModelPrinter.printStarterCard(starterCard);
+        starterCardCode = starterCard.getCode();
     }
 
     @Override

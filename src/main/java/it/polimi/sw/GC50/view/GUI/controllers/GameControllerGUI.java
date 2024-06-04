@@ -34,12 +34,13 @@ public class GameControllerGUI {
         guiView = (GuiView) AppClient.getView();
         commonObjectivesLabel.setText(guiView.setupCommonObjectives);
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
-        Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/30022.jpg")));
+        System.out.println(guiView.starterCardCode);
+        Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
         imageView = new ImageView(starterCardFront);
         imageView.setFitWidth(200);
         imageView.setFitHeight(150);
         pane.getChildren().add(imageView);
-        Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/0002.jpg")));
+        Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
         imageView = new ImageView(starterCardBack);
         imageView.setFitWidth(200);
         imageView.setFitHeight(150);
