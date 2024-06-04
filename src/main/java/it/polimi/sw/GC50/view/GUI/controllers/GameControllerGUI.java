@@ -4,7 +4,9 @@ import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
@@ -27,7 +29,14 @@ public class GameControllerGUI {
     @FXML
     private Label secretObjectivesLabel;
 
-    private ImageView imageView;
+    private ImageView imageViewStarterFront;
+    private ImageView imageViewStarterBack;
+
+    @FXML
+    private Button starterBackButton;
+
+    @FXML
+    private Button starterFrontButton;
 
     @FXML
     public void initialize() {
@@ -36,17 +45,29 @@ public class GameControllerGUI {
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
         System.out.println(guiView.starterCardCode);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
-        imageView = new ImageView(starterCardFront);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(150);
-        pane.getChildren().add(imageView);
+        imageViewStarterFront = new ImageView(starterCardFront);
+        imageViewStarterFront.setFitWidth(200);
+        imageViewStarterFront.setFitHeight(150);
+        imageViewStarterFront.setLayoutX(90);
+        imageViewStarterFront.setLayoutY(325);
+        pane.getChildren().add(imageViewStarterFront);
         Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
-        imageView = new ImageView(starterCardBack);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(150);
-        pane.getChildren().add(imageView);
+        imageViewStarterBack = new ImageView(starterCardBack);
+        imageViewStarterBack.setFitWidth(200);
+        imageViewStarterBack.setFitHeight(150);
+        imageViewStarterBack.setLayoutX(441);
+        imageViewStarterBack.setLayoutY(325);
+        pane.getChildren().add(imageViewStarterBack);
     }
 
+    @FXML
+    void handleStarterBackButton(ActionEvent event) {
 
+    }
+
+    @FXML
+    void handleStarterFrontButton(ActionEvent event) {
+
+    }
 
 }
