@@ -269,6 +269,7 @@ public class Client {
         endPhase();
     }
 
+    // da qui V
     private void playTurn() throws GameException {
         view.showCurrentPlayer();
 
