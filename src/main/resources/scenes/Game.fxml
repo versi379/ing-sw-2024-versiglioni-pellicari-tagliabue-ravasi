@@ -8,8 +8,8 @@
    <children>
       <Label fx:id="commonObjectivesLabel" layoutX="47.0" layoutY="34.0" prefHeight="116.0" prefWidth="550.0" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
       <Label fx:id="secretObjectivesLabel" layoutX="40.0" layoutY="118.0" prefHeight="116.0" prefWidth="550.0" text="Label" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="50.0" />
-      <Button fx:id="starterFrontButton" layoutX="90.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterFrontButton" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="100.0" />
-      <Button fx:id="starterBackButton" layoutX="441.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterBackButton" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="starterFrontButton" layoutX="201.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterFrontButton" prefHeight="30.0" prefWidth="100.0" text="Front" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="150.0" />
+      <Button fx:id="starterBackButton" layoutX="441.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterBackButton" prefHeight="30.0" prefWidth="100.0" text="Back" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="150.0" />
       <Button fx:id="chooseObjective2Button" layoutX="631.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleChooseObjective2Button" text="2" />
       <Button fx:id="chooseObjective1Button" layoutX="631.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleChooseObjective1Button" text="1" />
    </children>

@@ -52,22 +52,22 @@ public class GameControllerGUI {
         guiView = (GuiView) AppClient.getView();
         commonObjectivesLabel.setText(guiView.setupCommonObjectives);
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
-        Rectangle2D viewport = new Rectangle2D(25, 25, 100, 200);
+        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
         imageViewStarterFront = new ImageView(starterCardFront);
         imageViewStarterFront.setViewport(viewport);
         imageViewStarterFront.setFitWidth(200);
         imageViewStarterFront.setFitHeight(150);
-        imageViewStarterFront.setLayoutX(90);
-        imageViewStarterFront.setLayoutY(325);
+        imageViewStarterFront.setLayoutX(50);
+        imageViewStarterFront.setLayoutY(200);
         pane.getChildren().add(imageViewStarterFront);
         Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
         imageViewStarterBack = new ImageView(starterCardBack);
         imageViewStarterBack.setViewport(viewport);
         imageViewStarterBack.setFitWidth(200);
         imageViewStarterBack.setFitHeight(150);
-        imageViewStarterBack.setLayoutX(441);
-        imageViewStarterBack.setLayoutY(325);
+        imageViewStarterBack.setLayoutX(300);
+        imageViewStarterBack.setLayoutY(200);
         pane.getChildren().add(imageViewStarterBack);
 
     }
@@ -79,12 +79,14 @@ public class GameControllerGUI {
     private void handleStarterFrontButton(ActionEvent event) {
         guiView.read = "-cs 1";
         starterBackButton.setDisable(true);
+        imageViewStarterBack.setOpacity(0.3);
     }
 
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
         guiView.read = "-cs 2";
         starterFrontButton.setDisable(true);
+        imageViewStarterFront.setOpacity(0.3);
     }
 
     @FXML
