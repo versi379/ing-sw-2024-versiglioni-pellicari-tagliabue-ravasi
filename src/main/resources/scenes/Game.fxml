@@ -2,15 +2,25 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.GameControllerGUI">
    <children>
-      <Label fx:id="commonObjectivesLabel" layoutX="47.0" layoutY="34.0" prefHeight="116.0" prefWidth="550.0" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0" />
-      <Label fx:id="secretObjectivesLabel" layoutX="40.0" layoutY="118.0" prefHeight="116.0" prefWidth="550.0" text="Label" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="50.0" />
-      <Button fx:id="starterFrontButton" layoutX="201.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterFrontButton" prefHeight="30.0" prefWidth="100.0" text="Front" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="150.0" />
-      <Button fx:id="starterBackButton" layoutX="441.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterBackButton" prefHeight="30.0" prefWidth="100.0" text="Back" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="150.0" />
-      <Button fx:id="chooseObjective2Button" layoutX="631.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleChooseObjective2Button" text="2" />
-      <Button fx:id="chooseObjective1Button" layoutX="631.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleChooseObjective1Button" text="1" />
+      <Label fx:id="commonObjectivesLabel" layoutX="47.0" layoutY="34.0" prefHeight="150.0" prefWidth="800.0" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label fx:id="secretObjectivesLabel" layoutX="135.0" layoutY="189.0" prefHeight="150.0" prefWidth="700.0" text="Label" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Button fx:id="starterFrontButton" layoutX="201.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterFrontButton" prefHeight="30.0" prefWidth="100.0" styleClass="orange-button" text="Front" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" />
+      <Button fx:id="starterBackButton" layoutX="441.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterBackButton" prefHeight="30.0" prefWidth="100.0" styleClass="orange-button" text="Back" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="200.0" />
+      <Button fx:id="chooseObjective2Button" layoutX="794.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleChooseObjective2Button" prefHeight="50.0" prefWidth="50.0" styleClass="orange-button" text="2" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="290.0" />
+      <Button fx:id="chooseObjective1Button" layoutX="796.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleChooseObjective1Button" prefHeight="50.0" prefWidth="50.0" styleClass="orange-button" text="1" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="210.0" />
+      <ImageView fx:id="imageViewStarterFront" fitHeight="200.0" fitWidth="300.0" layoutX="96.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" />
+      <ImageView fx:id="imageViewStarterBack" fitHeight="200.0" fitWidth="300.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="100.0" />
    </children>
 </AnchorPane>

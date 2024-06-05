@@ -34,13 +34,16 @@ public class GameControllerGUI {
     @FXML
     private Label secretObjectivesLabel;
 
-    private ImageView imageViewStarterFront;
-    private ImageView imageViewStarterBack;
-
     @FXML
     private Button starterFrontButton;
     @FXML
     private Button starterBackButton;
+
+    @FXML
+    private ImageView imageViewStarterBack;
+
+    @FXML
+    private ImageView imageViewStarterFront;
 
     @FXML
     private Button chooseObjective1Button;
@@ -54,22 +57,11 @@ public class GameControllerGUI {
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
-        imageViewStarterFront = new ImageView(starterCardFront);
+        imageViewStarterFront.setImage(starterCardFront);
         imageViewStarterFront.setViewport(viewport);
-        imageViewStarterFront.setFitWidth(200);
-        imageViewStarterFront.setFitHeight(150);
-        imageViewStarterFront.setLayoutX(50);
-        imageViewStarterFront.setLayoutY(200);
-        pane.getChildren().add(imageViewStarterFront);
         Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
-        imageViewStarterBack = new ImageView(starterCardBack);
+        imageViewStarterBack.setImage(starterCardBack);
         imageViewStarterBack.setViewport(viewport);
-        imageViewStarterBack.setFitWidth(200);
-        imageViewStarterBack.setFitHeight(150);
-        imageViewStarterBack.setLayoutX(300);
-        imageViewStarterBack.setLayoutY(200);
-        pane.getChildren().add(imageViewStarterBack);
-
     }
 
     // add  COMMAND listeners
