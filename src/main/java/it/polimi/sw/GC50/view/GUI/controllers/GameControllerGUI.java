@@ -24,7 +24,7 @@ import java.util.Scanner;
 public class GameControllerGUI {
 
     @FXML
-    private AnchorPane pane;
+    public AnchorPane pane;
 
     private GuiView guiView;
 

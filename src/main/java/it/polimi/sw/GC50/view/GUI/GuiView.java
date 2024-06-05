@@ -221,6 +221,22 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showStart() {
+        
+    }
+
+    @Override
+    public void showPlacingPhase() {
+        System.out.println("Placing phase started V");
+        showCardsArea(getGameView().getNickname());
+    }
+
+    @Override
+    public void showCardsArea(String nickname) {
+
+    }
+
+    @Override
     public void showChatMessage(Chat chat) {
 
     }
@@ -349,10 +365,6 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showCardsArea(String nickname) {
-    }
-
-    @Override
     public void showHand() {
 
     }
@@ -398,16 +410,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showPlayerReady(String nickname) {
-
-    }
-
-    @Override
-    public void showStart() {
-
-    }
-
-    @Override
-    public void showPlacingPhase() {
 
     }
 
