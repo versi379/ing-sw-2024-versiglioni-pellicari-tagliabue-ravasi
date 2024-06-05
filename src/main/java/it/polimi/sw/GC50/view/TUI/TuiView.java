@@ -389,6 +389,9 @@ public class TuiView implements View {
         return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid command"});
     }
 
+    /**
+     * To retrieve the name of the command (e.g. -co 1 returns -co)
+     */
     private static String getFirstWord(String read) {
         int index = read.indexOf(' ');
         if (index > -1) {
@@ -398,6 +401,9 @@ public class TuiView implements View {
         }
     }
 
+    /**
+     * To retrieve the argument of the command (e.g. -co 1 returns 1)
+     */
     private static String removeFirstWord(String read) {
         int index = read.indexOf(' ');
         if (index > -1) {

@@ -5,6 +5,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
@@ -15,9 +16,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GuiView extends Application implements View {
 
@@ -48,6 +51,7 @@ public class GuiView extends Application implements View {
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
+    public String read = ""; // commands sent via GUI components
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -65,9 +69,9 @@ public class GuiView extends Application implements View {
         Parent menuRoot = menuLoader.load();
         menuController = menuLoader.getController();
 
-        // FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-        // Parent gameRoot = gameLoader.load();
-        // gameControllerGUI = gameLoader.getController();
+//         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+//         Parent gameRoot = gameLoader.load();
+//         gameControllerGUI = gameLoader.getController();
 
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
         Parent createGameRoot = createGameLoader.load();
@@ -227,7 +231,121 @@ public class GuiView extends Application implements View {
 
     @Override
     public void listen() {
+        Pair<Command, String[]> command = readCommand();
+        client.addCommand(command.getKey(), command.getValue());
+    }
 
+    // commands must be read via GUI rather than terminal
+    public Pair<Command, String[]> readCommand() {
+
+        switch (getFirstWord(read)) {
+            case "-choose_objective", "-co" -> {
+                System.out.println("Choose objective triggered");
+                String arg = removeFirstWord(read);
+                read = "";
+                try {
+                    return new Pair<>(Command.CHOOSE_OBJECTIVE,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-choose_starter_face", "-cs" -> {
+                System.out.println("Choose starter face triggered");
+                String arg = removeFirstWord(read);
+                read = "";
+                try {
+                    return new Pair<>(Command.CHOOSE_STARTER_FACE,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-place_card", "-p" -> {
+                System.out.println("Place card triggered");
+                String[] args = new String[4];
+                read = removeFirstWord(read);
+                for (int i = 0; i < args.length; i++) {
+                    try {
+                        args[i] = String.valueOf(Integer.parseInt(getFirstWord(read)) - 1);
+                        read = removeFirstWord(read);
+                    } catch (NumberFormatException e) {
+                        return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                    }
+                }
+                if (read.isEmpty()) {
+                    return new Pair<>(Command.PLACE_CARD, args);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-draw_card", "-d" -> {
+                System.out.println("Draw card triggered");
+                String arg = removeFirstWord(read);
+                try {
+                    return new Pair<>(Command.DRAW_CARD,
+                            new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
+                } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-chat", "-c" -> {
+                System.out.println("Chat triggered");
+                String arg = removeFirstWord(read);
+                return new Pair<>(Command.CHAT, new String[]{arg});
+            }
+
+            case "-chat_private", "-cp" -> {
+                System.out.println("Chat private triggered");
+                String[] args = new String[2];
+                read = removeFirstWord(read);
+                if (read.isEmpty()) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+                args[0] = getFirstWord(read);
+                args[1] = removeFirstWord(read);
+                return new Pair<>(Command.CHAT_PRIVATE, args);
+            }
+
+            case "-help", "-h" -> {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
+                    return new Pair<>(Command.HELP, null);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
+                }
+            }
+        }
+
+        return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid command"});
+    }
+
+    /**
+     * To retrieve the name of the command (e.g. -co 1 returns -co)
+     */
+    private static String getFirstWord(String read) {
+        int index = read.indexOf(' ');
+        if (index > -1) {
+            return read.substring(0, index).trim();
+        } else {
+            return read;
+        }
+    }
+
+    /**
+     * To retrieve the argument of the command (e.g. -co 1 returns 1)
+     */
+    private static String removeFirstWord(String read) {
+        int index = read.indexOf(' ');
+        if (index > -1) {
+            return read.substring(index).trim();
+        } else {
+            return "";
+        }
     }
 
     @Override
