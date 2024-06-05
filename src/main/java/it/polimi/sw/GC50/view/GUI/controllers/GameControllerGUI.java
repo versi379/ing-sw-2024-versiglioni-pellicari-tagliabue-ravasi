@@ -7,6 +7,7 @@ import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -40,18 +41,21 @@ public class GameControllerGUI {
     private Button starterFrontButton;
     @FXML
     private Button starterBackButton;
-    public int starterCardFaceChoice;
 
     @FXML
-    private Button chooseObjectiveButton;
+    private Button chooseObjective1Button;
+    @FXML
+    private Button chooseObjective2Button;
 
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
         commonObjectivesLabel.setText(guiView.setupCommonObjectives);
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
+        Rectangle2D viewport = new Rectangle2D(25, 25, 100, 200);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
         imageViewStarterFront = new ImageView(starterCardFront);
+        imageViewStarterFront.setViewport(viewport);
         imageViewStarterFront.setFitWidth(200);
         imageViewStarterFront.setFitHeight(150);
         imageViewStarterFront.setLayoutX(90);
@@ -59,6 +63,7 @@ public class GameControllerGUI {
         pane.getChildren().add(imageViewStarterFront);
         Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
         imageViewStarterBack = new ImageView(starterCardBack);
+        imageViewStarterBack.setViewport(viewport);
         imageViewStarterBack.setFitWidth(200);
         imageViewStarterBack.setFitHeight(150);
         imageViewStarterBack.setLayoutX(441);
@@ -72,19 +77,26 @@ public class GameControllerGUI {
 
     @FXML
     private void handleStarterFrontButton(ActionEvent event) {
-        starterCardFaceChoice = 1;
         guiView.read = "-cs 1";
+        starterBackButton.setDisable(true);
     }
 
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
-        starterCardFaceChoice = 2;
-        guiView.read = "-cs 1";
+        guiView.read = "-cs 2";
+        starterFrontButton.setDisable(true);
     }
 
     @FXML
-    private void handleChooseObjectiveButton(ActionEvent event) {
+    private void handleChooseObjective1Button(ActionEvent event) {
+        guiView.read = "-co 1";
+        chooseObjective2Button.setDisable(true);
+    }
+
+    @FXML
+    private void handleChooseObjective2Button(ActionEvent event) {
         guiView.read = "-co 2";
+        chooseObjective1Button.setDisable(true);
     }
 
 }
