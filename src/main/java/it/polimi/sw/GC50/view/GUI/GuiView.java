@@ -12,6 +12,7 @@ import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -216,18 +217,22 @@ public class GuiView extends Application implements View {
 
     private void showStarterCardSelection() {
         PhysicalCard starterCard = getGameView().getStarterCard();
+        System.out.println(starterCard.getCode());
         TuiModelPrinter.printStarterCard(starterCard);
         starterCardCode = starterCard.getCode();
     }
 
     @Override
     public void showStart() {
-        
+
     }
 
     @Override
     public void showPlacingPhase() {
         System.out.println("Placing phase started V");
+        Platform.runLater(() -> {
+            gameControllerGUI.pane.getChildren().removeAll();
+        });
         showCardsArea(getGameView().getNickname());
     }
 

@@ -41,6 +41,8 @@ public class PlayableCard implements Serializable {
      */
     private final Corner[] corners;
 
+    private String code;
+
     /**
      * Constructor for card instance with bonus
      * @param color             represents color of the card
@@ -80,6 +82,15 @@ public class PlayableCard implements Serializable {
      *              @param corners           represents card's corners
      */
     public PlayableCard(Color color, int points, Corner[] corners) {
+        this.color = color;
+        this.points = points;
+        this.bonus = new BlankBonus();
+        this.fixedResources = new ArrayList<>();
+        this.corners = corners.clone();
+    }
+
+    public PlayableCard(String cardCode, Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
+        this.code = cardCode;
         this.color = color;
         this.points = points;
         this.bonus = new BlankBonus();
@@ -154,6 +165,10 @@ public class PlayableCard implements Serializable {
      */
     public Corner getSeCorner() {
         return corners[3];
+    }
+
+    public String getCode() {
+        return code;
     }
 
     /**
@@ -315,4 +330,9 @@ public class PlayableCard implements Serializable {
         }
         return card;
     }
+
+    public void toStringTest() {
+        System.out.println("colore: "+this.color+"ri");
+    }
+
 }
