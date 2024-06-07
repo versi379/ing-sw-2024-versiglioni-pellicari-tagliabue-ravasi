@@ -15,11 +15,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static it.polimi.sw.GC50.view.TUI.TuiView.yellowTxt;
 
 public class GuiView extends Application implements View {
 
@@ -40,12 +44,15 @@ public class GuiView extends Application implements View {
     private UserController userController;
     private MenuController menuController;
     private SetupGameController setupGameController;
+    private PlayGameController playGameController;
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
 
     public String setupCommonObjectives;
     public String setupSecretObjectives;
     public String starterCardCode;
+
+    public List<PhysicalCard> playerHand;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -68,9 +75,9 @@ public class GuiView extends Application implements View {
         Parent menuRoot = menuLoader.load();
         menuController = menuLoader.getController();
 
-//         FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-//         Parent gameRoot = gameLoader.load();
-//         gameControllerGUI = gameLoader.getController();
+//         FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
+//         Parent setupGameRoot = setupGameLoader.load();
+//         setupGameController = setupGameLoader.getController();
 
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
         Parent createGameRoot = createGameLoader.load();
@@ -79,6 +86,10 @@ public class GuiView extends Application implements View {
         FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
         Parent joinGameRoot = joinGameLoader.load();
         joinGameController = joinGameLoader.getController();
+
+        FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
+        Parent playGameRoot = playGameLoader.load();
+        playGameController = playGameLoader.getController();
 
         Scene scene = new Scene(netRoot);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
@@ -226,17 +237,37 @@ public class GuiView extends Application implements View {
     }
 
     @Override
+    public void showCurrentPlayer() {
+        System.out.println("Mostrami i labels");
+        if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
+            Platform.runLater(() -> {
+                Label playerLabel = new Label("Your turn:");
+                playGameController.pane.getChildren().add(playerLabel);
+            });
+        } else {
+            Platform.runLater(() -> {
+                Label otherPlayerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
+                playGameController.pane.getChildren().add(otherPlayerLabel);
+            });
+        }
+    }
+
+    @Override
     public void showPlacingPhase() {
         System.out.println("Placing phase started V");
-        Platform.runLater(() -> {
-            setupGameController.pane.getChildren().removeAll();
-        });
         showCardsArea(getGameView().getNickname());
+        showHand();
     }
 
     @Override
     public void showCardsArea(String nickname) {
+        System.out.println("mosto player area");
+    }
 
+    @Override
+    public void showHand() {
+        System.out.println("mostro mano giocatore");
+        playerHand = getGameView().getHand();
     }
 
     @Override
@@ -368,11 +399,6 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showHand() {
-
-    }
-
-    @Override
     public void showDecks() {
 
     }
@@ -418,11 +444,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showDrawingPhase() {
-
-    }
-
-    @Override
-    public void showCurrentPlayer() {
 
     }
 
