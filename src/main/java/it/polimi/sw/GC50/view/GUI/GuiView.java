@@ -1,7 +1,6 @@
 package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
@@ -21,7 +20,6 @@ import javafx.util.Pair;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class GuiView extends Application implements View {
 
@@ -41,7 +39,7 @@ public class GuiView extends Application implements View {
     private NetController netController;
     private UserController userController;
     private MenuController menuController;
-    private GameControllerGUI gameControllerGUI;
+    private SetupGameController setupGameController;
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
 
@@ -231,7 +229,7 @@ public class GuiView extends Application implements View {
     public void showPlacingPhase() {
         System.out.println("Placing phase started V");
         Platform.runLater(() -> {
-            gameControllerGUI.pane.getChildren().removeAll();
+            setupGameController.pane.getChildren().removeAll();
         });
         showCardsArea(getGameView().getNickname());
     }
@@ -443,8 +441,8 @@ public class GuiView extends Application implements View {
         return userController;
     }
 
-    public GameControllerGUI getGameController() {
-        return gameControllerGUI;
+    public SetupGameController getGameController() {
+        return setupGameController;
     }
 
     public MenuController getMenuController() {

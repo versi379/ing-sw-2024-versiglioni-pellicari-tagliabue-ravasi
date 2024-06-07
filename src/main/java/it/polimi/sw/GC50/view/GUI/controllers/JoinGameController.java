@@ -56,19 +56,4 @@ public class JoinGameController {
         guiView.resumeExecution();
     }
 
-    public void showGameView() throws Exception {
-        Stage stage = (Stage) enterGameButton.getScene().getWindow();
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-        Parent gameRoot = gameLoader.load();
-        Scene gameScene = new Scene(gameRoot);
-        gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-        stage.setScene(gameScene);
-    }
-
-    public ListView<String> getFreeGamesListView() {
-        return freeGames;
-    }
-
-
-
 }

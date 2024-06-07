@@ -214,7 +214,7 @@ public class Client {
         if (view.getClass().getSimpleName().equals("GuiView")) {
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
-                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
+                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
                 Parent gameRoot = null;
                 try {
                     gameRoot = gameLoader.load();
@@ -247,6 +247,22 @@ public class Client {
         }
 
         System.out.println("setup finished");
+
+        if (view.getClass().getSimpleName().equals("GuiView")) {
+            Platform.runLater(() -> {
+                Stage stage = ((GuiView) view).getPrimaryStage();
+                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
+                Parent gameRoot = null;
+                try {
+                    gameRoot = gameLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Scene gameScene = new Scene(gameRoot);
+                gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+                stage.setScene(gameScene);
+            });
+        }
 
         playingPhase();
     }

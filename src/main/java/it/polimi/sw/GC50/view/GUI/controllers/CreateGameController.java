@@ -72,15 +72,5 @@ public class CreateGameController {
         waitingPlayersBuffer.setVisible(true);
     }
 
-    public void showGameView() throws Exception {
-        System.out.println("carico game --- --- ---");
-        Stage stage = (Stage) createGameButton.getScene().getWindow();
-        FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.GAME.getPath()));
-        Parent gameRoot = gameLoader.load();
-        Scene gameScene = new Scene(gameRoot);
-        gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-        stage.setScene(gameScene);
-    }
-
 }
 
