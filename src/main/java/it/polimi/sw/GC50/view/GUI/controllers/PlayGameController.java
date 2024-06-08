@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -25,6 +26,15 @@ public class PlayGameController {
     public AnchorPane pane;
 
     private GuiView guiView;
+
+    @FXML
+    private Button drawCardButton;
+
+    @FXML
+    private TextField gameTextField;
+
+    @FXML
+    private Button placeCardButton;
 
     @FXML
     public void initialize() {
@@ -50,6 +60,17 @@ public class PlayGameController {
 
         pane.getChildren().add(gridPane);
 
+        pane.getChildren().add(printPlayerArea(guiView.playerArea));
+    }
+
+    @FXML
+    void handleDrawCardButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handlePlaceCardButton(ActionEvent event) {
+        guiView.read = "-p 1 1 42 42";
         pane.getChildren().add(printPlayerArea(guiView.playerArea));
     }
 

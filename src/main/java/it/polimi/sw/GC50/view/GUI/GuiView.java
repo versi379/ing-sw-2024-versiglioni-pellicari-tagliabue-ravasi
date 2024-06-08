@@ -331,6 +331,7 @@ public class GuiView extends Application implements View {
                     }
                 }
                 if (read.isEmpty()) {
+                    playerArea = getGameView().getPlayerArea(getGameView().getNickname());
                     return new Pair<>(Command.PLACE_CARD, args);
                 } else {
                     return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
