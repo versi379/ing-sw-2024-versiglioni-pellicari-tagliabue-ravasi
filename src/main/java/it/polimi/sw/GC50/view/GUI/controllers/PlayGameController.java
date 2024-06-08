@@ -28,6 +28,10 @@ public class PlayGameController {
         guiView = (GuiView) AppClient.getView();
         pane.getChildren().add(guiView.headerLabel);
         GridPane gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setLayoutX(300);
+        gridPane.setLayoutY(500);
 
         // Add ImageView objects to the GridPane
         for (int i = 0; i < 6; i++) {
@@ -56,7 +60,7 @@ public class PlayGameController {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
-        Rectangle2D viewport = new Rectangle2D(100, 100, 450, 300);
+        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);
         cardImageView.setFitWidth(150);
         cardImageView.setFitHeight(75);

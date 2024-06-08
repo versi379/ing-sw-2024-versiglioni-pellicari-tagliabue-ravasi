@@ -269,6 +269,7 @@ public class GuiView extends Application implements View {
     public void showHand() {
         System.out.println("mostro mano giocatore");
         playerHand = getGameView().getHand();
+        TuiModelPrinter.printHand(getGameView().getHand());
     }
 
     @Override
