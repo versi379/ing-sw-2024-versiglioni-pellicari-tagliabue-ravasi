@@ -11,6 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayGameController {
 
@@ -23,10 +27,22 @@ public class PlayGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
         pane.getChildren().add(guiView.headerLabel);
-        for (PhysicalCard physicalCard : guiView.playerHand) {
-            pane.getChildren().add(printPhysicalCardFront(physicalCard, 110, 110));
-            pane.getChildren().add(printPhysicalCardBack(physicalCard, 110, 110));
+        GridPane gridPane = new GridPane();
+
+        // Add ImageView objects to the GridPane
+        for (int i = 0; i < 6; i++) {
+            int row = i / 3; // 0 or 1
+            int col = i % 3; // 0, 1, or 2
+            if(i < 3) { // print front
+                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
+            } else { // print back
+                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
+
+            }
         }
+
+        pane.getChildren().add(gridPane);
+
     }
 
     /**
@@ -40,6 +56,12 @@ public class PlayGameController {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
+        Rectangle2D viewport = new Rectangle2D(100, 100, 450, 300);
+        cardImageView.setViewport(viewport);
+        cardImageView.setFitWidth(150);
+        cardImageView.setFitHeight(75);
+        cardImageView.setLayoutX(layoutX);
+        cardImageView.setLayoutY(layoutY);
         return cardImageView;
     }
 
@@ -54,6 +76,12 @@ public class PlayGameController {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/backs/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
+        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
+        cardImageView.setViewport(viewport);
+        cardImageView.setFitWidth(150);
+        cardImageView.setFitHeight(75);
+        cardImageView.setLayoutX(layoutX);
+        cardImageView.setLayoutY(layoutY);
         return cardImageView;
     }
 

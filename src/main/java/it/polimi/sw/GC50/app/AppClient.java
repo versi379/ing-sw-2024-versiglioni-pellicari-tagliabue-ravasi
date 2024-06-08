@@ -54,10 +54,10 @@ public class AppClient {
             }
         } else { // GUI
             while (((GuiView) view).getNetController() == null) {
-                System.out.println("ATTENDO SCHERMATA NET");
+                System.out.println("");
             }
             while (!((GuiView) view).getNetController().isnetSetted()) {
-                System.out.println("ATTENDO SCELTA NET");
+                System.out.println("");
             }
             if (((GuiView) view).getNetController().getNetSelected() == 1) {
                 System.out.println("LANCIO SOCKET");

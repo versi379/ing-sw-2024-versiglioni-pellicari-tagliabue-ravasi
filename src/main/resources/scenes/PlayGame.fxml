@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane fx:id="pane" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
+<AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
 
 </AnchorPane>
