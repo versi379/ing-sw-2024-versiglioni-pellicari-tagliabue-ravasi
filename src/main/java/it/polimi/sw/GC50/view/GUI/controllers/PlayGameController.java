@@ -104,6 +104,8 @@ public class PlayGameController {
         int targetAreaHeight = maxY - minY + 1;
 
         GridPane grid = new GridPane();
+        grid.setLayoutX(100);
+        grid.setLayoutY(100);
 
         if (targetAreaWidth > 0 && targetAreaHeight > 0) {
             for (Integer coordinates : cardsMatrix.getOrderList()) {

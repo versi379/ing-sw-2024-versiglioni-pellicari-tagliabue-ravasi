@@ -54,10 +54,10 @@ public class AppClient {
             }
         } else { // GUI
             while (((GuiView) view).getNetController() == null) {
-                System.out.println("");
+                System.out.print("");
             }
             while (!((GuiView) view).getNetController().isnetSetted()) {
-                System.out.println("");
+                System.out.print("");
             }
             if (((GuiView) view).getNetController().getNetSelected() == 1) {
                 System.out.println("LANCIO SOCKET");
