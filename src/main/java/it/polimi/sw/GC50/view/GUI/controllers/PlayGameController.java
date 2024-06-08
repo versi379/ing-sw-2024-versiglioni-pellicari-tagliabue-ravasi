@@ -62,6 +62,8 @@ public class PlayGameController {
 
         pane.getChildren().add(gridPane);
 
+        System.out.println("test   "+guiView.playerArea.getCardsMatrix().get(42,42));
+
         playerAreaGrid = printPlayerArea(guiView.playerArea);
 
         pane.getChildren().add(playerAreaGrid);
@@ -75,7 +77,9 @@ public class PlayGameController {
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         guiView.read = "-p 1 1 42 42";
+
         playerAreaGrid = printPlayerArea(guiView.playerArea);
+        System.out.println("test   "+guiView.playerArea.getCardsMatrix().get(42,42));
         pane.getChildren().add(playerAreaGrid);
     }
 
