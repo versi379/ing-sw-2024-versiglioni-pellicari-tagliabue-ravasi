@@ -52,9 +52,10 @@ public class GuiView extends Application implements View {
     public String setupSecretObjectives;
     public String starterCardCode;
 
-    public List<PhysicalCard> playerHand;
+    public List<PhysicalCard> playerHand = new ArrayList<>();
 
     public Label headerLabel;
+    public Label headerLabel2;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -235,29 +236,33 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showStart() {
-
-    }
-
-    @Override
-    public void showCurrentPlayer() {
-        System.out.println("Mostrami i labels");
         if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
             headerLabel = new Label("Your turn:");
         } else {
             headerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
         }
-    }
-
-    @Override
-    public void showPlacingPhase() {
-        System.out.println("Placing phase started V");
         showCardsArea(getGameView().getNickname());
         showHand();
     }
 
     @Override
+    public void showCurrentPlayer() {
+    }
+
+    @Override
+    public void showPlacingPhase() {
+
+    }
+
+    @Override
     public void showCardsArea(String nickname) {
         System.out.println("mosto player area");
+        if (getGameView().getNickname().equals(nickname)) {
+            headerLabel2 = new Label("Your cards area:");
+        } else {
+            headerLabel2 = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
+        }
+        GuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
     }
 
     @Override
@@ -526,4 +531,5 @@ public class GuiView extends Application implements View {
     public Client getClientRmi() {
         return client;
     }
+
 }
