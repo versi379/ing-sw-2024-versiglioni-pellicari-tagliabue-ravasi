@@ -263,8 +263,6 @@ public class Client {
     private void playingPhase() throws GameException {
         view.showStart();
 
-        System.out.println(getGameView().getHand().get(0).getCode());
-
         if (view.getClass().getSimpleName().equals("GuiView")) {
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();

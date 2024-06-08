@@ -50,8 +50,7 @@ public class PlayGameController {
 
         pane.getChildren().add(gridPane);
 
-        pane.getChildren().add(printPlayerArea(guiView.getClientRmi().getGameView().getPlayerArea(guiView.getClientRmi().getGameView().getNickname())));
-
+        pane.getChildren().add(printPlayerArea(guiView.playerArea));
     }
 
     /**
