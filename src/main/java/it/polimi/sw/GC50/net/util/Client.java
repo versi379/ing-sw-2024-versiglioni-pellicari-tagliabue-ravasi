@@ -248,6 +248,23 @@ public class Client {
 
         System.out.println("setup finished");
 
+        playingPhase();
+    }
+
+    private void selectSecretObjective(int index) throws GameException {
+        serverInterface.selectSecretObjective(index);
+    }
+
+    private void selectStarterFace(int face) throws GameException {
+        serverInterface.selectStarterFace(face);
+    }
+
+    // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void playingPhase() throws GameException {
+        view.showStart();
+
+        System.out.println(getGameView().getHand().get(0).getCode());
+
         if (view.getClass().getSimpleName().equals("GuiView")) {
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
@@ -263,21 +280,6 @@ public class Client {
                 stage.setScene(gameScene);
             });
         }
-
-        playingPhase();
-    }
-
-    private void selectSecretObjective(int index) throws GameException {
-        serverInterface.selectSecretObjective(index);
-    }
-
-    private void selectStarterFace(int face) throws GameException {
-        serverInterface.selectStarterFace(face);
-    }
-
-    // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void playingPhase() throws GameException {
-        view.showStart();
 
         while (gameView.getGameStatus().equals(GameStatus.PLAYING)) {
             playTurn();

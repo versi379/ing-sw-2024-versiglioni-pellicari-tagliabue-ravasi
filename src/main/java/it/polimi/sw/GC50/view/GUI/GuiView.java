@@ -241,7 +241,7 @@ public class GuiView extends Application implements View {
         } else {
             headerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
         }
-        showCardsArea(getGameView().getNickname());
+        //showCardsArea(getGameView().getNickname());
         showHand();
     }
 

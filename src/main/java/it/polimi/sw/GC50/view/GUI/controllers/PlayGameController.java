@@ -20,33 +20,39 @@ public class PlayGameController {
     private GuiView guiView;
 
     @FXML
-    private Button showHand;
-
-    @FXML
-    void handleShowHand(ActionEvent event) {
-        System.out.println(guiView.playerHand.get(0).getFront().getCode());
-        for(PhysicalCard physicalCard : guiView.playerHand) {
-            pane.getChildren().add(showPlayableCard(physicalCard.getFront(), 110, 110));
-        }
-    }
-
-    @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
         pane.getChildren().add(guiView.headerLabel);
-        System.out.println(guiView.getClientRmi().getGameView().getHand().get(0).getFront().getCode());
-        //pane.getChildren().add(guiView.headerLabel2);
+        for (PhysicalCard physicalCard : guiView.playerHand) {
+            pane.getChildren().add(printPhysicalCardFront(physicalCard, 110, 110));
+            pane.getChildren().add(printPhysicalCardBack(physicalCard, 110, 110));
+        }
     }
 
     /**
      * Prints given playable card in GUI at given layout coordinates.
+     *
      * @param card
      * @param layoutX
      * @param layoutY
      */
-    public ImageView showPlayableCard(PlayableCard card, int layoutX, int layoutY) {
+    public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
         String cardCode = card.getCode();
-        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + "81" + ".jpg")));
+        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
+        ImageView cardImageView = new ImageView(cardImage);
+        return cardImageView;
+    }
+
+    /**
+     * Prints given playable card in GUI at given layout coordinates.
+     *
+     * @param card
+     * @param layoutX
+     * @param layoutY
+     */
+    public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
+        String cardCode = card.getCode();
+        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/backs/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
         return cardImageView;
     }
