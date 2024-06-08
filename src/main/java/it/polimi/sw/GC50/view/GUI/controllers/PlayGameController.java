@@ -19,7 +19,7 @@ public class PlayGameController {
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
-
+        pane.getChildren().add(guiView.headerLabel);
     }
 
     /**

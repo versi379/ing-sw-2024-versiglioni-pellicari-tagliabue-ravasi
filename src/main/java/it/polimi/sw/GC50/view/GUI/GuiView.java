@@ -54,6 +54,8 @@ public class GuiView extends Application implements View {
 
     public List<PhysicalCard> playerHand;
 
+    public Label headerLabel;
+
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
@@ -87,9 +89,9 @@ public class GuiView extends Application implements View {
         Parent joinGameRoot = joinGameLoader.load();
         joinGameController = joinGameLoader.getController();
 
-        FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
-        Parent playGameRoot = playGameLoader.load();
-        playGameController = playGameLoader.getController();
+//        FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
+//        Parent playGameRoot = playGameLoader.load();
+//        playGameController = playGameLoader.getController();
 
         Scene scene = new Scene(netRoot);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
@@ -240,15 +242,9 @@ public class GuiView extends Application implements View {
     public void showCurrentPlayer() {
         System.out.println("Mostrami i labels");
         if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
-            Platform.runLater(() -> {
-                Label playerLabel = new Label("Your turn:");
-                playGameController.pane.getChildren().add(playerLabel);
-            });
+            headerLabel = new Label("Your turn:");
         } else {
-            Platform.runLater(() -> {
-                Label otherPlayerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
-                playGameController.pane.getChildren().add(otherPlayerLabel);
-            });
+            headerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
         }
     }
 
