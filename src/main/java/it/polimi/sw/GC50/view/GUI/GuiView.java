@@ -249,6 +249,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCurrentPlayer() {
+
     }
 
     @Override

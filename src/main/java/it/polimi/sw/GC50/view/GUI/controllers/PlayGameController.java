@@ -36,6 +36,8 @@ public class PlayGameController {
     @FXML
     private Button placeCardButton;
 
+    private GridPane playerAreaGrid;
+
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -60,7 +62,9 @@ public class PlayGameController {
 
         pane.getChildren().add(gridPane);
 
-        pane.getChildren().add(printPlayerArea(guiView.playerArea));
+        playerAreaGrid = printPlayerArea(guiView.playerArea);
+
+        pane.getChildren().add(playerAreaGrid);
     }
 
     @FXML
@@ -71,7 +75,8 @@ public class PlayGameController {
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         guiView.read = "-p 1 1 42 42";
-        pane.getChildren().add(printPlayerArea(guiView.playerArea));
+        playerAreaGrid = printPlayerArea(guiView.playerArea);
+        pane.getChildren().add(playerAreaGrid);
     }
 
     /**
@@ -134,7 +139,7 @@ public class PlayGameController {
                 int actualY = coordinates % cardsMatrix.length();
                 ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                grid.add(cardImageView, actualY - minY, actualX - minX);
+                grid.add(cardImageView,actualX - minX, actualY - minY);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
