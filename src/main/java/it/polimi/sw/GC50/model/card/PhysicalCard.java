@@ -39,7 +39,9 @@ public class PhysicalCard implements Serializable {
         this.code = code;
         this.cardType = cardType;
         this.front = front;
+        this.front.setCode(this.code);
         this.back = back;
+        this.back.setCode(this.code);
     }
 
     /**

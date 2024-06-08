@@ -18,7 +18,7 @@ public class GoldCardTest {
         Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
         List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
         List<Resource> constraint = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
-        GoldCard card = new GoldCard(Color.BLUE, 3, bonus, fixedResources, corners, constraint);
+        GoldCard card = new GoldCard(cardCode, Color.BLUE, 3, bonus, fixedResources, corners, constraint);
 
         assertEquals(Color.BLUE, card.getColor());
         assertEquals(3, card.getPoints());
@@ -32,7 +32,7 @@ public class GoldCardTest {
     void testIsPlaceableInvalidPosition() {
         PlayerData playerData = new PlayerData(2);
         List<Resource> resources = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
-        GoldCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+        GoldCard goldCard = new GoldCard(cardCode, Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
 
         assertFalse(goldCard.isPlaceable(playerData, 100, 100));
     }
@@ -43,7 +43,7 @@ public class GoldCardTest {
         List<Resource> resources = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
         PlayableCard resourceCard = new PlayableCard(Color.WHITE, 0, corners);
         playerData.placeCard(resourceCard, 2, 2);
-        GoldCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+        GoldCard goldCard = new GoldCard(cardCode, Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
 
         assertFalse(goldCard.isPlaceable(playerData, 3, 3));
     }
@@ -54,7 +54,7 @@ public class GoldCardTest {
         List<Resource> resources = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
         PlayableCard resourceCard = new PlayableCard(Color.WHITE, 0, resources, corners);
         playerData.placeCard(resourceCard, 2, 2);
-        GoldCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+        GoldCard goldCard = new GoldCard(cardCode, Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
 
         assertTrue(goldCard.isPlaceable(playerData, 3, 3));
     }
@@ -63,7 +63,7 @@ public class GoldCardTest {
     void testCheckConstraintFalse() {
         PlayerData playerData = new PlayerData(2);
         List<Resource> resources = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
-        GoldCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+        GoldCard goldCard = new GoldCard(cardCode, Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
 
         assertFalse(goldCard.checkConstraint(playerData));
     }
@@ -74,7 +74,7 @@ public class GoldCardTest {
         List<Resource> resources = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
         PlayableCard resourceCard = new PlayableCard(Color.WHITE, 0, resources, corners);
         playerData.placeCard(resourceCard, 2, 2);
-        GoldCard goldCard = new GoldCard(Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
+        GoldCard goldCard = new GoldCard(cardCode, Color.RED, 3, new BlankBonus(), new ArrayList<>(), corners, resources);
 
         assertTrue(goldCard.checkConstraint(playerData));
     }
@@ -85,8 +85,8 @@ public class GoldCardTest {
         testCorners[0] = fungiCorner;
         List<Resource> constraint1 = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
         List<Resource> constraint2 = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.PLANT));
-        GoldCard card1 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
-        GoldCard card2 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
+        GoldCard card1 = new GoldCard(cardCode, Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
+        GoldCard card2 = new GoldCard(cardCode, Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
 
         assertFalse(card1.equals(card2));
         assertNotEquals(card1.hashCode(), card2.hashCode());
@@ -98,9 +98,9 @@ public class GoldCardTest {
         testCorners[0] = fungiCorner;
         List<Resource> constraint1 = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
         List<Resource> constraint2 = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.PLANT, Resource.FUNGI));
-        GoldCard card1 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
-        PlayableCard card2 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
-        GoldCard card3 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
+        GoldCard card1 = new GoldCard(cardCode, Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
+        PlayableCard card2 = new GoldCard(cardCode, Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
+        GoldCard card3 = new GoldCard(cardCode, Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
 
         assertTrue(card1.equals(card2));
         assertEquals(card1.hashCode(), card2.hashCode());

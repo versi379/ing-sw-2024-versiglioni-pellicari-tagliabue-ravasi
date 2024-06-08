@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
+import it.polimi.sw.GC50.view.PlayerDataView;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
@@ -53,6 +54,7 @@ public class GuiView extends Application implements View {
     public String starterCardCode;
 
     public List<PhysicalCard> playerHand = new ArrayList<>();
+    public PlayerDataView playerArea;
 
     public Label headerLabel;
     public Label headerLabel2;
@@ -262,7 +264,7 @@ public class GuiView extends Application implements View {
         } else {
             headerLabel2 = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
         }
-        GuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        playerArea = getGameView().getPlayerArea(nickname);
     }
 
     @Override

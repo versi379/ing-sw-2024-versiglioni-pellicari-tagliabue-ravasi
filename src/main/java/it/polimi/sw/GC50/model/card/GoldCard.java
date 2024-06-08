@@ -18,12 +18,13 @@ public class GoldCard extends PlayableCard implements Serializable {
 
     /**
      * constructs a new Gold Card instance
-     * @param color                 specify the color
-     * @param points                specify the points associated
-     * @param bonus                 specify the bonus associated
-     * @param fixedResources        specify fixed resources associated
-     * @param corners               specify the corners
-     * @param constraint            specify constraints of gold card
+     *
+     * @param color          specify the color
+     * @param points         specify the points associated
+     * @param bonus          specify the bonus associated
+     * @param fixedResources specify fixed resources associated
+     * @param corners        specify the corners
+     * @param constraint     specify constraints of gold card
      */
     public GoldCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
         super(color, points, bonus, fixedResources, corners);

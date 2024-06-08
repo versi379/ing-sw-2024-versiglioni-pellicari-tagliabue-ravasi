@@ -89,15 +89,6 @@ public class PlayableCard implements Serializable {
         this.corners = corners.clone();
     }
 
-    public PlayableCard(String cardCode, Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
-        this.code = cardCode;
-        this.color = color;
-        this.points = points;
-        this.bonus = new BlankBonus();
-        this.fixedResources = new ArrayList<>();
-        this.corners = corners.clone();
-    }
-
     /**
      * Returns color of the card
      * @return color
@@ -335,4 +326,7 @@ public class PlayableCard implements Serializable {
         System.out.println("colore: "+this.color+"ri");
     }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
 }
