@@ -124,12 +124,12 @@ public class ClientSCK implements Runnable, ServerInterface {
                 } else {
                     this.nickName = null;
                 }
-                notifySetupFase();
+                notifySetupPhase();
             }
             case NOTIFY_FREE_GAMES -> {
                 ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
                 this.freeMatch = (Map<String, List<String>>) objectMessage.getObject();
-                notifySetupFase();
+                notifySetupPhase();
             }
             case NOTIFY_GAME_CREATED, NOTIFY_GAME_JOINED -> {
                 ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
@@ -138,7 +138,7 @@ public class ClientSCK implements Runnable, ServerInterface {
                 } else {
                     this.matchName = null;
                 }
-                notifySetupFase();
+                notifySetupPhase();
             }
         }
     }
@@ -152,7 +152,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      *
      * @param messageout is the message to send to the server
      */
-    private synchronized void setMessageout(SocketMessage messageout) {
+    private synchronized void setMessageOut(SocketMessage messageout) {
         try {
             output.writeObject(messageout);
             output.flush();
@@ -213,16 +213,16 @@ public class ClientSCK implements Runnable, ServerInterface {
     }
 
     /**
-     * method that notify the method waitSetupFase
+     * method that notify the method waitSetupPhase
      */
-    private void notifySetupFase() {
+    private void notifySetupPhase() {
         unlock(1);
     }
 
     /**
-     * method that wait for notify from the method notifySetupFase
+     * method that wait for notify from the method notifySetupPhase
      */
-    private void waitSetupFase() {
+    private void waitSetupPhase() {
         lock(1);
     }
 
@@ -238,9 +238,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void run() {
-        thread1 = new Thread(() -> {
-            inputThread();
-        });
+        thread1 = new Thread(this::inputThread);
 
         thread2 = new Thread(() -> {
             while (true) {
@@ -272,8 +270,8 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public String setPlayer(String nickname) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(nickname), LobbyCommand.SET_PLAYER_NAME));
-        waitSetupFase();
+        setMessageOut(new SocketMessage(new ObjectMessage(nickname), LobbyCommand.SET_PLAYER_NAME));
+        waitSetupPhase();
         return this.nickName;
     }
 
@@ -282,7 +280,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void resetPlayer() throws GameException {
-        setMessageout(new SocketMessage(null, LobbyCommand.RESET_PLAYER));
+        setMessageOut(new SocketMessage(null, LobbyCommand.RESET_PLAYER));
     }
 
     /**
@@ -299,16 +297,12 @@ public class ClientSCK implements Runnable, ServerInterface {
     @Override
     public boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         if (matchName == null) {
-            setMessageout(new SocketMessage(new CreateGameMessage(gameId, numPlayers, endScore), LobbyCommand.CREATE_GAME));
-            waitSetupFase();
+            setMessageOut(new SocketMessage(new CreateGameMessage(gameId, numPlayers, endScore), LobbyCommand.CREATE_GAME));
+            waitSetupPhase();
         } else {
             return false;
         }
-        if (matchName != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return matchName != null;
     }
 
     /**
@@ -323,8 +317,8 @@ public class ClientSCK implements Runnable, ServerInterface {
     @Override
     public boolean joinGame(String gameId) throws GameException {
         if (matchName == null) {
-            setMessageout(new SocketMessage(new ObjectMessage(gameId), LobbyCommand.JOIN_GAME));
-            waitSetupFase();
+            setMessageOut(new SocketMessage(new ObjectMessage(gameId), LobbyCommand.JOIN_GAME));
+            waitSetupPhase();
         } else {
             return false;
         }
@@ -340,8 +334,8 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public Map<String, List<String>> getFreeGames() throws GameException {
-        setMessageout(new SocketMessage(null, LobbyCommand.LIST_FREE_GAMES));
-        waitSetupFase();
+        setMessageOut(new SocketMessage(null, LobbyCommand.LIST_FREE_GAMES));
+        waitSetupPhase();
         return freeMatch;
     }
 
@@ -353,7 +347,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void selectSecretObjective(int index) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(index), Command.CHOOSE_OBJECTIVE));
+        setMessageOut(new SocketMessage(new ObjectMessage(index), Command.CHOOSE_OBJECTIVE));
     }
 
     /**
@@ -364,7 +358,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void selectStarterFace(int face) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(face), Command.CHOOSE_STARTER_FACE));
+        setMessageOut(new SocketMessage(new ObjectMessage(face), Command.CHOOSE_STARTER_FACE));
     }
 
     /**
@@ -375,7 +369,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(placeCardRequest), Command.PLACE_CARD));
+        setMessageOut(new SocketMessage(new ObjectMessage(placeCardRequest), Command.PLACE_CARD));
     }
 
     /**
@@ -386,7 +380,7 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void drawCard(int position) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(position), Command.DRAW_CARD));
+        setMessageOut(new SocketMessage(new ObjectMessage(position), Command.DRAW_CARD));
     }
 
     /**
@@ -397,11 +391,11 @@ public class ClientSCK implements Runnable, ServerInterface {
      */
     @Override
     public void sendChatMessage(ChatMessageRequest message) throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(message), Command.CHAT));
+        setMessageOut(new SocketMessage(new ObjectMessage(message), Command.CHAT));
     }
 
     @Override
     public void leaveGame() throws GameException {
-        setMessageout(new SocketMessage(new ObjectMessage(null), Command.LEAVE));
+        setMessageOut(new SocketMessage(new ObjectMessage(null), Command.LEAVE));
     }
 }

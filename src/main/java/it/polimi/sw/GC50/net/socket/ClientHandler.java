@@ -120,6 +120,9 @@ public class ClientHandler implements Runnable, ClientInterface {
                     ChatMessageRequest chatMessageRequest = (ChatMessageRequest) message.getMessage();
                     this.sendChatMessage(chatMessageRequest);
                 }
+                case LEAVE -> {
+                    leaveGame();
+                }
             }
         } else if (message.getLobbyCommand() != null) {
             switch (message.getLobbyCommand()) {
@@ -323,6 +326,14 @@ public class ClientHandler implements Runnable, ClientInterface {
     private void sendChatMessage(ChatMessageRequest message) {
         try {
             gameController.sendChatMessage(this, message);
+        } catch (RemoteException e) {
+
+        }
+    }
+
+    private void leaveGame() {
+        try {
+            gameController.leaveGame(this);
         } catch (RemoteException e) {
 
         }
