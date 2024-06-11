@@ -37,31 +37,40 @@ public class PlayGameController {
     @FXML
     private Button placeCardButton;
 
+    public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
 
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
-        pane.getChildren().add(guiView.headerLabel);
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(20);
-        gridPane.setLayoutX(300);
-        gridPane.setLayoutY(500);
+        guiView.headerTurnLabel.setLayoutX(0);
+        guiView.headerTurnLabel.setLayoutY(0);
+        pane.getChildren().add(guiView.headerTurnLabel);
+        guiView.headerMessageLabel.setLayoutX(0);
+        guiView.headerMessageLabel.setLayoutY(100);
+        pane.getChildren().add(guiView.headerMessageLabel);
+//        GridPane gridPane = new GridPane();
+//        gridPane.setHgap(20);
+//        gridPane.setVgap(20);
+//        gridPane.setLayoutX(300);
+//        gridPane.setLayoutY(500);
+//
+//        // method printHandGrid (cosi che la stampo sia all'inizializzazione che quando voglio)
+//
+//        // Add ImageView objects to the GridPane
+//        for (int i = 0; i < 6; i++) {
+//            int row = i / 3; // 0 or 1
+//            int col = i % 3; // 0, 1, or 2
+//            if(i < 3) { // print front
+//                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
+//            } else { // print back
+//                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
+//
+//            }
+//        }
 
-        // Add ImageView objects to the GridPane
-        for (int i = 0; i < 6; i++) {
-            int row = i / 3; // 0 or 1
-            int col = i % 3; // 0, 1, or 2
-            if(i < 3) { // print front
-                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
-            } else { // print back
-                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
-
-            }
-        }
-
-        pane.getChildren().add(gridPane);
+        playerHandGrid = printPlayerHand();
+        pane.getChildren().add(playerHandGrid);
 
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
@@ -88,13 +97,7 @@ public class PlayGameController {
         guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
     }
 
-    /**
-     * Prints given playable card in GUI at given layout coordinates.
-     *
-     * @param card
-     * @param layoutX
-     * @param layoutY
-     */
+
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
         String cardCode = card.getFront().getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
@@ -108,13 +111,6 @@ public class PlayGameController {
         return cardImageView;
     }
 
-    /**
-     * Prints given playable card in GUI at given layout coordinates.
-     *
-     * @param card
-     * @param layoutX
-     * @param layoutY
-     */
     public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
         String cardCode = card.getBack().getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/backs/" + cardCode + ".jpg")));
@@ -169,6 +165,25 @@ public class PlayGameController {
         cardImageView.setLayoutX(layoutX);
         cardImageView.setLayoutY(layoutY);
         return cardImageView;
+    }
+
+    public GridPane printPlayerHand() {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setLayoutX(300);
+        gridPane.setLayoutY(500);
+        for (int i = 0; i < 6; i++) {
+            int row = i / 3; // 0 or 1
+            int col = i % 3; // 0, 1, or 2
+            if(i < 3) { // print front
+                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
+            } else { // print back
+                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
+
+            }
+        }
+        return gridPane;
     }
 
 }

@@ -57,8 +57,8 @@ public class GuiView extends Application implements View {
     public PlayerDataView playerArea;
     public Boolean playerAreaUpdated = false;
 
-    public Label headerLabel;
-    public Label headerLabel2;
+    public Label headerTurnLabel;
+    public Label headerMessageLabel;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -240,9 +240,9 @@ public class GuiView extends Application implements View {
     @Override
     public void showStart() {
         if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
-            headerLabel = new Label("Your turn:");
+            headerTurnLabel = new Label("Your turn:");
         } else {
-            headerLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
+            headerTurnLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
         }
         showCardsArea(getGameView().getNickname());
         showHand();
@@ -261,9 +261,9 @@ public class GuiView extends Application implements View {
     @Override
     public void showCardsArea(String nickname) {
         if (getGameView().getNickname().equals(nickname)) {
-            headerLabel2 = new Label("Your cards area:");
+            headerMessageLabel = new Label("Your cards area:");
         } else {
-            headerLabel2 = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
+            headerMessageLabel = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
         }
         playerArea = getGameView().getPlayerArea(nickname);
         System.out.println("playerArea aggiornata in showcardsarea");
@@ -278,7 +278,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showHand() {
-        System.out.println("mostro mano giocatore");
         playerHand = getGameView().getHand();
         TuiModelPrinter.printHand(getGameView().getHand());
     }
