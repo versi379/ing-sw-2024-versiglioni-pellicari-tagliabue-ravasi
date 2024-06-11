@@ -8,6 +8,7 @@ import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import java.util.*;
 
 public class GameView {
+    private boolean inGame;
     // GENERAL //////////////////////////////////////////////////////
     private GameStatus gameStatus;
     private PlayingPhase playingPhase;
@@ -25,6 +26,8 @@ public class GameView {
     private final Map<String, PlayerDataView> playerAreas;
 
     public GameView(String nickname) {
+        inGame = false;
+
         gameStatus = GameStatus.WAITING;
         playingPhase = PlayingPhase.PLACING;
         currentPlayer = null;
@@ -42,6 +45,8 @@ public class GameView {
     }
 
     public void clear() {
+        inGame = false;
+
         gameStatus = GameStatus.WAITING;
         playingPhase = PlayingPhase.PLACING;
         currentPlayer = null;
@@ -55,6 +60,14 @@ public class GameView {
         starterCard = null;
 
         playerAreas.clear();
+    }
+
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+
+    public boolean isInGame() {
+        return inGame;
     }
 
     public void setGameStatus(GameStatus gameStatus) {

@@ -4,7 +4,7 @@ import it.polimi.sw.GC50.net.util.PlaceCardRequest;
 
 import java.io.Serializable;
 
-public class ObjectMessage implements Message, Serializable {
+public class ObjectMessage implements Message {
 
     private Object object;
     private PlaceCardRequest placeCardRequest;

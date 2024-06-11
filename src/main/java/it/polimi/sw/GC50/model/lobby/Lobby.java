@@ -25,6 +25,7 @@ public class Lobby {
 
     /**
      * Adds a player to the game
+     *
      * @param clientInterface
      * @param nickname
      * @return nickname of the player added
@@ -39,6 +40,7 @@ public class Lobby {
 
     /**
      * Removes a player from the game
+     *
      * @param clientInterface
      */
     public synchronized void removePlayer(ClientInterface clientInterface) {
@@ -47,6 +49,7 @@ public class Lobby {
 
     /**
      * Verify if a player is present in the game
+     *
      * @param client
      * @return
      */
@@ -74,6 +77,7 @@ public class Lobby {
             return null;
         }
     }
+
     /**
      * @param client
      * @param gameId
@@ -99,25 +103,31 @@ public class Lobby {
 
     /**
      * Verify if the game is present, given GameID
+     *
      * @param gameId
      * @return
      */
     private synchronized boolean isGamePresent(String gameId) {
-        return freeGameControllers.stream()
-                .map(GameController::getGameId)
+        return getFreeGames().keySet().stream()
                 .anyMatch(gameId::equals);
     }
 
     /**
-     * Returns a list of name of free games ( all in the lobby)
+     * Returns a list of name of free games (all in the lobby)
      * and a list of players that are in each free games
+     *
      * @return
      */
     public synchronized Map<String, List<String>> getFreeGames() {
+        clearEmptyGames();
         Map<String, List<String>> freeGames = new HashMap<>();
         for (GameController gameController : freeGameControllers) {
             freeGames.put(gameController.getGameId(), gameController.getPlayerList());
         }
         return freeGames;
+    }
+
+    private void clearEmptyGames() {
+        freeGameControllers.removeIf(GameController::isEmpty);
     }
 }

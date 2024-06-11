@@ -128,12 +128,20 @@ public class TuiView implements View {
 
     @Override
     public void showPlayerJoined(String nickname) {
-        System.out.println("Player \"" + nickname + "\" joined the game");
+        if (getGameView().getNickname().equals(nickname)) {
+            System.out.println("You joined the game");
+        } else {
+            System.out.println("Player \"" + nickname + "\" joined the game");
+        }
     }
 
     @Override
     public void showPlayerLeft(String nickname) {
-        System.out.println("Player \"" + nickname + "\" left the game");
+        if (getGameView().getNickname().equals(nickname)) {
+            System.out.println("You left the game");
+        } else {
+            System.out.println("Player \"" + nickname + "\" left the game");
+        }
     }
 
     @Override
@@ -282,6 +290,7 @@ public class TuiView implements View {
         System.out.println("Draw card -> \"-draw_card\", \"-d\" [index]");
         System.out.println("Send message in chat -> \"-chat\", \"-c\" [message]");
         System.out.println("Send private message in chat -> \"-chat_private\", \"-cp\" [receiver] [message]");
+        System.out.println("Leave game -> \"-leave\", \"-l\"");
         System.out.println("Help -> \"-help\", \"-h\"");
         System.out.println();
     }
@@ -305,7 +314,9 @@ public class TuiView implements View {
     @Override
     public void listen() {
         Pair<Command, String[]> command = readCommand();
-        client.addCommand(command.getKey(), command.getValue());
+        if (getGameView().isInGame()) {
+            client.addCommand(command.getKey(), command.getValue());
+        }
     }
 
     public Pair<Command, String[]> readCommand() {
@@ -374,6 +385,15 @@ public class TuiView implements View {
                 args[0] = getFirstWord(read);
                 args[1] = removeFirstWord(read);
                 return new Pair<>(Command.CHAT_PRIVATE, args);
+            }
+
+            case "-leave", "-l" -> {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
+                    return new Pair<>(Command.LEAVE, null);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
+                }
             }
 
             case "-help", "-h" -> {

@@ -1,20 +1,15 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.game.DrawingPosition;
-import it.polimi.sw.GC50.model.game.GameStatus;
-import it.polimi.sw.GC50.model.game.PlayingPhase;
-
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.util.*;
 import it.polimi.sw.GC50.view.Command;
-import it.polimi.sw.GC50.view.View;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -116,9 +111,9 @@ public class ClientSCK implements Runnable, ServerInterface {
     private void switchMex(SocketMessage message) {
         switch (message.getNotify()) {
             case NOTIFY_PLAYER_JOINED_GAME, GET_MODEL_RESPONSE, REQUEST_NOT_AVAILABLE, NOTIFY_GAME_ENDED,
-                 GET_CHAT_MODEL_RESPONSE, NOTIFY_NEXT_TURN, NOTIFY_CHAT_MESSAGE, NOTIFY_CARD_DRAWN,
-                 NOTIFY_GAME_STARTED, NOTIFY_PLAYER_READY, NOTIFY_CARD_PLACED, NOTIFY_GAME_SETUP,
-                 NOTIFY_PLAYER_LEFT_GAME, NOTIFY_ERROR -> {
+                    GET_CHAT_MODEL_RESPONSE, NOTIFY_NEXT_TURN, NOTIFY_CHAT_MESSAGE, NOTIFY_CARD_DRAWN,
+                    NOTIFY_GAME_STARTED, NOTIFY_PLAYER_READY, NOTIFY_CARD_PLACED, NOTIFY_GAME_SETUP,
+                    NOTIFY_PLAYER_LEFT_GAME, NOTIFY_ERROR -> {
                 client.update(message.getNotify(), message.getMessage());
             }
             case NOTIFY_NAME_SET -> {
@@ -333,11 +328,7 @@ public class ClientSCK implements Runnable, ServerInterface {
         } else {
             return false;
         }
-        if (matchName != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return matchName != null;
     }
 
     /**
@@ -407,5 +398,10 @@ public class ClientSCK implements Runnable, ServerInterface {
     @Override
     public void sendChatMessage(ChatMessageRequest message) throws GameException {
         setMessageout(new SocketMessage(new ObjectMessage(message), Command.CHAT));
+    }
+
+    @Override
+    public void leaveGame() throws GameException {
+        setMessageout(new SocketMessage(new ObjectMessage(null), Command.LEAVE));
     }
 }

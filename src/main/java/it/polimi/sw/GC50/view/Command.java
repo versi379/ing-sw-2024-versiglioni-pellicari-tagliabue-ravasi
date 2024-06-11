@@ -7,6 +7,7 @@ public enum Command {
     DRAW_CARD,
     CHAT,
     CHAT_PRIVATE,
+    LEAVE,
     HELP,
     NOT_A_COMMAND
 }

@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.net.util;
 
-import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
@@ -10,7 +9,6 @@ import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
-import it.polimi.sw.GC50.view.ViewType;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -28,28 +26,30 @@ public class Client {
     private final View view;
     private GameView gameView;
 
-    public Client(String serverIp, String serverPort, ConnectionType connection, View view) throws RemoteException {
+    public Client(String serverIp, String serverPort, ConnectionType connection, View view) {
+        ServerInterface serverInterface;
         switch (connection) {
             case RMI -> {
-                this.serverInterface = new ClientRmi(this, serverIp, serverPort);
+                try {
+                    serverInterface = new ClientRmi(this, serverIp, serverPort);
+                } catch (RemoteException e) {
+                    serverInterface = null;
+                }
             }
             case SOCKET -> {
-                ClientSCK clientSCK = null;
                 try {
-                    clientSCK = new ClientSCK(this, serverPort, serverIp);
-                    Thread clientThread = new Thread(clientSCK);
+                    serverInterface = new ClientSCK(this, serverPort, serverIp);
+                    Thread clientThread = new Thread((ClientSCK) serverInterface);
                     clientThread.start();
-
                 } catch (IOException e) {
-                    System.err.println(e.getMessage());
+                    serverInterface = null;
                 }
-                System.out.println("ClientSCK");
-                this.serverInterface = clientSCK;
             }
             default -> {
-                this.serverInterface = null;
+                serverInterface = null;
             }
         }
+        this.serverInterface = serverInterface;
         this.view = view;
         view.setClient(this);
     }
@@ -59,10 +59,8 @@ public class Client {
         try {
             connect();
             lobby();
-        } catch (GameException | InterruptedException e) {
+        } catch (GameException e) {
             System.err.println(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -71,20 +69,19 @@ public class Client {
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void lobby() throws Exception {
+    private void lobby() throws GameException {
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
 
         while (true) {
-            boolean inGame = false;
+            gameView.clear();
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    System.out.println();
                     if (view.getClass().getSimpleName().equals("GuiView")) {
                         ((GuiView) view).waitGameParams();
                     }
-                    inGame = createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore());
+                    gameView.setInGame(createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore()));
                 }
 
                 case 2 -> {
@@ -92,9 +89,9 @@ public class Client {
                     view.showFreeGames(freeGames);
                     if (!freeGames.isEmpty()) {
                         if (view.getClass().getSimpleName().equals("GuiView")) {
-                            inGame = joinGame(((GuiView) view).selectedJoinGame());
+                            gameView.setInGame(joinGame(((GuiView) view).selectedJoinGame()));
                         } else {
-                            inGame = joinGame(view.selectGameName());
+                            gameView.setInGame(joinGame(view.selectGameName()));
                         }
                     }
                 }
@@ -105,8 +102,7 @@ public class Client {
                     return;
                 }
             }
-            if (inGame) {
-                gameView.clear();
+            if (gameView.isInGame()) {
                 listenCommands();
                 waitingPhase();
             } else {
@@ -143,7 +139,7 @@ public class Client {
     // VIEW LISTENER ///////////////////////////////////////////////////////////////////////////////////////////////////
     private void listenCommands() {
         new Thread(() -> {
-            while (!gameView.getGameStatus().equals(GameStatus.ENDED)) {
+            while (gameView.isInGame()) {
                 view.listen();
             }
         }).start();
@@ -185,6 +181,9 @@ public class Client {
             case CHAT_PRIVATE -> {
                 sendPrivateChatMessage(args[0], args[1]);
             }
+            case LEAVE -> {
+                leaveGame();
+            }
             case HELP -> {
                 view.showHelp();
             }
@@ -195,15 +194,15 @@ public class Client {
     }
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void waitingPhase() throws Exception {
+    private void waitingPhase() throws GameException {
 
-        System.out.println("waiting phase entered");
+        System.err.println("> waiting phase entered");
 
         if (!view.getClass().getSimpleName().equals("GuiView")) {
             view.showWaitPlayers();
         }
 
-        while (gameView.getGameStatus().equals(GameStatus.WAITING)) {
+        while (gameView.getGameStatus().equals(GameStatus.WAITING) && gameView.isInGame()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -211,34 +210,37 @@ public class Client {
             }
         }
 
-        if (view.getClass().getSimpleName().equals("GuiView")) {
-            Platform.runLater(() -> {
-                Stage stage = ((GuiView) view).getPrimaryStage();
-                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
-                Parent gameRoot = null;
-                try {
-                    gameRoot = gameLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Scene gameScene = new Scene(gameRoot);
-                gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-                stage.setScene(gameScene);
-            });
-        }
+        if (gameView.isInGame()) {
 
-        System.out.println("setup completed -> min num of players reached!");
-        setupPhase();
+            if (view.getClass().getSimpleName().equals("GuiView")) {
+                Platform.runLater(() -> {
+                    Stage stage = ((GuiView) view).getPrimaryStage();
+                    FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
+                    Parent gameRoot = null;
+                    try {
+                        gameRoot = gameLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Scene gameScene = new Scene(gameRoot);
+                    gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+                    stage.setScene(gameScene);
+                });
+            }
+
+            System.err.println("> setup completed -> min num of players reached!");
+            setupPhase();
+        }
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void setupPhase() throws GameException {
 
-        System.out.println("setup phase entered");
+        System.err.println("> setup phase entered");
 
         view.showSetup();
 
-        while (gameView.getGameStatus().equals(GameStatus.SETUP)) {
+        while (gameView.getGameStatus().equals(GameStatus.SETUP) && gameView.isInGame()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -246,9 +248,12 @@ public class Client {
             }
         }
 
-        System.out.println("setup finished");
+        if (gameView.isInGame()) {
 
-        playingPhase();
+            System.err.println("> setup finished");
+
+            playingPhase();
+        }
     }
 
     private void selectSecretObjective(int index) throws GameException {
@@ -279,13 +284,15 @@ public class Client {
             });
         }
 
-        while (gameView.getGameStatus().equals(GameStatus.PLAYING)) {
+        while (gameView.getGameStatus().equals(GameStatus.PLAYING) && gameView.isInGame()) {
             playTurn();
         }
-        endPhase();
+
+        if (gameView.isInGame()) {
+            endPhase();
+        }
     }
 
-    // da qui V
     private void playTurn() throws GameException {
         view.showCurrentPlayer();
 
@@ -293,7 +300,7 @@ public class Client {
             view.showPlacingPhase();
         }
 
-        while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
+        while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING) && gameView.isInGame()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -301,15 +308,18 @@ public class Client {
             }
         }
 
-        if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
-            view.showDrawingPhase();
-        }
+        if (gameView.isInGame()) {
 
-        while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING)) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new GameException("Interruption error", e.getCause());
+            if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
+                view.showDrawingPhase();
+            }
+
+            while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING) && gameView.isInGame()) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    throw new GameException("Interruption error", e.getCause());
+                }
             }
         }
     }
@@ -333,6 +343,10 @@ public class Client {
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void endPhase() {
         view.showEnd();
+    }
+
+    private void leaveGame() throws GameException {
+        serverInterface.leaveGame();
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,6 +374,9 @@ public class Client {
                 gameView.removePlayerArea(player);
 
                 view.showPlayerLeft(player);
+                if (gameView.getNickname().equals(player)) {
+                    gameView.clear();
+                }
             }
 
             case NOTIFY_GAME_SETUP -> {

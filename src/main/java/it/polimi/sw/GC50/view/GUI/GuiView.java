@@ -114,7 +114,7 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public String selectName() throws InterruptedException {
+    public String selectName() {
         while(userController == null) {
             System.out.println("Attendo caricamento user login page.");
         }

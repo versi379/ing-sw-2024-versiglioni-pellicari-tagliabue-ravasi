@@ -3,7 +3,7 @@ package it.polimi.sw.GC50.net.Messages;
 import java.io.Serializable;
 import java.util.Map;
 
-public class CreateGameMessage implements Message, Serializable{
+public class CreateGameMessage implements Message {
     private String gameId;
     private int numPlayers;
     private int endScore;

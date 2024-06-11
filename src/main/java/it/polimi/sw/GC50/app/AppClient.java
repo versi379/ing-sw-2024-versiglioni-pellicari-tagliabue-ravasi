@@ -69,11 +69,7 @@ public class AppClient {
                 serverPort = "1099";
             }
         }
-        try {
-            new Client(serverIp, serverPort, connectionType, view).start();
-        } catch (Exception e) {
-            System.err.println("Error in connection");
-        }
+        new Client(serverIp, serverPort, connectionType, view).start();
         System.err.println("Bye");
     }
 
@@ -141,20 +137,20 @@ public class AppClient {
     }
 
     private static void launchGui(GuiView view) {
-            try {
-                // Ensure JavaFX is initialized
-                Platform.startup(() -> {
-                    try {
-                        // Launch the JavaFX Application
-                        Stage stage = new Stage();
-                        view.start(stage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            // Ensure JavaFX is initialized
+            Platform.startup(() -> {
+                try {
+                    // Launch the JavaFX Application
+                    Stage stage = new Stage();
+                    view.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static View getView() {

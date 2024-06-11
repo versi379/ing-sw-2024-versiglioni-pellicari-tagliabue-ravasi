@@ -44,6 +44,10 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         return isWaiting();
     }
 
+    public synchronized boolean isEmpty() {
+        return playerMap.isEmpty();
+    }
+
     // PLAYERS MANAGEMENT //////////////////////////////////////////////////////////////////////////////////////////////
     public synchronized boolean addPlayer(ClientInterface clientInterface, String nickname) {
         if (isFree()) {
@@ -61,6 +65,7 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             Player player = playerMap.get(clientInterface);
             game.removePlayer(player);
             game.removeObserver(clientInterface);
+            playerMap.remove(clientInterface);
         }
     }
 
@@ -71,8 +76,6 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             throw new RemoteException();
         }
     }
-
-    // RECEIVE REQUESTS  ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // UPDATE MODEL ////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
@@ -178,6 +181,11 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                 game.error(player, "Invalid receiver");
             }
         }
+    }
+
+    @Override
+    public synchronized void leaveGame(ClientInterface clientInterface) throws RemoteException {
+        removePlayer(clientInterface);
     }
 
     // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
