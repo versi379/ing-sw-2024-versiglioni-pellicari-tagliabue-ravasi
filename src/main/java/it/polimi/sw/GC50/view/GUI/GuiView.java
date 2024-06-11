@@ -231,9 +231,9 @@ public class GuiView extends Application implements View {
 
     private void showStarterCardSelection() {
         PhysicalCard starterCard = getGameView().getStarterCard();
-        System.out.println(starterCard.getCode());
+        System.out.println(starterCard.getFront().getCode());
         TuiModelPrinter.printStarterCard(starterCard);
-        starterCardCode = starterCard.getCode();
+        starterCardCode = starterCard.getFront().getCode();
     }
 
     @Override

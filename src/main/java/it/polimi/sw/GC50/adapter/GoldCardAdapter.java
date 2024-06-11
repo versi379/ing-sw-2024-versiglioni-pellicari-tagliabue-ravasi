@@ -14,6 +14,7 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
     @Override
     public void write(JsonWriter out, GoldCard card) throws IOException {
         out.beginObject();
+        out.name("code").value(card.getCode());
         out.name("color").value(card.getColor().toString());
         out.name("points").value(card.getPoints());
         out.name("bonus");
@@ -44,6 +45,7 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
     @Override
     public GoldCard read(JsonReader in) throws IOException {
         in.beginObject();
+        String code = null;
         Color color = null;
         int points = 0;
         Bonus bonus = null;
@@ -52,6 +54,9 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
         Corner[] corners = new Corner[4];
         while (in.hasNext()) {
             switch (in.nextName()) {
+                case "code":
+                    code = in.nextString();
+                    break;
                 case "color":
                     color = Color.valueOf(in.nextString());
                     break;
@@ -90,7 +95,7 @@ public class GoldCardAdapter extends TypeAdapter<GoldCard> {
             }
         }
         in.endObject();
-        return new GoldCard(color, points, bonus, fixedResources, corners, constraint);
+        return new GoldCard(code, color, points, bonus, fixedResources, corners, constraint);
     }
 
 }

@@ -14,6 +14,7 @@ import static java.util.stream.Stream.concat;
  * Represents either front or back of a game card
  */
 public class PlayableCard implements Serializable {
+    private final String code;
 
     private final Color color;
 
@@ -41,7 +42,15 @@ public class PlayableCard implements Serializable {
      */
     private final Corner[] corners;
 
-    private String code;
+    public PlayableCard(String code, Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
+        this.code = code;
+
+        this.color = color;
+        this.points = points;
+        this.bonus = bonus;
+        this.fixedResources = fixedResources;
+        this.corners = corners.clone();
+    }
 
     /**
      * Constructor for card instance with bonus
@@ -52,6 +61,8 @@ public class PlayableCard implements Serializable {
      * @param corners           represents card's corners
      */
     public PlayableCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
+        code = "-1";
+
         this.color = color;
         this.points = points;
         this.bonus = bonus;
@@ -68,6 +79,8 @@ public class PlayableCard implements Serializable {
            * @param corners           represents card's corners
      */
     public PlayableCard(Color color, int points, List<Resource> fixedResources, Corner[] corners) {
+        code = "-1";
+
         this.color = color;
         this.points = points;
         this.bonus = new BlankBonus();
@@ -82,11 +95,17 @@ public class PlayableCard implements Serializable {
      *              @param corners           represents card's corners
      */
     public PlayableCard(Color color, int points, Corner[] corners) {
+        code = "-1";
+
         this.color = color;
         this.points = points;
         this.bonus = new BlankBonus();
         this.fixedResources = new ArrayList<>();
         this.corners = corners.clone();
+    }
+
+    public String getCode() {
+        return code;
     }
 
     /**
@@ -156,10 +175,6 @@ public class PlayableCard implements Serializable {
      */
     public Corner getSeCorner() {
         return corners[3];
-    }
-
-    public String getCode() {
-        return code;
     }
 
     /**
@@ -323,10 +338,6 @@ public class PlayableCard implements Serializable {
     }
 
     public void toStringTest() {
-        System.out.println("colore: "+this.color+"ri");
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+        System.out.println("colore: " + this.color + "ri");
     }
 }

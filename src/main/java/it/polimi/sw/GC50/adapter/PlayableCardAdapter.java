@@ -14,6 +14,7 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
     @Override
     public void write(JsonWriter out, PlayableCard card) throws IOException {
         out.beginObject();
+        out.name("code").value(card.getCode());
         out.name("color").value(card.getColor().toString());
         out.name("points").value(card.getPoints());
         out.name("bonus");
@@ -42,6 +43,7 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
     @Override
     public PlayableCard read(JsonReader in) throws IOException {
         in.beginObject();
+        String code = null;
         Color color = null;
         int points = 0;
         Bonus bonus = null;
@@ -49,6 +51,9 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
         Corner[] corners = new Corner[4];
         while (in.hasNext()) {
             switch (in.nextName()) {
+                case "code":
+                    code = in.nextString();
+                    break;
                 case "color":
                     color = Color.valueOf(in.nextString());
                     break;
@@ -79,7 +84,7 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
             }
         }
         in.endObject();
-        return new PlayableCard(color, points, bonus, fixedResources, corners);
+        return new PlayableCard(code, color, points, bonus, fixedResources, corners);
     }
 
 }

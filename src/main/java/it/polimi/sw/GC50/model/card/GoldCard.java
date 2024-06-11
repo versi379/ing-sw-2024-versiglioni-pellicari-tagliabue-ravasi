@@ -16,6 +16,20 @@ public class GoldCard extends PlayableCard implements Serializable {
      */
     private final Map<Resource, Integer> constraint;
 
+    public GoldCard(String code, Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners, List<Resource> constraint) {
+        super(code, color, points, bonus, fixedResources, corners);
+
+        this.constraint = new EnumMap<>(Resource.class);
+        for (Resource resource : Resource.values()) {
+            this.constraint.put(resource, 0);
+        }
+        if (constraint != null) {
+            for (Resource resource : constraint) {
+                this.constraint.replace(resource, (this.constraint.get(resource)) + 1);
+            }
+        }
+    }
+
     /**
      * constructs a new Gold Card instance
      *

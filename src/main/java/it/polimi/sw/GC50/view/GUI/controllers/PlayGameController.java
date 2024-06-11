@@ -91,7 +91,7 @@ public class PlayGameController {
      * @param layoutY
      */
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
-        String cardCode = card.getCode();
+        String cardCode = card.getFront().getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
@@ -111,7 +111,7 @@ public class PlayGameController {
      * @param layoutY
      */
     public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
-        String cardCode = card.getCode();
+        String cardCode = card.getBack().getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/backs/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
