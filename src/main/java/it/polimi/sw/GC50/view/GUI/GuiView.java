@@ -259,14 +259,23 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCardsArea(String nickname) {
-        System.out.println("mosto player area");
         if (getGameView().getNickname().equals(nickname)) {
             headerLabel2 = new Label("Your cards area:");
         } else {
             headerLabel2 = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
         }
         playerArea = getGameView().getPlayerArea(nickname);
-        TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        System.out.println("playerArea aggiornata in showcardsarea");
+        if (playGameController != null) {
+            playGameController.playerAreaGrid = playGameController.printPlayerArea(playerArea);
+            playGameController.pane.getChildren().add(playGameController.playerAreaGrid);
+        }
+        // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+
+    }
+
+    public void updatePlayerArea() {
+        playerArea = getGameView().getPlayerArea(getGameView().getNickname());
     }
 
     @Override
@@ -332,7 +341,7 @@ public class GuiView extends Application implements View {
                     }
                 }
                 if (read.isEmpty()) {
-                    playerArea = getGameView().getPlayerArea(getGameView().getNickname());
+//                    playerArea = getGameView().getPlayerArea(getGameView().getNickname());
                     return new Pair<>(Command.PLACE_CARD, args);
                 } else {
                     return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
@@ -342,6 +351,7 @@ public class GuiView extends Application implements View {
             case "-draw_card", "-d" -> {
                 System.out.println("Draw card triggered");
                 String arg = removeFirstWord(read);
+                read = "";
                 try {
                     return new Pair<>(Command.DRAW_CARD,
                             new String[]{String.valueOf(Integer.parseInt(arg) - 1)});

@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
+import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

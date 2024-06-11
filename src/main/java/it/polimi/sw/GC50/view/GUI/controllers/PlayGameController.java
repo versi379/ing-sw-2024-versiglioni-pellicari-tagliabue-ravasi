@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.PlayerDataView;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -36,7 +37,7 @@ public class PlayGameController {
     @FXML
     private Button placeCardButton;
 
-    private GridPane playerAreaGrid;
+    public GridPane playerAreaGrid;
 
     @FXML
     public void initialize() {
@@ -62,24 +63,21 @@ public class PlayGameController {
 
         pane.getChildren().add(gridPane);
 
-        System.out.println("test   "+guiView.playerArea.getCardsMatrix().get(42,42));
-
         playerAreaGrid = printPlayerArea(guiView.playerArea);
-
         pane.getChildren().add(playerAreaGrid);
     }
 
     @FXML
     void handleDrawCardButton(ActionEvent event) {
-
+        guiView.read = "-d 3";
     }
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
+        pane.getChildren().remove(playerAreaGrid);
         guiView.read = "-p 1 1 42 42";
-
+        System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         playerAreaGrid = printPlayerArea(guiView.playerArea);
-        System.out.println("test   "+guiView.playerArea.getCardsMatrix().get(42,42));
         pane.getChildren().add(playerAreaGrid);
     }
 
