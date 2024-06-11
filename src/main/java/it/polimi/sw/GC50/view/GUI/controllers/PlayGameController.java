@@ -72,6 +72,7 @@ public class PlayGameController {
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         guiView.read = "-d 3";
+        guiView.playerAreaUpdated = false;
     }
 
     @FXML
