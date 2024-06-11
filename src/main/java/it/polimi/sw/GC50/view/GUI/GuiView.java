@@ -55,6 +55,7 @@ public class GuiView extends Application implements View {
 
     public List<PhysicalCard> playerHand = new ArrayList<>();
     public PlayerDataView playerArea;
+    public Boolean playerAreaUpdated = false;
 
     public Label headerLabel;
     public Label headerLabel2;
@@ -266,16 +267,13 @@ public class GuiView extends Application implements View {
         }
         playerArea = getGameView().getPlayerArea(nickname);
         System.out.println("playerArea aggiornata in showcardsarea");
-        if (playGameController != null) {
-            playGameController.playerAreaGrid = playGameController.printPlayerArea(playerArea);
-            playGameController.pane.getChildren().add(playGameController.playerAreaGrid);
-        }
+        playerAreaUpdated = true;
         // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
 
     }
 
-    public void updatePlayerArea() {
-        playerArea = getGameView().getPlayerArea(getGameView().getNickname());
+    @Override
+    public void showScores() {
     }
 
     @Override
@@ -421,10 +419,6 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showScores() {
-    }
-
-    @Override
     public void showEnd() {
 
     }
@@ -464,12 +458,6 @@ public class GuiView extends Application implements View {
 
     }
 
-    public void showUserView() throws Exception{
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
-        Parent userRoot = userLoader.load();
-        Scene userScene = new Scene(userRoot);
-        primaryStage.setScene(userScene);
-    }
 
     public NetController getNetController() {
         return netController;

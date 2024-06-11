@@ -65,6 +65,8 @@ public class PlayGameController {
 
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
+
+        guiView.playerAreaUpdated = false;
     }
 
     @FXML
@@ -76,9 +78,13 @@ public class PlayGameController {
     void handlePlaceCardButton(ActionEvent event) {
         pane.getChildren().remove(playerAreaGrid);
         guiView.read = "-p 1 1 42 42";
+        while(!guiView.playerAreaUpdated) {
+            System.out.println("aspetta");
+        }
         System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
+        guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
     }
 
     /**
