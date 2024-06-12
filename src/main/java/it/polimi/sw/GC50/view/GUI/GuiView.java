@@ -60,6 +60,8 @@ public class GuiView extends Application implements View {
 
     public Label headerTurnLabel;
     public Label headerMessageLabel;
+    public Boolean headerTurnUpdated = false;
+    public Boolean headerMessageUpdated = false;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -251,7 +253,13 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCurrentPlayer() {
-
+        System.out.println("AGGIORNO GRAFICA TURNO GIOCATORE");
+        if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
+            headerTurnLabel = new Label("Your turn:");
+        } else {
+            headerTurnLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
+        }
+        headerTurnUpdated = true;
     }
 
     @Override

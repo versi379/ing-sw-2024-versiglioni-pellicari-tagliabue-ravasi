@@ -79,16 +79,21 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
     }
 
+    // NB tutto quello che metto dentro questo metodo viene eseguito dopo che l'utente di fatto
+    // termina il proprio turno, visto che pesca una carta (dopo averne piazzata una)
+    // quindi tutti i trigger collegati a NOTIFY NECT TURN vanno messi qui
+    // e.g. label che cambiano
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         guiView.read = "-d 3";
         guiView.playerAreaUpdated = false;
         // attendo che player hand sia updated per ristamparla
         // dopo aver pescato una carta devo aggiornare la hand (con la carta pescata)
-        while (!guiView.playerHandUpdated) {
+        while (!guiView.playerHandUpdated || !guiView.headerTurnUpdated || !guiView.headerMessageUpdated) {
             System.out.println("wait");
         }
         guiView.playerHandUpdated = false;
+
     }
 
     @FXML
