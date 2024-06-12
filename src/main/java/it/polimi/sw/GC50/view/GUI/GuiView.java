@@ -63,8 +63,6 @@ public class GuiView extends Application implements View {
     public Boolean headerTurnUpdated = false;
     public Boolean headerMessageUpdated = false;
 
-    public Boolean isPlacingPhase = false;
-
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
@@ -250,12 +248,19 @@ public class GuiView extends Application implements View {
     @Override
     public void showCurrentPlayer() {
         System.out.println("AGGIORNO GRAFICA TURNO GIOCATORE");
-        if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
-            headerTurnLabel = new Label("Your turn:");
+        if (playGameController == null) {
+            if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
+                headerTurnLabel = new Label("Your turn:");
+            } else {
+                headerTurnLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
+            }
         } else {
-            headerTurnLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
+            if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
+                headerTurnLabel.setText("Your turn:");
+            } else {
+                headerTurnLabel.setText("Player " + getGameView().getCurrentPlayer() + " turn:");
+            }
         }
-        headerTurnUpdated = true;
     }
 
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
@@ -266,13 +271,20 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCardsArea(String nickname) {
-        System.out.println("giocatore corrente "+ getGameView().getNickname());
-        if (getGameView().getNickname().equals(nickname)) {
-            headerMessageLabel = new Label("Your cards area:");
+        if (playGameController == null) {
+            if (getGameView().getNickname().equals(nickname)) {
+                headerMessageLabel = new Label("Your cards area:");
+            } else {
+                headerMessageLabel = new Label("Player " + getGameView().getCurrentPlayer() + " cards area:");
+            }
         } else {
-            headerMessageLabel = new Label("Player " + getGameView().getCurrentPlayer() + " cards area:");
+            if (getGameView().getNickname().equals(nickname)) {
+                headerMessageLabel.setText("Your cards area:");
+            } else {
+                headerMessageLabel.setText("Player " + getGameView().getCurrentPlayer() + " cards area:");
+            }
         }
-        headerMessageUpdated = true;
+
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
         // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
@@ -284,6 +296,8 @@ public class GuiView extends Application implements View {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
         TuiModelPrinter.printHand(getGameView().getHand());
+        headerTurnUpdated = true;
+        headerMessageUpdated = true;
     }
 
     @Override

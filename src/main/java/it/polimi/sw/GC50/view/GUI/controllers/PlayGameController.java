@@ -73,12 +73,16 @@ public class PlayGameController {
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         guiView.read = "-d 3";
-        while (!guiView.playerHandUpdated) {
+        pane.getChildren().remove(guiView.headerTurnLabel);
+        pane.getChildren().remove(guiView.headerMessageLabel);
+        while (!guiView.playerHandUpdated || !guiView.headerTurnUpdated || !guiView.headerMessageUpdated) {
             System.out.println("wait");
         }
         System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
         playerHandGrid = printPlayerHand();
         pane.getChildren().add(playerHandGrid);
+        pane.getChildren().add(guiView.headerTurnLabel);
+        pane.getChildren().add(guiView.headerMessageLabel);
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
         guiView.headerTurnUpdated = false;
