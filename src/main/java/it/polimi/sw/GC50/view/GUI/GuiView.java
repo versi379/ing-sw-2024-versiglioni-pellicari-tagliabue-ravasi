@@ -63,6 +63,8 @@ public class GuiView extends Application implements View {
     public Boolean headerTurnUpdated = false;
     public Boolean headerMessageUpdated = false;
 
+    public Boolean isPlacingPhase = false;
+
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
@@ -256,9 +258,10 @@ public class GuiView extends Application implements View {
         headerTurnUpdated = true;
     }
 
+    // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
-
+        isPlacingPhase = true;
     }
 
     @Override
@@ -267,7 +270,7 @@ public class GuiView extends Application implements View {
         if (getGameView().getNickname().equals(nickname)) {
             headerMessageLabel = new Label("Your cards area:");
         } else {
-            headerMessageLabel = new Label("Player \"" + getGameView().getNickname() + "\" cards area:");
+            headerMessageLabel = new Label("Player " + getGameView().getCurrentPlayer() + " cards area:");
         }
         headerMessageUpdated = true;
         playerArea = getGameView().getPlayerArea(nickname);
@@ -277,15 +280,20 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showScores() {
+    public void showHand() {
+        playerHand = getGameView().getHand();
+        playerHandUpdated = true;
+        TuiModelPrinter.printHand(getGameView().getHand());
+    }
+
+    @Override
+    public void showDecks() {
 
     }
 
     @Override
-    public void showHand() {
-        playerHand = getGameView().getHand();
-        playerHandUpdated = true;
-        // TuiModelPrinter.printHand(getGameView().getHand()); (solo per tui -> test)
+    public void showScores() {
+
     }
 
     @Override
@@ -416,11 +424,6 @@ public class GuiView extends Application implements View {
         } else {
             return "";
         }
-    }
-
-    @Override
-    public void showDecks() {
-
     }
 
     @Override

@@ -422,8 +422,7 @@ public class Client {
                 }
 
                 view.showCardsArea(player);
-                // update card hand (?)
-                view.showHand();
+                // view.showHand();
                 view.showScores();
             }
 
@@ -434,6 +433,7 @@ public class Client {
                     gameView.setHand((decksUpdateMex.getHand()));
                 }
 
+                view.showHand();
                 view.showDecks();
             }
 
