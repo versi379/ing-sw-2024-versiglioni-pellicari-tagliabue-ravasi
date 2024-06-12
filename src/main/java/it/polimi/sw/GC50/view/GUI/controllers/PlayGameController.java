@@ -76,18 +76,26 @@ public class PlayGameController {
         pane.getChildren().add(playerAreaGrid);
 
         guiView.playerAreaUpdated = false;
+        guiView.playerHandUpdated = false;
     }
 
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         guiView.read = "-d 3";
         guiView.playerAreaUpdated = false;
+        // attendo che player hand sia updated per ristamparla
+        // dopo aver pescato una carta devo aggiornare la hand (con la carta pescata)
+        while (!guiView.playerHandUpdated) {
+            System.out.println("wait");
+        }
+        guiView.playerHandUpdated = false;
     }
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         pane.getChildren().remove(playerAreaGrid);
         guiView.read = "-p 1 1 42 42";
+        // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
             System.out.println("aspetta");
         }

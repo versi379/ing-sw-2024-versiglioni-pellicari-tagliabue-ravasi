@@ -56,6 +56,7 @@ public class GuiView extends Application implements View {
     public List<PhysicalCard> playerHand = new ArrayList<>();
     public PlayerDataView playerArea;
     public Boolean playerAreaUpdated = false;
+    public Boolean playerHandUpdated = false;
 
     public Label headerTurnLabel;
     public Label headerMessageLabel;
@@ -266,7 +267,6 @@ public class GuiView extends Application implements View {
             headerMessageLabel = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
         }
         playerArea = getGameView().getPlayerArea(nickname);
-        System.out.println("playerArea aggiornata in showcardsarea");
         playerAreaUpdated = true;
         // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
 
@@ -274,12 +274,14 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showScores() {
+
     }
 
     @Override
     public void showHand() {
         playerHand = getGameView().getHand();
-        TuiModelPrinter.printHand(getGameView().getHand());
+        playerHandUpdated = true;
+        // TuiModelPrinter.printHand(getGameView().getHand()); (solo per tui -> test)
     }
 
     @Override

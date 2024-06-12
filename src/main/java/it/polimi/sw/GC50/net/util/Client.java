@@ -420,6 +420,8 @@ public class Client {
                 }
 
                 view.showCardsArea(player);
+                // update card hand (?)
+                view.showHand();
                 view.showScores();
             }
 
