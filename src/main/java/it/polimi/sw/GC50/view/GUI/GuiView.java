@@ -242,13 +242,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showStart() {
-        if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
-            headerTurnLabel = new Label("Your turn:");
-        } else {
-            headerTurnLabel = new Label("Player " + getGameView().getCurrentPlayer() + " turn:");
-        }
-        showCardsArea(getGameView().getNickname());
-        showHand();
+
     }
 
     @Override

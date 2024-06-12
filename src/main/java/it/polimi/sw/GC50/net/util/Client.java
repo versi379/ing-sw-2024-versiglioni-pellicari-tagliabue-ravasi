@@ -270,6 +270,8 @@ public class Client {
         view.showStart();
 
         if (view.getClass().getSimpleName().equals("GuiView")) {
+            view.showCardsArea(getGameView().getNickname());
+            view.showHand();
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
                 FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));

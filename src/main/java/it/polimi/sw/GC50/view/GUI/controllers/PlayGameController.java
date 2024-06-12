@@ -53,25 +53,6 @@ public class PlayGameController {
         guiView.headerMessageLabel.setPrefWidth(200);
         guiView.headerMessageLabel.setPrefHeight(25);
         pane.getChildren().add(guiView.headerMessageLabel);
-//        GridPane gridPane = new GridPane();
-//        gridPane.setHgap(20);
-//        gridPane.setVgap(20);
-//        gridPane.setLayoutX(300);
-//        gridPane.setLayoutY(500);
-//
-//        // method printHandGrid (cosi che la stampo sia all'inizializzazione che quando voglio)
-//
-//        // Add ImageView objects to the GridPane
-//        for (int i = 0; i < 6; i++) {
-//            int row = i / 3; // 0 or 1
-//            int col = i % 3; // 0, 1, or 2
-//            if(i < 3) { // print front
-//                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
-//            } else { // print back
-//                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
-//
-//            }
-//        }
 
         playerHandGrid = printPlayerHand();
         pane.getChildren().add(playerHandGrid);
@@ -95,9 +76,15 @@ public class PlayGameController {
         guiView.playerAreaUpdated = false;
         // attendo che player hand sia updated per ristamparla
         // dopo aver pescato una carta devo aggiornare la hand (con la carta pescata)
+        System.out.println("player hand updated "+ guiView.playerHandUpdated);
+        System.out.println("header turn updated "+ guiView.headerTurnUpdated);
+        System.out.println("header message updated "+ guiView.headerMessageUpdated);
         while (!guiView.playerHandUpdated || !guiView.headerTurnUpdated || !guiView.headerMessageUpdated) {
             System.out.println("wait");
         }
+        System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
+        playerHandGrid = printPlayerHand();
+        pane.getChildren().add(playerHandGrid);
         guiView.playerHandUpdated = false;
 
     }
