@@ -45,9 +45,13 @@ public class PlayGameController {
         guiView = (GuiView) AppClient.getView();
         guiView.headerTurnLabel.setLayoutX(0);
         guiView.headerTurnLabel.setLayoutY(0);
+        guiView.headerTurnLabel.setPrefWidth(200);
+        guiView.headerTurnLabel.setPrefHeight(25);
         pane.getChildren().add(guiView.headerTurnLabel);
         guiView.headerMessageLabel.setLayoutX(0);
         guiView.headerMessageLabel.setLayoutY(100);
+        guiView.headerMessageLabel.setPrefWidth(200);
+        guiView.headerMessageLabel.setPrefHeight(25);
         pane.getChildren().add(guiView.headerMessageLabel);
 //        GridPane gridPane = new GridPane();
 //        gridPane.setHgap(20);
@@ -77,6 +81,8 @@ public class PlayGameController {
 
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
+        guiView.headerTurnUpdated = false;
+        guiView.headerMessageUpdated = false;
     }
 
     // NB tutto quello che metto dentro questo metodo viene eseguito dopo che l'utente di fatto
@@ -148,8 +154,8 @@ public class PlayGameController {
         int targetAreaHeight = maxY - minY + 1;
 
         GridPane grid = new GridPane();
-        grid.setLayoutX(100);
-        grid.setLayoutY(100);
+        grid.setLayoutX(300);
+        grid.setLayoutY(300);
 
         if (targetAreaWidth > 0 && targetAreaHeight > 0) {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
@@ -157,7 +163,7 @@ public class PlayGameController {
                 int actualY = coordinates % cardsMatrix.length();
                 ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                grid.add(cardImageView,actualX - minX, actualY - minY);
+                grid.add(cardImageView, actualY - minY, actualX - minX);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
@@ -184,8 +190,8 @@ public class PlayGameController {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
-        gridPane.setLayoutX(300);
-        gridPane.setLayoutY(500);
+        gridPane.setLayoutX(200);
+        gridPane.setLayoutY(600);
         for (int i = 0; i < 6; i++) {
             int row = i / 3; // 0 or 1
             int col = i % 3; // 0, 1, or 2

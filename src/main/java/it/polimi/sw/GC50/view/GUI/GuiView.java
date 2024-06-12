@@ -269,11 +269,13 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCardsArea(String nickname) {
+        System.out.println("giocatore corrente "+ getGameView().getNickname());
         if (getGameView().getNickname().equals(nickname)) {
             headerMessageLabel = new Label("Your cards area:");
         } else {
-            headerMessageLabel = new Label("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
+            headerMessageLabel = new Label("Player \"" + getGameView().getNickname() + "\" cards area:");
         }
+        headerMessageUpdated = true;
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
         // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
