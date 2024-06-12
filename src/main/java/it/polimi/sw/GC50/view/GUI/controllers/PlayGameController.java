@@ -57,8 +57,7 @@ public class PlayGameController {
         guiView.headerMessageLabel.setPrefHeight(25);
         pane.getChildren().add(guiView.headerMessageLabel);
 
-        playerHandGrid = printPlayerHand();
-        pane.getChildren().add(playerHandGrid);
+        printPlayerHand();
 
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
@@ -75,15 +74,15 @@ public class PlayGameController {
     // e.g. label che cambiano
     @FXML
     void handleDrawCardButton(ActionEvent event) {
-        guiView.read = "-d 3";
+        String drawnCardIndex = drawCardTextField.getText();
+        guiView.read = drawnCardIndex;
         pane.getChildren().remove(guiView.headerTurnLabel);
         pane.getChildren().remove(guiView.headerMessageLabel);
         while (!guiView.playerHandUpdated || !guiView.headerTurnUpdated || !guiView.headerMessageUpdated) {
             System.out.println("wait");
         }
         System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
-        playerHandGrid = printPlayerHand();
-        pane.getChildren().add(playerHandGrid);
+        printPlayerHand();
         pane.getChildren().add(guiView.headerTurnLabel);
         pane.getChildren().add(guiView.headerMessageLabel);
         guiView.playerAreaUpdated = false;
@@ -95,7 +94,9 @@ public class PlayGameController {
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         pane.getChildren().remove(playerAreaGrid);
-        guiView.read = "-p 1 1 42 42";
+        // in futuro possiamo mettere pulsanti sopra le 6 carte per ottenere la scelta
+        String placedCardInfo = placeCardTextField.getText();
+        guiView.read = placedCardInfo;
         // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
             System.out.println("aspetta");
@@ -113,8 +114,8 @@ public class PlayGameController {
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(150);
-        cardImageView.setFitHeight(75);
+        cardImageView.setFitWidth(80);
+        cardImageView.setFitHeight(40);
         cardImageView.setLayoutX(layoutX);
         cardImageView.setLayoutY(layoutY);
         return cardImageView;
@@ -126,8 +127,8 @@ public class PlayGameController {
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(150);
-        cardImageView.setFitHeight(75);
+        cardImageView.setFitWidth(80);
+        cardImageView.setFitHeight(40);
         cardImageView.setLayoutX(layoutX);
         cardImageView.setLayoutY(layoutY);
         return cardImageView;
@@ -153,7 +154,7 @@ public class PlayGameController {
                 int actualY = coordinates % cardsMatrix.length();
                 ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                grid.add(cardImageView, actualX - minX, actualY - minY);
+                grid.add(cardImageView, actualX - minX, 800 -(actualY - minY));
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
@@ -169,14 +170,14 @@ public class PlayGameController {
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(150);
-        cardImageView.setFitHeight(75);
+        cardImageView.setFitWidth(80);
+        cardImageView.setFitHeight(40);
         cardImageView.setLayoutX(layoutX);
         cardImageView.setLayoutY(layoutY);
         return cardImageView;
     }
 
-    public GridPane printPlayerHand() {
+    public void printPlayerHand() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
@@ -192,7 +193,7 @@ public class PlayGameController {
 
             }
         }
-        return gridPane;
+        pane.getChildren().add(gridPane);
     }
 
 }

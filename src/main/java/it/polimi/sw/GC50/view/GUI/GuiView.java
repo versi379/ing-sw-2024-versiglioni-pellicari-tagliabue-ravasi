@@ -273,6 +273,8 @@ public class GuiView extends Application implements View {
     @Override
     public void showPlacingPhase() {
         System.out.println("PLACING PHASE");
+        showCardsArea(getGameView().getNickname());
+        showHand();
     }
 
     @Override
