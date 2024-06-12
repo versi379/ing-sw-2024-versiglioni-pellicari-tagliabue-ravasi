@@ -107,7 +107,7 @@ public class Client {
                 listenCommands();
                 waitingPhase();
             } else {
-                view.showError("Game name not valid");
+                view.showError("Invalid choice");
             }
         }
     }
@@ -146,17 +146,15 @@ public class Client {
         }).start();
     }
 
-    public void addCommand(Command command, String[] args) {
-        new Thread(() -> {
-            synchronized (this) {
-                try {
-                    switchCommand(command, args);
-                } catch (GameException e) {
-                    throw new RuntimeException(e);
-                }
-                notifyAll();
+    public synchronized void addCommand(Command command, String[] args) {
+        synchronized (this) {
+            try {
+                switchCommand(command, args);
+            } catch (GameException e) {
+                throw new RuntimeException(e);
             }
-        }).start();
+            notifyAll();
+        }
     }
 
     private void switchCommand(Command command, String[] args) throws GameException {
@@ -349,6 +347,7 @@ public class Client {
     }
 
     private void leaveGame() throws GameException {
+        gameView.clear();
         serverInterface.leaveGame();
     }
 
@@ -377,9 +376,6 @@ public class Client {
                 gameView.removePlayerArea(player);
 
                 view.showPlayerLeft(player);
-                if (gameView.getNickname().equals(player)) {
-                    gameView.clear();
-                }
             }
 
             case NOTIFY_GAME_SETUP -> {

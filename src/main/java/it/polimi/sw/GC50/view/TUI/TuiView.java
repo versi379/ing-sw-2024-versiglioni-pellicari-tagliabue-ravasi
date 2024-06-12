@@ -266,6 +266,7 @@ public class TuiView implements View {
             for (String nickname : getGameView().getWinnerList()) {
                 System.out.print(" " + nickname);
             }
+            System.out.println();
         }
         showScores();
     }
@@ -314,9 +315,7 @@ public class TuiView implements View {
     @Override
     public void listen() {
         Pair<Command, String[]> command = readCommand();
-        if (getGameView().isInGame()) {
-            client.addCommand(command.getKey(), command.getValue());
-        }
+        client.addCommand(command.getKey(), command.getValue());
     }
 
     public Pair<Command, String[]> readCommand() {
