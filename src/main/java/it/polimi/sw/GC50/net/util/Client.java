@@ -270,7 +270,7 @@ public class Client {
         view.showStart();
 
         if (view.getClass().getSimpleName().equals("GuiView")) {
-            view.showCardsArea(getGameView().getNickname());
+            view.showCardsArea(getGameView().getCurrentPlayer());
             view.showHand();
             Platform.runLater(() -> {
                 Stage stage = ((GuiView) view).getPrimaryStage();
@@ -422,7 +422,9 @@ public class Client {
                 }
 
                 view.showCardsArea(player);
-                // view.showHand();
+                if (view.getClass().getSimpleName().equals("TuiView")) {
+                    view.showHand();
+                }
                 view.showScores();
             }
 
@@ -435,6 +437,7 @@ public class Client {
 
                 view.showHand();
                 view.showDecks();
+
             }
 
             case NOTIFY_NEXT_TURN -> {

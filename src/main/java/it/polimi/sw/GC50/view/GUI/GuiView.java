@@ -261,7 +261,7 @@ public class GuiView extends Application implements View {
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
-        isPlacingPhase = true;
+
     }
 
     @Override

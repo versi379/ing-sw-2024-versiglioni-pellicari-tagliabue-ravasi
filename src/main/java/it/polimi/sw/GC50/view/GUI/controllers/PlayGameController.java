@@ -54,13 +54,11 @@ public class PlayGameController {
         guiView.headerMessageLabel.setPrefHeight(25);
         pane.getChildren().add(guiView.headerMessageLabel);
 
-        if(guiView.isPlacingPhase) {
-            playerHandGrid = printPlayerHand();
-            pane.getChildren().add(playerHandGrid);
+        playerHandGrid = printPlayerHand();
+        pane.getChildren().add(playerHandGrid);
 
-            playerAreaGrid = printPlayerArea(guiView.playerArea);
-            pane.getChildren().add(playerAreaGrid);
-        }
+        playerAreaGrid = printPlayerArea(guiView.playerArea);
+        pane.getChildren().add(playerAreaGrid);
 
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
@@ -130,35 +128,31 @@ public class PlayGameController {
 
     public GridPane printPlayerArea(PlayerDataView playerArea) {
         GridPane grid = new GridPane();
-        if (guiView.isPlacingPhase) {
-            CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
-            int minX = cardsMatrix.getMinX();
-            int maxX = cardsMatrix.getMaxX();
-            int minY = cardsMatrix.getMinY();
-            int maxY = cardsMatrix.getMaxY();
+        grid.setLayoutX(300);
+        grid.setLayoutY(300);
 
-            int targetAreaWidth = maxX - minX + 1;
-            int targetAreaHeight = maxY - minY + 1;
+        CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
+        int minX = cardsMatrix.getMinX();
+        int maxX = cardsMatrix.getMaxX();
+        int minY = cardsMatrix.getMinY();
+        int maxY = cardsMatrix.getMaxY();
 
-            grid.setLayoutX(300);
-            grid.setLayoutY(300);
+        int targetAreaWidth = maxX - minX + 1;
+        int targetAreaHeight = maxY - minY + 1;
 
-            if (targetAreaWidth > 0 && targetAreaHeight > 0) {
-                for (Integer coordinates : cardsMatrix.getOrderList()) {
-                    int actualX = coordinates / cardsMatrix.length();
-                    int actualY = coordinates % cardsMatrix.length();
-                    ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
+        if (targetAreaWidth > 0 && targetAreaHeight > 0) {
+            for (Integer coordinates : cardsMatrix.getOrderList()) {
+                int actualX = coordinates / cardsMatrix.length();
+                int actualY = coordinates % cardsMatrix.length();
+                ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                    grid.add(cardImageView, actualY - minY, actualX - minX);
-                }
-            } else {
-                Label noCardsLabel = new Label("No cards placed");
-                grid.add(noCardsLabel, 0, 0);
+                grid.add(cardImageView, actualY - minY, actualX - minX);
             }
-
-            return grid;
+        } else {
+            Label noCardsLabel = new Label("No cards placed");
+            grid.add(noCardsLabel, 0, 0);
         }
-        grid.setVisible(false);
+
         return grid;
     }
 
@@ -177,24 +171,20 @@ public class PlayGameController {
 
     public GridPane printPlayerHand() {
         GridPane gridPane = new GridPane();
-        if (guiView.isPlacingPhase) {
-            gridPane.setHgap(20);
-            gridPane.setVgap(20);
-            gridPane.setLayoutX(200);
-            gridPane.setLayoutY(600);
-            for (int i = 0; i < 6; i++) {
-                int row = i / 3; // 0 or 1
-                int col = i % 3; // 0, 1, or 2
-                if(i < 3) { // print front
-                    gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
-                } else { // print back
-                    gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setLayoutX(200);
+        gridPane.setLayoutY(600);
+        for (int i = 0; i < 6; i++) {
+            int row = i / 3; // 0 or 1
+            int col = i % 3; // 0, 1, or 2
+            if(i < 3) { // print front
+                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
+            } else { // print back
+                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
 
-                }
             }
-            return gridPane;
         }
-        gridPane.setVisible(false);
         return gridPane;
     }
 
