@@ -46,10 +46,10 @@ public class UserController {
     @FXML
     public void handleMenuButton(ActionEvent event) throws Exception {
         nameSetted = true;
-        showMenuView();
         String submittedPlayerName = playerNickname.getText();
         guiView.setSubmittedPlayerNickname(submittedPlayerName);
         guiView.resumeExecution();
+        showMenuView();
     }
 
     public String getPlayerNickname() {
