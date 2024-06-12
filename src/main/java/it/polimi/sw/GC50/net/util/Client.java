@@ -439,6 +439,7 @@ public class Client {
             case NOTIFY_NEXT_TURN -> {
                 gameView.setPlayingPhase(PlayingPhase.PLACING);
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
+
             }
 
             case NOTIFY_GAME_ENDED -> {

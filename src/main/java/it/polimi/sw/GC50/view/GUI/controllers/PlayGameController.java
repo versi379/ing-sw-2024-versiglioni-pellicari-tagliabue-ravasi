@@ -32,10 +32,13 @@ public class PlayGameController {
     private Button drawCardButton;
 
     @FXML
-    private TextField gameTextField;
+    private TextField drawCardTextField;
 
     @FXML
     private Button placeCardButton;
+
+    @FXML
+    private TextField placeCardTextField;
 
     public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
@@ -150,7 +153,7 @@ public class PlayGameController {
                 int actualY = coordinates % cardsMatrix.length();
                 ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                grid.add(cardImageView, actualY - minY, actualX - minX);
+                grid.add(cardImageView, actualX - minX, actualY - minY);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");

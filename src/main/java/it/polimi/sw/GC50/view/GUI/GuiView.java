@@ -117,6 +117,8 @@ public class GuiView extends Application implements View {
         this.client = client;
     }
 
+    // ---------------------------------  GAME SETUP  ---------------------------------
+
     @Override
     public String selectName() {
         while(userController == null) {
@@ -205,6 +207,8 @@ public class GuiView extends Application implements View {
         return client.getGameView();
     }
 
+    // ---------------------------------  GAME INIT PHASE  ---------------------------------
+
     @Override
     public void showSetup() {
 
@@ -240,6 +244,8 @@ public class GuiView extends Application implements View {
         starterCardCode = starterCard.getFront().getCode();
     }
 
+    // ---------------------------------  GAME START (P-D) PHASE  ---------------------------------
+
     @Override
     public void showStart() {
 
@@ -266,7 +272,12 @@ public class GuiView extends Application implements View {
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
+        System.out.println("PLACING PHASE");
+    }
 
+    @Override
+    public void showDrawingPhase() {
+        System.out.println("DRAWING PHASE");
     }
 
     @Override
@@ -287,6 +298,7 @@ public class GuiView extends Application implements View {
 
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
+        System.out.print("player area updated del giocatore: "+ nickname);
         // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
 
     }
@@ -310,6 +322,8 @@ public class GuiView extends Application implements View {
 
     }
 
+    // ---------------------------------  CHAT  ---------------------------------
+
     @Override
     public void showChatMessage(Chat chat) {
 
@@ -318,6 +332,8 @@ public class GuiView extends Application implements View {
     @Override
     public void showChatMessage(String sender, String content, String time) {
     }
+
+    // ---------------------------------  COMMANDS  ---------------------------------
 
     @Override
     public void listen() {
@@ -474,12 +490,6 @@ public class GuiView extends Application implements View {
     public void showPlayerReady(String nickname) {
 
     }
-
-    @Override
-    public void showDrawingPhase() {
-
-    }
-
 
     public NetController getNetController() {
         return netController;
