@@ -154,7 +154,12 @@ public class PlayGameController {
                 int actualY = coordinates % cardsMatrix.length();
                 ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
 
-                grid.add(cardImageView, actualX - minX, 800 -(actualY - minY));
+                int offsetX = actualX - minX;
+                int offsetY = 800 - (actualY - minY);
+
+
+
+                grid.add(cardImageView, offsetX, offsetY);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
