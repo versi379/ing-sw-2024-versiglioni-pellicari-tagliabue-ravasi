@@ -125,7 +125,7 @@ public abstract class TuiModelPrinter {
     public static void printScores(Map<String, Integer> scores) {
        for (String nickname : scores.keySet()) {
             System.out.println("Player " + nickname + " -> " + scores.get(nickname));
-        }
+       }
     }
 
 

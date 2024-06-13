@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,8 @@ public class GuiView extends Application implements View {
     public Label headerMessageLabel;
     public Boolean headerTurnUpdated = false;
     public Boolean headerMessageUpdated = false;
+
+    public String scoresText;
 
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
@@ -239,8 +242,6 @@ public class GuiView extends Application implements View {
 
     private void showStarterCardSelection() {
         PhysicalCard starterCard = getGameView().getStarterCard();
-        System.out.println(starterCard.getFront().getCode());
-        TuiModelPrinter.printStarterCard(starterCard);
         starterCardCode = starterCard.getFront().getCode();
     }
 
@@ -300,8 +301,7 @@ public class GuiView extends Application implements View {
 
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
-        System.out.print("player area updated del giocatore: "+ nickname);
-        // TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        System.out.println("player area updated del giocatore: " + nickname);
 
     }
 
@@ -309,7 +309,6 @@ public class GuiView extends Application implements View {
     public void showHand() {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
-        TuiModelPrinter.printHand(getGameView().getHand());
         headerTurnUpdated = true;
         headerMessageUpdated = true;
     }
@@ -321,7 +320,18 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showScores() {
+        scoresText = "";
+        Map<String, Integer> scores = new HashMap<>();
+        for (String nickname : getGameView().getPlayerList()) {
+            scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
+        }
+        printScores(scores);
+    }
 
+    private void printScores(Map<String, Integer> scores) {
+        for (String nickname : scores.keySet()) {
+            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
+        }
     }
 
     // ---------------------------------  CHAT  ---------------------------------

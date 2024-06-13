@@ -29,6 +29,9 @@ public class PlayGameController {
     private GuiView guiView;
 
     @FXML
+    private Button showBoardButton;
+
+    @FXML
     private Button drawCardButton;
 
     @FXML
@@ -39,6 +42,9 @@ public class PlayGameController {
 
     @FXML
     private TextField placeCardTextField;
+
+    @FXML
+    private Label scoresLabel;
 
     public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
@@ -66,6 +72,13 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
         guiView.headerTurnUpdated = false;
         guiView.headerMessageUpdated = false;
+
+        scoresLabel.setText(guiView.scoresText);
+    }
+
+    @FXML
+    void handleShowBoardButton(ActionEvent event) {
+        updatePlayerArea();
     }
 
     // NB tutto quello che metto dentro questo metodo viene eseguito dopo che l'utente di fatto
@@ -102,9 +115,8 @@ public class PlayGameController {
             System.out.println("aspetta");
         }
         System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
-        playerAreaGrid = printPlayerArea(guiView.playerArea);
-        pane.getChildren().add(playerAreaGrid);
-        guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
+        updatePlayerArea();
+        scoresLabel.setText(guiView.scoresText);
     }
 
 
@@ -199,6 +211,12 @@ public class PlayGameController {
             }
         }
         pane.getChildren().add(gridPane);
+    }
+
+    public void updatePlayerArea() {
+        playerAreaGrid = printPlayerArea(guiView.playerArea);
+        pane.getChildren().add(playerAreaGrid);
+        guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
     }
 
 }
