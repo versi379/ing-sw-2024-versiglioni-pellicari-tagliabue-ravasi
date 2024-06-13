@@ -106,7 +106,6 @@ public class PlayGameController {
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
-        pane.getChildren().remove(playerAreaGrid);
         // in futuro possiamo mettere pulsanti sopra le 6 carte per ottenere la scelta
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
@@ -214,6 +213,7 @@ public class PlayGameController {
     }
 
     public void updatePlayerArea() {
+        pane.getChildren().remove(playerAreaGrid);
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
         guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
