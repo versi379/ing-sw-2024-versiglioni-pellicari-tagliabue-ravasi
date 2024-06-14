@@ -470,6 +470,7 @@ public class Client {
                 if (gameView.getNickname().equals(errorMex.getNickname())) {
                     view.showError(errorMex.getContent());
                 }
+                ((GuiView) view).serverError = true;
             }
 
             default -> {

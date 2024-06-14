@@ -100,9 +100,10 @@ public class PlayGameController {
         // in futuro possiamo mettere pulsanti sopra le 6 carte per ottenere la scelta
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
-        if (true) {
+        if (guiView.serverError) {
             return;
         }
+        guiView.serverError = false;
         // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
             System.out.println("aspetta ");
