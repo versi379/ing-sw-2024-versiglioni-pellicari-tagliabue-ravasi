@@ -74,11 +74,15 @@ public class PlayGameController {
         guiView.headerMessageUpdated = false;
 
         scoresLabel.setText(guiView.scoresText);
+        deactivateButton(placeCardButton);
+        deactivateButton(drawCardButton);
     }
 
     @FXML
     void handleShowBoardButton(ActionEvent event) {
         updatePlayerArea();
+        deactivateButton(showBoardButton);
+        activateButton(placeCardButton);
     }
 
     // NB tutto quello che metto dentro questo metodo viene eseguito dopo che l'utente di fatto
@@ -102,6 +106,8 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
         guiView.headerTurnUpdated = false;
         guiView.headerMessageUpdated = false;
+        deactivateButton(drawCardButton);
+        activateButton(showBoardButton);
     }
 
     @FXML
@@ -111,11 +117,13 @@ public class PlayGameController {
         guiView.read = placedCardInfo;
         // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
-            System.out.println("aspetta");
+            System.out.println("aspetta " + guiView.playerAreaUpdated);
         }
         System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         updatePlayerArea();
         scoresLabel.setText(guiView.scoresText);
+        deactivateButton(placeCardButton);
+        activateButton(drawCardButton);
     }
 
 
@@ -217,6 +225,16 @@ public class PlayGameController {
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
         guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
+    }
+
+    private void activateButton(Button button) {
+        button.setDisable(false);
+        button.setOpacity(1);
+    }
+
+    private void deactivateButton(Button button) {
+        button.setDisable(true);
+        button.setOpacity(0.3);
     }
 
 }
