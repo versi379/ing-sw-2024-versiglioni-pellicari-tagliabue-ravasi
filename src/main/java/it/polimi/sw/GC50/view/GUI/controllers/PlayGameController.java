@@ -46,22 +46,15 @@ public class PlayGameController {
     @FXML
     private Label scoresLabel;
 
+    @FXML
+    private Label turnLabel;
+
     public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
 
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
-        guiView.headerTurnLabel.setLayoutX(0);
-        guiView.headerTurnLabel.setLayoutY(0);
-        guiView.headerTurnLabel.setPrefWidth(200);
-        guiView.headerTurnLabel.setPrefHeight(25);
-        pane.getChildren().add(guiView.headerTurnLabel);
-        guiView.headerMessageLabel.setLayoutX(0);
-        guiView.headerMessageLabel.setLayoutY(100);
-        guiView.headerMessageLabel.setPrefWidth(200);
-        guiView.headerMessageLabel.setPrefHeight(25);
-        pane.getChildren().add(guiView.headerMessageLabel);
 
         printPlayerHand();
 
@@ -70,8 +63,6 @@ public class PlayGameController {
 
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
-        guiView.headerTurnUpdated = false;
-        guiView.headerMessageUpdated = false;
 
         scoresLabel.setText(guiView.scoresText);
         deactivateButton(placeCardButton);
@@ -93,19 +84,13 @@ public class PlayGameController {
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
         guiView.read = drawnCardIndex;
-        pane.getChildren().remove(guiView.headerTurnLabel);
-        pane.getChildren().remove(guiView.headerMessageLabel);
-        while (!guiView.playerHandUpdated || !guiView.headerTurnUpdated || !guiView.headerMessageUpdated) {
+        while (!guiView.playerHandUpdated) {
             System.out.println("wait");
         }
         System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
         printPlayerHand();
-        pane.getChildren().add(guiView.headerTurnLabel);
-        pane.getChildren().add(guiView.headerMessageLabel);
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
-        guiView.headerTurnUpdated = false;
-        guiView.headerMessageUpdated = false;
         deactivateButton(drawCardButton);
         activateButton(showBoardButton);
     }
@@ -117,7 +102,7 @@ public class PlayGameController {
         guiView.read = placedCardInfo;
         // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
-            System.out.println("aspetta " + guiView.playerAreaUpdated);
+            System.out.println("aspetta ");
         }
         System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         updatePlayerArea();
