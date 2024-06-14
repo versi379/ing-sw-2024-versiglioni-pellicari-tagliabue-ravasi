@@ -69,6 +69,7 @@ public class Client {
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void lobby() throws GameException {
+
         while (!setPlayer(view.selectName())) {
             view.showError("Player name not valid");
         }
@@ -109,7 +110,7 @@ public class Client {
         }
     }
 
-    private boolean setPlayer(String nickname) throws GameException {
+    public boolean setPlayer(String nickname) throws GameException {
         nickname = serverInterface.setPlayer(nickname);
         if (nickname != null) {
             gameView = new GameView(nickname);

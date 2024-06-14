@@ -143,11 +143,10 @@ public class GuiView extends Application implements View {
         while(joinGameController == null) {
             System.err.println("> Attendo caricamento join game page.");
             try {
-                // Sleep briefly to avoid busy-waiting
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // Restore interrupted status
-                return; // Exit the method if interrupted
+                Thread.currentThread().interrupt();
+                return;
             }
         }
 
