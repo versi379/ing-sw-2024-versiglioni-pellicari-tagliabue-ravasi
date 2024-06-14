@@ -138,11 +138,7 @@ public class TuiView implements View {
 
     @Override
     public void showPlayerLeft(String nickname) {
-        if (getGameView().getNickname().equals(nickname)) {
-            System.out.println("You left the game");
-        } else {
-            System.out.println("Player \"" + nickname + "\" left the game");
-        }
+        System.out.println("Player \"" + nickname + "\" left the game");
     }
 
     @Override

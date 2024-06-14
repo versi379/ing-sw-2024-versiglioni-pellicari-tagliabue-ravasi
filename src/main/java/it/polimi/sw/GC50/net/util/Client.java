@@ -382,7 +382,9 @@ public class Client {
                 String player = ((PlayerMex) message).getNickname();
                 gameView.removePlayerArea(player);
 
-                view.showPlayerLeft(player);
+                if (!getGameView().getNickname().equals(player)) {
+                    view.showPlayerLeft(player);
+                }
             }
 
             case NOTIFY_GAME_SETUP -> {

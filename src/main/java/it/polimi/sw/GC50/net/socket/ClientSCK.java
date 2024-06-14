@@ -98,7 +98,7 @@ public class ClientSCK implements ServerInterface {
             new Thread(() -> {
                 while (true) {
                     waitMessageFromServer();
-                    if (!queue.isEmpty()) {
+                    while (!queue.isEmpty()) {
                         switchMex(queue.poll());
                     }
                 }
