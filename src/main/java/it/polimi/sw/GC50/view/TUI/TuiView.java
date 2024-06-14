@@ -3,7 +3,7 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.view.Command;
+import it.polimi.sw.GC50.net.util.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.util.Pair;

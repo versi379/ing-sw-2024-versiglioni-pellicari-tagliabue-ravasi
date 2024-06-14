@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view;
+package it.polimi.sw.GC50.net.util;
 
 public enum Command {
     CHOOSE_OBJECTIVE,

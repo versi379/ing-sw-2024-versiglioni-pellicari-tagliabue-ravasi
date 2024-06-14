@@ -4,19 +4,16 @@ import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.view.Command;
+import it.polimi.sw.GC50.net.util.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.PlayerDataView;
-import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -24,8 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static it.polimi.sw.GC50.view.TUI.TuiView.yellowTxt;
 
 public class GuiView extends Application implements View {
 
@@ -122,7 +117,7 @@ public class GuiView extends Application implements View {
     @Override
     public String selectName() {
         while(userController == null) {
-            System.out.println("Attendo caricamento user login page.");
+            System.err.println("> Attendo caricamento user login page.");
         }
         waitForButtonPress();
         return submittedPlayerNickname;
@@ -131,7 +126,7 @@ public class GuiView extends Application implements View {
     @Override
     public int selectJoinOrCreate() {
         while(menuController == null) {
-            System.out.println("Attendo caricamento menu page.");
+            System.err.println("> Attendo caricamento menu page.");
         }
         waitForButtonPress();
         return submittedGameChoice;
@@ -146,7 +141,7 @@ public class GuiView extends Application implements View {
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
         while(joinGameController == null) {
-            System.out.println("Attendo caricamento join game page.");
+            System.err.println("> Attendo caricamento join game page.");
             try {
                 // Sleep briefly to avoid busy-waiting
                 Thread.sleep(100);
@@ -173,7 +168,7 @@ public class GuiView extends Application implements View {
 
     public void waitGameParams() {
         while(createGameController == null) {
-            System.out.println("Attendo caricamento create game page.");
+            System.err.println("> Attendo caricamento create game page.");
         }
         waitForButtonPress();
     }
@@ -257,14 +252,14 @@ public class GuiView extends Application implements View {
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
-        System.out.println("PLACING PHASE");
+        System.err.println("> PLACING PHASE");
         showCardsArea(getGameView().getNickname());
         showHand();
     }
 
     @Override
     public void showDrawingPhase() {
-        System.out.println("DRAWING PHASE");
+        System.err.println("> DRAWING PHASE");
     }
 
     @Override
@@ -273,7 +268,7 @@ public class GuiView extends Application implements View {
 
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
-        System.out.println("player area updated del giocatore: " + nickname);
+        System.err.println("> player area updated del giocatore: " + nickname);
 
     }
 
@@ -329,7 +324,7 @@ public class GuiView extends Application implements View {
 
         switch (getFirstWord(read)) {
             case "-choose_objective", "-co" -> {
-                System.out.println("Choose objective triggered");
+                System.err.println("> Choose objective triggered");
                 String arg = removeFirstWord(read);
                 read = "";
                 try {
@@ -341,7 +336,7 @@ public class GuiView extends Application implements View {
             }
 
             case "-choose_starter_face", "-cs" -> {
-                System.out.println("Choose starter face triggered");
+                System.err.println("> Choose starter face triggered");
                 String arg = removeFirstWord(read);
                 read = "";
                 try {
@@ -353,7 +348,7 @@ public class GuiView extends Application implements View {
             }
 
             case "-place_card", "-p" -> {
-                System.out.println("Place card triggered");
+                System.err.println("> Place card triggered");
                 String[] args = new String[4];
                 read = removeFirstWord(read);
                 for (int i = 0; i < args.length; i++) {
@@ -373,7 +368,7 @@ public class GuiView extends Application implements View {
             }
 
             case "-draw_card", "-d" -> {
-                System.out.println("Draw card triggered");
+                System.err.println("> Draw card triggered");
                 String arg = removeFirstWord(read);
                 read = "";
                 try {
@@ -385,13 +380,13 @@ public class GuiView extends Application implements View {
             }
 
             case "-chat", "-c" -> {
-                System.out.println("Chat triggered");
+                System.err.println("> Chat triggered");
                 String arg = removeFirstWord(read);
                 return new Pair<>(Command.CHAT, new String[]{arg});
             }
 
             case "-chat_private", "-cp" -> {
-                System.out.println("Chat private triggered");
+                System.err.println("> Chat private triggered");
                 String[] args = new String[2];
                 read = removeFirstWord(read);
                 if (read.isEmpty()) {

@@ -5,12 +5,10 @@ import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
-import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
-import it.polimi.sw.GC50.view.ViewType;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,9 +37,7 @@ public class Client {
             }
             case SOCKET -> {
                 try {
-                    serverInterface = new ClientSCK(this, serverPort, serverIp);
-                    Thread clientThread = new Thread((ClientSCK) serverInterface);
-                    clientThread.start();
+                    serverInterface = new ClientSCK(this, serverIp, serverPort);
                 } catch (IOException e) {
                     serverInterface = null;
                 }
@@ -147,14 +143,12 @@ public class Client {
     }
 
     public synchronized void addCommand(Command command, String[] args) {
-        synchronized (this) {
-            try {
-                switchCommand(command, args);
-            } catch (GameException e) {
-                throw new RuntimeException(e);
-            }
-            notifyAll();
+        try {
+            switchCommand(command, args);
+        } catch (GameException e) {
+            throw new RuntimeException(e);
         }
+        notifyAll();
     }
 
     private void switchCommand(Command command, String[] args) throws GameException {

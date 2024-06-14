@@ -1,7 +1,8 @@
 package it.polimi.sw.GC50.net.Messages;
 
+import it.polimi.sw.GC50.net.util.LobbyCommand;
 import it.polimi.sw.GC50.net.util.Notify;
-import it.polimi.sw.GC50.view.Command;
+import it.polimi.sw.GC50.net.util.Command;
 
 import java.io.Serializable;
 

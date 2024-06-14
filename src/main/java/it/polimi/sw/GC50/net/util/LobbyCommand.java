@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.Messages;
+package it.polimi.sw.GC50.net.util;
 
 public enum LobbyCommand {
     JOIN_GAME,
