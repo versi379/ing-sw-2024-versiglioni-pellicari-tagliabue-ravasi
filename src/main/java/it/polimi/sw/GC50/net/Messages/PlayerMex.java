@@ -6,7 +6,7 @@ public class PlayerMex implements Message {
     private final String nickname;
 
     public PlayerMex(Player player) {
-       nickname = player.getNickname();
+        nickname = player.getNickname();
     }
 
     public String getNickname() {

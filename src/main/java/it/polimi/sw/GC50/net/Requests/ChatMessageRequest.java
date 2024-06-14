@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.util;
+package it.polimi.sw.GC50.net.Requests;
 
 import java.io.Serializable;
 

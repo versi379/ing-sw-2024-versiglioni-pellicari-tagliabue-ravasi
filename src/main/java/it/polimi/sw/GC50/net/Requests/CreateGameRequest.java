@@ -1,14 +1,13 @@
-package it.polimi.sw.GC50.net.Messages;
+package it.polimi.sw.GC50.net.Requests;
 
 import java.io.Serializable;
-import java.util.Map;
 
-public class CreateGameMessage implements Message {
-    private String gameId;
-    private int numPlayers;
-    private int endScore;
+public class CreateGameRequest implements Serializable {
+    private final String gameId;
+    private final int numPlayers;
+    private final int endScore;
 
-    public CreateGameMessage(String gameId, int numPlayers, int endScore) {
+    public CreateGameRequest(String gameId, int numPlayers, int endScore) {
         this.gameId = gameId;
         this.numPlayers = numPlayers;
         this.endScore = endScore;

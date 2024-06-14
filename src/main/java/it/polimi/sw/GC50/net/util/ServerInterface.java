@@ -1,5 +1,8 @@
 package it.polimi.sw.GC50.net.util;
 
+import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
+
 import java.util.List;
 import java.util.Map;
 

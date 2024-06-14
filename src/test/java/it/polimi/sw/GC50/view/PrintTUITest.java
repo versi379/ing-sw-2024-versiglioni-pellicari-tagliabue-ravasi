@@ -11,7 +11,7 @@ public class PrintTUITest {
     @Test
     void testPrintBoard2() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         PrintBoardTUI2 ob = new PrintBoardTUI2(game.getCardsArea(player));
@@ -43,7 +43,7 @@ public class PrintTUITest {
 
     @Test
     void testToStringTUI() {
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(new Player("Player"));
         while (game.goldDeckSize() > 0) {
             String[][] card = game.pickCard(DrawingPosition.GOLDDECK).getFront().toStringTUI();

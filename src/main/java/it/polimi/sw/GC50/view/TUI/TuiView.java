@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view.TUI;
 
 import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
 import it.polimi.sw.GC50.net.util.Client;
 import it.polimi.sw.GC50.net.util.Command;
@@ -247,11 +248,22 @@ public class TuiView implements View {
     @Override
     public void showScores() {
         System.out.println("Scores:");
-        Map<String, Integer> scores = new HashMap<>();
-        for (String nickname : getGameView().getPlayerList()) {
-            scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
+
+        if (getGameView().getGameStatus().equals(GameStatus.ENDED)) {
+            Map<String, Pair<Integer, Integer>> scores = new HashMap<>();
+            for (String nickname : getGameView().getPlayerList()) {
+                scores.put(nickname, new Pair(getGameView().getPlayerArea(nickname).getTotalScore(),
+                        getGameView().getPlayerArea(nickname).getObjectivesScore()));
+            }
+            TuiModelPrinter.printScoresEnd(scores);
+
+        } else {
+            Map<String, Integer> scores = new HashMap<>();
+            for (String nickname : getGameView().getPlayerList()) {
+                scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
+            }
+            TuiModelPrinter.printScoresPlaying(scores);
         }
-        TuiModelPrinter.printScores(scores);
     }
 
     @Override
@@ -260,11 +272,11 @@ public class TuiView implements View {
         System.out.println(yellowTxt + "Game ended!" + baseTxt);
 
         if (getGameView().getWinnerList().size() == 1) {
-            System.out.println("winner -> " + getGameView().getWinnerList().getFirst());
+            System.out.println("Winner -> " + getGameView().getWinnerList().getFirst());
         } else {
-            System.out.print("winners ->");
+            System.out.print("Winners ->");
             for (String nickname : getGameView().getWinnerList()) {
-                System.out.print(" " + nickname);
+                System.out.print(" \"" + nickname + "\"");
             }
             System.out.println();
         }

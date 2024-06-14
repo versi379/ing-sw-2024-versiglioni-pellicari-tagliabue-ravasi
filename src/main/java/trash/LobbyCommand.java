@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.util;
+package trash;
 
 public enum LobbyCommand {
     JOIN_GAME,

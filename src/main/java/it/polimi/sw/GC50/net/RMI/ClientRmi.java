@@ -2,6 +2,8 @@ package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.net.Messages.*;
+import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.util.*;
 
 import java.net.MalformedURLException;

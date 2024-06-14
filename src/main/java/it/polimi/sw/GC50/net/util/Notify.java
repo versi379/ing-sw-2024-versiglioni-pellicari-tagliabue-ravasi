@@ -1,6 +1,12 @@
 package it.polimi.sw.GC50.net.util;
 
 public enum Notify {
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    NOTIFY_NAME_SET,
+    NOTIFY_GAME_CREATED,
+    NOTIFY_GAME_JOINED,
+    NOTIFY_FREE_GAMES,
+
     // PLAYER //////////////////////////////////////////////////////////////////////////////////////////////////////////
     NOTIFY_PLAYER_JOINED_GAME,
     NOTIFY_PLAYER_LEFT_GAME,
@@ -20,10 +26,5 @@ public enum Notify {
     NOTIFY_GAME_ENDED,
 
     // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    GET_MODEL_RESPONSE,
-    REQUEST_NOT_AVAILABLE,
-    GET_CHAT_MODEL_RESPONSE,
-    NOTIFY_NAME_SET,
     NOTIFY_ERROR,
-    NOTIFY_FREE_GAMES, NOTIFY_GAME_CREATED, NOTIFY_GAME_JOINED
 }

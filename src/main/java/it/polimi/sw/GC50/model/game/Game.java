@@ -23,11 +23,6 @@ import java.util.*;
 public class Game extends GameObservable {
 
     /**
-     * Game's unique identifier
-     */
-    private final String id;
-
-    /**
      * Declared number of players
      */
     private final int numPlayers;
@@ -115,12 +110,10 @@ public class Game extends GameObservable {
 
     /**
      * constructs a new Game instance
-     * @param id            identifier of the game
      * @param numPlayers    number of players in the game
      * @param endScore      shows final score
      */
-    public Game(String id, int numPlayers, int endScore) {
-        this.id = id;
+    public Game(int numPlayers, int endScore) {
         this.numPlayers = numPlayers;
         this.endScore = endScore;
         deckSize = 40;
@@ -145,14 +138,6 @@ public class Game extends GameObservable {
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @return id game unique identifier
-     */
-    public String getId() {
-        return id;
-    }
-
     /**
      * Returns visible PlayebleCard in the center of the board during game,
      * then backs of the decks and fronts of the four face up cards
@@ -525,7 +510,6 @@ public class Game extends GameObservable {
      */
     private void start() {
         status = GameStatus.PLAYING;
-        System.err.println("Game \"" + id + "\" has started");
         setChanged();
         notifyObservers(Notify.NOTIFY_GAME_STARTED, new PlayerMex(getCurrentPlayer()));
     }
@@ -752,9 +736,7 @@ public class Game extends GameObservable {
      */
     private void end() {
         status = GameStatus.ENDED;
-        playerList.stream()
-                .map(this::getPlayerData)
-                .forEach(x -> x.setFinalScore(getCommonObjectives()));
+        playerList.forEach(this::setFinalScore);
 
         int maxScore = playerList.stream()
                 .map(this::getTotalScore)
@@ -763,32 +745,12 @@ public class Game extends GameObservable {
         playerList.stream()
                 .filter(x -> getTotalScore(x) == maxScore)
                 .forEach(winnerList::add);
-        if (winnerList.size() == 1) {
-            System.err.println("Vincitore: " + winnerList.getFirst());
-            System.err.println("Punteggio: " + maxScore);
-
-        } else {
+        if (winnerList.size() > 1) {
             int maxObjectivesScore = playerList.stream()
                     .map(this::getObjectivesScore)
                     .max(Integer::compareTo)
                     .orElse(0);
             winnerList.removeIf(x -> getObjectivesScore(x) < maxObjectivesScore);
-            if (winnerList.size() == 1) {
-                System.err.println("Vincitore: " + winnerList.getFirst());
-                System.err.println("Punteggio: " + maxScore);
-                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
-
-            } else {
-                System.err.println("Pareggio");
-                System.err.print("Vincitori:");
-                for (Player player : winnerList) {
-                    System.err.print(" " + player);
-                }
-                System.err.println();
-                System.err.println("Punteggio: " + maxScore);
-                System.err.println("Punteggio obiettivi: " + maxObjectivesScore);
-                System.err.println();
-            }
         }
         setChanged();
         notifyObservers(Notify.NOTIFY_GAME_ENDED, new EndMex(this));
@@ -800,6 +762,10 @@ public class Game extends GameObservable {
      */
     public List<Player> getWinnerList() {
         return new ArrayList<>(winnerList);
+    }
+
+    private void setFinalScore(Player player) {
+        getPlayerData(player).setFinalScore(getCommonObjectives());
     }
 
     /**
@@ -830,19 +796,6 @@ public class Game extends GameObservable {
     public void error(Player player, String content) {
         setChanged();
         notifyObservers(Notify.NOTIFY_ERROR, new ErrorMex(player, content));
-    }
-
-    /*
-    @Override
-    public GameView getGameView(Player player) {
-        return new GameView(this, player);
-    }
-
-     */
-
-    @Override
-    public String toString() {
-        return getId();
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////

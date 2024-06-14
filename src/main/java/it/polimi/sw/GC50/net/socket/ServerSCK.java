@@ -31,8 +31,9 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
         this.port = port;
         this.clients = new ArrayList<>();
     }
+
     /**
-     *method that waits for the connection of a client
+     * method that waits for the connection of a client
      * this method starts the server and waits the connection of a client
      * it creates a new client handler for each client that connects
      * and starts a new thread for each client handler
@@ -56,10 +57,9 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
             try {
                 Socket socketClient = serverSocket.accept();
                 socketClient.setSoTimeout(0);
-                ClientHandler clientHandler = new ClientHandler(socketClient, this, lobby);
+                ClientHandler clientHandler = new ClientHandler(socketClient, lobby);
                 clients.add(clientHandler);
-                Thread clientThread = new Thread(clientHandler);
-                clientThread.start();
+                new Thread(clientHandler).start();
                 System.out.println("Client connected");
             } catch (IOException e) {
 

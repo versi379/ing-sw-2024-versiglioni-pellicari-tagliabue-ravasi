@@ -18,14 +18,12 @@ public class GameTest {
 
     @Test
     void testGameConstructor() {
-        String gameId = "Partita";
         int numPlayers = 3;
         int endScore = 20;
         Player player = new Player("Creator");
-        Game game = new Game(gameId, numPlayers, endScore);
+        Game game = new Game(numPlayers, endScore);
         game.addPlayer(player);
 
-        assertEquals(gameId, game.getId());
         assertEquals(numPlayers, game.getNumPlayers());
         assertEquals(GameStatus.WAITING, game.getStatus());
         assertEquals(1, game.getPlayerList().size());
@@ -38,7 +36,7 @@ public class GameTest {
     void testAddPlayer() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20);
+        Game game = new Game(2, 20);
         game.addPlayer(player1);
 
         assertFalse(game.containsPlayer(player2));
@@ -56,7 +54,7 @@ public class GameTest {
     void testRemovePlayer() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 3, 20);
+        Game game = new Game(3, 20);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.removePlayer(player2);
@@ -71,7 +69,7 @@ public class GameTest {
         Player player2 = new Player("Player2");
         Player player3 = new Player("Player3");
         List<Player> expectedPlayerList = new ArrayList<>(Arrays.asList(player1, player2, player3));
-        Game game = new Game("Partita", 3, 20);
+        Game game = new Game(3, 20);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.addPlayer(player3);
@@ -84,7 +82,7 @@ public class GameTest {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
         Player player3 = new Player("Player3");
-        Game game = new Game("Partita", 3, 20);
+        Game game = new Game(3, 20);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.addPlayer(player3);
@@ -115,7 +113,7 @@ public class GameTest {
     void testPlayerDataFromNickname() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20);
+        Game game = new Game(2, 20);
         game.addPlayer(player1);
 
         assertEquals(game.getPlayerData(player1), game.getPlayerData("Player1"));
@@ -131,7 +129,7 @@ public class GameTest {
     @Test
     void testGetStartingChoices() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         assertEquals(CardType.STARTER, game.getStarterCard(player).getCardType());
@@ -143,7 +141,7 @@ public class GameTest {
     @Test
     void testSetStarterCard() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
         game.setStarterCard(player, whitePlayableCard);
 
@@ -153,7 +151,7 @@ public class GameTest {
     @Test
     void testSetSecretObjective() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
         ObjectiveCard secretObjective = new ObjectiveCard(2,
                 new IdenticalResourcesObjective(Resource.ANIMAL, 3));
@@ -166,7 +164,7 @@ public class GameTest {
     void testIsReady() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20);
+        Game game = new Game(2, 20);
         game.addPlayer(player1);
         game.addPlayer(player2);
 
@@ -194,7 +192,7 @@ public class GameTest {
     @Test
     void testPickCardPositions() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
         int num;
         PhysicalCard card;
@@ -239,7 +237,7 @@ public class GameTest {
     @Test
     void testPickCardEmptyDecks1() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
 
@@ -272,7 +270,7 @@ public class GameTest {
     @Test
     void testPickCardEmptyDecks2() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
 
@@ -305,7 +303,7 @@ public class GameTest {
     @Test
     void testPickCardEmptyResourceDeck() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         while (game.resourceDeckSize() > 0) {
@@ -320,7 +318,7 @@ public class GameTest {
     @Test
     void testPickCardEmptyGoldDeck() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         while (game.goldDeckSize() > 0) {
@@ -335,7 +333,7 @@ public class GameTest {
     @Test
     void testPlaceCard() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
         game.setStarterCard(player, whitePlayableCard);
         game.setSecretObjective(player,
@@ -352,7 +350,7 @@ public class GameTest {
     void testAddCard() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 20);
+        Game game = new Game(2, 20);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.setStarterCard(player1, whitePlayableCard);
@@ -379,7 +377,7 @@ public class GameTest {
     @Test
     void testRemoveCard() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
         PhysicalCard card = game.pickCard(DrawingPosition.RESOURCEDECK);
         game.addCard(player, card);
@@ -394,7 +392,7 @@ public class GameTest {
     void testEndTotalWinner() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 5);
+        Game game = new Game(2, 5);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.setStarterCard(player1, whitePlayableCard);
@@ -418,7 +416,7 @@ public class GameTest {
     void testEndObjectivesWinner() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 5);
+        Game game = new Game(2, 5);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.setStarterCard(player1, whitePlayableCard);
@@ -446,7 +444,7 @@ public class GameTest {
     void testEndDraw() {
         Player player1 = new Player("Player1");
         Player player2 = new Player("Player2");
-        Game game = new Game("Partita", 2, 5);
+        Game game = new Game(2, 5);
         game.addPlayer(player1);
         game.addPlayer(player2);
         game.setStarterCard(player1, whitePlayableCard);
@@ -472,19 +470,11 @@ public class GameTest {
     }
 
     // OTHER METHODS ///////////////////////////////////////////////////////////////////////////////////////////////////
-    @Test
-    void testToString() {
-        Player player = new Player("Player");
-        String gameId = "Partita";
-        Game game = new Game(gameId, 1, 20);
-
-        assertEquals(gameId, game.toString());
-    }
 
     @Test
     void testRandom1() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
 
@@ -547,7 +537,7 @@ public class GameTest {
 
                 Player("Player");
 
-        Game game2 = new Game("Partita", 1, 20);
+        Game game2 = new Game(1, 20);
         game2.addPlayer(player);
 
         {

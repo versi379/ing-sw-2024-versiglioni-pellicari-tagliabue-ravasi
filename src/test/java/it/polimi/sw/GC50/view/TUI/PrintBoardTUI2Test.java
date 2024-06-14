@@ -10,7 +10,7 @@ class PrintBoardTUI2Test {
     @Test
     void testPrintBoard2FullBoard() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");
@@ -39,7 +39,7 @@ class PrintBoardTUI2Test {
     @Test
     void testPrintBoard2SelectedArea() {
         Player player = new Player("Player");
-        Game game = new Game("Partita", 1, 20);
+        Game game = new Game(1, 20);
         game.addPlayer(player);
 
         System.out.println("/////////////////////////////////////////////////////////////////////////////////////////");

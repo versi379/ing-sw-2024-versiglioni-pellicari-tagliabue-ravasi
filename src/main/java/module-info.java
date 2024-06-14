@@ -16,4 +16,5 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.model.lobby;
     exports it.polimi.sw.GC50.model;
     exports it.polimi.sw.GC50.view;
+    exports it.polimi.sw.GC50.net.Requests;
 }

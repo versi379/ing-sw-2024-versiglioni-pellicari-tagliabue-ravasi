@@ -4,6 +4,8 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.Messages.*;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
+import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -72,7 +74,6 @@ public class Client {
         }
 
         while (true) {
-            gameView.clear();
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
                     if (view.getClass().getSimpleName().equals("GuiView")) {
@@ -341,11 +342,19 @@ public class Client {
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void endPhase() {
         view.showEnd();
+        while (gameView.getGameStatus().equals(GameStatus.ENDED)) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void leaveGame() throws GameException {
         gameView.clear();
         serverInterface.leaveGame();
+        notifyAll();
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -464,7 +473,7 @@ public class Client {
                 if (gameView.getNickname().equals(errorMex.getNickname())) {
                     view.showError(errorMex.getContent());
                 }
-                ((GuiView) view).serverError = true;
+                //((GuiView) view).serverError = true;
             }
 
             default -> {

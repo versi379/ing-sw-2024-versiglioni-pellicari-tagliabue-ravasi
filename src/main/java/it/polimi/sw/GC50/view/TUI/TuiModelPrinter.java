@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.model.card.PhysicalCard;
 import it.polimi.sw.GC50.model.card.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import javafx.util.Pair;
 import trash.PrintBoardTUI2;
 import it.polimi.sw.GC50.view.PlayerDataView;
 
@@ -122,12 +123,18 @@ public abstract class TuiModelPrinter {
         printMatrix(boardMatrix);
     }
 
-    public static void printScores(Map<String, Integer> scores) {
+    public static void printScoresPlaying(Map<String, Integer> scores) {
        for (String nickname : scores.keySet()) {
-            System.out.println("Player " + nickname + " -> " + scores.get(nickname));
+            System.out.println("Player \"" + nickname + "\" -> " + scores.get(nickname));
        }
     }
 
+    public static void printScoresEnd(Map<String, Pair<Integer, Integer>> scores) {
+        for (String nickname : scores.keySet()) {
+            System.out.println("Player \"" + nickname + "\" -> total: " + scores.get(nickname).getKey() +
+                    ", objectives: " + scores.get(nickname).getValue());
+        }
+    }
 
     public static void printDecks(PlayableCard[] decks) {
         String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];

@@ -8,9 +8,9 @@ import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.util.ChatMessageRequest;
+import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.util.PlaceCardRequest;
+import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -22,18 +22,20 @@ import java.util.Map;
  *
  */
 public class GameController extends UnicastRemoteObject implements GameControllerRemote {
+    private final String gameId;
     private final Game game;
     private final Map<ClientInterface, Player> playerMap;
 
     public GameController(ClientInterface clientInterface, String gameId, int numPlayers, int endScore, String nickname) throws RemoteException {
+        this.gameId = gameId;
+        game = new Game(numPlayers, endScore);
         playerMap = new HashMap<>();
-        game = new Game(gameId, numPlayers, endScore);
         addPlayer(clientInterface, nickname);
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
     public synchronized String getGameId() {
-        return game.getId();
+        return gameId;
     }
 
     public synchronized List<String> getPlayerList() {
@@ -187,66 +189,6 @@ public class GameController extends UnicastRemoteObject implements GameControlle
     public synchronized void leaveGame(ClientInterface clientInterface) throws RemoteException {
         removePlayer(clientInterface);
     }
-
-    // FUFFA ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    synchronized public void updateController(ClientInterface clientInterface, Object update, Request request) throws RemoteException {
-        if (!playerMap.containsKey(clientInterface)) {
-            return;
-        }
-        System.out.println(request + " from player " + playerMap.get(clientInterface));
-        Player player = playerMap.get(clientInterface);
-        switch (request) {
-            case SELECT_OBJECTIVE_CARD -> {
-                selectObjectiveCard(player, (Integer) update);
-            }
-            case SELECT_STARTER_FACE -> {
-                selectStarterFace(player, (Integer) update);
-            }
-            case PLACE_CARD -> {
-                placeCard(player, (PlaceCardRequest) update);
-            }
-            case DRAW_CARD -> {
-                drawCard(player, (Integer) update);
-            }
-            default -> {
-            }
-        }
-    }
-
-    synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
-        return new GameView(game, playerMap.get(clientInterface));
-    }
-
-     */
-
-    /*
-    synchronized public Object getModel(ClientInterface clientInterface) throws RemoteException {
-        if (!playerMap.containsKey(clientInterface)) {
-            return null;
-        }
-        Player player = playerMap.get(clientInterface);
-        ArrayList<CardsMatrix> board = new ArrayList<>();
-        ArrayList<Color> color = new ArrayList<>();
-        ArrayList<Integer> point = new ArrayList<>();
-        ArrayList<String> name = new ArrayList<>();
-
-        for (Player p : game.getPlayerList()) {
-            if (!p.getNickname().equals(player.getNickname())) {
-                board.add(game.getPlayerData(p).getCardsArea());
-                color.add(Color.BLUE);
-                point.add(game.getPlayerData(p).getTotalScore());
-                name.add(p.getNickname());
-            }
-        }
-
-        ModelMex modelMex = new ModelMex(game.getPlayerData(player), player, game.getChat(),
-                game.getCurrentPlayer().getNickname(), name,
-                board, color, point,
-                game.getDecksTop(), game.getCurrentPhase(), game.getStatus());
-        return modelMex;
-    }
-     */
 
     // GAME STATUS /////////////////////////////////////////////////////////////////////////////////////////////////////
     private boolean isWaiting() {

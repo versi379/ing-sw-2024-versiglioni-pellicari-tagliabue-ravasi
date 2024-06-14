@@ -1,7 +1,10 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.util.LobbyCommand;
-import it.polimi.sw.GC50.net.Messages.*;
+import it.polimi.sw.GC50.net.Messages.FreeGamesMex;
+import it.polimi.sw.GC50.net.Messages.StringMex;
+import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.Requests.CreateGameRequest;
+import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.util.*;
 import it.polimi.sw.GC50.net.util.Command;
 
@@ -26,16 +29,17 @@ public class ClientSCK implements ServerInterface {
     private final String serverIp;
     private final int serverPort;
     private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private final ExecutorService executorService;
 
     /////////////////////////////////////////////////////////////////
     private String nickname;
     private Map<String, List<String>> freeGames;
     private String gameId;
-    ///////////////////////////////////////////
-    private final ExecutorService executorService;
-    /////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////
     private final Object[] lock;
-    private final Queue<SocketMessage> queue;
+    private final Queue<NotifyMessage> queue;
     private final boolean[] condition;
 
     /**
@@ -65,6 +69,7 @@ public class ClientSCK implements ServerInterface {
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      *
      */
@@ -74,6 +79,21 @@ public class ClientSCK implements ServerInterface {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(this.serverIp, this.serverPort), 1000);
             output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
+
+            executorService.execute(() -> {
+                while (!executorService.isShutdown()) {
+                    try {
+                        Object object = input.readObject();
+                        NotifyMessage message = (NotifyMessage) object;
+                        queue.add(message);
+                        notifyMessageFromServer();
+
+                    } catch (IOException | ClassNotFoundException e) {
+
+                    }
+                }
+            });
 
             new Thread(() -> {
                 while (true) {
@@ -88,7 +108,27 @@ public class ClientSCK implements ServerInterface {
         }
     }
 
+    /**
+     * method that sends a message to the server
+     * the method writes the message to the output stream
+     * the method flushes the output stream
+     * the method resets the output stream
+     * if an error occurs the method returns
+     *
+     * @param messageOut is the message to send to the server
+     */
+    private synchronized void setMessageOut(CommandMessage messageOut) throws GameException {
+        try {
+            output.writeObject(messageOut);
+            output.flush();
+            output.reset();
+        } catch (IOException e) {
+            throw new GameException("Connection error zio pera", e.getCause());
+        }
+    }
+
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that send a message to the server to set the player name
      * it waits for notify from the server and returns the nickname of the player
@@ -98,7 +138,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public String setPlayer(String nickname) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(nickname), LobbyCommand.SET_PLAYER_NAME));
+        setMessageOut(new CommandMessage(Command.SET_PLAYER, nickname));
         waitSetupPhase();
         return this.nickname;
     }
@@ -108,7 +148,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void resetPlayer() throws GameException {
-        setMessageOut(new SocketMessage(null, LobbyCommand.RESET_PLAYER));
+        setMessageOut(new CommandMessage(Command.RESET_PLAYER, null));
     }
 
     /**
@@ -124,12 +164,8 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
-        if (this.gameId == null) {
-            setMessageOut(new SocketMessage(new CreateGameMessage(gameId, numPlayers, endScore), LobbyCommand.CREATE_GAME));
-            waitSetupPhase();
-        } else {
-            return false;
-        }
+        setMessageOut(new CommandMessage(Command.CREATE_GAME, new CreateGameRequest(gameId, numPlayers, endScore)));
+        waitSetupPhase();
         return this.gameId != null;
     }
 
@@ -144,12 +180,8 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public boolean joinGame(String gameId) throws GameException {
-        if (this.gameId == null) {
-            setMessageOut(new SocketMessage(new ObjectMessage(gameId), LobbyCommand.JOIN_GAME));
-            waitSetupPhase();
-        } else {
-            return false;
-        }
+        setMessageOut(new CommandMessage(Command.JOIN_GAME, gameId));
+        waitSetupPhase();
         return this.gameId != null;
     }
 
@@ -162,12 +194,13 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public Map<String, List<String>> getFreeGames() throws GameException {
-        setMessageOut(new SocketMessage(null, LobbyCommand.LIST_FREE_GAMES));
+        setMessageOut(new CommandMessage(Command.LIST_FREE_GAMES, null));
         waitSetupPhase();
         return freeGames;
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that sends a message to the server to select the objective card of the player
      *
@@ -176,7 +209,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void selectSecretObjective(int index) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(index), Command.CHOOSE_OBJECTIVE));
+        setMessageOut(new CommandMessage(Command.CHOOSE_OBJECTIVE, index));
     }
 
     /**
@@ -187,10 +220,11 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void selectStarterFace(int face) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(face), Command.CHOOSE_STARTER_FACE));
+        setMessageOut(new CommandMessage(Command.CHOOSE_STARTER_FACE, face));
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that sends a message to the server to place a card
      *
@@ -199,7 +233,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(placeCardRequest), Command.PLACE_CARD));
+        setMessageOut(new CommandMessage(Command.PLACE_CARD, placeCardRequest));
     }
 
     /**
@@ -210,26 +244,27 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void drawCard(int position) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(position), Command.DRAW_CARD));
+        setMessageOut(new CommandMessage(Command.DRAW_CARD, position));
     }
 
     /**
      * method that sends a message to the server to send a chat message
      *
-     * @param message is the message to send
+     * @param chatMessage is the message to send
      * @throws GameException if an error occurs
      */
     @Override
-    public void sendChatMessage(ChatMessageRequest message) throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(message), Command.CHAT));
+    public void sendChatMessage(ChatMessageRequest chatMessage) throws GameException {
+        setMessageOut(new CommandMessage(Command.CHAT, chatMessage));
     }
 
     @Override
     public void leaveGame() throws GameException {
-        setMessageOut(new SocketMessage(new ObjectMessage(null), Command.LEAVE));
+        setMessageOut(new CommandMessage(Command.LEAVE, null));
     }
 
     // UPDATES /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that switches the message received from the server
      * the method switches the message based on the notify
@@ -237,56 +272,23 @@ public class ClientSCK implements ServerInterface {
      *
      * @param message is the message received from the server
      */
-    private void switchMex(SocketMessage message) {
+    private void switchMex(NotifyMessage message) {
         switch (message.getNotify()) {
-            case NOTIFY_PLAYER_JOINED_GAME, GET_MODEL_RESPONSE, REQUEST_NOT_AVAILABLE, NOTIFY_GAME_ENDED,
-                    GET_CHAT_MODEL_RESPONSE, NOTIFY_NEXT_TURN, NOTIFY_CHAT_MESSAGE, NOTIFY_CARD_DRAWN,
-                    NOTIFY_GAME_STARTED, NOTIFY_PLAYER_READY, NOTIFY_CARD_PLACED, NOTIFY_GAME_SETUP,
-                    NOTIFY_PLAYER_LEFT_GAME, NOTIFY_ERROR -> {
-                client.update(message.getNotify(), message.getMessage());
-            }
             case NOTIFY_NAME_SET -> {
-                ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
-                if (objectMessage.getObject() != null) {
-                    nickname = (String) objectMessage.getObject();
-                } else {
-                    nickname = null;
-                }
-                notifySetupPhase();
-            }
-            case NOTIFY_FREE_GAMES -> {
-                ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
-                freeGames = (Map<String, List<String>>) objectMessage.getObject();
+                nickname = ((StringMex) message.getContent()).getString();
                 notifySetupPhase();
             }
             case NOTIFY_GAME_CREATED, NOTIFY_GAME_JOINED -> {
-                ObjectMessage objectMessage = (ObjectMessage) message.getMessage();
-                if (objectMessage.getObject() != null) {
-                    gameId = objectMessage.getObject().toString();
-                } else {
-                    gameId = null;
-                }
+                gameId = ((StringMex) message.getContent()).getString();
                 notifySetupPhase();
             }
-        }
-    }
-
-    /**
-     * method that sends a message to the server
-     * the method writes the message to the output stream
-     * the method flushes the output stream
-     * the method resets the output stream
-     * if an error occurs the method returns
-     *
-     * @param messageOut is the message to send to the server
-     */
-    private synchronized void setMessageOut(SocketMessage messageOut) throws GameException {
-        try {
-            output.writeObject(messageOut);
-            output.flush();
-            output.reset();
-        } catch (IOException e) {
-            throw new GameException("Connection error", e.getCause());
+            case NOTIFY_FREE_GAMES -> {
+                freeGames = ((FreeGamesMex) message.getContent()).getFreeGames();
+                notifySetupPhase();
+            }
+            default -> {
+                client.update(message.getNotify(), message.getContent());
+            }
         }
     }
 
@@ -353,33 +355,4 @@ public class ClientSCK implements ServerInterface {
     private void waitSetupPhase() {
         lock(1);
     }
-
-    /*
-    /**
-     * method that listens for messages from the server
-     * the method reads an object from the input stream
-     * the object is cast to a SocketMessage
-     * the message is added to the queue
-     * the method notifies the client that a message has been received
-     * if an error occurs the method returns
-     * the method is an infinite loop
-     * the method is executed by a thread
-
-    private void inputThread() {
-        executorService.execute(() -> {
-            while (!executorService.isShutdown()) {
-                try {
-                    Object object = input.readObject();
-                    SocketMessage message = (SocketMessage) object;
-                    queue.add(message);
-                    notifyMessageFromServer();
-
-                } catch (IOException | ClassNotFoundException e) {
-
-                }
-            }
-        });
-    }
-
-     */
 }
