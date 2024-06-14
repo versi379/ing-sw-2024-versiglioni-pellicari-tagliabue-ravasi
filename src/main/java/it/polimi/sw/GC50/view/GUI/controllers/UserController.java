@@ -24,13 +24,10 @@ public class UserController {
     @FXML
     private Button menuButton;
 
-    private boolean nameSetted;
-
     private GuiView guiView;
 
     @FXML
     public void initialize() throws Exception {
-        nameSetted = false;
         guiView = (GuiView) AppClient.getView();
     }
 
@@ -45,23 +42,10 @@ public class UserController {
 
     @FXML
     public void handleMenuButton(ActionEvent event) throws Exception {
-        nameSetted = true;
         String submittedPlayerName = playerNickname.getText();
         guiView.setSubmittedPlayerNickname(submittedPlayerName);
         guiView.resumeExecution();
         showMenuView();
-    }
-
-    public String getPlayerNickname() {
-        return playerNickname.getText();
-    }
-
-    public boolean isNameSetted() {
-        return nameSetted;
-    }
-
-    public Button getMenuButton() {
-        return menuButton;
     }
 
 }
