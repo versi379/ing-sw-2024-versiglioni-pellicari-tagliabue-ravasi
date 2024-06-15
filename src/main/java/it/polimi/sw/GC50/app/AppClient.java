@@ -70,7 +70,7 @@ public class AppClient {
             }
         }
         new Client(serverIp, serverPort, connectionType, view).start();
-        System.err.println("Bye");
+        System.err.println("> Bye");
     }
 
     public static void setupSocket(View view, ViewType viewType) {

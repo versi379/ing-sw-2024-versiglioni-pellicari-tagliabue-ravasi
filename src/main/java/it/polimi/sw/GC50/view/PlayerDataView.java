@@ -8,11 +8,13 @@ public class PlayerDataView {
     private final CardsMatrix cardsMatrix;
     private final int totalScore;
     private final int objectivesScore;
+    private final boolean ready;
 
-    public PlayerDataView(CardsMatrix cardsMatrix, int totalScore, int objectivesScore) {
+    public PlayerDataView(CardsMatrix cardsMatrix, int totalScore, int objectivesScore, boolean ready) {
         this.cardsMatrix = cardsMatrix;
         this.totalScore = totalScore;
         this.objectivesScore = objectivesScore;
+        this.ready = ready;
     }
 
     public CardsMatrix getCardsMatrix() {
@@ -25,5 +27,8 @@ public class PlayerDataView {
 
     public int getObjectivesScore() {
         return objectivesScore;
+    }
+    public boolean isReady() {
+        return ready;
     }
 }

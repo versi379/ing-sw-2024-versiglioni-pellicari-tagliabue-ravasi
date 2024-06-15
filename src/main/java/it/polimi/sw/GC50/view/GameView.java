@@ -158,8 +158,8 @@ public class GameView {
         return starterCard;
     }
 
-    public void setPlayerArea(String nickname, CardsMatrix cardsMatrix, int totalScore, int objectivesScore) {
-        playerAreas.put(nickname, new PlayerDataView(cardsMatrix, totalScore, objectivesScore));
+    public void setPlayerArea(String nickname, CardsMatrix cardsMatrix, int totalScore, int objectivesScore, boolean ready) {
+        playerAreas.put(nickname, new PlayerDataView(cardsMatrix, totalScore, objectivesScore, ready));
     }
 
     public void removePlayerArea(String nickname) {
@@ -172,5 +172,10 @@ public class GameView {
 
     public List<String> getPlayerList() {
         return new ArrayList<>(playerAreas.keySet());
+    }
+
+    public boolean allReady() {
+        return playerAreas.values().stream()
+                .allMatch(PlayerDataView::isReady);
     }
 }

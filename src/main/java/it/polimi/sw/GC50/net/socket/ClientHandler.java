@@ -29,7 +29,6 @@ import java.util.concurrent.Executors;
 public class ClientHandler implements Runnable, ClientInterface {
     private final ObjectOutputStream output;
     private final ObjectInputStream input;
-    private final ExecutorService executorService;
 
     /////////////////////////////////////////////////////////////////
     private final Lobby lobby;
@@ -41,19 +40,14 @@ public class ClientHandler implements Runnable, ClientInterface {
      * @param socketClient is the socket of the client
      * @param lobby        is the lobby of the server
      */
-    public ClientHandler(Socket socketClient, Lobby lobby) {
+    public ClientHandler(Socket socketClient, Lobby lobby) throws IOException {
         this.lobby = lobby;
-        executorService = Executors.newSingleThreadScheduledExecutor();
-        try {
-            output = new ObjectOutputStream(socketClient.getOutputStream());
-            input = new ObjectInputStream(socketClient.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        output = new ObjectOutputStream(socketClient.getOutputStream());
+        input = new ObjectInputStream(socketClient.getInputStream());
     }
 
     /**
-     * Method that waits for a mesaage from the client socket
+     * Method that waits for a message from the client socket
      * after it receives the message it calls the switchMex method
      *
      * @throws IOException            if an error occurs
@@ -61,17 +55,12 @@ public class ClientHandler implements Runnable, ClientInterface {
      */
     @Override
     public void run() {
-        executorService.execute(() -> {
-            while (true) {
-                try {
-                    CommandMessage message = (CommandMessage) input.readObject();
-                    System.out.println(message.getCommand());
-                    switchMex(message);
-                } catch (IOException | ClassNotFoundException e) {
-
-                }
+        while (true) {
+            try {
+                switchMex((CommandMessage) input.readObject());
+            } catch (IOException | ClassNotFoundException ignored) {
             }
-        });
+        }
     }
 
     /**
@@ -84,7 +73,9 @@ public class ClientHandler implements Runnable, ClientInterface {
      *                if the message is not a command or a lobby command it does nothing
      *                if an exception is thrown it does nothing
      */
-    private synchronized void switchMex(CommandMessage message) {
+    private void switchMex(CommandMessage message) {
+        System.out.println(message.getCommand());
+
         switch (message.getCommand()) {
             case SET_PLAYER -> {
                 setPlayer((String) message.getContent());

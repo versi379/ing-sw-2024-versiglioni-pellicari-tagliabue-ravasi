@@ -243,7 +243,8 @@ public class Client {
 
         view.showSetup();
 
-        while (gameView.getGameStatus().equals(GameStatus.SETUP) && gameView.isInGame()) {
+        while ((gameView.getGameStatus().equals(GameStatus.SETUP) || !gameView.allReady())
+                && gameView.isInGame()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -376,11 +377,11 @@ public class Client {
     }
 
     private void switchRequest(Notify notify, Message message) {
-//       System.err.println("> Update from server: " + notify);
+       System.err.println("> Update from server: " + notify);
         switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 String player = ((PlayerMex) message).getNickname();
-                gameView.setPlayerArea(player, null, 0, 0);
+                gameView.setPlayerArea(player, null, 0, 0, false);
 
                 view.showPlayerJoined(player);
             }
@@ -411,7 +412,7 @@ public class Client {
                     gameView.setSecretObjective(playerReadyMex.getSecretObjective());
                 }
                 gameView.setPlayerArea(player, playerReadyMex.getCardsMatrix(),
-                        playerReadyMex.getTotalScore(), 0);
+                        playerReadyMex.getTotalScore(), 0, true);
 
                 view.showPlayerReady(player);
             }
@@ -428,7 +429,7 @@ public class Client {
                 gameView.setPlayingPhase(PlayingPhase.DRAWING);
 
                 gameView.setPlayerArea(player, boardUpdateMex.getCardsMatrix(),
-                        boardUpdateMex.getTotalScore(), 0);
+                        boardUpdateMex.getTotalScore(), 0, true);
                 if (gameView.getNickname().equals(boardUpdateMex.getNickname())) {
                     gameView.setHand((boardUpdateMex.getHand()));
                 }
@@ -463,7 +464,7 @@ public class Client {
                 gameView.setWinnerList((endMex).getWinnerList());
                 for (String player : gameView.getPlayerList()) {
                     gameView.setPlayerArea(player, gameView.getPlayerArea(player).getCardsMatrix(),
-                            endMex.getTotalScore(player), endMex.getObjectivesScore(player));
+                            endMex.getTotalScore(player), endMex.getObjectivesScore(player), true);
                 }
             }
 

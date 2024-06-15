@@ -289,8 +289,7 @@ public class TuiView implements View {
     @Override
     public void showEndSession() {
         System.out.println();
-        System.out.println(yellowTxt + "Session ended" + baseTxt);
-        System.out.println();
+        System.out.println(purpleTxt + "Session ended" + baseTxt);
     }
 
     @Override

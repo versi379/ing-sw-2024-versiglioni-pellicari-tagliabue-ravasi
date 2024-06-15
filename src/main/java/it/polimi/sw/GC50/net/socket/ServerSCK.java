@@ -40,7 +40,6 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
      * the client handler is added to the list of clients
      * the method prints a message when a client connects
      * if an error occurs the method returns
-     * the method is synchronized
      * the method is an infinite loop
      */
     @Override
@@ -61,8 +60,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 clients.add(clientHandler);
                 new Thread(clientHandler).start();
                 System.out.println("Client connected");
-            } catch (IOException e) {
-
+            } catch (IOException ignored) {
             }
         }
     }

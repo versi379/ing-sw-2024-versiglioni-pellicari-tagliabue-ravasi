@@ -30,7 +30,7 @@ public class ClientSCK implements ServerInterface {
     private final int serverPort;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private final ExecutorService executorService;
+//    private final ExecutorService executorService;
 
     /////////////////////////////////////////////////////////////////
     private String nickname;
@@ -58,7 +58,7 @@ public class ClientSCK implements ServerInterface {
         gameId = null;
         nickname = null;
         freeGames = new HashMap<>();
-        executorService = Executors.newSingleThreadScheduledExecutor();
+//        executorService = Executors.newSingleThreadScheduledExecutor();
         queue = new LinkedList<>();
         condition = new boolean[6];
         lock = new Object[6];
@@ -81,6 +81,16 @@ public class ClientSCK implements ServerInterface {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
 
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        switchMex((NotifyMessage) input.readObject());
+                    } catch (IOException | ClassNotFoundException ignored) {
+                    }
+                }
+            }).start();
+
+            /*
             executorService.execute(() -> {
                 while (!executorService.isShutdown()) {
                     try {
@@ -90,19 +100,28 @@ public class ClientSCK implements ServerInterface {
                         notifyMessageFromServer();
 
                     } catch (IOException | ClassNotFoundException e) {
-
+                        throw new GameException("Connection error", e.getCause());
                     }
                 }
             });
 
             new Thread(() -> {
                 while (true) {
+                    try {
+                        Object object = input.readObject();
+                        NotifyMessage message = (NotifyMessage) object;
+                        queue.add(message);
+                        notifyMessageFromServer();
+                    } catch (IOException | ClassNotFoundException ignored) {
+                    }
                     waitMessageFromServer();
                     while (!queue.isEmpty()) {
                         switchMex(queue.poll());
                     }
                 }
             }).start();
+
+             */
         } catch (IOException e) {
             throw new GameException("Connection error", e.getCause());
         }
@@ -123,7 +142,7 @@ public class ClientSCK implements ServerInterface {
             output.flush();
             output.reset();
         } catch (IOException e) {
-            throw new GameException("Connection error zio pera", e.getCause());
+            throw new GameException("Connection error", e.getCause());
         }
     }
 
