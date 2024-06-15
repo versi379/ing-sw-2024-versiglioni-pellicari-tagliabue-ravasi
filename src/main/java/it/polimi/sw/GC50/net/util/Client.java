@@ -59,7 +59,7 @@ public class Client {
             connect();
             lobby();
         } catch (GameException e) {
-            System.err.println(e.getMessage());
+            System.err.println("> " + e.getMessage());
         }
     }
 
@@ -144,13 +144,21 @@ public class Client {
         }).start();
     }
 
-    public synchronized void addCommand(Command command, String[] args) {
-        try {
-            switchCommand(command, args);
-        } catch (GameException e) {
-            throw new RuntimeException(e);
+    public void addCommand(Command command, String[] args) {
+        if (command.equals(Command.LEAVE)) {
+            gameView.clear();
         }
-        notifyAll();
+
+        new Thread(() -> {
+            synchronized (this) {
+                try {
+                    switchCommand(command, args);
+                } catch (GameException e) {
+                    System.err.println("> " + e.getMessage());
+                }
+                notifyAll();
+            }
+        }).start();
     }
 
     private void switchCommand(Command command, String[] args) throws GameException {
@@ -191,7 +199,7 @@ public class Client {
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void waitingPhase() throws GameException {
 
-        System.err.println("> waiting phase entered");
+//        System.err.println("> waiting phase entered");
 
         if (!view.getClass().getSimpleName().equals("GuiView")) {
             view.showWaitPlayers();
@@ -223,7 +231,7 @@ public class Client {
                 });
             }
 
-            System.err.println("> setup completed -> min num of players reached!");
+//            System.err.println("> setup completed -> min num of players reached!");
             setupPhase();
         }
     }
@@ -231,7 +239,7 @@ public class Client {
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void setupPhase() throws GameException {
 
-        System.err.println("> setup phase entered");
+//        System.err.println("> setup phase entered");
 
         view.showSetup();
 
@@ -245,7 +253,7 @@ public class Client {
 
         if (gameView.isInGame()) {
 
-            System.err.println("> setup finished");
+//            System.err.println("> setup finished");
 
             playingPhase();
         }
@@ -341,21 +349,20 @@ public class Client {
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void endPhase() {
+    private void endPhase() throws GameException {
         view.showEnd();
+
         while (gameView.getGameStatus().equals(GameStatus.ENDED)) {
             try {
                 wait();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                throw new GameException("Interruption error", e.getCause());
             }
         }
     }
 
     private void leaveGame() throws GameException {
-        gameView.clear();
         serverInterface.leaveGame();
-        notifyAll();
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,7 +376,7 @@ public class Client {
     }
 
     private void switchRequest(Notify notify, Message message) {
-        System.err.println("> Update from server: " + notify);
+//       System.err.println("> Update from server: " + notify);
         switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 String player = ((PlayerMex) message).getNickname();
@@ -427,9 +434,6 @@ public class Client {
                 }
 
                 view.showCardsArea(player);
-                if (view.getClass().getSimpleName().equals("TuiView")) {
-                    view.showHand();
-                }
                 view.showScores();
             }
 
@@ -440,9 +444,10 @@ public class Client {
                     gameView.setHand((decksUpdateMex.getHand()));
                 }
 
-                view.showHand();
                 view.showDecks();
-
+                if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
+                    view.showHand();
+                }
             }
 
             case NOTIFY_NEXT_TURN -> {

@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.TUI;
 
+import it.polimi.sw.GC50.model.card.Resource;
 import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objective.ObjectiveCard;
@@ -17,6 +18,7 @@ public class TuiView implements View {
     public static String redTxt = "\u001B[31m";
     public static String yellowTxt = "\u001B[33m";
     public static String blueTxt = "\u001B[34m";
+    public static String purpleTxt = "\u001B[35m";
 
     @Override
     public void setClient(Client client) {
@@ -144,19 +146,19 @@ public class TuiView implements View {
     @Override
     public void showWaitPlayers() {
         System.out.println();
-        System.out.println(yellowTxt + "Waiting for other players to join the game..." + baseTxt);
+        System.out.println(purpleTxt + "Waiting for other players to join the game..." + baseTxt);
         showHelp();
     }
 
     @Override
     public void showSetup() {
         System.out.println();
-        System.out.println(yellowTxt + "All players joined, beginning game setup!" + baseTxt);
+        System.out.println(purpleTxt + "All players joined, beginning game setup!" + baseTxt);
+
         showCommonObjectives();
         showSecretObjectiveSelection();
         showStarterCardSelection();
 
-        System.out.println();
         System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
     }
 
@@ -182,6 +184,7 @@ public class TuiView implements View {
     private void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
         TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
+        System.out.println();
     }
 
     @Override
@@ -192,7 +195,7 @@ public class TuiView implements View {
     @Override
     public void showStart() {
         System.out.println();
-        System.out.println(yellowTxt + "Game started" + baseTxt);
+        System.out.println(purpleTxt + "Game started" + baseTxt);
     }
 
     @Override
@@ -265,10 +268,10 @@ public class TuiView implements View {
     @Override
     public void showEnd() {
         System.out.println();
-        System.out.println(yellowTxt + "Game ended!" + baseTxt);
+        System.out.println(purpleTxt + "Game ended!" + baseTxt);
 
         if (getGameView().getWinnerList().size() == 1) {
-            System.out.println("Winner -> " + getGameView().getWinnerList().getFirst());
+            System.out.println("Winner -> \"" + getGameView().getWinnerList().getFirst() + "\"");
         } else {
             System.out.print("Winners ->");
             for (String nickname : getGameView().getWinnerList()) {
@@ -302,6 +305,13 @@ public class TuiView implements View {
         System.out.println("Leave game -> \"-leave\", \"-l\"");
         System.out.println("Help -> \"-help\", \"-h\"");
         System.out.println();
+        System.out.println(yellowTxt + "Legend:" + baseTxt);
+        System.out.print("Resource types:");
+        for (Resource resource : Resource.values()) {
+            System.out.print(" " + resource.toStringTUI());
+        }
+        System.out.println();
+        System.out.println("Card bonus types: blank, resource, covered corners (C)");
     }
 
     @Override
@@ -380,7 +390,11 @@ public class TuiView implements View {
 
             case "-chat", "-c" -> {
                 String arg = removeFirstWord(read);
-                return new Pair<>(Command.CHAT, new String[]{arg});
+                if (!arg.isEmpty()) {
+                    return new Pair<>(Command.CHAT, new String[]{arg});
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
             }
 
             case "-chat_private", "-cp" -> {
@@ -391,7 +405,11 @@ public class TuiView implements View {
                 }
                 args[0] = getFirstWord(read);
                 args[1] = removeFirstWord(read);
-                return new Pair<>(Command.CHAT_PRIVATE, args);
+                if (!args[1].isEmpty()) {
+                    return new Pair<>(Command.CHAT_PRIVATE, args);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
             }
 
             case "-leave", "-l" -> {
