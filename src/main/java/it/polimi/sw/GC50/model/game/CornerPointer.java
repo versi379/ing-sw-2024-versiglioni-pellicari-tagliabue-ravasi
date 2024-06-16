@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.Corner;
+import it.polimi.sw.GC50.model.cards.Corner;
 
 import java.io.Serializable;
 

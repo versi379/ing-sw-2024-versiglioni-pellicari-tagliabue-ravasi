@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.model.lobby;
 
 import it.polimi.sw.GC50.controller.GameController;
-import it.polimi.sw.GC50.net.util.ClientInterface;
+import it.polimi.sw.GC50.net.client.ClientInterface;
 
 import java.rmi.RemoteException;
 import java.util.*;

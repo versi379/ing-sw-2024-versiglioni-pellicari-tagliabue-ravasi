@@ -1,12 +1,11 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.PlayerDataView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -17,9 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayGameController {
 

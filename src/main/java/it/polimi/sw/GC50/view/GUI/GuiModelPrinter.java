@@ -1,10 +1,8 @@
 package it.polimi.sw.GC50.view.GUI;
 
-import it.polimi.sw.GC50.model.card.*;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.PlayerDataView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
-import javafx.application.Platform;
 import trash.PrintBoardTUI2;
 
 public class GuiModelPrinter {

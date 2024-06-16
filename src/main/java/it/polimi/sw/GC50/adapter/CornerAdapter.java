@@ -3,9 +3,9 @@ package it.polimi.sw.GC50.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import it.polimi.sw.GC50.model.card.Corner;
-import it.polimi.sw.GC50.model.card.CornerStatus;
-import it.polimi.sw.GC50.model.card.Resource;
+import it.polimi.sw.GC50.model.cards.Corner;
+import it.polimi.sw.GC50.model.cards.CornerStatus;
+import it.polimi.sw.GC50.model.cards.Resource;
 
 import java.io.IOException;
 

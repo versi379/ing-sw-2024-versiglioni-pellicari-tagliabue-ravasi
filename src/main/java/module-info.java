@@ -8,7 +8,6 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.view.GUI;
     exports it.polimi.sw.GC50.net.RMI;
     exports it.polimi.sw.GC50.app;
-    exports it.polimi.sw.GC50.net.util;
     exports it.polimi.sw.GC50.controller;
     exports trash;
     exports it.polimi.sw.GC50.view.GUI.controllers;
@@ -16,5 +15,8 @@ module it.polimi.sw.GC50 {
     exports it.polimi.sw.GC50.model.lobby;
     exports it.polimi.sw.GC50.model;
     exports it.polimi.sw.GC50.view;
-    exports it.polimi.sw.GC50.net.Requests;
+    exports it.polimi.sw.GC50.net.requests;
+    exports it.polimi.sw.GC50.net.messages;
+    exports it.polimi.sw.GC50.net.client;
+    exports it.polimi.sw.GC50.net;
 }

@@ -1,12 +1,13 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.Messages.FreeGamesMex;
-import it.polimi.sw.GC50.net.Messages.StringMex;
-import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
-import it.polimi.sw.GC50.net.Requests.CreateGameRequest;
-import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
-import it.polimi.sw.GC50.net.util.*;
-import it.polimi.sw.GC50.net.util.Command;
+import it.polimi.sw.GC50.net.messages.FreeGamesMex;
+import it.polimi.sw.GC50.net.messages.StringMex;
+import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.requests.CreateGameRequest;
+import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
+import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.net.client.GameException;
+import it.polimi.sw.GC50.net.ServerInterface;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,8 +15,6 @@ import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * class that represents the client for the socket connection
@@ -136,7 +135,7 @@ public class ClientSCK implements ServerInterface {
      *
      * @param messageOut is the message to send to the server
      */
-    private synchronized void setMessageOut(CommandMessage messageOut) throws GameException {
+    private synchronized void setMessageOut(RequestMessage messageOut) throws GameException {
         try {
             output.writeObject(messageOut);
             output.flush();
@@ -157,7 +156,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public String setPlayer(String nickname) throws GameException {
-        setMessageOut(new CommandMessage(Command.SET_PLAYER, nickname));
+        setMessageOut(new RequestMessage(Request.SET_PLAYER, nickname));
         waitSetupPhase();
         return this.nickname;
     }
@@ -167,7 +166,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void resetPlayer() throws GameException {
-        setMessageOut(new CommandMessage(Command.RESET_PLAYER, null));
+        setMessageOut(new RequestMessage(Request.RESET_PLAYER, null));
     }
 
     /**
@@ -183,7 +182,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
-        setMessageOut(new CommandMessage(Command.CREATE_GAME, new CreateGameRequest(gameId, numPlayers, endScore)));
+        setMessageOut(new RequestMessage(Request.CREATE_GAME, new CreateGameRequest(gameId, numPlayers, endScore)));
         waitSetupPhase();
         return this.gameId != null;
     }
@@ -199,7 +198,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public boolean joinGame(String gameId) throws GameException {
-        setMessageOut(new CommandMessage(Command.JOIN_GAME, gameId));
+        setMessageOut(new RequestMessage(Request.JOIN_GAME, gameId));
         waitSetupPhase();
         return this.gameId != null;
     }
@@ -213,7 +212,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public Map<String, List<String>> getFreeGames() throws GameException {
-        setMessageOut(new CommandMessage(Command.LIST_FREE_GAMES, null));
+        setMessageOut(new RequestMessage(Request.LIST_FREE_GAMES, null));
         waitSetupPhase();
         return freeGames;
     }
@@ -228,7 +227,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void selectSecretObjective(int index) throws GameException {
-        setMessageOut(new CommandMessage(Command.CHOOSE_OBJECTIVE, index));
+        setMessageOut(new RequestMessage(Request.CHOOSE_OBJECTIVE, index));
     }
 
     /**
@@ -239,7 +238,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void selectStarterFace(int face) throws GameException {
-        setMessageOut(new CommandMessage(Command.CHOOSE_STARTER_FACE, face));
+        setMessageOut(new RequestMessage(Request.CHOOSE_STARTER_FACE, face));
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,7 +251,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
-        setMessageOut(new CommandMessage(Command.PLACE_CARD, placeCardRequest));
+        setMessageOut(new RequestMessage(Request.PLACE_CARD, placeCardRequest));
     }
 
     /**
@@ -263,7 +262,7 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void drawCard(int position) throws GameException {
-        setMessageOut(new CommandMessage(Command.DRAW_CARD, position));
+        setMessageOut(new RequestMessage(Request.DRAW_CARD, position));
     }
 
     /**
@@ -274,12 +273,12 @@ public class ClientSCK implements ServerInterface {
      */
     @Override
     public void sendChatMessage(ChatMessageRequest chatMessage) throws GameException {
-        setMessageOut(new CommandMessage(Command.CHAT, chatMessage));
+        setMessageOut(new RequestMessage(Request.CHAT, chatMessage));
     }
 
     @Override
     public void leaveGame() throws GameException {
-        setMessageOut(new CommandMessage(Command.LEAVE, null));
+        setMessageOut(new RequestMessage(Request.LEAVE, null));
     }
 
     // UPDATES /////////////////////////////////////////////////////////////////////////////////////////////////////////

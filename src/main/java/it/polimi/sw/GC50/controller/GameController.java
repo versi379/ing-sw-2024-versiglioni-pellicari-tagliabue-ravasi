@@ -1,16 +1,16 @@
 package it.polimi.sw.GC50.controller;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
-import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
+import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.client.ClientInterface;
+import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

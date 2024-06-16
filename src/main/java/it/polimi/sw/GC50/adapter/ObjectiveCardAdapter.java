@@ -3,8 +3,8 @@ package it.polimi.sw.GC50.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import it.polimi.sw.GC50.model.objective.Objective;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.model.objectives.Objective;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 
 import java.io.IOException;
 

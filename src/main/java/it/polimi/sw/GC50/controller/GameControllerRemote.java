@@ -1,8 +1,8 @@
 package it.polimi.sw.GC50.controller;
 
-import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
-import it.polimi.sw.GC50.net.util.ClientInterface;
-import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
+import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.client.ClientInterface;
+import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

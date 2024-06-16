@@ -2,7 +2,7 @@ package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
-import it.polimi.sw.GC50.net.util.ClientInterface;
+import it.polimi.sw.GC50.net.client.ClientInterface;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

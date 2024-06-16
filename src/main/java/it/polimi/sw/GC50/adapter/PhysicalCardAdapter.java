@@ -3,9 +3,9 @@ package it.polimi.sw.GC50.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import it.polimi.sw.GC50.model.card.CardType;
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.cards.CardType;
+import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 
 import java.io.IOException;
 

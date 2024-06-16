@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.net.socket;
 
-import it.polimi.sw.GC50.net.Messages.Message;
-import it.polimi.sw.GC50.net.util.Notify;
+import it.polimi.sw.GC50.net.messages.Message;
+import it.polimi.sw.GC50.net.messages.Notify;
 
 import java.io.Serializable;
 

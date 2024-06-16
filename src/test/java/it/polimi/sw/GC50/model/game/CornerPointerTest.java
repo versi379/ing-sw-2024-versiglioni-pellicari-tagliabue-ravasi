@@ -1,7 +1,7 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.Corner;
-import it.polimi.sw.GC50.model.card.CornerStatus;
+import it.polimi.sw.GC50.model.cards.Corner;
+import it.polimi.sw.GC50.model.cards.CornerStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 
 import java.io.Serializable;
 import java.util.ArrayList;

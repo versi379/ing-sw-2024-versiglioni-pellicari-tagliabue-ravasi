@@ -1,9 +1,9 @@
 package it.polimi.sw.GC50.view;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.card.PlayableCard;
+import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.*;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 
 import java.util.*;
 

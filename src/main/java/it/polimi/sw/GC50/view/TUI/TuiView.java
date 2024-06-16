@@ -1,11 +1,10 @@
 package it.polimi.sw.GC50.view.TUI;
 
-import it.polimi.sw.GC50.model.card.Resource;
-import it.polimi.sw.GC50.model.chat.Chat;
+import it.polimi.sw.GC50.model.cards.Resource;
 import it.polimi.sw.GC50.model.game.GameStatus;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.net.util.Command;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
+import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 import javafx.util.Pair;
@@ -57,7 +56,7 @@ public class TuiView implements View {
             for (String game : freeGames.keySet()) {
                 System.out.print("Game \"" + game + "\" -> current players:");
                 for (String nickname : freeGames.get(game)) {
-                    System.out.print(" " + nickname);
+                    System.out.print(" \"" + nickname + "\"");
                 }
                 System.out.println();
             }
@@ -280,10 +279,6 @@ public class TuiView implements View {
             System.out.println();
         }
         showScores();
-    }
-
-    @Override
-    public void showChatMessage(Chat chat) {
     }
 
     @Override

@@ -1,7 +1,6 @@
 package it.polimi.sw.GC50.view;
 
-import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.net.util.Client;
+import it.polimi.sw.GC50.net.client.Client;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,6 +39,4 @@ public interface View extends Serializable {
     void showHelp();
     void showError(String content);
     void showChatMessage(String sender, String content, String time);
-    // ????
-    void showChatMessage(Chat chat);
 }

@@ -1,10 +1,9 @@
 package it.polimi.sw.GC50.view.GUI;
 
-import it.polimi.sw.GC50.model.card.PhysicalCard;
-import it.polimi.sw.GC50.model.chat.Chat;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
-import it.polimi.sw.GC50.net.util.Client;
-import it.polimi.sw.GC50.net.util.Command;
+import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
+import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
@@ -300,11 +299,6 @@ public class GuiView extends Application implements View {
     }
 
     // ---------------------------------  CHAT  ---------------------------------
-
-    @Override
-    public void showChatMessage(Chat chat) {
-
-    }
 
     @Override
     public void showChatMessage(String sender, String content, String time) {

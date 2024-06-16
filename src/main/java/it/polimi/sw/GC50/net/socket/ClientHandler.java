@@ -2,13 +2,14 @@ package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
-import it.polimi.sw.GC50.net.Messages.FreeGamesMex;
-import it.polimi.sw.GC50.net.Messages.StringMex;
-import it.polimi.sw.GC50.net.Requests.ChatMessageRequest;
-import it.polimi.sw.GC50.net.Requests.CreateGameRequest;
-import it.polimi.sw.GC50.net.Messages.Message;
-import it.polimi.sw.GC50.net.Requests.PlaceCardRequest;
-import it.polimi.sw.GC50.net.util.*;
+import it.polimi.sw.GC50.net.client.ClientInterface;
+import it.polimi.sw.GC50.net.messages.FreeGamesMex;
+import it.polimi.sw.GC50.net.messages.Notify;
+import it.polimi.sw.GC50.net.messages.StringMex;
+import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
+import it.polimi.sw.GC50.net.requests.CreateGameRequest;
+import it.polimi.sw.GC50.net.messages.Message;
+import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,8 +18,6 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * class that represents the client handler
@@ -57,7 +56,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     public void run() {
         while (true) {
             try {
-                switchMex((CommandMessage) input.readObject());
+                switchMex((RequestMessage) input.readObject());
             } catch (IOException | ClassNotFoundException ignored) {
             }
         }
@@ -67,16 +66,12 @@ public class ClientHandler implements Runnable, ClientInterface {
      * method that switch the message received from the client
      *
      * @param message is the message received from the client
-     *                it can be a command or a lobby command
-     *                if it is a command it calls the method related to the command
-     *                if it is a lobby command it calls the method related to the lobby command
-     *                if the message is not a command or a lobby command it does nothing
      *                if an exception is thrown it does nothing
      */
-    private void switchMex(CommandMessage message) {
-        System.out.println(message.getCommand());
+    private void switchMex(RequestMessage message) {
+        System.out.println(message.getRequest());
 
-        switch (message.getCommand()) {
+        switch (message.getRequest()) {
             case SET_PLAYER -> {
                 setPlayer((String) message.getContent());
             }
@@ -105,10 +100,10 @@ public class ClientHandler implements Runnable, ClientInterface {
             case DRAW_CARD -> {
                 drawCard((int) message.getContent());
             }
-            case CHAT, CHAT_PRIVATE -> {
+            case CHAT -> {
                 sendChatMessage((ChatMessageRequest) message.getContent());
             }
-            case Command.LEAVE -> {
+            case LEAVE -> {
                 leaveGame();
             }
         }

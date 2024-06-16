@@ -3,9 +3,9 @@ package it.polimi.sw.GC50.adapter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import it.polimi.sw.GC50.model.card.Color;
-import it.polimi.sw.GC50.model.card.Resource;
-import it.polimi.sw.GC50.model.objective.*;
+import it.polimi.sw.GC50.model.cards.Color;
+import it.polimi.sw.GC50.model.cards.Resource;
+import it.polimi.sw.GC50.model.objectives.*;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,40 +1,10 @@
 package it.polimi.sw.GC50.view;
 
-import it.polimi.sw.GC50.net.Messages.Message;
-import it.polimi.sw.GC50.net.util.Notify;
+import it.polimi.sw.GC50.net.messages.Message;
+import it.polimi.sw.GC50.net.messages.Notify;
 
 import java.rmi.RemoteException;
 
 public interface GameObserver {
     void update(Notify notify, Message message) throws RemoteException;
-
-    //void onUpdate(Message message) throws RemoteException;
-
-    /*
-    String getNickname();
-
-    void setModel();
-
-    void playerJoined(String nickname);
-
-    void playerLeft(String nickname);
-
-    void gameSetup();
-
-    void playerReady(String nickname);
-
-    void gameStarted();
-
-    void cardAdded(String nickname, PhysicalCard card);
-
-    void cardRemoved(String nickname, int index);
-
-    void cardPlaced(String nickname, PlayableCard card, int x, int y);
-
-    void cardDrawn(DrawingPosition drawingPosition);
-
-    void gameEnd(List<String> winnerList, int totalScore, int objectivesScore);
-
-    void chatMessage(String nickname, String message);
-    */
 }

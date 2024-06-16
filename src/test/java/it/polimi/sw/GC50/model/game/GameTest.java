@@ -1,9 +1,9 @@
 package it.polimi.sw.GC50.model.game;
 
-import it.polimi.sw.GC50.model.card.*;
+import it.polimi.sw.GC50.model.cards.*;
 import it.polimi.sw.GC50.model.lobby.Player;
-import it.polimi.sw.GC50.model.objective.IdenticalResourcesObjective;
-import it.polimi.sw.GC50.model.objective.ObjectiveCard;
+import it.polimi.sw.GC50.model.objectives.IdenticalResourcesObjective;
+import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static it.polimi.sw.GC50.model.card.PlayableCardTest.*;
+import static it.polimi.sw.GC50.model.cards.PlayableCardTest.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
