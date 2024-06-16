@@ -17,7 +17,7 @@ public class TuiView implements View {
     public static String redTxt = "\u001B[31m";
     public static String yellowTxt = "\u001B[33m";
     public static String blueTxt = "\u001B[34m";
-    public static String purpleTxt = "\u001B[35m";
+    public static String goldTxt = "\u001B[93m";
 
     @Override
     public void setClient(Client client) {
@@ -145,14 +145,14 @@ public class TuiView implements View {
     @Override
     public void showWaitPlayers() {
         System.out.println();
-        System.out.println(purpleTxt + "Waiting for other players to join the game..." + baseTxt);
+        System.out.println(goldTxt + "Waiting for other players to join the game..." + baseTxt);
         showHelp();
     }
 
     @Override
     public void showSetup() {
         System.out.println();
-        System.out.println(purpleTxt + "All players joined, beginning game setup!" + baseTxt);
+        System.out.println(goldTxt + "All players joined, beginning game setup!" + baseTxt);
 
         showCommonObjectives();
         showSecretObjectiveSelection();
@@ -194,15 +194,15 @@ public class TuiView implements View {
     @Override
     public void showStart() {
         System.out.println();
-        System.out.println(purpleTxt + "Game started" + baseTxt);
+        System.out.println(goldTxt + "Game started!" + baseTxt);
     }
 
     @Override
     public void showCurrentPlayer() {
         if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
-            System.out.println(yellowTxt + "Your turn:" + baseTxt);
+            System.out.println(goldTxt + "Your turn:" + baseTxt);
         } else {
-            System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
+            System.out.println(goldTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
         }
     }
 
@@ -267,7 +267,7 @@ public class TuiView implements View {
     @Override
     public void showEnd() {
         System.out.println();
-        System.out.println(purpleTxt + "Game ended!" + baseTxt);
+        System.out.println(goldTxt + "Game ended!" + baseTxt);
 
         if (getGameView().getWinnerList().size() == 1) {
             System.out.println("Winner -> \"" + getGameView().getWinnerList().getFirst() + "\"");
@@ -284,7 +284,7 @@ public class TuiView implements View {
     @Override
     public void showEndSession() {
         System.out.println();
-        System.out.println(purpleTxt + "Session ended" + baseTxt);
+        System.out.println(goldTxt + "Session ended" + baseTxt);
     }
 
     @Override
