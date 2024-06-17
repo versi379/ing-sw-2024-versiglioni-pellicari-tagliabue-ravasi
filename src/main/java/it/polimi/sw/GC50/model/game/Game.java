@@ -210,7 +210,7 @@ public class Game extends GameObservable {
         playerList.add(player);
         playerAreas.put(player, new PlayerData(deckSize));
         setChanged();
-        notifyObservers(Notify.NOTIFY_PLAYER_JOINED_GAME, new PlayerMex(player));
+        notifyObservers(Notify.NOTIFY_PLAYER_JOINED_GAME, new PlayerJoinedMex(this, player));
 
         if (playerList.size() >= getNumPlayers()) {
             setup();

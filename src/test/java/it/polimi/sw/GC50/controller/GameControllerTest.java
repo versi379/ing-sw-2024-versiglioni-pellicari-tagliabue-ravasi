@@ -22,7 +22,7 @@ public class GameControllerTest {
         assertEquals("Game", controller.getGameId());
         assertEquals(List.of("Player"), controller.getPlayerList());
         assertEquals(Notify.NOTIFY_PLAYER_JOINED_GAME, client.getNotify());
-        assertEquals("Player", ((PlayerMex) client.getMessage()).getNickname());
+        assertEquals("Player", ((PlayerJoinedMex) client.getMessage()).getNickname());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class GameControllerTest {
 
         assertEquals(List.of("Player1", "Player2"), controller.getPlayerList());
         assertEquals(Notify.NOTIFY_PLAYER_JOINED_GAME, client1.getNotify());
-        assertEquals("Player2", ((PlayerMex) client1.getMessage()).getNickname());
+        assertEquals("Player2", ((PlayerJoinedMex) client1.getMessage()).getNickname());
     }
 
     @Test

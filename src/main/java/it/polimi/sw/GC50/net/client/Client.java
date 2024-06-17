@@ -208,7 +208,8 @@ public class Client {
             view.showWaitPlayers();
         }
 
-        while (gameView.getGameStatus().equals(GameStatus.WAITING) && gameView.isInGame()) {
+        while ((gameView.getGameStatus().equals(GameStatus.WAITING) || !gameView.allJoined())
+                && gameView.isInGame()) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -306,6 +307,7 @@ public class Client {
     }
 
     private void playTurn() throws GameException {
+        gameView.setTurnEnded(false);
         view.showCurrentPlayer();
 
         if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
@@ -326,7 +328,8 @@ public class Client {
                 view.showDrawingPhase();
             }
 
-            while (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING) && gameView.isInGame()) {
+            while ((gameView.getPlayingPhase().equals(PlayingPhase.DRAWING) || !gameView.isTurnEnded())
+                    && gameView.isInGame()) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
@@ -383,10 +386,10 @@ public class Client {
 //       System.err.println("> Update from server: " + notify);
         switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
-                String player = ((PlayerMex) message).getNickname();
-                gameView.setPlayerArea(player, null, 0, 0, false);
+                PlayerJoinedMex playerJoinedMex = (PlayerJoinedMex) message;
+                gameView.setPlayersLeft(playerJoinedMex.getPlayersLeft());
 
-                view.showPlayerJoined(player);
+                view.showPlayerJoined(playerJoinedMex.getNickname());
             }
 
             case NOTIFY_PLAYER_LEFT_GAME -> {
@@ -443,21 +446,21 @@ public class Client {
 
             case NOTIFY_CARD_DRAWN -> {
                 DecksUpdateMex decksUpdateMex = (DecksUpdateMex) message;
+                gameView.setTurnEnded(true);
                 gameView.setDecks(decksUpdateMex.getDecks());
                 if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
                     gameView.setHand((decksUpdateMex.getHand()));
                 }
 
-                view.showDecks();
                 if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
                     view.showHand();
                 }
+                view.showDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {
                 gameView.setPlayingPhase(PlayingPhase.PLACING);
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
-
             }
 
             case NOTIFY_GAME_ENDED -> {

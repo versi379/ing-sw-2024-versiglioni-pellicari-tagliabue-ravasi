@@ -10,8 +10,10 @@ import java.util.*;
 public class GameView {
     private boolean inGame;
     // GENERAL //////////////////////////////////////////////////////
+    private int playersLeft;
     private GameStatus gameStatus;
     private PlayingPhase playingPhase;
+    private boolean turnEnded;
     private String currentPlayer;
     private List<ObjectiveCard> commonObjectives;
     private PlayableCard[] decks;
@@ -28,8 +30,10 @@ public class GameView {
     public GameView(String nickname) {
         inGame = false;
 
+        playersLeft = -1;
         gameStatus = GameStatus.WAITING;
         playingPhase = PlayingPhase.PLACING;
+        turnEnded = false;
         currentPlayer = null;
         commonObjectives = null;
         decks = null;
@@ -70,6 +74,18 @@ public class GameView {
         return inGame;
     }
 
+    public void setPlayersLeft(int playersLeft) {
+        this.playersLeft = playersLeft;
+    }
+
+    public int getPlayersLeft() {
+        return playersLeft;
+    }
+
+    public boolean allJoined() {
+        return getPlayersLeft() == 0;
+    }
+
     public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
     }
@@ -84,6 +100,14 @@ public class GameView {
 
     public PlayingPhase getPlayingPhase() {
         return playingPhase;
+    }
+
+    public void setTurnEnded(boolean turnEnded) {
+        this.turnEnded = turnEnded;
+    }
+
+    public boolean isTurnEnded() {
+        return turnEnded;
     }
 
     public void setCurrentPlayer(String currentPlayer) {
