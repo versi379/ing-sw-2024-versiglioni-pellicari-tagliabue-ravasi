@@ -133,8 +133,8 @@ public class GameTest {
         game.addPlayer(player);
 
         assertEquals(CardType.STARTER, game.getStarterCard(player).getCardType());
-        assertEquals(2, game.getSecretObjectivesList(player).size());
-        game.getSecretObjectivesList(player).stream()
+        assertEquals(2, game.getSecretObjectivesSelection(player).size());
+        game.getSecretObjectivesSelection(player).stream()
                 .forEach(x -> assertEquals(CardType.OBJECTIVE, x.getCardType()));
     }
 

@@ -172,6 +172,9 @@ public class Client {
             case CHOOSE_STARTER_FACE -> {
                 selectStarterFace(Integer.parseInt(args[0]));
             }
+            case SHOW_OBJECTIVES -> {
+                view.showObjectives();
+            }
             case PLACE_CARD -> {
                 placeCard(new PlaceCardRequest(Integer.parseInt(args[0]),
                         Integer.parseInt(args[1]),
@@ -407,7 +410,7 @@ public class Client {
                 gameView.setCommonObjectives(setupMex.getCommonObjectives());
                 gameView.setDecks(setupMex.getDecks());
                 gameView.setHand(setupMex.getHand(gameView.getNickname()));
-                gameView.setSecreteObjectivesList(setupMex.getSecretObjectivesMap(gameView.getNickname()));
+                gameView.setSecreteObjectivesSelection(setupMex.getSecretObjectivesMap(gameView.getNickname()));
                 gameView.setStarterCard(setupMex.getStarterCard(gameView.getNickname()));
             }
 

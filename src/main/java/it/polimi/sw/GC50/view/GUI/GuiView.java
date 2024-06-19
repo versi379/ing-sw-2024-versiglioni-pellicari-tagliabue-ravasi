@@ -205,14 +205,14 @@ public class GuiView extends Application implements View {
     @Override
     public void showSetup() {
 
-        showCommonObjectives();
+        this.showObjectives();
         showSecretObjectiveSelection();
         showStarterCardSelection();
 
     }
 
     @Override
-    public void showCommonObjectives() {
+    public void showObjectives() {
         List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
         StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
         for (ObjectiveCard commonObjective : commonObjectives) {
@@ -222,7 +222,7 @@ public class GuiView extends Application implements View {
     }
 
     private void showSecretObjectiveSelection() {
-        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
+        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesSelection();
         StringBuilder secretObjectiveStringBuilder = new StringBuilder("Secret Objective Cards");
         for (int i = 0; i < objectiveCards.size(); i++) {
             secretObjectiveStringBuilder.append((i + 1) + ") " + objectiveCards.get(i).toStringTUI());

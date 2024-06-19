@@ -24,7 +24,7 @@ public interface View extends Serializable {
     void showPlayerJoined(String nickname);
     void showPlayerLeft(String nickname);
     void showSetup();
-    void showCommonObjectives();
+    void showObjectives();
     void showPlayerReady(String nickname);
     void showStart();
     void showPlacingPhase();

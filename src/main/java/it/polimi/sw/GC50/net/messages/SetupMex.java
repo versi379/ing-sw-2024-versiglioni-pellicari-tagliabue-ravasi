@@ -26,7 +26,7 @@ public class SetupMex implements Message {
         starterCardMap = new HashMap<>();
         for (Player player : game.getPlayerList()) {
             handMap.put(player.getNickname(), game.getHand(player));
-            secretObjectivesMap.put(player.getNickname(), game.getSecretObjectivesList(player));
+            secretObjectivesMap.put(player.getNickname(), game.getSecretObjectivesSelection(player));
             starterCardMap.put(player.getNickname(), game.getStarterCard(player));
         }
     }

@@ -433,8 +433,8 @@ public class Game extends GameObservable {
      * @param player
      * @return
      */
-    public List<ObjectiveCard> getSecretObjectivesList(Player player) {
-        return getPlayerData(player).getSecretObjectivesList();
+    public List<ObjectiveCard> getSecretObjectivesSelection(Player player) {
+        return getPlayerData(player).getSecretObjectivesSelection();
     }
 
     /**

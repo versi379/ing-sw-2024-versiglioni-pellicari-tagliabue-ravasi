@@ -154,36 +154,52 @@ public class TuiView implements View {
         System.out.println();
         System.out.println(goldTxt + "All players joined, beginning game setup!" + baseTxt);
 
-        showCommonObjectives();
+        showObjectives();
+        System.out.println();
         showSecretObjectiveSelection();
+        System.out.println();
         showStarterCardSelection();
 
         System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
     }
 
     @Override
-    public void showCommonObjectives() {
-        System.out.println(yellowTxt + "Common objective cards:" + baseTxt);
-        List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
-        for (ObjectiveCard commonObjective : commonObjectives) {
-            System.out.println((commonObjective.toStringTUI()));
-            System.out.println();
+    public void showObjectives() {
+        if (!getGameView().getGameStatus().equals(GameStatus.WAITING)) {
+            System.out.println(yellowTxt + "Common objective cards:" + baseTxt);
+            List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
+            for (ObjectiveCard commonObjective : commonObjectives) {
+                System.out.println((commonObjective.toStringTUI()));
+                if (!(commonObjective == commonObjectives.getLast())) {
+                    System.out.println();
+                }
+            }
+            if (getGameView().getSecretObjective() != null) {
+                System.out.println();
+                System.out.println(yellowTxt + "Secret objective card:" + baseTxt);
+                ObjectiveCard secretObjective = getGameView().getSecretObjective();
+                System.out.println((secretObjective.toStringTUI()));
+            }
+
+        } else {
+            System.out.println(redTxt + "Objectives are yet to be chosen!" + baseTxt);
         }
     }
 
     private void showSecretObjectiveSelection() {
         System.out.println(yellowTxt + "Secret objective cards selection:" + baseTxt);
-        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesList();
+        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesSelection();
         for (int i = 0; i < objectiveCards.size(); i++) {
             System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
-            System.out.println();
+            if (i < objectiveCards.size() - 1) {
+                System.out.println();
+            }
         }
     }
 
     private void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
         TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
-        System.out.println();
     }
 
     @Override
@@ -292,6 +308,7 @@ public class TuiView implements View {
         System.out.println(yellowTxt + "Commands:" + baseTxt);
         System.out.println("Select secret objective card -> \"-choose_objective\", \"-co\" [index]");
         System.out.println("Select starter card face -> \"-choose_starter_face\", \"-cs\" [index]");
+        System.out.println("Show objectives -> \"-objectives\", \"-o\"");
         System.out.println("Place card -> \"-place_card\", \"-p\" [card index] [face index] [x] [y]");
         System.out.println("Draw card -> \"-draw_card\", \"-d\" [index]");
         System.out.println("Send message in chat -> \"-chat\", \"-c\" [message]");
@@ -299,6 +316,7 @@ public class TuiView implements View {
         System.out.println("Leave game -> \"-leave\", \"-l\"");
         System.out.println("Help -> \"-help\", \"-h\"");
         System.out.println();
+
         System.out.println(yellowTxt + "Legend:" + baseTxt);
         System.out.print("Resource types:");
         for (Resource resource : Resource.values()) {
@@ -350,6 +368,15 @@ public class TuiView implements View {
                     return new Pair<>(Command.CHOOSE_STARTER_FACE,
                             new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
                 } catch (NumberFormatException e) {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-objectives", "-o" -> {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
+                    return new Pair<>(Command.SHOW_OBJECTIVES, null);
+                } else {
                     return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
@@ -411,7 +438,7 @@ public class TuiView implements View {
                 if (arg.isEmpty()) {
                     return new Pair<>(Command.LEAVE, null);
                 } else {
-                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
@@ -420,7 +447,7 @@ public class TuiView implements View {
                 if (arg.isEmpty()) {
                     return new Pair<>(Command.HELP, null);
                 } else {
-                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
         }

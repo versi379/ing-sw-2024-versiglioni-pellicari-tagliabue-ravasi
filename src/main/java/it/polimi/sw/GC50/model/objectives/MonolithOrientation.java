@@ -10,8 +10,8 @@ public enum MonolithOrientation implements Serializable {
 
     public String toStringTUI() {
         return switch (this) {
-            case RIGHTDIAGONAL -> "diagonal right to left";
-            case LEFTDIAGONAL -> "diagonal left to right";
+            case RIGHTDIAGONAL -> "diagonal left to right (\\)";
+            case LEFTDIAGONAL -> "diagonal right to left (/)";
         };
     }
 }

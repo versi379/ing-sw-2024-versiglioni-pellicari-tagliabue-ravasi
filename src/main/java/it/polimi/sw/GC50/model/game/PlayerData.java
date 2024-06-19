@@ -30,7 +30,7 @@ public class PlayerData {
      */
     private boolean ready;
     private PhysicalCard starterCard;
-    private List<ObjectiveCard> secretObjectivesList;
+    private List<ObjectiveCard> secretObjectivesSelection;
 
     /**
      * Constructor to build player area
@@ -62,12 +62,12 @@ public class PlayerData {
     /**
      * given a starter card and a list of secret objective sets a starting choice
      * @param starterCard
-     * @param secretObjectivesList
+     * @param secretObjectivesSelection
      */
-    public void setStartingChoices(PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
+    public void setStartingChoices(PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesSelection) {
         ready = false;
         this.starterCard = starterCard;
-        this.secretObjectivesList = secretObjectivesList;
+        this.secretObjectivesSelection = secretObjectivesSelection;
     }
 
     /**
@@ -77,11 +77,11 @@ public class PlayerData {
         return starterCard;
     }
 
-    /*
+    /**
      * @return a secret objective list
      */
-    public List<ObjectiveCard> getSecretObjectivesList() {
-        return secretObjectivesList;
+    public List<ObjectiveCard> getSecretObjectivesSelection() {
+        return new ArrayList<>(secretObjectivesSelection);
     }
 
     /**

@@ -22,7 +22,7 @@ public class GameView {
     private String nickname;
     private List<PhysicalCard> hand;
     private ObjectiveCard secretObjective;
-    private List<ObjectiveCard> secreteObjectivesList;
+    private List<ObjectiveCard> secreteObjectivesSelection;
     private PhysicalCard starterCard;
     // BOARDS ///////////////////////////////////////////////////////
     private final Map<String, PlayerDataView> playerAreas;
@@ -42,7 +42,7 @@ public class GameView {
         hand = null;
         secretObjective = null;
 
-        secreteObjectivesList = null;
+        secreteObjectivesSelection = null;
         starterCard = null;
 
         playerAreas = new HashMap<>();
@@ -60,7 +60,7 @@ public class GameView {
         hand = null;
         secretObjective = null;
 
-        secreteObjectivesList = null;
+        secreteObjectivesSelection = null;
         starterCard = null;
 
         playerAreas.clear();
@@ -166,12 +166,12 @@ public class GameView {
         return secretObjective;
     }
 
-    public void setSecreteObjectivesList(List<ObjectiveCard> secreteObjectivesList) {
-        this.secreteObjectivesList = secreteObjectivesList;
+    public void setSecreteObjectivesSelection(List<ObjectiveCard> secreteObjectivesSelection) {
+        this.secreteObjectivesSelection = secreteObjectivesSelection;
     }
 
-    public List<ObjectiveCard> getSecreteObjectivesList() {
-        return new ArrayList<>(secreteObjectivesList);
+    public List<ObjectiveCard> getSecreteObjectivesSelection() {
+        return new ArrayList<>(secreteObjectivesSelection);
     }
 
     public void setStarterCard(PhysicalCard starterCard) {

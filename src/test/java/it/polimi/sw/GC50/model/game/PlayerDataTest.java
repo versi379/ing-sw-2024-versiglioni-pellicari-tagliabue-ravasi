@@ -44,7 +44,7 @@ public class PlayerDataTest {
         playerData.setStartingChoices(starterCard, secretObjectivesList);
 
         assertEquals(starterCard, playerData.getStarterCard());
-        assertEquals(secretObjectivesList, playerData.getSecretObjectivesList());
+        assertEquals(secretObjectivesList, playerData.getSecretObjectivesSelection());
     }
 
     @Test
@@ -65,14 +65,14 @@ public class PlayerDataTest {
     void testGetSecretObjectivesList() {
         PlayerData playerData = new PlayerData(40);
 
-        assertNull(playerData.getSecretObjectivesList());
+        assertNull(playerData.getSecretObjectivesSelection());
 
 
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);
         List<ObjectiveCard> secretObjectivesList = new ArrayList<>();
         playerData.setStartingChoices(starterCard, secretObjectivesList);
 
-        assertEquals(secretObjectivesList, playerData.getSecretObjectivesList());
+        assertEquals(secretObjectivesList, playerData.getSecretObjectivesSelection());
     }
 
     @Test

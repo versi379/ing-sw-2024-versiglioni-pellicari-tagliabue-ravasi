@@ -85,9 +85,9 @@ public class GameController extends UnicastRemoteObject implements GameControlle
         Player player = getPlayer(clientInterface);
 
         if (isStarting()) {
-            List<ObjectiveCard> secretObjectivesList = game.getSecretObjectivesList(player);
-            if (index >= 0 && index < secretObjectivesList.size()) {
-                game.setSecretObjective(player, secretObjectivesList.get(index));
+            List<ObjectiveCard> secretObjectivesSelection = game.getSecretObjectivesSelection(player);
+            if (index >= 0 && index < secretObjectivesSelection.size()) {
+                game.setSecretObjective(player, secretObjectivesSelection.get(index));
             } else {
                 game.error(player, "Invalid index");
             }
