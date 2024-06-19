@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * class that manages set up messages
+ */
 public class SetupMex implements Message {
     private final List<ObjectiveCard> commonObjectives;
     private final PlayableCard[] decks;
@@ -18,6 +21,10 @@ public class SetupMex implements Message {
     private final Map<String, List<ObjectiveCard>> secretObjectivesMap;
     private final Map<String, PhysicalCard> starterCardMap;
 
+    /**
+     * Construct an instance of SetupMex
+     * @param game
+     */
     public SetupMex(Game game) {
         commonObjectives = game.getCommonObjectives();
         decks = game.getDecksTop();
@@ -31,26 +38,53 @@ public class SetupMex implements Message {
         }
     }
 
+    /**
+     * @return an array list of common objectives
+     */
     public List<ObjectiveCard> getCommonObjectives() {
         return new ArrayList<>(commonObjectives);
     }
 
+    /**
+     * @return a copy of decks
+     */
     public PlayableCard[] getDecks() {
         return decks.clone();
     }
+
+    /**
+     * Given a player returns his/her hand
+     * @param nickname
+     * @return
+     */
 
     public List<PhysicalCard> getHand(String nickname) {
         return new ArrayList<>(handMap.get(nickname));
     }
 
+    /**
+     * Given a player returns his/her backs hand
+     * @param nickname
+     * @return
+     */
     public List<PlayableCard> getHandBacks(String nickname) {
         return new ArrayList<>(handMap.get(nickname).stream().map(PhysicalCard::getBack).toList());
     }
 
+    /**
+     * Given a player returns a map of his/her secret objectives
+     * @param nickname
+     * @return
+     */
     public List<ObjectiveCard> getSecretObjectivesMap(String nickname) {
         return new ArrayList<>(secretObjectivesMap.get(nickname));
     }
 
+    /**
+     * Given a player returns his/her starter card
+     * @param nickname
+     * @return
+     */
     public PhysicalCard getStarterCard(String nickname) {
         return starterCardMap.get(nickname);
     }
