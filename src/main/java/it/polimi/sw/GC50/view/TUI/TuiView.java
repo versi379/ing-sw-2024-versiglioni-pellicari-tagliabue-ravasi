@@ -155,9 +155,7 @@ public class TuiView implements View {
         System.out.println(goldTxt + "All players joined, beginning game setup!" + baseTxt);
 
         showObjectives();
-        System.out.println();
         showSecretObjectiveSelection();
-        System.out.println();
         showStarterCardSelection();
 
         System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
@@ -170,15 +168,13 @@ public class TuiView implements View {
             List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
             for (ObjectiveCard commonObjective : commonObjectives) {
                 System.out.println((commonObjective.toStringTUI()));
-                if (!(commonObjective == commonObjectives.getLast())) {
-                    System.out.println();
-                }
+                System.out.println();
             }
             if (getGameView().getSecretObjective() != null) {
-                System.out.println();
                 System.out.println(yellowTxt + "Secret objective card:" + baseTxt);
                 ObjectiveCard secretObjective = getGameView().getSecretObjective();
                 System.out.println((secretObjective.toStringTUI()));
+                System.out.println();
             }
 
         } else {
@@ -191,15 +187,14 @@ public class TuiView implements View {
         List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesSelection();
         for (int i = 0; i < objectiveCards.size(); i++) {
             System.out.println((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
-            if (i < objectiveCards.size() - 1) {
-                System.out.println();
-            }
+            System.out.println();
         }
     }
 
     private void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
         TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
+        System.out.println();
     }
 
     @Override
@@ -224,7 +219,7 @@ public class TuiView implements View {
 
     @Override
     public void showPlacingPhase() {
-        System.out.println(yellowTxt + "Placing phase" + baseTxt);
+        System.out.println(goldTxt + "Placing phase" + baseTxt);
         showCardsArea(getGameView().getNickname());
         showHand();
         System.out.println(blueTxt + "Place a card:" + baseTxt);
@@ -232,7 +227,7 @@ public class TuiView implements View {
 
     @Override
     public void showDrawingPhase() {
-        System.out.println(yellowTxt + "Drawing phase" + baseTxt);
+        System.out.println(goldTxt + "Drawing phase" + baseTxt);
         showDecks();
         System.out.println(blueTxt + "Draw a card:" + baseTxt);
     }
@@ -240,28 +235,31 @@ public class TuiView implements View {
     @Override
     public void showCardsArea(String nickname) {
         if (getGameView().getNickname().equals(nickname)) {
-            System.out.println("Your cards area:");
+            System.out.println(yellowTxt + "Your cards area:" + baseTxt);
         } else {
-            System.out.println("Player \"" + getGameView().getCurrentPlayer() + "\" cards area:");
+            System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" cards area:" + baseTxt);
         }
         TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        System.out.println();
     }
 
     @Override
     public void showHand() {
-        System.out.println("Your hand:");
+        System.out.println(yellowTxt + "Your hand:" + baseTxt);
         TuiModelPrinter.printHand(getGameView().getHand());
+        System.out.println();
     }
 
     @Override
     public void showDecks() {
-        System.out.println("Cards in the center of the table:");
+        System.out.println(yellowTxt + "Cards in the center of the table:" + baseTxt);
         TuiModelPrinter.printDecks(getGameView().getDecks());
+        System.out.println();
     }
 
     @Override
     public void showScores() {
-        System.out.println("Scores:");
+        System.out.println(yellowTxt + "Scores:" + baseTxt);
 
         if (getGameView().getGameStatus().equals(GameStatus.ENDED)) {
             Map<String, Pair<Integer, Integer>> scores = new HashMap<>();
@@ -278,6 +276,7 @@ public class TuiView implements View {
             }
             TuiModelPrinter.printScoresPlaying(scores);
         }
+        System.out.println();
     }
 
     @Override
@@ -324,6 +323,7 @@ public class TuiView implements View {
         }
         System.out.println();
         System.out.println("Card bonus types: blank, resource, covered corners (C)");
+        System.out.println();
     }
 
     @Override

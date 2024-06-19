@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.net.client;
 
+import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.messages.*;
@@ -391,6 +392,8 @@ public class Client {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 PlayerJoinedMex playerJoinedMex = (PlayerJoinedMex) message;
                 gameView.setPlayersLeft(playerJoinedMex.getPlayersLeft());
+                gameView.setPlayerArea(playerJoinedMex.getNickname(), new CardsMatrix(1),
+                        0, 0, false);
 
                 view.showPlayerJoined(playerJoinedMex.getNickname());
             }
