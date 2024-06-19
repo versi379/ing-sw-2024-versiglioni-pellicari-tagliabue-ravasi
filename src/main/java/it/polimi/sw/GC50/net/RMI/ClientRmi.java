@@ -17,6 +17,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class for client RMI
+ */
 public class ClientRmi extends UnicastRemoteObject implements ServerInterface, ClientInterface {
     private final Client client;
     private final String serverIp;
@@ -24,6 +27,13 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     private ServerRmiRemote serverRmi;
     private GameControllerRemote gameController;
 
+    /**
+     * Constructs an interface of RMI client
+     * @param client            name of the client
+     * @param serverIp          IP of the server
+     * @param serverPort        port of the server
+     * @throws RemoteException  if there is an error
+     */
     public ClientRmi(Client client, String serverIp, String serverPort) throws RemoteException {
         this.client = client;
         this.serverIp = serverIp;
@@ -33,6 +43,11 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that connect RMI client to RMI server
+     * @throws GameException    if there is an error in connection to the server
+     */
     @Override
     public void connect() throws GameException {
         try {
@@ -44,6 +59,13 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that set a new player
+     * @param nickname  of the player
+     * @return          nickname of the player
+     * @throws GameException    if there is a connection error
+     */
     @Override
     public String setPlayer(String nickname) throws GameException {
         try {
@@ -53,6 +75,10 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method that resets a player
+     * @throws GameException if there is a connection error
+     */
     @Override
     public void resetPlayer() throws GameException {
         try {
@@ -62,6 +88,14 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method that creates a new game
+     * @param gameId    id of the game
+     * @param numPlayers    number of players
+     * @param endScore      final score
+     * @return              gameController when is != null
+     * @throws GameException    if there is a connection error
+     */
     @Override
     public boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         try {
@@ -72,6 +106,12 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method that join a client to a new game
+     * @param gameId    id of the game
+     * @return  gameController != null
+     * @throws GameException     if there is a connection error
+     */
     @Override
     public boolean joinGame(String gameId) throws GameException {
         try {
@@ -82,6 +122,11 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method that returns a list of free games
+     * @return
+     * @throws GameException  if there is a connection error
+     */
     @Override
     public Map<String, List<String>> getFreeGames() throws GameException {
         try {
@@ -92,6 +137,12 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that select secret objective
+     * @param index
+     * @throws GameException  if there is a connection error
+     */
     @Override
     public void selectSecretObjective(int index) throws GameException {
         try {
@@ -101,6 +152,11 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method that select starter face
+     * @param face  of the cars
+     * @throws GameException     if there is a connection error
+     */
     @Override
     public void selectStarterFace(int face) throws GameException {
         try {
@@ -111,6 +167,12 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used to place a card
+     * @param placeCardRequest  request of place a card
+     * @throws GameException    if there is a connection error
+     */
     @Override
     public void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
         try {
@@ -120,6 +182,11 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method used to draw a card
+     * @param position          of the card
+     * @throws GameException    if there is a connection error
+     */
     @Override
     public void drawCard(int position) throws GameException {
         try {
@@ -129,6 +196,11 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method used to send a chat message
+     * @param message               that is sent
+     * @throws GameException        if there is a connection error
+     */
     @Override
     public void sendChatMessage(ChatMessageRequest message) throws GameException {
         try {
@@ -138,6 +210,10 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         }
     }
 
+    /**
+     * method for leave a game
+     * @throws GameException    if there is a connection error
+     */
     @Override
     public void leaveGame() throws GameException {
         try {
