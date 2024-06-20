@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.net.client;
 
+import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
@@ -9,7 +10,6 @@ import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
-import it.polimi.sw.GC50.net.ConnectionType;
 import it.polimi.sw.GC50.net.ServerInterface;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -30,41 +30,21 @@ import java.util.Map;
  * class that implements client
  */
 public class Client {
-    private final ServerInterface serverInterface;
     private final View view;
+    private ServerInterface serverInterface;
     private GameView gameView;
 
     /**
      * Constructs an instance of client
-     * @param serverIp      ip address of the server
-     * @param serverPort    port of the server
-     * @param connection    type of connection with the server
-     * @param view          type of view
+     *
+     * @param view       type of view
      */
-    public Client(String serverIp, String serverPort, ConnectionType connection, View view) {
-        ServerInterface serverInterface;
-        switch (connection) {
-            case RMI -> {
-                try {
-                    serverInterface = new ClientRmi(this, serverIp, serverPort);
-                } catch (RemoteException e) {
-                    serverInterface = null;
-                }
-            }
-            case SOCKET -> {
-                try {
-                    serverInterface = new ClientSCK(this, serverIp, serverPort);
-                } catch (IOException e) {
-                    serverInterface = null;
-                }
-            }
-            default -> {
-                serverInterface = null;
-            }
-        }
-        this.serverInterface = serverInterface;
+    public Client(View view) {
         this.view = view;
         view.setClient(this);
+
+        serverInterface = null;
+        gameView = null;
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,9 +63,35 @@ public class Client {
 
     /**
      * method used to connect a client
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void connect() throws GameException {
+        String serverIp = view.selectServerIp();
+
+        while (serverInterface == null) {
+            ServerInterface serverInterface;
+            switch (view.selectConnectionType()) {
+                case 1 -> {
+                    try {
+                        serverInterface = new ClientSCK(this, serverIp, AppClient.serverSckPort);
+                    } catch (IOException e) {
+                        serverInterface = null;
+                    }
+                }
+                case 2 -> {
+                    try {
+                        serverInterface = new ClientRmi(this, serverIp, AppClient.serverRmiPort);
+                    } catch (RemoteException e) {
+                        serverInterface = null;
+                    }
+                }
+                default -> {
+                    serverInterface = null;
+                }
+            }
+            this.serverInterface = serverInterface;
+        }
         serverInterface.connect();
     }
 
@@ -93,7 +99,8 @@ public class Client {
 
     /**
      * method used to connect with a lobby
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void lobby() throws GameException {
 
@@ -139,9 +146,10 @@ public class Client {
 
     /**
      * method used to set a player
-     * @param nickname  player's nickname
-     * @return       a boolean true if player is set correctly
-     * @throws GameException    if there is an error
+     *
+     * @param nickname player's nickname
+     * @return a boolean true if player is set correctly
+     * @throws GameException if there is an error
      */
     public boolean setPlayer(String nickname) throws GameException {
         nickname = serverInterface.setPlayer(nickname);
@@ -154,7 +162,8 @@ public class Client {
 
     /**
      * method used to reset a player
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void resetPlayer() throws GameException {
         serverInterface.resetPlayer();
@@ -162,20 +171,23 @@ public class Client {
 
     /**
      * method used to create a new game
-     * @param gameId    id of the game
-     * @param numPlayers    number of players
-     * @param endScore      final score
+     *
+     * @param gameId     id of the game
+     * @param numPlayers number of players
+     * @param endScore   final score
      * @return
-     * @throws GameException    if there is an error
+     * @throws GameException if there is an error
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         return serverInterface.createGame(gameId, numPlayers, endScore);
     }
+
     /**
      * method used to join a game
-     * @param gameId    id of the game
+     *
+     * @param gameId id of the game
      * @return
-     * @throws GameException    if there is an error
+     * @throws GameException if there is an error
      */
     private boolean joinGame(String gameId) throws GameException {
         return serverInterface.joinGame(gameId);
@@ -183,7 +195,7 @@ public class Client {
 
     /**
      * @return a map of free games
-     * @throws GameException    if there is an error
+     * @throws GameException if there is an error
      */
     private Map<String, List<String>> getFreeGames() throws GameException {
         return serverInterface.getFreeGames();
@@ -204,8 +216,9 @@ public class Client {
 
     /**
      * method used to add a new command
-     * @param command   type of command
-     * @param args      args of command
+     *
+     * @param command type of command
+     * @param args    args of command
      */
     public void addCommand(Command command, String[] args) {
         if (command.equals(Command.LEAVE)) {
@@ -226,9 +239,10 @@ public class Client {
 
     /**
      * method used to switch command
-     * @param command   type of command
-     * @param args      args of command
-     * @throws GameException    if there is an error
+     *
+     * @param command type of command
+     * @param args    args of command
+     * @throws GameException if there is an error
      */
     private void switchCommand(Command command, String[] args) throws GameException {
         switch (command) {
@@ -272,7 +286,8 @@ public class Client {
 
     /**
      * method that puts game in a waiting phase
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void waitingPhase() throws GameException {
 
@@ -318,7 +333,8 @@ public class Client {
 
     /**
      * method used for setup phase
-     * @throws GameException    if player name is not valid
+     *
+     * @throws GameException if player name is not valid
      */
     private void setupPhase() throws GameException {
 
@@ -345,8 +361,9 @@ public class Client {
 
     /**
      * method used to select secret objective
+     *
      * @param index
-     * @throws GameException    if there is an error
+     * @throws GameException if there is an error
      */
     private void selectSecretObjective(int index) throws GameException {
         serverInterface.selectSecretObjective(index);
@@ -354,8 +371,9 @@ public class Client {
 
     /**
      * method used to select starter face
+     *
      * @param face
-     * @throws GameException    if there is an error
+     * @throws GameException if there is an error
      */
     private void selectStarterFace(int face) throws GameException {
         serverInterface.selectStarterFace(face);
@@ -365,7 +383,8 @@ public class Client {
 
     /**
      * method used for playing phase
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void playingPhase() throws GameException {
         view.showStart();
@@ -402,7 +421,8 @@ public class Client {
 
     /**
      * method used when there is a play turn
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void playTurn() throws GameException {
         gameView.setTurnEnded(false);
@@ -439,8 +459,9 @@ public class Client {
 
     /**
      * method used to place a card
-     * @param placeCardRequest  request to place a card
-     * @throws GameException    if there is an error
+     *
+     * @param placeCardRequest request to place a card
+     * @throws GameException if there is an error
      */
     private void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
         serverInterface.placeCard(placeCardRequest);
@@ -448,8 +469,9 @@ public class Client {
 
     /**
      * method used to draw a card
-     * @param position  where the card is placed
-     * @throws GameException    if there is an error
+     *
+     * @param position where the card is placed
+     * @throws GameException if there is an error
      */
     private void drawCard(int position) throws GameException {
         serverInterface.drawCard(position);
@@ -457,8 +479,9 @@ public class Client {
 
     /**
      * method used to send a chat message
-     * @param message   that is sent
-     * @throws GameException    if there is an error
+     *
+     * @param message that is sent
+     * @throws GameException if there is an error
      */
     private void sendChatMessage(String message) throws GameException {
         serverInterface.sendChatMessage(new ChatMessageRequest(message));
@@ -466,9 +489,10 @@ public class Client {
 
     /**
      * method used to send a private chat message
-     * @param receiver  nickname of receiver
-     * @param message   message that is sent
-     * @throws GameException    if there is an error
+     *
+     * @param receiver nickname of receiver
+     * @param message  message that is sent
+     * @throws GameException if there is an error
      */
     private void sendPrivateChatMessage(String receiver, String message) throws GameException {
         serverInterface.sendChatMessage(new ChatMessageRequest(receiver, message));
@@ -478,7 +502,8 @@ public class Client {
 
     /**
      * method used to end connection
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void endPhase() throws GameException {
         view.showEnd();
@@ -494,7 +519,8 @@ public class Client {
 
     /**
      * method used to leave a game
-     * @throws GameException    if there is an error
+     *
+     * @throws GameException if there is an error
      */
     private void leaveGame() throws GameException {
         serverInterface.leaveGame();
@@ -504,6 +530,7 @@ public class Client {
 
     /**
      * method used to update a message
+     *
      * @param notify
      * @param message
      */
@@ -518,6 +545,7 @@ public class Client {
 
     /**
      * method used to switch a request
+     *
      * @param notify
      * @param message
      */

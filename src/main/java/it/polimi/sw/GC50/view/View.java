@@ -11,6 +11,8 @@ public interface View extends Serializable {
     void listen();
 
     // SELECT ///////////////////////////////////////////////////////
+    String selectServerIp();
+    int selectConnectionType();
     String selectName();
     int selectJoinOrCreate();
     String selectGameName();

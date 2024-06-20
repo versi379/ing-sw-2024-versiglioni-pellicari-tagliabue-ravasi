@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view;
+package trash;
 
 public enum ViewType {
     GUI,TUI

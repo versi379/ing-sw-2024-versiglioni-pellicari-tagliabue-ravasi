@@ -29,6 +29,23 @@ public class TuiView implements View {
         System.out.println("Connected to server");
     }
 
+    // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public String selectServerIp() {
+        System.out.println(blueTxt + "Insert the server's Ip address:" + baseTxt);
+
+        return readString();
+    }
+
+    @Override
+    public int selectConnectionType() {
+        System.out.println(blueTxt + "Select the desired connection technology:" + baseTxt);
+        System.out.println("1) socket");
+        System.out.println("2) RMI");
+
+        return readInt(1, 2);
+    }
+
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String selectName() {

@@ -1,7 +1,6 @@
 package trash;
 
 import it.polimi.sw.GC50.view.View;
-import it.polimi.sw.GC50.view.ViewType;
 
 import java.util.ArrayList;
 

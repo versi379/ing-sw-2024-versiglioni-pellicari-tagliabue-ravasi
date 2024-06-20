@@ -10,6 +10,7 @@ import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.PlayerDataView;
 import it.polimi.sw.GC50.view.View;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -103,7 +104,20 @@ public class GuiView extends Application implements View {
     }
 
     public GuiView() {
-
+        try {
+            // Ensure JavaFX is initialized
+            Platform.startup(() -> {
+                try {
+                    // Launch the JavaFX Application
+                    Stage stage = new Stage();
+                    start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -310,6 +324,27 @@ public class GuiView extends Application implements View {
     public void listen() {
         Pair<Command, String[]> command = readCommand();
         client.addCommand(command.getKey(), command.getValue());
+    }
+
+    @Override
+    public String selectServerIp() {
+        // DA SISTEMARE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        return "localhost";
+    }
+
+    @Override
+    public int selectConnectionType() {
+        while (getNetController() == null) {
+            System.out.print("");
+        }
+        while (!getNetController().isnetSetted()) {
+            System.out.print("");
+        }
+        if (getNetController().getNetSelected() == 1) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 
     // commands must be read via GUI rather than terminal

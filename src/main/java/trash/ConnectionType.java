@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net;
+package trash;
 
 public enum ConnectionType {
     RMI, SOCKET
