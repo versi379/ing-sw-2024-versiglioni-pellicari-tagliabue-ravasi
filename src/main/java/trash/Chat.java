@@ -1,5 +1,6 @@
-package it.polimi.sw.GC50.model.chat;
+package trash;
 
+import it.polimi.sw.GC50.model.chat.ChatMessage;
 import it.polimi.sw.GC50.model.lobby.Player;
 
 import java.io.Serializable;
@@ -9,13 +10,11 @@ import java.util.List;
 /**
  * This class is for the player chat so that the players can send each other messages while playing
  */
-public class Chat implements Serializable {
-
-
+public class Chat {
     private final List<ChatMessage> chatMessages;
 
     public Chat() {
-        this.chatMessages = new ArrayList<ChatMessage>();
+        chatMessages = new ArrayList<>();
     }
 
     /**
@@ -23,7 +22,7 @@ public class Chat implements Serializable {
      * @param chatMessage   message associated with ChatMessage
      */
     public void addMessage(ChatMessage chatMessage){
-        this.chatMessages.add(chatMessage);
+        chatMessages.add(chatMessage);
     }
 
     /**
@@ -32,13 +31,13 @@ public class Chat implements Serializable {
      * @return a copy of chat messages
      */
     public List<ChatMessage> getMessages(Player player) {
-        List<ChatMessage> copyChatMessages = new ArrayList<ChatMessage>();
+        List<ChatMessage> copyChatMessages = new ArrayList<>();
         // messages where sender is (input) player
-        copyChatMessages.addAll(this.chatMessages.stream().filter(t->t.getSender().equals(player)).toList());
+        copyChatMessages.addAll(chatMessages.stream().filter(t->t.getSender().equals(player)).toList());
         // messages where receiver is null (broadcast)
-        copyChatMessages.addAll(this.chatMessages.stream().filter(t-> t.getReceiver() == null).toList());
+        copyChatMessages.addAll(chatMessages.stream().filter(t-> t.getReceiver() == null).toList());
         // messages where receiver is (input) player
-        copyChatMessages.addAll(this.chatMessages.stream().filter(t->(t.getReceiver() != null && t.getReceiver().equals(player))).toList());
+        copyChatMessages.addAll(chatMessages.stream().filter(t->(t.getReceiver() != null && t.getReceiver().equals(player))).toList());
         return copyChatMessages;
     }
 }

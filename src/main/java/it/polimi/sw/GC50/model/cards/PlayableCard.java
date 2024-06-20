@@ -42,6 +42,17 @@ public class PlayableCard implements Serializable {
      */
     private final Corner[] corners;
 
+
+    /**
+     * Constructs a new PlayableCard instance
+     *
+     * @param code           specify the associated .jpg
+     * @param color          represents color of the card
+     * @param points         represents points associated to the card
+     * @param bonus          represents bonus given to the card
+     * @param fixedResources represents resources of the card
+     * @param corners        represents card's corners
+     */
     public PlayableCard(String code, Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
         this.code = code;
 
@@ -52,64 +63,13 @@ public class PlayableCard implements Serializable {
         this.corners = corners.clone();
     }
 
-    /**
-     * Constructor for card instance with bonus
-     * @param color             represents color of the card
-     * @param points            represents points associated to the card
-     * @param bonus             represents bonus given to the card
-     * @param fixedResources    represents resources of the card
-     * @param corners           represents card's corners
-     */
-    public PlayableCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
-        code = "-1";
-
-        this.color = color;
-        this.points = points;
-        this.bonus = bonus;
-        this.fixedResources = fixedResources;
-        this.corners = corners.clone();
-    }
-
-    /**
-     *  Constructor for cards without bonus
-
-           * @param color             represents color of the card
-           * @param points            represents points associated to the card
-           * @param fixedResources    represents resources of the card
-           * @param corners           represents card's corners
-     */
-    public PlayableCard(Color color, int points, List<Resource> fixedResources, Corner[] corners) {
-        code = "-1";
-
-        this.color = color;
-        this.points = points;
-        this.bonus = new BlankBonus();
-        this.fixedResources = fixedResources;
-        this.corners = corners.clone();
-    }
-
-    /**
-     * Constructor for cards without bonus and central resource
-     *              @param color             represents color of the card
-     *              @param points            represents points associated to the card
-     *              @param corners           represents card's corners
-     */
-    public PlayableCard(Color color, int points, Corner[] corners) {
-        code = "-1";
-
-        this.color = color;
-        this.points = points;
-        this.bonus = new BlankBonus();
-        this.fixedResources = new ArrayList<>();
-        this.corners = corners.clone();
-    }
-
     public String getCode() {
         return code;
     }
 
     /**
      * Returns color of the card
+     *
      * @return color
      */
     public Color getColor() {
@@ -118,6 +78,7 @@ public class PlayableCard implements Serializable {
 
     /**
      * Returns points of the card
+     *
      * @return points
      */
     public int getPoints() {
@@ -126,6 +87,7 @@ public class PlayableCard implements Serializable {
 
     /**
      * Returns bonus given to the card
+     *
      * @return bonus
      */
     public Bonus getBonus() {
@@ -134,6 +96,7 @@ public class PlayableCard implements Serializable {
 
     /**
      * Returns resources associated to the card
+     *
      * @return arraylist of fixed resources
      */
     public List<Resource> getFixedResources() {
@@ -142,6 +105,7 @@ public class PlayableCard implements Serializable {
 
     /**
      * Returns card's corners
+     *
      * @return arraylist of corners
      */
     public List<Corner> getCorners() {
@@ -150,27 +114,34 @@ public class PlayableCard implements Serializable {
 
     /**
      * Returns south-west card corner
+     *
      * @return 0 element of corner array
      */
     public Corner getSwCorner() {
         return corners[0];
     }
+
     /**
      * Returns north-west card corner
+     *
      * @return 1 element of corner array
      */
     public Corner getNwCorner() {
         return corners[1];
     }
+
     /**
      * Returns north-east card corner
+     *
      * @return 2 element of corner array
      */
     public Corner getNeCorner() {
         return corners[2];
     }
+
     /**
      * Returns south-east card corner
+     *
      * @return 3 element of corner array
      */
     public Corner getSeCorner() {
@@ -179,6 +150,7 @@ public class PlayableCard implements Serializable {
 
     /**
      * Counts number of resources
+     *
      * @param targetResource represents the resource that is selected
      * @return number of elements of target resource
      */
@@ -190,10 +162,11 @@ public class PlayableCard implements Serializable {
 
     /**
      * Verify if the position selected is valid
-     * @param board     identify game board
-     * @param x         X coordinate of playerData
-     * @param y         Y coordinate of playerData
-     * @return          boolean (true if it is valid)
+     *
+     * @param board identify game board
+     * @param x     X coordinate of playerData
+     * @param y     Y coordinate of playerData
+     * @return boolean (true if it is valid)
      */
     public boolean isPlaceable(PlayerData board, int x, int y) {
         return board.isPositionValid(x, y);
@@ -201,10 +174,11 @@ public class PlayableCard implements Serializable {
 
     /**
      * Increments bonus' score
-     * @param board     identify game board
-     * @param x         X coordinate of playerData
-     * @param y         Y coordinate of playerData
-     * @return  number of points
+     *
+     * @param board identify game board
+     * @param x     X coordinate of playerData
+     * @param y     Y coordinate of playerData
+     * @return number of points
      */
     public int scoreIncrement(PlayerData board, int x, int y) {
         return points * bonus.checkBonus(this, board, x, y);
@@ -229,6 +203,7 @@ public class PlayableCard implements Serializable {
     public int hashCode() {
         return Objects.hash(getColor(), getPoints(), getBonus(), getFixedResources(), getCorners());
     }
+
     /**
      * Returns the String representing this bonus in the TUI graphics
      *
@@ -337,7 +312,59 @@ public class PlayableCard implements Serializable {
         return card;
     }
 
-    public void toStringTest() {
-        System.out.println("colore: " + this.color + "ri");
+    // TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Constructor for card instance with bonus
+     *
+     * @param color          represents color of the card
+     * @param points         represents points associated to the card
+     * @param bonus          represents bonus given to the card
+     * @param fixedResources represents resources of the card
+     * @param corners        represents card's corners
+     */
+    public PlayableCard(Color color, int points, Bonus bonus, List<Resource> fixedResources, Corner[] corners) {
+        code = "-1";
+
+        this.color = color;
+        this.points = points;
+        this.bonus = bonus;
+        this.fixedResources = fixedResources;
+        this.corners = corners.clone();
+    }
+
+    /**
+     * Constructor for cards without bonus
+     *
+     * @param color          represents color of the card
+     * @param points         represents points associated to the card
+     * @param fixedResources represents resources of the card
+     * @param corners        represents card's corners
+     */
+    public PlayableCard(Color color, int points, List<Resource> fixedResources, Corner[] corners) {
+        code = "-1";
+
+        this.color = color;
+        this.points = points;
+        this.bonus = new BlankBonus();
+        this.fixedResources = fixedResources;
+        this.corners = corners.clone();
+    }
+
+    /**
+     * Constructor for cards without bonus and central resource
+     *
+     * @param color   represents color of the card
+     * @param points  represents points associated to the card
+     * @param corners represents card's corners
+     */
+    public PlayableCard(Color color, int points, Corner[] corners) {
+        code = "-1";
+
+        this.color = color;
+        this.points = points;
+        this.bonus = new BlankBonus();
+        this.fixedResources = new ArrayList<>();
+        this.corners = corners.clone();
     }
 }

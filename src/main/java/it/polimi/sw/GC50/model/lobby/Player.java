@@ -1,11 +1,7 @@
 package it.polimi.sw.GC50.model.lobby;
 
-import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.game.PlayerStatus;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,7 +14,9 @@ public class Player {
      */
     private final String nickname;
 
-    //Status of the connection to the server of the player
+    /**
+     * Status of the connection to the server of the player
+     */
     private PlayerStatus status;
 
     /**

@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameControllerTest {
     @Test
@@ -23,6 +22,38 @@ public class GameControllerTest {
         assertEquals(List.of("Player"), controller.getPlayerList());
         assertEquals(Notify.NOTIFY_PLAYER_JOINED_GAME, client.getNotify());
         assertEquals("Player", ((PlayerJoinedMex) client.getMessage()).getNickname());
+    }
+
+    @Test
+    void testIsFree() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+
+        assertTrue(controller.isFree());
+
+
+        controller.addPlayer(client2, "Player2");
+
+        assertFalse(controller.isFree());
+    }
+
+    @Test
+    void testIsEmpty() throws RemoteException {
+        MockClient client = new MockClient();
+        GameController controller = new GameController(client, "Game", 2, 20, "Player");
+
+        assertFalse(controller.isEmpty());
+
+
+        controller.removePlayer(client);
+
+        assertTrue(controller.isEmpty());
+
+
+        controller.addPlayer(client, "Player");
+
+        assertFalse(controller.isEmpty());
     }
 
     @Test
@@ -295,12 +326,64 @@ public class GameControllerTest {
     }
 
     @Test
-    void testChatMessage() throws RemoteException {
+    void testChatMessagePublic() throws RemoteException {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.sendChatMessage(client, new ChatMessageRequest("Hello world"));
 
         assertEquals(Notify.NOTIFY_CHAT_MESSAGE, client.getNotify());
         assertEquals("Hello world", ((ChatMex) client.getMessage()).getContent());
+    }
+
+    @Test
+    void testChatMessagePrivateInvalidReceiver() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.sendChatMessage(client1, new ChatMessageRequest("Player3", "Hello world"));
+
+        assertEquals(Notify.NOTIFY_ERROR, client1.getNotify());
+
+
+        controller.sendChatMessage(client1, new ChatMessageRequest("Player1", "Hello world"));
+
+        assertEquals(Notify.NOTIFY_ERROR, client1.getNotify());
+    }
+
+    @Test
+    void testChatMessagePrivate() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.sendChatMessage(client1, new ChatMessageRequest("Player2", "Hello world"));
+
+        assertEquals(Notify.NOTIFY_CHAT_MESSAGE, client1.getNotify());
+        assertEquals("Player2", ((ChatMex) client1.getMessage()).getReceiver());
+        assertEquals("Hello world", ((ChatMex) client1.getMessage()).getContent());
+    }
+
+    @Test
+    void testLeaveGame() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 3, 20, "Player1");
+        controller.addPlayer(client2, "Player2");
+        controller.leaveGame(client1);
+
+        assertEquals(List.of("Player2"), controller.getPlayerList());
+        assertEquals(Notify.NOTIFY_PLAYER_LEFT_GAME, client2.getNotify());
+        assertEquals("Player1", ((PlayerMex) client2.getMessage()).getNickname());
+    }
+
+    @Test
+    void testUnknownPlayer() throws RemoteException {
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
+        GameController controller = new GameController(client1, "Game", 1, 20, "Player1");
+
+        assertThrowsExactly(RemoteException.class,
+                () -> controller.sendChatMessage(client2, new ChatMessageRequest("Player2", "Hello world")));
     }
 }

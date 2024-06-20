@@ -15,8 +15,8 @@ public class TuiView implements View {
     private Client client;
     public static String baseTxt = "\u001B[0m";
     public static String redTxt = "\u001B[31m";
-    public static String yellowTxt = "\u001B[33m";
     public static String blueTxt = "\u001B[34m";
+    public static String yellowTxt = "\u001B[33m";
     public static String goldTxt = "\u001B[93m";
 
     @Override
@@ -239,7 +239,7 @@ public class TuiView implements View {
         } else {
             System.out.println(yellowTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" cards area:" + baseTxt);
         }
-        TuiModelPrinter.printPlayerArea(nickname, getGameView().getPlayerArea(nickname));
+        TuiModelPrinter.printPlayerArea(getGameView().getPlayerArea(nickname).getCardsMatrix());
         System.out.println();
     }
 

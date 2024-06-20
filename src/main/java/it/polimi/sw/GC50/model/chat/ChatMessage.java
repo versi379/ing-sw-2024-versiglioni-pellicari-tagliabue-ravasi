@@ -11,16 +11,16 @@ import java.time.format.DateTimeFormatter;
  */
 public class ChatMessage implements Serializable {
     private final Player sender;
+    private final Player receiver;
     private final String content;
     private final String time;
-    private final Player receiver;
 
     /**
-     *  This constructor creates a broadcast message (to all other players)
-
-     * @param sender        identify the sender of the message
-     * @param content       contains the text of the message
-     * @param time          specify when the message is sent
+     * This constructor creates a broadcast message (to all other players)
+     *
+     * @param sender  identify the sender of the message
+     * @param content contains the text of the message
+     * @param time    specify when the message is sent
      */
     public ChatMessage(Player sender, String content, LocalTime time) {
         this.sender = sender;
@@ -35,20 +35,21 @@ public class ChatMessage implements Serializable {
      *
      * @param sender   identify the sender of the message
      * @param receiver identify the sender of the message
-     * @param time     specify when the message is sent
      * @param content  contains the text of the message
+     * @param time     specify when the message is sent
      * @throws UnsupportedOperationException if someone tries to send a message to itself
      */
-    public ChatMessage(Player sender, Player receiver, LocalTime time, String content) {
+    public ChatMessage(Player sender, Player receiver, String content, LocalTime time) {
         this.sender = sender;
+        this.receiver = receiver;
         this.content = content;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss");
         this.time = time.format(formatter);
-        this.receiver = receiver;
     }
 
     /**
      * Returns the sender of the message
+     *
      * @return player
      */
     public Player getSender() {
@@ -56,7 +57,17 @@ public class ChatMessage implements Serializable {
     }
 
     /**
+     * Return the receiver of the message
+     *
+     * @return player
+     */
+    public Player getReceiver() {
+        return receiver;
+    }
+
+    /**
      * Returns the content of the message
+     *
      * @return a string
      */
     public String getContent() {
@@ -65,18 +76,10 @@ public class ChatMessage implements Serializable {
 
     /**
      * Returns when the message is sent
+     *
      * @return a string
      */
     public String getTime() {
         return this.time;
     }
-
-    /**
-     * Return the receiver of the message
-     * @return player
-     */
-    public Player getReceiver() {
-        return receiver;
-    }
-    
 }

@@ -62,10 +62,10 @@ public class PlayerDataTest {
     }
 
     @Test
-    void testGetSecretObjectivesList() {
+    void testGetSecretObjectivesSelection() {
         PlayerData playerData = new PlayerData(40);
 
-        assertNull(playerData.getSecretObjectivesSelection());
+        assertEquals(new ArrayList<>(), playerData.getSecretObjectivesSelection());
 
 
         PhysicalCard starterCard = new PhysicalCard(CardType.STARTER, null, null);

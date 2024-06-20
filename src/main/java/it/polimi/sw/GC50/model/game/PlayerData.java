@@ -55,6 +55,10 @@ public class PlayerData {
         secretObjective = null;
         totalScore = 0;
         objectivesScore = 0;
+
+        ready = false;
+        starterCard = null;
+        secretObjectivesSelection = new ArrayList<>();
     }
 
     // SETUP PHASE /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,27 +308,6 @@ public class PlayerData {
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void printCornersArea() {
-        System.out.println("_____________________________________________________________________________________________");
-        for (int j = 47; j > 35; j--) {
-            for (int i = 35; i < 47; i++) {
-                Corner x = cornersArea[i][j].getCorner();
-                if (x != null) {
-                    if (x.isFull()) {
-                        System.out.print(x.getResource().toString() + "\t");
-                    } else if (x.isVisible()) {
-                        System.out.print("EMPTY\t");
-                    } else {
-                        System.out.print("HIDDEN\t");
-                    }
-                } else {
-                    System.out.print("null\t");
-                }
-            }
-            System.out.print("\n");
-        }
-    }
-
     /**
      * Constructor used for testing different game situations and patterns
      *
@@ -354,13 +337,5 @@ public class PlayerData {
         for (Resource resource : Resource.values()) {
             this.numOfResources.put(resource, numOfResources.get(resource));
         }
-    }
-
-    public CornerPointer[][] getCornersArea() {
-        return cornersArea;
-    }
-
-    public Map<Resource, Integer> getNumOfResources() {
-        return numOfResources;
     }
 }

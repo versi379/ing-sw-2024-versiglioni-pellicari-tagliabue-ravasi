@@ -2,7 +2,6 @@ package trash;
 
 import it.polimi.sw.GC50.model.cards.Color;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
-import it.polimi.sw.GC50.model.chat.Chat;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayerData;

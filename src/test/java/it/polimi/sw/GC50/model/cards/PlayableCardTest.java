@@ -24,6 +24,19 @@ public class PlayableCardTest {
     void testPlayableCardFullConstructor() {
         Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
         List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
+        PlayableCard card = new PlayableCard("1", Color.BLUE, 3, bonus, fixedResources, corners);
+
+        assertEquals("1", card.getCode());
+        assertEquals(Color.BLUE, card.getColor());
+        assertEquals(3, card.getPoints());
+        assertEquals(bonus, card.getBonus());
+        assertEquals(fixedResources, card.getFixedResources());
+    }
+
+    @Test
+    void testPlayableCardNoCodeConstructor() {
+        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
         PlayableCard card = new PlayableCard(Color.BLUE, 3, bonus, fixedResources, corners);
 
         assertEquals(Color.BLUE, card.getColor());
@@ -142,6 +155,8 @@ public class PlayableCardTest {
         PlayableCard card2 = new PlayableCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), corners);
         PlayableCard card3 = new PlayableCard(Color.RED, 1, new ArrayList<>(), testCorners);
 
+        assertFalse(card1.equals(new Object()));
+        assertNotEquals(card1.hashCode(), new Object().hashCode());
         assertFalse(card1.equals(card2));
         assertNotEquals(card1.hashCode(), card2.hashCode());
         assertFalse(card1.equals(card3));
@@ -157,6 +172,8 @@ public class PlayableCardTest {
         PlayableCard card1 = new PlayableCard(Color.RED, 1, new BlankBonus(), new ArrayList<>(), testCorners);
         PlayableCard card2 = new PlayableCard(Color.RED, 1, testCorners);
 
+        assertTrue(card1.equals(card1));
+        assertEquals(card1.hashCode(), card1.hashCode());
         assertTrue(card1.equals(card2));
         assertEquals(card1.hashCode(), card2.hashCode());
     }

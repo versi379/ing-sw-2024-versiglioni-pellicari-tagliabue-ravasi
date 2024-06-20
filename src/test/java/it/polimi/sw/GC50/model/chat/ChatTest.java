@@ -12,18 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ChatTest {
 
     @Test
-    void Chat(){
-        List<ChatMessage> chatMessages =  new ArrayList<ChatMessage>();
+    void testChatConstructor() {
+        List<ChatMessage> chatMessages = new ArrayList<ChatMessage>();
         Player player = new Player("XXX");
         ChatMessage m = new ChatMessage(player, "message1", LocalTime.now());
         chatMessages.add(m);
-        assertEquals(chatMessages.get(0).getContent(),m.getContent());
-
+        assertEquals(chatMessages.get(0).getContent(), m.getContent());
     }
+
     @Test
-    void addMessage() {
+    void testAddMessage() {
 
     }
-
-
 }

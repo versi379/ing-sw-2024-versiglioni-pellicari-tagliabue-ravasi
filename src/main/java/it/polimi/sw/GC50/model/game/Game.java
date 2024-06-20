@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.sw.GC50.adapter.*;
 import it.polimi.sw.GC50.model.cards.*;
-import it.polimi.sw.GC50.model.chat.Chat;
+import trash.Chat;
 import it.polimi.sw.GC50.model.chat.ChatMessage;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objectives.Objective;
@@ -104,14 +104,10 @@ public class Game extends GameObservable {
     private final List<ObjectiveCard> commonObjectives;
 
     /**
-     * Game's chat
-     */
-    private final Chat chat;
-
-    /**
      * constructs a new Game instance
-     * @param numPlayers    number of players in the game
-     * @param endScore      shows final score
+     *
+     * @param numPlayers number of players in the game
+     * @param endScore   shows final score
      */
     public Game(int numPlayers, int endScore) {
         this.numPlayers = numPlayers;
@@ -133,40 +129,11 @@ public class Game extends GameObservable {
         starterDeck = new Stack<>();
         objectiveDeck = new Stack<>();
         commonObjectives = new ArrayList<>();
-
-        chat = new Chat();
     }
 
     // GENERAL INFO ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Returns visible PlayebleCard in the center of the board during game,
-     * then backs of the decks and fronts of the four face up cards
-     *
-     */
-    public PlayableCard[] getDecksTop() {
-        if(status.equals(GameStatus.WAITING)) {
-            return null;
-        }
-
-        PlayableCard[] drawableCards = new PlayableCard[6];
-        drawableCards[0] = peekCard(DrawingPosition.RESOURCEDECK);
-        drawableCards[1] = peekCard(DrawingPosition.RESOURCE1);
-        drawableCards[2] = peekCard(DrawingPosition.RESOURCE2);
-        drawableCards[3] = peekCard(DrawingPosition.GOLDDECK);
-        drawableCards[4] = peekCard(DrawingPosition.GOLD1);
-        drawableCards[5] = peekCard(DrawingPosition.GOLD2);
-        return drawableCards;
-    }
 
     /**
-     * @return transcription of chat
-     */
-    public Chat getChat() {
-        return chat;
-    }
-
-    /**
-     *
      * @return number of players
      */
     public int getNumPlayers() {
@@ -184,27 +151,19 @@ public class Game extends GameObservable {
 
     /**
      * Verify if a player is in the game
-     * @param player    player searched
-     * @return  a boolean ( true if is present)
+     *
+     * @param player player searched
+     * @return a boolean ( true if is present)
      */
     public boolean containsPlayer(Player player) {
         return playerList.stream()
                 .anyMatch(player::equals);
     }
-    /**
-     * Verify if a player is in the game using nickname
-     * @param nickname    player searched
-     * @return  a boolean ( true if is present)
-     */
-    public boolean containsPlayer(String nickname) {
-        return playerList.stream()
-                .map(Player::getNickname)
-                .anyMatch(nickname::equals);
-    }
 
     /**
      * adds a new player to the game
-     * @param player    added player
+     *
+     * @param player added player
      */
     public void addPlayer(Player player) {
         playerList.add(player);
@@ -219,6 +178,7 @@ public class Game extends GameObservable {
 
     /**
      * Removes a player from the game
+     *
      * @param player player removed
      */
     public void removePlayer(Player player) {
@@ -234,7 +194,6 @@ public class Game extends GameObservable {
     }
 
     /**
-     *
      * @return an array list with all players in the game
      */
     public List<Player> getPlayerList() {
@@ -242,7 +201,6 @@ public class Game extends GameObservable {
     }
 
     /**
-     *
      * @return who is the current player
      */
     public Player getCurrentPlayer() {
@@ -251,15 +209,18 @@ public class Game extends GameObservable {
 
     /**
      * Given a player returns his/her data
-     * @param player    player searched
+     *
+     * @param player player searched
      * @return player's infos
      */
     public PlayerData getPlayerData(Player player) {
         return playerAreas.get(player);
     }
+
     /**
      * Given a nickname returns his/her data
-     * @param nickname    player searched
+     *
+     * @param nickname player searched
      * @return player's infos
      */
     public PlayerData getPlayerData(String nickname) {
@@ -334,8 +295,7 @@ public class Game extends GameObservable {
             List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
             objectiveDeck.addAll(objectiveCards);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
 
         mixAllDecks(resourceDeck);
@@ -374,6 +334,7 @@ public class Game extends GameObservable {
 
     /**
      * choose a list of objective
+     *
      * @param quantity
      * @return
      */
@@ -387,6 +348,7 @@ public class Game extends GameObservable {
 
     /**
      * Given a quantity sets a common objective
+     *
      * @param quantity
      */
     private void setCommonObjectives(int quantity) {
@@ -395,6 +357,7 @@ public class Game extends GameObservable {
 
     /**
      * returns common objective
+     *
      * @return an array list of common objective
      */
     public List<ObjectiveCard> getCommonObjectives() {
@@ -403,6 +366,7 @@ public class Game extends GameObservable {
 
     /**
      * picks the first card from the deck
+     *
      * @return
      */
     public PhysicalCard pickStarterCard() {
@@ -411,9 +375,10 @@ public class Game extends GameObservable {
 
     /**
      * Given a player sets the starting choices
+     *
      * @param player
-     * @param starterCard           starter card selected
-     * @param secretObjectivesList  list of secret objectives
+     * @param starterCard          starter card selected
+     * @param secretObjectivesList list of secret objectives
      */
     private void setStartingChoices(Player player, PhysicalCard starterCard, List<ObjectiveCard> secretObjectivesList) {
         getPlayerData(player).setStartingChoices(starterCard, secretObjectivesList);
@@ -421,6 +386,7 @@ public class Game extends GameObservable {
 
     /**
      * Picks a starter card given a player
+     *
      * @param player who choose the starter card
      * @return
      */
@@ -430,6 +396,7 @@ public class Game extends GameObservable {
 
     /**
      * Given a player returns the list of secret objectives
+     *
      * @param player
      * @return
      */
@@ -438,7 +405,8 @@ public class Game extends GameObservable {
     }
 
     /**
-     *  Given a player sets the starter card
+     * Given a player sets the starter card
+     *
      * @param player
      * @param starterCard
      */
@@ -454,6 +422,7 @@ public class Game extends GameObservable {
 
     /**
      * Given a player sets the secret objective
+     *
      * @param player
      * @param secretObjective
      */
@@ -469,6 +438,7 @@ public class Game extends GameObservable {
 
     /**
      * Returns the secret objective given a player
+     *
      * @param player
      * @return
      */
@@ -478,6 +448,7 @@ public class Game extends GameObservable {
 
     /**
      * Verify if player status is ready
+     *
      * @param player
      * @return
      */
@@ -487,6 +458,7 @@ public class Game extends GameObservable {
 
     /**
      * * Verify if a player has chosen both objective secret and starter card
+     *
      * @param player
      */
     private void checkPreparation(Player player) {
@@ -515,7 +487,6 @@ public class Game extends GameObservable {
     }
 
     /**
-     *
      * @return current phase of the game
      */
     public PlayingPhase getCurrentPhase() {
@@ -523,7 +494,7 @@ public class Game extends GameObservable {
     }
 
     /**
-     phase in which player pick a card from deck
+     * phase in which player pick a card from deck
      */
     private void drawingPhase() {
         currentPhase = PlayingPhase.DRAWING;
@@ -545,6 +516,7 @@ public class Game extends GameObservable {
 
     /**
      * Verify if the current round is the last
+     *
      * @return
      */
     public boolean isLastRound() {
@@ -559,7 +531,27 @@ public class Game extends GameObservable {
     }
 
     /**
+     * Returns visible PlayableCard in the center of the board during game,
+     * then backs of the decks and fronts of the four face up cards
+     */
+    public PlayableCard[] getDecksTop() {
+        if (status.equals(GameStatus.WAITING)) {
+            return null;
+        }
+
+        PlayableCard[] drawableCards = new PlayableCard[6];
+        drawableCards[0] = peekCard(DrawingPosition.RESOURCEDECK);
+        drawableCards[1] = peekCard(DrawingPosition.RESOURCE1);
+        drawableCards[2] = peekCard(DrawingPosition.RESOURCE2);
+        drawableCards[3] = peekCard(DrawingPosition.GOLDDECK);
+        drawableCards[4] = peekCard(DrawingPosition.GOLD1);
+        drawableCards[5] = peekCard(DrawingPosition.GOLD2);
+        return drawableCards;
+    }
+
+    /**
      * Select pick card from the decks
+     *
      * @param position
      * @return
      */
@@ -576,6 +568,7 @@ public class Game extends GameObservable {
 
     /**
      * Pick a card from the deck
+     *
      * @param position
      * @return
      */
@@ -652,6 +645,7 @@ public class Game extends GameObservable {
 
     /**
      * Places a card on the board
+     *
      * @param player player who puts the card
      * @param card   card played
      * @param x      X coordinates
@@ -671,6 +665,7 @@ public class Game extends GameObservable {
 
     /**
      * Returns cards area of a player
+     *
      * @param player
      * @return
      */
@@ -680,6 +675,7 @@ public class Game extends GameObservable {
 
     /**
      * Adds a card in a player area
+     *
      * @param player
      * @param card
      */
@@ -694,6 +690,7 @@ public class Game extends GameObservable {
 
     /**
      * removes a card from a player area
+     *
      * @param player
      * @param index
      */
@@ -703,6 +700,7 @@ public class Game extends GameObservable {
 
     /**
      * returns a player hand
+     *
      * @param player
      * @return
      */
@@ -712,19 +710,18 @@ public class Game extends GameObservable {
 
     /**
      * add a message in the chat
-     * @param player    who send the message
-     * @param message   content of the message
+     *
+     * @param player  who send the message
+     * @param message content of the message
      */
     public void addChatMessage(Player player, String message) {
         ChatMessage chatMessage = new ChatMessage(player, message, LocalTime.now());
-        chat.addMessage(chatMessage);
         setChanged();
         notifyObservers(Notify.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
     }
 
     public void addChatMessage(Player player, Player receiver, String message) {
-        ChatMessage chatMessage = new ChatMessage(player, receiver, LocalTime.now(), message);
-        chat.addMessage(chatMessage);
+        ChatMessage chatMessage = new ChatMessage(player, receiver, message, LocalTime.now());
         setChanged();
         notifyObservers(Notify.NOTIFY_CHAT_MESSAGE, new ChatMex(chatMessage));
     }
@@ -758,6 +755,7 @@ public class Game extends GameObservable {
 
     /**
      * Returns player who win the game
+     *
      * @return an array list
      */
     public List<Player> getWinnerList() {
@@ -770,6 +768,7 @@ public class Game extends GameObservable {
 
     /**
      * Returns the total score of a player
+     *
      * @param player
      * @return
      */
@@ -779,6 +778,7 @@ public class Game extends GameObservable {
 
     /**
      * Returns score from objective given a player
+     *
      * @param player
      * @return
      */
@@ -790,6 +790,7 @@ public class Game extends GameObservable {
 
     /**
      * Notifies an error
+     *
      * @param player
      * @param content
      */
@@ -799,19 +800,11 @@ public class Game extends GameObservable {
     }
 
     // TEST METHODS ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public List<ObjectiveCard> getObjectives(int quantity) {
-        return pickObjectivesList(quantity);
-    }
-
     public int resourceDeckSize() {
         return resourceDeck.size();
     }
 
     public int goldDeckSize() {
         return goldDeck.size();
-    }
-
-    public void forceEnd() {
-        end();
     }
 }

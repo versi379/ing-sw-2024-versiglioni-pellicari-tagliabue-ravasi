@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class TuiModelPrinter {
-    public static void printObjectiveList(List<ObjectiveCard> objectives) {
-
-    }
 
     public static void printStarterCard(PhysicalCard starterCard) {
         String[][] starterMatrix = new String[3 * 2 + 1][7 + 1];
@@ -77,10 +74,9 @@ public abstract class TuiModelPrinter {
         printMatrix(handMatrix);
     }
 
-    public static void printPlayerArea(String nickname, PlayerDataView playerArea) {
+    public static void printPlayerArea(CardsMatrix cardsMatrix) {
         String[][] boardMatrix;
 
-        CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
         int minX = cardsMatrix.getMinX();
         int maxX = cardsMatrix.getMaxX();
         int minY = cardsMatrix.getMinY();

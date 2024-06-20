@@ -1,48 +1,54 @@
 package it.polimi.sw.GC50.view;
 
+import it.polimi.sw.GC50.model.cards.Color;
+import it.polimi.sw.GC50.model.cards.Resource;
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.lobby.Player;
+import it.polimi.sw.GC50.model.objectives.*;
+import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import trash.PrintBoardTUI2;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
 
 public class PrintTUITest {
 
     @Test
-    void testPrintBoard2() {
+    void testPrintBoard() {
         Player player = new Player("Player");
         Game game = new Game(1, 20);
         game.addPlayer(player);
 
-        PrintBoardTUI2 ob = new PrintBoardTUI2(game.getCardsArea(player));
-        ob.print();
+        System.out.println();
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
+        TuiModelPrinter.printPlayerArea(game.getCardsArea(player));
 
 
-        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println();
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 40);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 41, 41);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 40, 42);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 41);
         game.placeCard(player, game.pickCard(DrawingPosition.GOLDDECK).getFront(), 39, 39);
 
-        ob = new PrintBoardTUI2(game.getCardsArea(player));
-        ob.print();
+        TuiModelPrinter.printPlayerArea(game.getCardsArea(player));
 
 
-        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        System.out.println();
+        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         game.placeCard(player, game.pickCard(DrawingPosition.RESOURCEDECK).getFront(), 0, 0);
 
-        ob = new PrintBoardTUI2(game.getCardsArea(player));
-        ob.print();
-
-
-        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        ob = new PrintBoardTUI2(game.getCardsArea(player), 40, 40, 2);
-        ob.print();
+        TuiModelPrinter.printPlayerArea(game.getCardsArea(player));
     }
 
     @Test
-    void testToStringTUI() {
+    void testCardToStringTUI() {
         Game game = new Game(1, 20);
         game.addPlayer(new Player("Player"));
         while (game.goldDeckSize() > 0) {
@@ -63,5 +69,45 @@ public class PrintTUITest {
                 System.out.println();
             }
         }
+    }
+
+    @Test
+    void testObjectiveToStringTUI() {
+        Objective objective;
+
+        objective = new IdenticalResourcesObjective(Resource.PLANT, 5);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new DifferentResourcesObjective(new HashSet<>(Arrays.asList(Resource.PLANT, Resource.FUNGI, Resource.SCROLL)));
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new MonolithObjective(Color.RED, MonolithOrientation.RIGHTDIAGONAL);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new MonolithObjective(Color.RED, MonolithOrientation.LEFTDIAGONAL);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.UPRIGHTL);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.UPRIGHTJ);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.INVERTEDL);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        objective = new CaveObjective(Color.RED, Color.BLUE, CaveOrientation.INVERTEDJ);
+        System.out.println(objective.toStringTUI());
+        System.out.println();
+
+        ObjectiveCard objectiveCard = new ObjectiveCard(2, objective);
+        System.out.println(objectiveCard.toStringTUI());
     }
 }

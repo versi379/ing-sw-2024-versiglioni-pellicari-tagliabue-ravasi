@@ -1,13 +1,12 @@
-package it.polimi.sw.GC50.view.TUI;
+package trash;
 
 import it.polimi.sw.GC50.model.game.DrawingPosition;
 import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.lobby.Player;
 import trash.PrintBoardTUI2;
-import org.junit.jupiter.api.Test;
 
 class PrintBoardTUI2Test {
-    @Test
+
     void testPrintBoard2FullBoard() {
         Player player = new Player("Player");
         Game game = new Game(1, 20);
@@ -36,7 +35,7 @@ class PrintBoardTUI2Test {
         ob.print();
     }
 
-    @Test
+
     void testPrintBoard2SelectedArea() {
         Player player = new Player("Player");
         Game game = new Game(1, 20);

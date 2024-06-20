@@ -14,7 +14,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GoldCardTest {
 
     @Test
-    void testGoldCardConstructor() {
+    void testGoldCardFullConstructor() {
+        Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
+        List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
+        List<Resource> constraint = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
+        GoldCard card = new GoldCard("1", Color.BLUE, 3, bonus, fixedResources, corners, constraint);
+
+        assertEquals("1", card.getCode());
+        assertEquals(Color.BLUE, card.getColor());
+        assertEquals(3, card.getPoints());
+        assertEquals(bonus, card.getBonus());
+        assertEquals(fixedResources, card.getFixedResources());
+        assertTrue(constraint.containsAll(card.getConstraintList()));
+        assertTrue(card.getConstraintList().containsAll(constraint));
+    }
+
+    @Test
+    void testGoldCardNoCodeConstructor() {
         Bonus bonus = new ResourcesBonus(Resource.ANIMAL);
         List<Resource> fixedResources = new ArrayList<>(Arrays.asList(Resource.ANIMAL, Resource.PLANT));
         List<Resource> constraint = new ArrayList<>(Arrays.asList(Resource.FUNGI, Resource.FUNGI, Resource.PLANT));
@@ -88,6 +104,8 @@ public class GoldCardTest {
         GoldCard card1 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
         GoldCard card2 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
 
+        assertFalse(card1.equals(new Object()));
+        assertNotEquals(card1.hashCode(), new Object().hashCode());
         assertFalse(card1.equals(card2));
         assertNotEquals(card1.hashCode(), card2.hashCode());
     }
@@ -102,6 +120,8 @@ public class GoldCardTest {
         PlayableCard card2 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint1);
         GoldCard card3 = new GoldCard(Color.RED, 1, new ResourcesBonus(Resource.INK), new ArrayList<>(), testCorners, constraint2);
 
+        assertTrue(card1.equals(card1));
+        assertEquals(card1.hashCode(), card1.hashCode());
         assertTrue(card1.equals(card2));
         assertEquals(card1.hashCode(), card2.hashCode());
         assertTrue(card1.equals(card3));

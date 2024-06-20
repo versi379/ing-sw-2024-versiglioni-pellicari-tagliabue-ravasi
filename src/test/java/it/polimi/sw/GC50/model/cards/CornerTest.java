@@ -66,6 +66,8 @@ public class CornerTest {
     void testEqualsFalse() {
         Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
 
+        assertFalse(corner.equals(new Object()));
+        assertNotEquals(corner.hashCode(), new Object().hashCode());
         assertFalse(corner.equals(fungiCorner));
         assertNotEquals(corner.hashCode(), fungiCorner.hashCode());
         assertFalse(corner.equals(hiddenCorner));
@@ -76,6 +78,8 @@ public class CornerTest {
     void testEqualsTrue() {
         Corner corner = new Corner(CornerStatus.FULL, Resource.ANIMAL);
 
+        assertTrue(corner.equals(corner));
+        assertEquals(corner.hashCode(), corner.hashCode());
         assertTrue(corner.equals(animalCorner));
         assertEquals(corner.hashCode(), animalCorner.hashCode());
     }

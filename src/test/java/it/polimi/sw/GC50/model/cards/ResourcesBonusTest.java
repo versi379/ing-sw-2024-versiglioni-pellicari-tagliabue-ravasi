@@ -46,6 +46,8 @@ public class ResourcesBonusTest {
         Bonus resourcesBonus2 = new ResourcesBonus(Resource.PLANT);
         Bonus resourcesBonus3 = new ResourcesBonus(Resource.ANIMAL);
 
+        assertTrue(resourcesBonus1.equals(resourcesBonus1));
+        assertEquals(resourcesBonus1.hashCode(), resourcesBonus1.hashCode());
         assertTrue(resourcesBonus1.equals(resourcesBonus2));
         assertEquals(resourcesBonus1.hashCode(), resourcesBonus2.hashCode());
         assertFalse(resourcesBonus1.equals(resourcesBonus3));
