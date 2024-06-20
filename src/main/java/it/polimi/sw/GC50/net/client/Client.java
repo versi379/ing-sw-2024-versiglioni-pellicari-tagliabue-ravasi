@@ -26,11 +26,21 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * class that implements client
+ */
 public class Client {
     private final ServerInterface serverInterface;
     private final View view;
     private GameView gameView;
 
+    /**
+     * Constructs an instance of client
+     * @param serverIp      ip address of the server
+     * @param serverPort    port of the server
+     * @param connection    type of connection with the server
+     * @param view          type of view
+     */
     public Client(String serverIp, String serverPort, ConnectionType connection, View view) {
         ServerInterface serverInterface;
         switch (connection) {
@@ -58,6 +68,10 @@ public class Client {
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that starts connection with the server
+     */
     public synchronized void start() {
         try {
             connect();
@@ -67,11 +81,20 @@ public class Client {
         }
     }
 
+    /**
+     * method used to connect a client
+     * @throws GameException    if there is an error
+     */
     private void connect() throws GameException {
         serverInterface.connect();
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used to connect with a lobby
+     * @throws GameException    if there is an error
+     */
     private void lobby() throws GameException {
 
         while (!setPlayer(view.selectName())) {
@@ -114,6 +137,12 @@ public class Client {
         }
     }
 
+    /**
+     * method used to set a player
+     * @param nickname  player's nickname
+     * @return       a boolean true if player is set correctly
+     * @throws GameException    if there is an error
+     */
     public boolean setPlayer(String nickname) throws GameException {
         nickname = serverInterface.setPlayer(nickname);
         if (nickname != null) {
@@ -123,23 +152,48 @@ public class Client {
         return false;
     }
 
+    /**
+     * method used to reset a player
+     * @throws GameException    if there is an error
+     */
     private void resetPlayer() throws GameException {
         serverInterface.resetPlayer();
     }
 
+    /**
+     * method used to create a new game
+     * @param gameId    id of the game
+     * @param numPlayers    number of players
+     * @param endScore      final score
+     * @return
+     * @throws GameException    if there is an error
+     */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         return serverInterface.createGame(gameId, numPlayers, endScore);
     }
-
+    /**
+     * method used to join a game
+     * @param gameId    id of the game
+     * @return
+     * @throws GameException    if there is an error
+     */
     private boolean joinGame(String gameId) throws GameException {
         return serverInterface.joinGame(gameId);
     }
 
+    /**
+     * @return a map of free games
+     * @throws GameException    if there is an error
+     */
     private Map<String, List<String>> getFreeGames() throws GameException {
         return serverInterface.getFreeGames();
     }
 
     // VIEW LISTENER ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used for listenCommands
+     */
     private void listenCommands() {
         new Thread(() -> {
             while (gameView.isInGame()) {
@@ -148,6 +202,11 @@ public class Client {
         }).start();
     }
 
+    /**
+     * method used to add a new command
+     * @param command   type of command
+     * @param args      args of command
+     */
     public void addCommand(Command command, String[] args) {
         if (command.equals(Command.LEAVE)) {
             gameView.clear();
@@ -165,6 +224,12 @@ public class Client {
         }).start();
     }
 
+    /**
+     * method used to switch command
+     * @param command   type of command
+     * @param args      args of command
+     * @throws GameException    if there is an error
+     */
     private void switchCommand(Command command, String[] args) throws GameException {
         switch (command) {
             case CHOOSE_OBJECTIVE -> {
@@ -204,6 +269,11 @@ public class Client {
     }
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that puts game in a waiting phase
+     * @throws GameException    if there is an error
+     */
     private void waitingPhase() throws GameException {
 
 //        System.err.println("> waiting phase entered");
@@ -245,6 +315,11 @@ public class Client {
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used for setup phase
+     * @throws GameException    if player name is not valid
+     */
     private void setupPhase() throws GameException {
 
 //        System.err.println("> setup phase entered");
@@ -268,15 +343,30 @@ public class Client {
         }
     }
 
+    /**
+     * method used to select secret objective
+     * @param index
+     * @throws GameException    if there is an error
+     */
     private void selectSecretObjective(int index) throws GameException {
         serverInterface.selectSecretObjective(index);
     }
 
+    /**
+     * method used to select starter face
+     * @param face
+     * @throws GameException    if there is an error
+     */
     private void selectStarterFace(int face) throws GameException {
         serverInterface.selectStarterFace(face);
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used for playing phase
+     * @throws GameException    if there is an error
+     */
     private void playingPhase() throws GameException {
         view.showStart();
 
@@ -310,6 +400,10 @@ public class Client {
         }
     }
 
+    /**
+     * method used when there is a play turn
+     * @throws GameException    if there is an error
+     */
     private void playTurn() throws GameException {
         gameView.setTurnEnded(false);
         view.showCurrentPlayer();
@@ -343,23 +437,49 @@ public class Client {
         }
     }
 
+    /**
+     * method used to place a card
+     * @param placeCardRequest  request to place a card
+     * @throws GameException    if there is an error
+     */
     private void placeCard(PlaceCardRequest placeCardRequest) throws GameException {
         serverInterface.placeCard(placeCardRequest);
     }
 
+    /**
+     * method used to draw a card
+     * @param position  where the card is placed
+     * @throws GameException    if there is an error
+     */
     private void drawCard(int position) throws GameException {
         serverInterface.drawCard(position);
     }
 
+    /**
+     * method used to send a chat message
+     * @param message   that is sent
+     * @throws GameException    if there is an error
+     */
     private void sendChatMessage(String message) throws GameException {
         serverInterface.sendChatMessage(new ChatMessageRequest(message));
     }
 
+    /**
+     * method used to send a private chat message
+     * @param receiver  nickname of receiver
+     * @param message   message that is sent
+     * @throws GameException    if there is an error
+     */
     private void sendPrivateChatMessage(String receiver, String message) throws GameException {
         serverInterface.sendChatMessage(new ChatMessageRequest(receiver, message));
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used to end connection
+     * @throws GameException    if there is an error
+     */
     private void endPhase() throws GameException {
         view.showEnd();
 
@@ -372,11 +492,21 @@ public class Client {
         }
     }
 
+    /**
+     * method used to leave a game
+     * @throws GameException    if there is an error
+     */
     private void leaveGame() throws GameException {
         serverInterface.leaveGame();
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method used to update a message
+     * @param notify
+     * @param message
+     */
     public void update(Notify notify, Message message) {
         new Thread(() -> {
             synchronized (this) {
@@ -386,6 +516,11 @@ public class Client {
         }).start();
     }
 
+    /**
+     * method used to switch a request
+     * @param notify
+     * @param message
+     */
     private void switchRequest(Notify notify, Message message) {
 //       System.err.println("> Update from server: " + notify);
         switch (notify) {
@@ -502,6 +637,9 @@ public class Client {
         }
     }
 
+    /**
+     * @return game view
+     */
     public GameView getGameView() {
         return gameView;
     }
