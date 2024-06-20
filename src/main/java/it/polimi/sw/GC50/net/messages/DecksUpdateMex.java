@@ -28,32 +28,30 @@ public class DecksUpdateMex implements Message {
     }
 
     /**
-     * Returns decks
-     * @return
+
+     * @return  decks
      */
     public PlayableCard[] getDecks() {
         return decks;
     }
 
     /**
-     * Returns player's nickname
-     * @return
+     * @return player's nickname
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * Returns player's hand
-     * @return
+     * @return  player's hand
      */
     public List<PhysicalCard> getHand() {
         return new ArrayList<>(hand);
     }
 
     /**
-     * Returns an arraylist of player's hand
-     * @return
+
+     * @return  an arraylist of player's hand
      */
     public List<PlayableCard> getHandBacks() {
         return new ArrayList<>(hand.stream().map(PhysicalCard::getBack).toList());

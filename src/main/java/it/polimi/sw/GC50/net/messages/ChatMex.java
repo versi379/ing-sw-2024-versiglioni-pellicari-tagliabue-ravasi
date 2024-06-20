@@ -23,32 +23,28 @@ public class ChatMex implements Message {
     }
 
     /**
-     * Returns message's sender
-     * @return
+     * @return message's sender
      */
     public String getSender() {
         return sender;
     }
 
     /**
-     * Returns message's receiver
-     * @return
+     * @return message's receiver
      */
     public String getReceiver() {
         return receiver;
     }
 
     /**
-     * Returns content of the message
-     * @return
+     * @return content of the message
      */
     public String getContent() {
         return content;
     }
 
     /**
-     * Returns time when message is sent
-     * @return
+     * @return  time when message is sent
      */
     public String getTime() {
         return time;

@@ -7,15 +7,14 @@ public class PlayerMex implements Message {
 
     /**
      * Constructs an instance of PlayerMex
-     * @param player
+     * @param player player's nickname
      */
     public PlayerMex(Player player) {
         nickname = player.getNickname();
     }
 
     /**
-     * Returns player's nickname
-     * @return
+     * @return player's nickname
      */
     public String getNickname() {
         return nickname;

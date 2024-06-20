@@ -16,8 +16,8 @@ public class PlayerReadyMex implements Message {
 
     /**
      * Constructs an instance of PlayerReadyMex
-     * @param game
-     * @param player
+     * @param game game where the message is sent
+     * @param player  player's nickname
      */
     public PlayerReadyMex(Game game, Player player) {
         nickname = player.getNickname();

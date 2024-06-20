@@ -101,7 +101,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
 
     /**
      *
-     * @return  a list of free games
+     * @return  a map of free games
      * @throws RemoteException  if there is an error in binding to RMI registry
      */
     @Override

@@ -31,8 +31,7 @@ public class EndMex implements Message {
     }
 
     /**
-     * Returns a list of winners
-     * @return
+     * @return a list of winners
      */
     public List<String> getWinnerList() {
         return new ArrayList<>(winnerList);
@@ -40,8 +39,8 @@ public class EndMex implements Message {
 
     /**
      * Given a nickname of a player returns his total score
-     * @param nickname
-     * @return
+     * @param nickname player's nickname
+     * @return player's total score
      */
     public int getTotalScore(String nickname) {
         return totalScoreMap.get(nickname);
@@ -49,8 +48,8 @@ public class EndMex implements Message {
 
     /**
      * Given a nickname of a player returns his objective score
-     * @param nickname
-     * @return
+     * @param nickname player's nickname
+     * @return player's objective score
      */
     public int getObjectivesScore(String nickname) {
         return objectivesScoreMap.get(nickname);

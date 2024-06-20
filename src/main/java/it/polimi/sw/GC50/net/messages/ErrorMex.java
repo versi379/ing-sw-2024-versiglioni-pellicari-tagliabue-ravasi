@@ -20,16 +20,14 @@ public class ErrorMex implements Message {
     }
 
     /**
-     * Returns player's nickname
-     * @return
+     * @return player's nickname
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * Returns content of the message
-     * @return
+     * @return content of the message
      */
     public String getContent() {
         return content;
