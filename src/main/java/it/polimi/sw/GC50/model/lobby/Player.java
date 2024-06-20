@@ -5,7 +5,7 @@ import it.polimi.sw.GC50.model.game.PlayerStatus;
 import java.util.Objects;
 
 /**
- *
+ contains player data like nickname and status
  */
 public class Player {
 
@@ -20,42 +20,41 @@ public class Player {
     private PlayerStatus status;
 
     /**
-     * Constructs a new instance of Player with default status as DISCONNECTED
-     * @param nickname of the player instance
+     * Constructs an instance of player with nickname
+     * @param nickname  player's nickname
      */
-
     public Player(String nickname) {
         this.nickname = nickname;
         status = PlayerStatus.DISCONNECTED;
     }
 
     /**
-     * Return player's nickname
-     * @return
+     * @return nickname of a player
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * Sets player's status
-     * @param status
+     * set player status
+     * @param status of the player
      */
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
 
     /**
-     * Returns player's status
+
+     * @return player status
      */
     public PlayerStatus getStatus() {
         return status;
     }
 
     /**
-     * Compare nicknames between players
-     * @param obj
-     * @return
+     * compare nicknames between players
+     * @param obj object
+     * @return a boolean
      */
     @Override
     public boolean equals(Object obj) {

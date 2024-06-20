@@ -30,7 +30,7 @@ public class CornerPointer implements Serializable {
 
     /**
      * Set a new corner
-     * @param corner
+     * @param corner represents corner of the card
      */
     public void setCorner(Corner corner) {
         present = true;
@@ -38,8 +38,7 @@ public class CornerPointer implements Serializable {
     }
 
     /**
-     * Returns corner if is present is true
-     * @return
+     * @return  corner if isPresent() returns true
      */
     public Corner getCorner() {
         return isPresent() ? corner : null;

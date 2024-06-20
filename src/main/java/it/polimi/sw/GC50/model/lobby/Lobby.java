@@ -27,7 +27,7 @@ public class Lobby {
      * Adds a player to the game
      *
      * @param clientInterface
-     * @param nickname
+     * @param nickname           player's nickname
      * @return nickname of the player added
      */
     public synchronized String addPlayer(ClientInterface clientInterface, String nickname) {
@@ -50,17 +50,17 @@ public class Lobby {
     /**
      * Verify if a player is present in the game
      *
-     * @param client
-     * @return
+     * @param client        a specific client
+     * @return              true if the player is present
      */
     private synchronized boolean isPlayerPresent(ClientInterface client) {
         return clients.containsKey(client);
     }
 
     /**
-     * @param client
-     * @param numOfPlayer
-     * @param gameId
+     * @param client       selected client
+     * @param numOfPlayer   number of players
+     * @param gameId        game identifier
      * @return GameController
      * the return value is the GameController created by the client
      * if is it null the GameController is not created
@@ -81,8 +81,8 @@ public class Lobby {
     }
 
     /**
-     * @param client
-     * @param gameId
+     * @param client    client selected
+     * @param gameId    game identifier
      * @return GameController
      * the return value is the GameController
      * this method is called when a client wants to join a GameController
@@ -106,8 +106,8 @@ public class Lobby {
     /**
      * Verify if the game is present, given GameID
      *
-     * @param gameId
-     * @return
+     * @param gameId    game identifier
+     * @return          true if the game is present
      */
     private synchronized boolean isGamePresent(String gameId) {
         return getFreeGames().keySet().stream()
@@ -115,10 +115,10 @@ public class Lobby {
     }
 
     /**
-     * Returns a list of name of free games (all in the lobby)
-     * and a list of players that are in each free games
      *
-     * @return
+     * @return a map of name of free games (all in the lobby)
+     *  and a list of players that are in each free games
+     *
      */
     public synchronized Map<String, List<String>> getFreeGames() {
         clearEmptyGames();
@@ -129,6 +129,9 @@ public class Lobby {
         return freeGames;
     }
 
+    /**
+     * deletes empty games
+     */
     private void clearEmptyGames() {
         freeGameControllers.removeIf(GameController::isEmpty);
     }

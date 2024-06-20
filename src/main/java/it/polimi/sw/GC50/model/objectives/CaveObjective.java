@@ -67,8 +67,8 @@ public class CaveObjective implements Objective , Serializable {
      * To check L-shaped patterns, cards can't be repeated
      * when a pattern is found (going in the best order) set to NULL cards that compose it and continue
      * this method works on a copy on Card Matrix not on the original one
-     * @param playerData
-     * @return
+     * @param playerData        player selected
+     * @return result
      */
     @Override
     public int checkCondition(PlayerData playerData) {
@@ -106,8 +106,8 @@ public class CaveObjective implements Objective , Serializable {
      * if CaveOrientation is UPRIGHTJ ->  Flips matrix over its primary diagonal
      * if CaveOrientation is INVERTEDL ->  Flips matrix over its secondary diagonal
      * if CaveOrientation is INVERTEDJ ->  Flips matrix over its primary diagonal then over its secondary diagonal
-     * @param matrix
-     * @return
+     * @param matrix    card matrix
+     * @return          flipped matrix
      */
     public CardsMatrix adjustOrientation(CardsMatrix matrix) {
         switch (orientation) {

@@ -335,8 +335,8 @@ public class Game extends GameObservable {
     /**
      * choose a list of objective
      *
-     * @param quantity
-     * @return
+     * @param quantity of cards in objective card decks
+     * @return  objective
      */
     private List<ObjectiveCard> pickObjectivesList(int quantity) {
         List<ObjectiveCard> objectives = new ArrayList<>();
@@ -349,7 +349,7 @@ public class Game extends GameObservable {
     /**
      * Given a quantity sets a common objective
      *
-     * @param quantity
+     * @param quantity of common objective
      */
     private void setCommonObjectives(int quantity) {
         commonObjectives.addAll(pickObjectivesList(quantity));
@@ -367,7 +367,7 @@ public class Game extends GameObservable {
     /**
      * picks the first card from the deck
      *
-     * @return
+     * @return  the first card from the deck
      */
     public PhysicalCard pickStarterCard() {
         return starterDeck.pop();
@@ -376,7 +376,7 @@ public class Game extends GameObservable {
     /**
      * Given a player sets the starting choices
      *
-     * @param player
+     * @param player               who plays
      * @param starterCard          starter card selected
      * @param secretObjectivesList list of secret objectives
      */
@@ -388,7 +388,7 @@ public class Game extends GameObservable {
      * Picks a starter card given a player
      *
      * @param player who choose the starter card
-     * @return
+     * @return  starter card
      */
     public PhysicalCard getStarterCard(Player player) {
         return getPlayerData(player).getStarterCard();
@@ -397,8 +397,8 @@ public class Game extends GameObservable {
     /**
      * Given a player returns the list of secret objectives
      *
-     * @param player
-     * @return
+     * @param player    nickname of the player
+     * @return  secret objectives of the player
      */
     public List<ObjectiveCard> getSecretObjectivesSelection(Player player) {
         return getPlayerData(player).getSecretObjectivesSelection();
@@ -407,8 +407,8 @@ public class Game extends GameObservable {
     /**
      * Given a player sets the starter card
      *
-     * @param player
-     * @param starterCard
+     * @param player            player who sets starter card
+     * @param starterCard       starter card chosen
      */
     public void setStarterCard(Player player, PlayableCard starterCard) {
         placeCard(player, starterCard, deckSize, deckSize);
@@ -423,8 +423,8 @@ public class Game extends GameObservable {
     /**
      * Given a player sets the secret objective
      *
-     * @param player
-     * @param secretObjective
+     * @param player        who set secret objective
+     * @param secretObjective   secret objective chosen
      */
     public void setSecretObjective(Player player, ObjectiveCard secretObjective) {
         getPlayerData(player).setSecretObjective(secretObjective);
@@ -439,8 +439,8 @@ public class Game extends GameObservable {
     /**
      * Returns the secret objective given a player
      *
-     * @param player
-     * @return
+     * @param player    nickname of the player
+     * @return          secret objective
      */
     public ObjectiveCard getSecretObjective(Player player) {
         return getPlayerData(player).getSecretObjective();
@@ -449,8 +449,8 @@ public class Game extends GameObservable {
     /**
      * Verify if player status is ready
      *
-     * @param player
-     * @return
+     * @param player    player that we want to know the status
+     * @return  player status
      */
     public boolean isReady(Player player) {
         return getPlayerData(player).isReady();
@@ -459,7 +459,7 @@ public class Game extends GameObservable {
     /**
      * * Verify if a player has chosen both objective secret and starter card
      *
-     * @param player
+     * @param player    player selected
      */
     private void checkPreparation(Player player) {
         getPlayerData(player).checkPreparation();
@@ -517,7 +517,7 @@ public class Game extends GameObservable {
     /**
      * Verify if the current round is the last
      *
-     * @return
+     * @return  true if the round is the last
      */
     public boolean isLastRound() {
         return lastRound;
@@ -552,8 +552,8 @@ public class Game extends GameObservable {
     /**
      * Select pick card from the decks
      *
-     * @param position
-     * @return
+     * @param position where we place the card
+     * @return  peek of the decks
      */
     private PlayableCard peekCard(DrawingPosition position) {
         return switch (position) {
@@ -569,8 +569,8 @@ public class Game extends GameObservable {
     /**
      * Pick a card from the deck
      *
-     * @param position
-     * @return
+     * @param position of the card
+     * @return      a card
      */
     public PhysicalCard pickCard(DrawingPosition position) {
         PhysicalCard card = null;
@@ -666,8 +666,8 @@ public class Game extends GameObservable {
     /**
      * Returns cards area of a player
      *
-     * @param player
-     * @return
+     * @param player    player selected
+     * @return          player's cards area
      */
     public CardsMatrix getCardsArea(Player player) {
         return getPlayerData(player).getCardsArea();
@@ -676,8 +676,8 @@ public class Game extends GameObservable {
     /**
      * Adds a card in a player area
      *
-     * @param player
-     * @param card
+     * @param player player selected
+     * @param card   card that we add
      */
     public void addCard(Player player, PhysicalCard card) {
         getPlayerData(player).addCard(card);
@@ -691,8 +691,8 @@ public class Game extends GameObservable {
     /**
      * removes a card from a player area
      *
-     * @param player
-     * @param index
+     * @param player    player selected
+     * @param index     index of the card
      */
     public void removeCard(Player player, int index) {
         getPlayerData(player).removeCard(index);
@@ -701,8 +701,8 @@ public class Game extends GameObservable {
     /**
      * returns a player hand
      *
-     * @param player
-     * @return
+     * @param player    player selected
+     * @return          player's hand
      */
     public List<PhysicalCard> getHand(Player player) {
         return getPlayerData(player).getHand();
@@ -769,8 +769,8 @@ public class Game extends GameObservable {
     /**
      * Returns the total score of a player
      *
-     * @param player
-     * @return
+     * @param player    player selected
+     * @return          player's total score
      */
     public int getTotalScore(Player player) {
         return getPlayerData(player).getTotalScore();
@@ -779,8 +779,8 @@ public class Game extends GameObservable {
     /**
      * Returns score from objective given a player
      *
-     * @param player
-     * @return
+     * @param player     player selected
+     * @return           player's objective score
      */
     public int getObjectivesScore(Player player) {
         return getPlayerData(player).getObjectivesScore();
@@ -791,8 +791,8 @@ public class Game extends GameObservable {
     /**
      * Notifies an error
      *
-     * @param player
-     * @param content
+     * @param player     player selected
+     * @param content    content of message error
      */
     public void error(Player player, String content) {
         setChanged();
