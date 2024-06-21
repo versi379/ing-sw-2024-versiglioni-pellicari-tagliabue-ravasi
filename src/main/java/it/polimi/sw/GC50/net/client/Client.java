@@ -633,6 +633,7 @@ public class Client {
 
                 view.showCardsArea(player);
                 view.showScores();
+                ((GuiView) view).serverError = false;
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -647,11 +648,14 @@ public class Client {
                     view.showHand();
                 }
                 view.showDecks();
+                ((GuiView) view).serverError = false;
             }
 
             case NOTIFY_NEXT_TURN -> {
                 gameView.setPlayingPhase(PlayingPhase.PLACING);
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
+                ((GuiView) view).playerAreaUpdated = false;
+                ((GuiView) view).playerHandUpdated = false;
             }
 
             case NOTIFY_GAME_ENDED -> {
@@ -679,8 +683,7 @@ public class Client {
                 if (gameView.getNickname().equals(errorMex.getNickname())) {
                     view.showError(errorMex.getContent());
                 }
-                ((GuiView) view).playerAreaUpdated = true;
-                ((GuiView) view).playerHandUpdated = true;
+                ((GuiView) view).serverError = true;
             }
         }
     }

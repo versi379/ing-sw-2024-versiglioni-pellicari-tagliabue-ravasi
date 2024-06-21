@@ -54,6 +54,8 @@ public class GuiView extends Application implements View {
     public Boolean playerAreaUpdated = false;
     public Boolean playerHandUpdated = false;
 
+    public Boolean serverError = false;
+
     public String scoresText;
 
     private Object lock = new Object(); // Object for synchronization

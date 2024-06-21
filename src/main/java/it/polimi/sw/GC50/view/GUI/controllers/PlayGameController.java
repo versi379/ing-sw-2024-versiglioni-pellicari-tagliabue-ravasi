@@ -47,6 +47,10 @@ public class PlayGameController {
 
     public GridPane playerAreaGrid;
 
+    // problema: playerHandUpdated non ridiventa false (per entrare nel while)
+    // dopo il cambio turno (funziona solo alla prima volta)
+    // mentre playerAreaUpdated funziona anche alla seconda ...
+
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -76,27 +80,38 @@ public class PlayGameController {
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
         guiView.read = drawnCardIndex;
-        while (!guiView.playerHandUpdated) {
+        System.out.println("PlayerHand Updated: "+guiView.playerHandUpdated);
+        System.out.println(("ServerError: "+guiView.serverError));
+        while (!guiView.playerHandUpdated && !guiView.serverError) {
             System.out.println("Updating player hand...");
         }
-        printPlayerHand();
+        if (guiView.serverError) {
+            guiView.serverError = false;
+        } else {
+            printPlayerHand();
+            deactivateButton(drawCardButton);
+            activateButton(showBoardButton);
+        }
         guiView.playerHandUpdated = false;
-//        deactivateButton(drawCardButton);
-        activateButton(showBoardButton);
     }
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
-        while(!guiView.playerAreaUpdated) {
+        System.out.println("PlayerArea Updated: "+guiView.playerAreaUpdated);
+        System.out.println(("ServerError: "+guiView.serverError));
+        while(!guiView.playerAreaUpdated && !guiView.serverError) {
             System.out.println("Updating player area...");
         }
-        updatePlayerArea();
+        if (guiView.serverError) {
+            guiView.serverError = false;
+        } else {
+            updatePlayerArea();
+            deactivateButton(placeCardButton);
+            activateButton(drawCardButton);
+        }
         guiView.playerAreaUpdated = false;
-        scoresLabel.setText(guiView.scoresText);
-//        deactivateButton(placeCardButton);
-        activateButton(drawCardButton);
     }
 
 
@@ -198,6 +213,7 @@ public class PlayGameController {
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
         guiView.playerAreaUpdated = false;
+        scoresLabel.setText(guiView.scoresText);
     }
 
     private void activateButton(Button button) {
