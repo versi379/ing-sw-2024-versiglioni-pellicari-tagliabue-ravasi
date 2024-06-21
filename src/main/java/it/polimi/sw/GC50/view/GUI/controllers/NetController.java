@@ -1,8 +1,6 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
-import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,15 +16,18 @@ public class NetController {
     @FXML
     private Button rmiButton;
 
-    private boolean netSetted;
+    @FXML
+    private Button quitButton;
+
+    private boolean netSet;
     private int netSelected;
 
     @FXML
     public void initialize() throws Exception {
-        netSetted = false;
+        netSet = false;
         netSelected = 1;
         socketButton.setOnAction(event -> {
-            netSetted = true;
+            netSet = true;
             netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
             try {
@@ -36,9 +37,19 @@ public class NetController {
             }
         });
         rmiButton.setOnAction(event -> {
-            netSetted = true;
+            netSet = true;
             netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
+            try {
+                showUserView();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        quitButton.setOnAction(event -> {
+            netSet = true;
+            netSelected = 3;
+            System.out.println("Scelta QUIT");
             try {
                 showUserView();
             } catch (Exception e) {
@@ -64,8 +75,8 @@ public class NetController {
         return rmiButton;
     }
 
-    public boolean isnetSetted() {
-        return netSetted;
+    public boolean isNetSet() {
+        return netSet;
     }
 
     public int getNetSelected() {

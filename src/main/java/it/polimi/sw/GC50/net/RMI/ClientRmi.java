@@ -46,16 +46,16 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
 
     /**
      * method that connect RMI client to RMI server
-     * @throws GameException    if there is an error in connection to the server
      */
     @Override
-    public void connect() throws GameException {
+    public boolean connect() {
         try {
             serverRmi = (ServerRmiRemote) Naming.lookup("rmi://" + serverIp + ":" + serverPort + "/server");
             serverRmi.addClient(this);
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
-            throw new GameException("Error in connection to the server", e.getCause());
+            return false;
         }
+        return true;
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -37,7 +37,7 @@ public class Client {
     /**
      * Constructs an instance of client
      *
-     * @param view       type of view
+     * @param view type of view
      */
     public Client(View view) {
         this.view = view;
@@ -54,8 +54,9 @@ public class Client {
      */
     public synchronized void run() {
         try {
-            connect();
-            lobby();
+            if (connect()) {
+                lobby();
+            }
         } catch (GameException e) {
             view.showError(e.getMessage());
         }
@@ -64,20 +65,17 @@ public class Client {
     /**
      * method used to connect a client
      *
+     * @return true if client is connected
      * @throws GameException if there is an error
      */
-    private void connect() throws GameException {
+    private boolean connect() throws GameException {
         String serverIp = view.selectServerIp();
 
-        while (serverInterface == null) {
-            ServerInterface serverInterface;
+        boolean connected = false;
+        while (!connected) {
             switch (view.selectConnectionType()) {
                 case 1 -> {
-                    try {
-                        serverInterface = new ClientSCK(this, serverIp, AppClient.serverSckPort);
-                    } catch (IOException e) {
-                        serverInterface = null;
-                    }
+                    serverInterface = new ClientSCK(this, serverIp, AppClient.serverSckPort);
                 }
                 case 2 -> {
                     try {
@@ -86,13 +84,20 @@ public class Client {
                         serverInterface = null;
                     }
                 }
-                default -> {
-                    serverInterface = null;
+                case 3 -> {
+                    view.showEndSession();
+                    return false;
                 }
             }
-            this.serverInterface = serverInterface;
+            if (serverInterface != null) {
+                connected = serverInterface.connect();
+            }
+
+            if (!connected) {
+                view.showError("Failure in connecting to the server");
+            }
         }
-        serverInterface.connect();
+        return true;
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,7 +180,7 @@ public class Client {
      * @param gameId     id of the game
      * @param numPlayers number of players
      * @param endScore   final score
-     * @return  a boolean with a new game
+     * @return a boolean with a new game
      * @throws GameException if there is an error
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
@@ -186,7 +191,7 @@ public class Client {
      * method used to join a game
      *
      * @param gameId id of the game
-     * @return  game we joint
+     * @return game we joint
      * @throws GameException if there is an error
      */
     private boolean joinGame(String gameId) throws GameException {
@@ -372,7 +377,7 @@ public class Client {
     /**
      * method used to select starter face
      *
-     * @param face      back or front face
+     * @param face back or front face
      * @throws GameException if there is an error
      */
     private void selectStarterFace(int face) throws GameException {
@@ -531,8 +536,8 @@ public class Client {
     /**
      * method used to update a message
      *
-     * @param notify    notify of update
-     * @param message   message of update
+     * @param notify  notify of update
+     * @param message message of update
      */
     public void update(Notify notify, Message message) {
         new Thread(() -> {
@@ -546,8 +551,8 @@ public class Client {
     /**
      * method used to switch a request
      *
-     * @param notify    of switch
-     * @param message   of switch
+     * @param notify  of switch
+     * @param message of switch
      */
     private void switchRequest(Notify notify, Message message) {
 //       System.err.println("> Update from server: " + notify);

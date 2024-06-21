@@ -29,6 +29,7 @@ public class AppClient {
 
         new Client(view).run();
 //        System.err.println("Bye");
+        System.exit(0);
     }
 
     private static int readBinaryChoice() {

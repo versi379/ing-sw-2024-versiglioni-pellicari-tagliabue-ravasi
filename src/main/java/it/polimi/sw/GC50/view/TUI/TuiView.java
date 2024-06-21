@@ -42,8 +42,9 @@ public class TuiView implements View {
         System.out.println(blueTxt + "Select the desired connection technology:" + baseTxt);
         System.out.println("1) socket");
         System.out.println("2) RMI");
+        System.out.println("3) quit");
 
-        return readInt(1, 2);
+        return readInt(1, 3);
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////

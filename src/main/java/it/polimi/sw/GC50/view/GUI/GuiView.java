@@ -337,14 +337,10 @@ public class GuiView extends Application implements View {
         while (getNetController() == null) {
             System.out.print("");
         }
-        while (!getNetController().isnetSetted()) {
+        while (!getNetController().isNetSet()) {
             System.out.print("");
         }
-        if (getNetController().getNetSelected() == 1) {
-            return 1;
-        } else {
-            return 2;
-        }
+        return getNetController().getNetSelected();
     }
 
     // commands must be read via GUI rather than terminal
