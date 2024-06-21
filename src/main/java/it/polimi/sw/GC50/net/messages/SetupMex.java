@@ -23,7 +23,7 @@ public class SetupMex implements Message {
 
     /**
      * Construct an instance of SetupMex
-     * @param game
+     * @param game we referred
      */
     public SetupMex(Game game) {
         commonObjectives = game.getCommonObjectives();
@@ -54,7 +54,7 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her hand
-     * @param nickname
+     * @param nickname player's nickname
      * @return
      */
 
@@ -64,8 +64,8 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her backs hand
-     * @param nickname
-     * @return
+     * @param nickname player's nickname
+     * @return player's backs hand
      */
     public List<PlayableCard> getHandBacks(String nickname) {
         return new ArrayList<>(handMap.get(nickname).stream().map(PhysicalCard::getBack).toList());
@@ -73,8 +73,8 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns a map of his/her secret objectives
-     * @param nickname
-     * @return
+     * @param nickname player's nickname
+     * @return player's  secret objectives
      */
     public List<ObjectiveCard> getSecretObjectivesMap(String nickname) {
         return new ArrayList<>(secretObjectivesMap.get(nickname));
@@ -82,8 +82,8 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her starter card
-     * @param nickname
-     * @return
+     * @param nickname player's nickname
+     * @return player's  starter card
      */
     public PhysicalCard getStarterCard(String nickname) {
         return starterCardMap.get(nickname);

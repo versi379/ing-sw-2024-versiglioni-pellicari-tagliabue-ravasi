@@ -14,7 +14,7 @@ public class DifferentResourcesObjective implements Objective , Serializable {
 
     /**
      * Constructs an instance of DifferentResourcesObjective
-     * @param targetResources
+     * @param targetResources   a set of resources
      */
     public DifferentResourcesObjective(Set<Resource> targetResources) {
         this.targetResources = targetResources;

@@ -175,7 +175,7 @@ public class Client {
      * @param gameId     id of the game
      * @param numPlayers number of players
      * @param endScore   final score
-     * @return
+     * @return  a boolean with a new game
      * @throws GameException if there is an error
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
@@ -186,7 +186,7 @@ public class Client {
      * method used to join a game
      *
      * @param gameId id of the game
-     * @return
+     * @return  game we joint
      * @throws GameException if there is an error
      */
     private boolean joinGame(String gameId) throws GameException {
@@ -362,7 +362,7 @@ public class Client {
     /**
      * method used to select secret objective
      *
-     * @param index
+     * @param index index of the card
      * @throws GameException if there is an error
      */
     private void selectSecretObjective(int index) throws GameException {
@@ -372,7 +372,7 @@ public class Client {
     /**
      * method used to select starter face
      *
-     * @param face
+     * @param face      back or front face
      * @throws GameException if there is an error
      */
     private void selectStarterFace(int face) throws GameException {
@@ -531,8 +531,8 @@ public class Client {
     /**
      * method used to update a message
      *
-     * @param notify
-     * @param message
+     * @param notify    notify of update
+     * @param message   message of update
      */
     public void update(Notify notify, Message message) {
         new Thread(() -> {
@@ -546,8 +546,8 @@ public class Client {
     /**
      * method used to switch a request
      *
-     * @param notify
-     * @param message
+     * @param notify    of switch
+     * @param message   of switch
      */
     private void switchRequest(Notify notify, Message message) {
 //       System.err.println("> Update from server: " + notify);

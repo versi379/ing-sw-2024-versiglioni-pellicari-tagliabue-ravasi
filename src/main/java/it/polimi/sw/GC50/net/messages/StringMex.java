@@ -5,7 +5,7 @@ public class StringMex implements Message {
 
     /**
      * Constructs an instance of StringMex
-     * @param string
+     * @param string message
      */
     public StringMex(String string) {
         this.string = string;

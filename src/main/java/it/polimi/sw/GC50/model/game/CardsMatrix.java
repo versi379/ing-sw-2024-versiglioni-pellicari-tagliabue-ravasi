@@ -193,7 +193,7 @@ public class CardsMatrix implements Serializable {
     /**
      * Rotates matrix 45 degrees clockwise
      *
-     * @return
+     * @return matrix rotated 45 degrees
      */
     public CardsMatrix rotate45() {
         CardsMatrix result = new CardsMatrix(length());
@@ -210,7 +210,7 @@ public class CardsMatrix implements Serializable {
     /**
      * Flips matrix over its primary diagonal
      *
-     * @return
+     * @return matrix flipped over its primary diagonal
      */
     public CardsMatrix transposePrimary() {
         CardsMatrix result = new CardsMatrix(length());
@@ -226,7 +226,7 @@ public class CardsMatrix implements Serializable {
     /**
      * Flips matrix over its secondary diagonal
      *
-     * @return
+     * @return  matrix flipped over its secondary diagonal
      */
     public CardsMatrix transposeSecondary() {
         CardsMatrix result = new CardsMatrix(length());

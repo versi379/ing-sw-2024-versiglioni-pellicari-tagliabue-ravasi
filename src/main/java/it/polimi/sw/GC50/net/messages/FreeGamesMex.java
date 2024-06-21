@@ -12,7 +12,7 @@ public class FreeGamesMex implements Message {
 
     /**
      * Constructs an instance of FreeMex class
-     * @param freeGames
+     * @param freeGames a list of free games
      */
     public FreeGamesMex(Map<String, List<String>> freeGames) {
         this.freeGames = new HashMap<>(freeGames);

@@ -20,8 +20,8 @@ public class BoardUpdateMex implements Message {
 
     /**
      * constructs an instance of BoardUpdateMex
-     * @param game
-     * @param player
+     * @param game  game in which appears the message
+     * @param player    nickname of the player
      */
     public BoardUpdateMex(Game game, Player player) {
         nickname = player.getNickname();
@@ -31,40 +31,36 @@ public class BoardUpdateMex implements Message {
     }
 
     /**
-     * Returns player's nickname
-     * @return
+
+     * @return  player's nickname
      */
     public String getNickname() {
         return nickname;
     }
 
     /**
-     * Returns player's hand
-     * @return
+     * @return  player's hand
      */
     public List<PhysicalCard> getHand() {
         return new ArrayList<>(hand);
     }
 
     /**
-     * Returns back of player's hand
-     * @return
+     * @return back of player's hand
      */
     public List<PlayableCard> getHandBacks() {
         return new ArrayList<>(hand.stream().map(PhysicalCard::getBack).toList());
     }
 
     /**
-     * Returns a copy of card Matrix
-     * @return
+     * @return a copy of card Matrix
      */
     public CardsMatrix getCardsMatrix() {
         return cardsMatrix.copy();
     }
 
     /**
-     * Returns total score
-     * @return
+     * @return total score
      */
     public int getTotalScore() {
         return totalScore;

@@ -21,8 +21,7 @@ public class PlayerJoinedMex implements Message {
     }
 
     /**
-     * Returns player's nickname
-     * @return
+     * @return  player's nickname
      */
     public String getNickname() {
         return nickname;

@@ -123,8 +123,7 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
     }
 
     /**
-     * method that returns a list of free games
-     * @return
+     * @return a map of free games
      * @throws GameException  if there is a connection error
      */
     @Override
@@ -140,7 +139,7 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
 
     /**
      * method that select secret objective
-     * @param index
+     * @param index of the card
      * @throws GameException  if there is a connection error
      */
     @Override

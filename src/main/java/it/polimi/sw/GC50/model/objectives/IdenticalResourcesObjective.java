@@ -35,7 +35,7 @@ public class IdenticalResourcesObjective implements Objective , Serializable {
     }
 
     /**
-     * @param playerData
+     * @param playerData    player data selected
      * @return number of target resource required / number of resource that we have
      */
     @Override

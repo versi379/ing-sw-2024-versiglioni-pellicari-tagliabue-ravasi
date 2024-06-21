@@ -36,8 +36,8 @@ public class ObjectiveCard implements Serializable {
 
     /**
      * Returns if objective is reached
-     * @param playerData
-     * @return
+     * @param playerData    player's information
+     * @return  if objective is reached
      */
     public int checkObjective(PlayerData playerData) {
         return getPointsPerCompletion() * getObjective().checkCondition(playerData);
