@@ -35,8 +35,6 @@ public class CreateGameController {
 
     private GuiView guiView;
 
-    public boolean waitingPlayers = true;
-
     @FXML
     private ProgressIndicator waitingPlayersBuffer;
 
@@ -82,8 +80,8 @@ public class CreateGameController {
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
 
-        createGameButton.setVisible(false);
-        waitingPlayersBuffer.setVisible(true);
+//        createGameButton.setVisible(false);
+//        waitingPlayersBuffer.setVisible(true);
     }
 
 }

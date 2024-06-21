@@ -210,10 +210,10 @@ public class Client {
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         if (serverInterface.createGame(gameId, numPlayers, endScore)) {
-            System.out.println("game settato !");
+            System.out.println("game creato !");
             return true;
         }
-        System.out.println("game non settato !");
+        System.out.println("game non creato !");
         return false;
     }
 
@@ -225,7 +225,11 @@ public class Client {
      * @throws GameException if there is an error
      */
     private boolean joinGame(String gameId) throws GameException {
-        return serverInterface.joinGame(gameId);
+        if (serverInterface.joinGame(gameId)) {
+            System.out.println("unito al game !");
+            return true;
+        }
+        return false;
     }
 
     /**
