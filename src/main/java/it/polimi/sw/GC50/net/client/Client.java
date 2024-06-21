@@ -680,6 +680,7 @@ public class Client {
                     view.showError(errorMex.getContent());
                 }
                 ((GuiView) view).playerAreaUpdated = true;
+                ((GuiView) view).playerHandUpdated = true;
             }
         }
     }

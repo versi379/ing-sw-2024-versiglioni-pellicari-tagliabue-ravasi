@@ -19,10 +19,10 @@ import javafx.scene.layout.GridPane;
 
 public class PlayGameController {
 
+    private GuiView guiView;
+
     @FXML
     public AnchorPane pane;
-
-    private GuiView guiView;
 
     @FXML
     private Button showBoardButton;
@@ -45,7 +45,6 @@ public class PlayGameController {
     @FXML
     private Label turnLabel;
 
-    public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
 
     @FXML
@@ -61,6 +60,7 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
 
         scoresLabel.setText(guiView.scoresText);
+
         deactivateButton(placeCardButton);
         deactivateButton(drawCardButton);
     }
@@ -77,13 +77,11 @@ public class PlayGameController {
         String drawnCardIndex = drawCardTextField.getText();
         guiView.read = drawnCardIndex;
         while (!guiView.playerHandUpdated) {
-            System.out.println("wait");
+            System.out.println("Updating player hand...");
         }
-        System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
         printPlayerHand();
-        guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
-        deactivateButton(drawCardButton);
+//        deactivateButton(drawCardButton);
         activateButton(showBoardButton);
     }
 
@@ -91,12 +89,11 @@ public class PlayGameController {
     void handlePlaceCardButton(ActionEvent event) {
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
-        // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
-            System.out.println("aspetta ");
+            System.out.println("Updating player area...");
         }
-        System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         updatePlayerArea();
+        guiView.playerAreaUpdated = false;
         scoresLabel.setText(guiView.scoresText);
 //        deactivateButton(placeCardButton);
         activateButton(drawCardButton);
@@ -200,7 +197,7 @@ public class PlayGameController {
         pane.getChildren().remove(playerAreaGrid);
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
-        guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
+        guiView.playerAreaUpdated = false;
     }
 
     private void activateButton(Button button) {
