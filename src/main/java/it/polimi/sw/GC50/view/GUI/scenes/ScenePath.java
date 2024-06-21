@@ -10,7 +10,7 @@ public enum ScenePath {
     MENU("/scenes/Menu.fxml"),
     CREATEGAME("/scenes/CreateGame.fxml"),
     JOINGAME("/scenes/JoinGame.fxml"),
-    RULES("scenes/Rules.fxml"),
+    RULES("/scenes/Rules.fxml"),
     SETUPGAME("/scenes/SetupGame.fxml"),
     PLAYGAME("/scenes/PlayGame.fxml");
 
