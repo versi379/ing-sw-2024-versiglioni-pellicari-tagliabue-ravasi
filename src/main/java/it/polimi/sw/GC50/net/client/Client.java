@@ -62,6 +62,8 @@ public class Client {
         } catch (GameException e) {
             view.showError(e.getMessage());
             exit = 1;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         view.showEndSession();
@@ -114,7 +116,7 @@ public class Client {
      *
      * @throws GameException if there is an error
      */
-    private void lobby() throws GameException {
+    private void lobby() throws GameException, IOException {
 
         while (!setPlayer(view.selectName())) {
             view.showError("Player nickname not available");
@@ -162,12 +164,29 @@ public class Client {
      * @return a boolean true if player is set correctly
      * @throws GameException if there is an error
      */
-    public boolean setPlayer(String nickname) throws GameException {
+    public boolean setPlayer(String nickname) throws GameException, IOException {
         nickname = serverInterface.setPlayer(nickname);
         if (nickname != null) {
             gameView = new GameView(nickname);
+            System.out.println("nome settato !");
+            if (view.getClass().getSimpleName().equals("GuiView")) {
+                Platform.runLater(() -> {
+                    Stage stage = ((GuiView) view).getPrimaryStage();
+                    FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+                    Parent menuRoot = null;
+                    try {
+                        menuRoot = menuLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Scene gameScene = new Scene(menuRoot);
+                    gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+                    stage.setScene(gameScene);
+                });
+            }
             return true;
         }
+        System.out.println("nome non settato !");
         return false;
     }
 
