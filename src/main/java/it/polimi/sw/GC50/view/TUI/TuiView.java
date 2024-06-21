@@ -49,7 +49,7 @@ public class TuiView implements View {
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String selectName() {
-        System.out.println(blueTxt + "Insert your player's name:" + baseTxt);
+        System.out.println(blueTxt + "Insert your player's nickname:" + baseTxt);
 
         return readString();
     }
@@ -98,7 +98,7 @@ public class TuiView implements View {
         return readInt(0, 51);
     }
 
-    private static String readString() {
+    private String readString() {
         Scanner scanner = new Scanner(System.in);
 
         String read;
@@ -109,7 +109,7 @@ public class TuiView implements View {
             scanner.nextLine();
         }
         while (read == null || read.trim().isEmpty()) {
-            System.out.println(redTxt + "Invalid input. Please retry" + baseTxt);
+            showError("Invalid input, please enter a valid string");
             try {
                 read = scanner.nextLine();
             } catch (InputMismatchException e) {
@@ -119,7 +119,7 @@ public class TuiView implements View {
         return read;
     }
 
-    private static int readInt(int min, int range) {
+    private int readInt(int min, int range) {
         Scanner scanner = new Scanner(System.in);
 
         int read;
@@ -130,7 +130,7 @@ public class TuiView implements View {
             scanner.nextLine();
         }
         while (read < min || read >= min + range) {
-            System.out.println(redTxt + "Invalid input. Please enter a number between " + min + " and " + (min + range - 1) + baseTxt);
+            showError("Invalid input, please enter a number between " + min + " and " + (min + range - 1));
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
@@ -195,7 +195,7 @@ public class TuiView implements View {
             }
 
         } else {
-            System.out.println(redTxt + "Objectives are yet to be chosen!" + baseTxt);
+            System.out.println(redTxt + "Objectives haven't been chosen yet!" + baseTxt);
         }
     }
 

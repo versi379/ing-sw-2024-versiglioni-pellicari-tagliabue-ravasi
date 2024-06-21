@@ -8,14 +8,16 @@ import it.polimi.sw.GC50.net.socket.ServerSCK;
 import java.io.IOException;
 
 public class AppServer {
+    public static final int sckPort = 2012;
+    public static final int rmiPort = 1099;
     public static void main(String[] args) throws IOException {
         Lobby lobby = new Lobby();
         System.setProperty("server", "localhost");
 
-        // server RMI
-        new ServerRmi(lobby, 1099).start();
-
         // server socket
-        new Thread(new ServerSCK(lobby, 2012), "serverSocket").start();
+        new Thread(new ServerSCK(lobby, sckPort), "serverSocket").start();
+
+        // server RMI
+        new ServerRmi(lobby, rmiPort).run();
     }
 }

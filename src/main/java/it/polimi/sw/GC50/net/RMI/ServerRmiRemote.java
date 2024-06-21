@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface ServerRmiRemote extends Remote {
-    void start() throws RemoteException;
-
     void addClient(ClientInterface client) throws RemoteException;
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////

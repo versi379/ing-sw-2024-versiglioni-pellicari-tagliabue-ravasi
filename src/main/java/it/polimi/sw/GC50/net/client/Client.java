@@ -52,12 +52,12 @@ public class Client {
     /**
      * method that starts connection with the server
      */
-    public synchronized void start() {
+    public synchronized void run() {
         try {
             connect();
             lobby();
         } catch (GameException e) {
-            System.err.println("> " + e.getMessage());
+            view.showError(e.getMessage());
         }
     }
 
@@ -105,7 +105,7 @@ public class Client {
     private void lobby() throws GameException {
 
         while (!setPlayer(view.selectName())) {
-            view.showError("Player name not valid");
+            view.showError("Player nickname not available");
         }
 
         while (true) {
@@ -139,7 +139,7 @@ public class Client {
                 listenCommands();
                 waitingPhase();
             } else {
-                view.showError("Invalid choice");
+                view.showError("Game not available");
             }
         }
     }

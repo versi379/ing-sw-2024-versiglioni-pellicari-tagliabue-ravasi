@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class AppClient {
     private static View view;
-    public static String serverSckPort = "2012";
-    public static String serverRmiPort = "1099";
+    public static final String serverSckPort = "2012";
+    public static final String serverRmiPort = "1099";
 
     public static void main(String[] args) {
         printBanner();
@@ -27,7 +27,7 @@ public class AppClient {
             view = new GuiView();
         }
 
-        new Client(view).start();
+        new Client(view).run();
 //        System.err.println("Bye");
     }
 
@@ -42,7 +42,7 @@ public class AppClient {
             scanner.nextLine();
         }
         while (read != 1 && read != 2) {
-            System.out.println("Invalid input. Please enter 1 or 2.");
+            System.out.println(TuiView.redTxt + "Invalid input. Please enter 1 or 2." + TuiView.baseTxt);
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
