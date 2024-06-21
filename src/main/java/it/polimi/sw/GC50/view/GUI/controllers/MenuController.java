@@ -91,6 +91,7 @@ public class MenuController {
     @FXML
     public void handleRulesButton(ActionEvent event) throws Exception {
         showRulesView();
+
     }
 
     @FXML
