@@ -102,8 +102,5 @@ public class ObjectiveAdapter extends TypeAdapter<Objective> {
         }
         in.endObject();
         return objective;
-
-
     }
-
 }

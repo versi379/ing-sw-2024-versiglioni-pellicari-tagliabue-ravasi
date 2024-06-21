@@ -1,37 +1,42 @@
 [
   {
+    "code": "87",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "MonolithObjective",
       "targetColor": "RED",
-      "orientation": "RIGHTDIAGONAL"
+      "orientation": "LEFTDIAGONAL"
     }
   },
   {
+    "code": "88",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "MonolithObjective",
       "targetColor": "GREEN",
-      "orientation": "LEFTDIAGONAL"
-    }
-  },
-  {
-    "pointsPerCompletion": 2,
-    "objective": {
-      "type": "MonolithObjective",
-      "targetColor": "BLUE",
       "orientation": "RIGHTDIAGONAL"
     }
   },
   {
+    "code": "89",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "MonolithObjective",
-      "targetColor": "PURPLE",
+      "targetColor": "BLUE",
       "orientation": "LEFTDIAGONAL"
     }
   },
   {
+    "code": "90",
+    "pointsPerCompletion": 2,
+    "objective": {
+      "type": "MonolithObjective",
+      "targetColor": "PURPLE",
+      "orientation": "RIGHTDIAGONAL"
+    }
+  },
+  {
+    "code": "91",
     "pointsPerCompletion": 3,
     "objective": {
       "type": "CaveObjective",
@@ -41,6 +46,7 @@
     }
   },
   {
+    "code": "92",
     "pointsPerCompletion": 3,
     "objective": {
       "type": "CaveObjective",
@@ -50,6 +56,7 @@
     }
   },
   {
+    "code": "93",
     "pointsPerCompletion": 3,
     "objective": {
       "type": "CaveObjective",
@@ -59,6 +66,7 @@
     }
   },
   {
+    "code": "94",
     "pointsPerCompletion": 3,
     "objective": {
       "type": "CaveObjective",
@@ -68,6 +76,7 @@
     }
   },
   {
+    "code": "95",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -76,6 +85,7 @@
     }
   },
   {
+    "code": "96",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -84,6 +94,7 @@
     }
   },
   {
+    "code": "97",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -92,6 +103,7 @@
     }
   },
   {
+    "code": "98",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -100,6 +112,7 @@
     }
   },
   {
+    "code": "99",
     "pointsPerCompletion": 3,
     "objective": {
       "type": "DifferentResourcesObjective",
@@ -111,6 +124,7 @@
     }
   },
   {
+    "code": "100",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -119,6 +133,7 @@
     }
   },
   {
+    "code": "101",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",
@@ -127,6 +142,7 @@
     }
   },
   {
+    "code": "102",
     "pointsPerCompletion": 2,
     "objective": {
       "type": "IdenticalResourcesObjective",

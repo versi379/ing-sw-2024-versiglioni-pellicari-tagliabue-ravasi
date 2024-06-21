@@ -15,7 +15,7 @@ public class CornerAdapter extends TypeAdapter<Corner> {
     public void write(JsonWriter out, Corner corner) throws IOException {
         out.beginObject();
         out.name("status").value(corner.getStatus().toString());
-        if (corner.getResource()!=null ) {
+        if (corner.getResource() != null) {
             out.name("resource").value(corner.getResource().toString());
         }
         out.endObject();
@@ -43,5 +43,4 @@ public class CornerAdapter extends TypeAdapter<Corner> {
         in.endObject();
         return new Corner(status, resource);
     }
-
 }

@@ -86,5 +86,4 @@ public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
         in.endObject();
         return new PlayableCard(code, color, points, bonus, fixedResources, corners);
     }
-
 }

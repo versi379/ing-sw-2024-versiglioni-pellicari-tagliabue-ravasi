@@ -13,6 +13,7 @@ public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
     @Override
     public void write(JsonWriter out, ObjectiveCard card) throws IOException {
         out.beginObject();
+        out.name("code").value(card.getCode());
         out.name("pointsPerCompletion").value(card.getPointsPerCompletion());
         out.name("objective");
         new ObjectiveAdapter().write(out, card.getObjective());
@@ -22,17 +23,20 @@ public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
     @Override
     public ObjectiveCard read(JsonReader in) throws IOException {
         in.beginObject();
-        ObjectiveCard objectiveCard = null;
-        Objective objective= null;
-        int point=0;
+        String code = null;
+        int pointsPerCompletion = 0;
+        Objective objective = null;
 
         while (in.hasNext()) {
             switch (in.nextName()) {
+                case "code":
+                    code = in.nextString();
+                    break;
                 case "pointsPerCompletion":
-                    point=in.nextInt();
+                    pointsPerCompletion = in.nextInt();
                     break;
                 case "objective":
-                    objective=new ObjectiveAdapter().read(in);
+                    objective = new ObjectiveAdapter().read(in);
                     break;
 
                 default:
@@ -41,8 +45,6 @@ public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
             }
         }
         in.endObject();
-        return new ObjectiveCard(point,objective);
-
+        return new ObjectiveCard(code, pointsPerCompletion, objective);
     }
-
 }

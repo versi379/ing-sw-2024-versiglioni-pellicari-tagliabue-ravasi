@@ -47,5 +47,4 @@ public class BonusAdapter extends TypeAdapter<Bonus> {
         }
         return null;
     }
-
 }
