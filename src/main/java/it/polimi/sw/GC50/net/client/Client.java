@@ -33,6 +33,7 @@ public class Client {
     private final View view;
     private ServerInterface serverInterface;
     private GameView gameView;
+    private int exit;
 
     /**
      * Constructs an instance of client
@@ -45,6 +46,7 @@ public class Client {
 
         serverInterface = null;
         gameView = null;
+        exit = 0;
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,14 +54,16 @@ public class Client {
     /**
      * method that starts connection with the server
      */
-    public synchronized void run() {
+    public synchronized int run() {
         try {
             if (connect()) {
                 lobby();
             }
         } catch (GameException e) {
             view.showError(e.getMessage());
+            exit = 1;
         }
+        return exit;
     }
 
     /**
@@ -235,7 +239,9 @@ public class Client {
                 try {
                     switchCommand(command, args);
                 } catch (GameException e) {
-                    System.err.println("> " + e.getMessage());
+                    view.showError(e.getMessage());
+                    gameView.setInGame(false);
+                    exit = 1;
                 }
                 notifyAll();
             }
