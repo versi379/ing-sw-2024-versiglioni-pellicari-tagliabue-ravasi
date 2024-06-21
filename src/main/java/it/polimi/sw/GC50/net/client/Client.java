@@ -633,7 +633,9 @@ public class Client {
 
                 view.showCardsArea(player);
                 view.showScores();
-                ((GuiView) view).serverError = false;
+                if (view.getClass().getSimpleName().equals("GuiView")) {
+                    ((GuiView) view).serverError = false;
+                }
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -648,7 +650,9 @@ public class Client {
                     view.showHand();
                 }
                 view.showDecks();
-                ((GuiView) view).serverError = false;
+                if (view.getClass().getSimpleName().equals("GuiView")) {
+                    ((GuiView) view).serverError = false;
+                }
             }
 
             case NOTIFY_NEXT_TURN -> {
