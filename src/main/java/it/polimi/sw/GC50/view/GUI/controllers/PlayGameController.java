@@ -19,10 +19,10 @@ import javafx.scene.layout.GridPane;
 
 public class PlayGameController {
 
+    private GuiView guiView;
+
     @FXML
     public AnchorPane pane;
-
-    private GuiView guiView;
 
     @FXML
     private Button showBoardButton;
@@ -45,7 +45,6 @@ public class PlayGameController {
     @FXML
     private Label turnLabel;
 
-    public GridPane playerHandGrid;
     public GridPane playerAreaGrid;
 
     @FXML
@@ -61,6 +60,7 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
 
         scoresLabel.setText(guiView.scoresText);
+
         deactivateButton(placeCardButton);
         deactivateButton(drawCardButton);
     }
@@ -68,6 +68,7 @@ public class PlayGameController {
     @FXML
     void handleShowBoardButton(ActionEvent event) {
         updatePlayerArea();
+        guiView.playerHandUpdated = false;
         deactivateButton(showBoardButton);
         activateButton(placeCardButton);
     }
@@ -76,30 +77,38 @@ public class PlayGameController {
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
         guiView.read = drawnCardIndex;
-        while (!guiView.playerHandUpdated) {
-            System.out.println("wait");
+        System.out.println("PlayerHand Updated: "+guiView.playerHandUpdated);
+        System.out.println(("ServerError: "+guiView.serverError));
+        while (!guiView.playerHandUpdated && !guiView.serverError) {
+            System.out.println("Updating player hand...");
         }
-        System.out.println("qui sotto richiamo la player hand (aggiornata) per stamparla");
-        printPlayerHand();
-        guiView.playerAreaUpdated = false;
+        if (guiView.serverError) {
+            guiView.serverError = false;
+        } else {
+            printPlayerHand();
+            deactivateButton(drawCardButton);
+            activateButton(showBoardButton);
+        }
         guiView.playerHandUpdated = false;
-        deactivateButton(drawCardButton);
-        activateButton(showBoardButton);
     }
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
-        // attendo che player area sia updated per ristamparla
-        while(!guiView.playerAreaUpdated) {
-            System.out.println("aspetta ");
+        System.out.println("PlayerArea Updated: "+guiView.playerAreaUpdated);
+        System.out.println(("ServerError: "+guiView.serverError));
+        while(!guiView.playerAreaUpdated && !guiView.serverError) {
+            System.out.println("Updating player area...");
         }
-        System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
-        updatePlayerArea();
-        scoresLabel.setText(guiView.scoresText);
-//        deactivateButton(placeCardButton);
-        activateButton(drawCardButton);
+        if (guiView.serverError) {
+            guiView.serverError = false;
+        } else {
+            updatePlayerArea();
+            deactivateButton(placeCardButton);
+            activateButton(drawCardButton);
+        }
+        guiView.playerAreaUpdated = false;
     }
 
 
@@ -200,7 +209,8 @@ public class PlayGameController {
         pane.getChildren().remove(playerAreaGrid);
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
-        guiView.playerAreaUpdated = false; // messa una carta rimetto la cosa non aggiornata per i prossimi piazzamenti
+        guiView.playerAreaUpdated = false;
+        scoresLabel.setText(guiView.scoresText);
     }
 
     private void activateButton(Button button) {

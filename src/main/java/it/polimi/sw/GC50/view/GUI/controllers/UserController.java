@@ -12,10 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.CountDownLatch;
-
 public class UserController {
 
     @FXML
@@ -31,21 +27,21 @@ public class UserController {
         guiView = (GuiView) AppClient.getView();
     }
 
-    public void showMenuView() throws Exception{
-        Stage stage = (Stage) menuButton.getScene().getWindow();
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-        Parent menuRoot = menuLoader.load();
-        Scene menuScene = new Scene(menuRoot);
-        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-        stage.setScene(menuScene);
-    }
+//    public void showMenuView() throws Exception{
+//        Stage stage = (Stage) menuButton.getScene().getWindow();
+//        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+//        Parent menuRoot = menuLoader.load();
+//        Scene menuScene = new Scene(menuRoot);
+//        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+//        stage.setScene(menuScene);
+//    }
 
     @FXML
     public void handleMenuButton(ActionEvent event) throws Exception {
         String submittedPlayerName = playerNickname.getText();
         guiView.setSubmittedPlayerNickname(submittedPlayerName);
         guiView.resumeExecution();
-        showMenuView();
+        System.out.println("Riprendo client Thread");
     }
 
 }

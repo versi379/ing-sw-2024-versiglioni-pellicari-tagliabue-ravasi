@@ -1,14 +1,19 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
+import it.polimi.sw.GC50.app.AppClient;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NetController {
+
+    private GuiView guiView;
 
     @FXML
     private Button socketButton;
@@ -23,11 +28,16 @@ public class NetController {
     private int netSelected;
 
     @FXML
+    private TextField serverIpTextField;
+
+    @FXML
     public void initialize() throws Exception {
+        guiView = (GuiView) AppClient.getView();
         netSet = false;
         netSelected = 1;
         socketButton.setOnAction(event -> {
             netSet = true;
+            setIP();
             netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
             try {
@@ -38,6 +48,7 @@ public class NetController {
         });
         rmiButton.setOnAction(event -> {
             netSet = true;
+            setIP();
             netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
             try {
@@ -56,6 +67,11 @@ public class NetController {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    private void setIP() {
+        guiView.setSubmittedIp(serverIpTextField.getText());
+        guiView.resumeExecution();
     }
 
     public void showUserView() throws Exception{
