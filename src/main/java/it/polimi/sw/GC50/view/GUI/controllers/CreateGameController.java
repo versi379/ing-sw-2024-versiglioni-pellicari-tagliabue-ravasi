@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.function.UnaryOperator;
+
 public class CreateGameController {
 
     @FXML
@@ -45,6 +47,17 @@ public class CreateGameController {
         threePlayersButton.setToggleGroup(numPlayersGroup);
         fourPlayersButton.setToggleGroup(numPlayersGroup);
         guiView = (GuiView) AppClient.getView();
+
+        // Create a TextFormatter that allows only integer input
+        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("-?([1-9][0-9]*)?")) { // Allows negative numbers and integers, disallow zero at start
+                return change;
+            }
+            return null;
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(integerFilter);
+        finalScore.setTextFormatter(textFormatter);
     }
 
     @FXML

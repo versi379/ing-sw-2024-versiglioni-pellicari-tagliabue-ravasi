@@ -209,7 +209,12 @@ public class Client {
      * @throws GameException if there is an error
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
-        return serverInterface.createGame(gameId, numPlayers, endScore);
+        if (serverInterface.createGame(gameId, numPlayers, endScore)) {
+            System.out.println("game settato !");
+            return true;
+        }
+        System.out.println("game non settato !");
+        return false;
     }
 
     /**
