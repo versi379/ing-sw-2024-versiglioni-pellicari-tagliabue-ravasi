@@ -7,17 +7,24 @@ import java.io.Serializable;
 
 
 public class ObjectiveCard implements Serializable {
+    private final String code;
     private final int pointsPerCompletion;
     private final Objective objective;
 
     /**
      * Constructs an instance of Objective Card
+     * @param code                   specify the associated .jpg
      * @param pointsPerCompletion    points necessaries for complete the objective
      * @param objective              objective to reach
      */
-    public ObjectiveCard(int pointsPerCompletion, Objective objective) {
+    public ObjectiveCard(String code, int pointsPerCompletion, Objective objective) {
+        this.code = code;
         this.pointsPerCompletion = pointsPerCompletion;
         this.objective = objective;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     /**
@@ -52,5 +59,12 @@ public class ObjectiveCard implements Serializable {
      */
     public CardType getCardType() {
         return CardType.OBJECTIVE;
+    }
+
+    // TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ObjectiveCard(int pointsPerCompletion, Objective objective) {
+        code = "-1";
+        this.pointsPerCompletion = pointsPerCompletion;
+        this.objective = objective;
     }
 }

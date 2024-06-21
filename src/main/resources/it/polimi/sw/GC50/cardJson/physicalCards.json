@@ -235,9 +235,9 @@
         "type": "BlankBonus"
       },
       "fixedResources": [
+        "ANIMAL",
         "INSECT",
-        "PLANT",
-        "ANIMAL"
+        "PLANT"
       ],
       "corners": [
         {
@@ -247,10 +247,10 @@
           "status": "EMPTY"
         },
         {
-          "status": "EMPTY"
+          "status": "HIDDEN"
         },
         {
-          "status": "EMPTY"
+          "status": "HIDDEN"
         }
       ]
     },
@@ -292,9 +292,9 @@
         "type": "BlankBonus"
       },
       "fixedResources": [
-        "FUNGI",
         "PLANT",
-        "ANIMAL"
+        "ANIMAL",
+        "FUNGI"
       ],
       "corners": [
         {
@@ -304,10 +304,10 @@
           "status": "EMPTY"
         },
         {
-          "status": "EMPTY"
+          "status": "HIDDEN"
         },
         {
-          "status": "EMPTY"
+          "status": "HIDDEN"
         }
       ]
     },
@@ -420,7 +420,7 @@
       ]
     },
     "back": {
-      "code": "2",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -473,7 +473,7 @@
       ]
     },
     "back": {
-      "code": "3",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -526,7 +526,7 @@
       ]
     },
     "back": {
-      "code": "4",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -580,7 +580,7 @@
       ]
     },
     "back": {
-      "code": "5",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -634,7 +634,7 @@
       ]
     },
     "back": {
-      "code": "6",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -688,7 +688,7 @@
       ]
     },
     "back": {
-      "code": "7",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -740,7 +740,7 @@
       ]
     },
     "back": {
-      "code": "8",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -792,7 +792,7 @@
       ]
     },
     "back": {
-      "code": "9",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -844,7 +844,7 @@
       ]
     },
     "back": {
-      "code": "10",
+      "code": "1",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -950,7 +950,7 @@
       ]
     },
     "back": {
-      "code": "12",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1003,7 +1003,7 @@
       ]
     },
     "back": {
-      "code": "13",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1056,7 +1056,7 @@
       ]
     },
     "back": {
-      "code": "14",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1110,7 +1110,7 @@
       ]
     },
     "back": {
-      "code": "15",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1164,7 +1164,7 @@
       ]
     },
     "back": {
-      "code": "16",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1218,7 +1218,7 @@
       ]
     },
     "back": {
-      "code": "17",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1270,7 +1270,7 @@
       ]
     },
     "back": {
-      "code": "18",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1322,7 +1322,7 @@
       ]
     },
     "back": {
-      "code": "19",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1374,7 +1374,7 @@
       ]
     },
     "back": {
-      "code": "20",
+      "code": "11",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -1480,7 +1480,7 @@
       ]
     },
     "back": {
-      "code": "22",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1533,7 +1533,7 @@
       ]
     },
     "back": {
-      "code": "23",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1586,7 +1586,7 @@
       ]
     },
     "back": {
-      "code": "24",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1640,7 +1640,7 @@
       ]
     },
     "back": {
-      "code": "25",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1694,7 +1694,7 @@
       ]
     },
     "back": {
-      "code": "26",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1748,7 +1748,7 @@
       ]
     },
     "back": {
-      "code": "27",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1800,7 +1800,7 @@
       ]
     },
     "back": {
-      "code": "28",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1852,7 +1852,7 @@
       ]
     },
     "back": {
-      "code": "29",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -1904,7 +1904,7 @@
       ]
     },
     "back": {
-      "code": "30",
+      "code": "21",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -2010,7 +2010,7 @@
       ]
     },
     "back": {
-      "code": "32",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2063,7 +2063,7 @@
       ]
     },
     "back": {
-      "code": "33",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2116,7 +2116,7 @@
       ]
     },
     "back": {
-      "code": "34",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2170,7 +2170,7 @@
       ]
     },
     "back": {
-      "code": "35",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2224,7 +2224,7 @@
       ]
     },
     "back": {
-      "code": "36",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2278,7 +2278,7 @@
       ]
     },
     "back": {
-      "code": "37",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2330,7 +2330,7 @@
       ]
     },
     "back": {
-      "code": "38",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2382,7 +2382,7 @@
       ]
     },
     "back": {
-      "code": "39",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2434,7 +2434,7 @@
       ]
     },
     "back": {
-      "code": "40",
+      "code": "31",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -2470,9 +2470,9 @@
         "targetResource": "QUILL"
       },
       "constraint": [
-        "ANIMAL",
         "FUNGI",
-        "FUNGI"
+        "FUNGI",
+        "ANIMAL"
       ],
       "corners": [
         {
@@ -2527,9 +2527,9 @@
         "targetResource": "INK"
       },
       "constraint": [
-        "PLANT",
         "FUNGI",
-        "FUNGI"
+        "FUNGI",
+        "PLANT"
       ],
       "corners": [
         {
@@ -2548,7 +2548,7 @@
       ]
     },
     "back": {
-      "code": "42",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2605,7 +2605,7 @@
       ]
     },
     "back": {
-      "code": "43",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2640,10 +2640,10 @@
         "type": "CoveredCornersBonus"
       },
       "constraint": [
-        "ANIMAL",
         "FUNGI",
         "FUNGI",
-        "FUNGI"
+        "FUNGI",
+        "ANIMAL"
       ],
       "corners": [
         {
@@ -2661,7 +2661,7 @@
       ]
     },
     "back": {
-      "code": "44",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2696,10 +2696,10 @@
         "type": "CoveredCornersBonus"
       },
       "constraint": [
-        "PLANT",
         "FUNGI",
         "FUNGI",
-        "FUNGI"
+        "FUNGI",
+        "PLANT"
       ],
       "corners": [
         {
@@ -2717,7 +2717,7 @@
       ]
     },
     "back": {
-      "code": "45",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2773,7 +2773,7 @@
       ]
     },
     "back": {
-      "code": "46",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2829,7 +2829,7 @@
       ]
     },
     "back": {
-      "code": "47",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2885,7 +2885,7 @@
       ]
     },
     "back": {
-      "code": "48",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2941,7 +2941,7 @@
       ]
     },
     "back": {
-      "code": "49",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -2998,7 +2998,7 @@
       ]
     },
     "back": {
-      "code": "50",
+      "code": "41",
       "color": "RED",
       "points": 0,
       "bonus": {
@@ -3112,7 +3112,7 @@
       ]
     },
     "back": {
-      "code": "52",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3169,7 +3169,7 @@
       ]
     },
     "back": {
-      "code": "53",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3225,7 +3225,7 @@
       ]
     },
     "back": {
-      "code": "54",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3281,7 +3281,7 @@
       ]
     },
     "back": {
-      "code": "55",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3337,7 +3337,7 @@
       ]
     },
     "back": {
-      "code": "56",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3393,7 +3393,7 @@
       ]
     },
     "back": {
-      "code": "57",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3449,7 +3449,7 @@
       ]
     },
     "back": {
-      "code": "58",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3505,7 +3505,7 @@
       ]
     },
     "back": {
-      "code": "59",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3562,7 +3562,7 @@
       ]
     },
     "back": {
-      "code": "60",
+      "code": "51",
       "color": "GREEN",
       "points": 0,
       "bonus": {
@@ -3676,7 +3676,7 @@
       ]
     },
     "back": {
-      "code": "62",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -3733,7 +3733,7 @@
       ]
     },
     "back": {
-      "code": "63",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -3789,7 +3789,7 @@
       ]
     },
     "back": {
-      "code": "64",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -3845,7 +3845,7 @@
       ]
     },
     "back": {
-      "code": "65",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -3901,7 +3901,7 @@
       ]
     },
     "back": {
-      "code": "66",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -3938,7 +3938,7 @@
       "constraint": [
         "ANIMAL",
         "ANIMAL",
-        "INSECT"
+        "ANIMAL"
       ],
       "corners": [
         {
@@ -3957,7 +3957,7 @@
       ]
     },
     "back": {
-      "code": "67",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -4013,7 +4013,7 @@
       ]
     },
     "back": {
-      "code": "68",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -4069,7 +4069,7 @@
       ]
     },
     "back": {
-      "code": "69",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -4126,7 +4126,7 @@
       ]
     },
     "back": {
-      "code": "70",
+      "code": "61",
       "color": "BLUE",
       "points": 0,
       "bonus": {
@@ -4240,7 +4240,7 @@
       ]
     },
     "back": {
-      "code": "72",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4297,7 +4297,7 @@
       ]
     },
     "back": {
-      "code": "73",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4353,7 +4353,7 @@
       ]
     },
     "back": {
-      "code": "74",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4409,7 +4409,7 @@
       ]
     },
     "back": {
-      "code": "75",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4465,7 +4465,7 @@
       ]
     },
     "back": {
-      "code": "76",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4521,7 +4521,7 @@
       ]
     },
     "back": {
-      "code": "77",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4577,7 +4577,7 @@
       ]
     },
     "back": {
-      "code": "78",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4633,7 +4633,7 @@
       ]
     },
     "back": {
-      "code": "79",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {
@@ -4690,7 +4690,7 @@
       ]
     },
     "back": {
-      "code": "80",
+      "code": "71",
       "color": "PURPLE",
       "points": 0,
       "bonus": {

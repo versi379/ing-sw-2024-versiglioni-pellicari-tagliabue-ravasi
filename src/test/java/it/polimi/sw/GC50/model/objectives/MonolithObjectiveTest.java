@@ -4,6 +4,7 @@ import it.polimi.sw.GC50.model.cards.Color;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.PlayerData;
+import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import org.junit.jupiter.api.Test;
 
 import static it.polimi.sw.GC50.model.cards.PlayableCardTest.redPlayableCard;

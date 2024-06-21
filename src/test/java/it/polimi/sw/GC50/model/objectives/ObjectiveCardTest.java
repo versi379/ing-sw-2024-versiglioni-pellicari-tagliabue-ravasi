@@ -13,7 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ObjectiveCardTest {
 
     @Test
-    void TestObjectiveCardConstructor() {
+    void TestObjectiveCardFullConstructor() {
+        CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL);
+        ObjectiveCard objectiveCard = new ObjectiveCard("1", 2, caveObjective);
+
+        assertEquals("1", objectiveCard.getCode());
+        assertEquals(objectiveCard.getPointsPerCompletion(), 2);
+        assertEquals(objectiveCard.getObjective(), caveObjective);
+    }
+
+    @Test
+    void TestObjectiveCardNoCodeConstructor() {
         CaveObjective caveObjective = new CaveObjective(Color.BLUE, Color.RED, CaveOrientation.UPRIGHTL);
         ObjectiveCard objectiveCard = new ObjectiveCard(2, caveObjective);
 
