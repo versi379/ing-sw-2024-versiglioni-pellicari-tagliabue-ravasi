@@ -240,7 +240,7 @@ public class Client {
                     switchCommand(command, args);
                 } catch (GameException e) {
                     view.showError(e.getMessage());
-                    gameView.setInGame(false);
+                    gameView.clear();
                     exit = 1;
                 }
                 notifyAll();
