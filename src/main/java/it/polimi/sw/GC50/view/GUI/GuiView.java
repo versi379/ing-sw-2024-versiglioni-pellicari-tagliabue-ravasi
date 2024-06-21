@@ -32,6 +32,7 @@ public class GuiView extends Application implements View {
     // RIF client
     private Client client;
 
+    private String submittedIp;
     private String submittedPlayerNickname;
     private int submittedGameChoice;
     private String submittedGameName;
@@ -279,12 +280,9 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showCardsArea(String nickname) {
-
-
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
         System.err.println("> player area updated del giocatore: " + nickname);
-
     }
 
     @Override
@@ -332,8 +330,8 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectServerIp() {
-        // to be implemented
-        return "localhost";
+        waitForButtonPress();
+        return submittedIp;
     }
 
     @Override
@@ -346,6 +344,7 @@ public class GuiView extends Application implements View {
         }
         return getNetController().getNetSelected();
     }
+
 
     // commands must be read via GUI rather than terminal
     public Pair<Command, String[]> readCommand() {
@@ -568,6 +567,10 @@ public class GuiView extends Application implements View {
 
     public void setSubmittedJoinGameName(String submittedJoinGameName) {
         this.submittedJoinGameName = submittedJoinGameName;
+    }
+
+    public void setSubmittedIp(String submittedIp) {
+        this.submittedIp = submittedIp;
     }
 
     public Client getClientRmi() {
