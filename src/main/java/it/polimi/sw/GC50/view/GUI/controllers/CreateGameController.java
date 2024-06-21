@@ -79,9 +79,11 @@ public class CreateGameController {
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
+    }
 
-//        createGameButton.setVisible(false);
-//        waitingPlayersBuffer.setVisible(true);
+    public void showWaitingBuffer() {
+        createGameButton.setVisible(false);
+        waitingPlayersBuffer.setVisible(true);
     }
 
 }
