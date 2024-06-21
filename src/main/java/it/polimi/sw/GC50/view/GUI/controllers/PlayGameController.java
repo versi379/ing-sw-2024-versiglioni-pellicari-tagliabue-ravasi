@@ -47,10 +47,6 @@ public class PlayGameController {
 
     public GridPane playerAreaGrid;
 
-    // problema: playerHandUpdated non ridiventa false (per entrare nel while)
-    // dopo il cambio turno (funziona solo alla prima volta)
-    // mentre playerAreaUpdated funziona anche alla seconda ...
-
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -72,6 +68,7 @@ public class PlayGameController {
     @FXML
     void handleShowBoardButton(ActionEvent event) {
         updatePlayerArea();
+        guiView.playerHandUpdated = false;
         deactivateButton(showBoardButton);
         activateButton(placeCardButton);
     }
