@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.RulesController">
+
+</AnchorPane>

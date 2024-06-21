@@ -28,6 +28,9 @@ public class MenuController {
     private Button joinGameButton;
 
     @FXML
+    private Button rulesButton;
+
+    @FXML
     private Button quitButton;
 
     private int gameChoice;
@@ -51,7 +54,6 @@ public class MenuController {
         stage.setScene(createGameScene);
     }
 
-    // deve essere lanciato quando i free games sono aggiornati (showfreegames)
     public void showJoinGameView() throws Exception {
         Stage stage = (Stage) joinGameButton.getScene().getWindow();
         FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
@@ -59,6 +61,15 @@ public class MenuController {
         Scene joinGameScene = new Scene(joinGameRoot);
         joinGameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(joinGameScene);
+    }
+
+    public void showRulesView() throws Exception {
+        Stage stage = (Stage) rulesButton.getScene().getWindow();
+        FXMLLoader rulesLoader = new FXMLLoader(getClass().getResource(ScenePath.RULES.getPath()));
+        Parent rulesRoot = rulesLoader.load();
+        Scene rulesScene = new Scene(rulesRoot);
+        rulesScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(rulesScene);
     }
 
     @FXML
@@ -75,6 +86,11 @@ public class MenuController {
         guiView.setSubmittedGameChoice(gameChoice);
         guiView.resumeExecution();
         showJoinGameView();
+    }
+
+    @FXML
+    public void handleRulesButton(ActionEvent event) throws Exception {
+        showRulesView();
     }
 
     @FXML
