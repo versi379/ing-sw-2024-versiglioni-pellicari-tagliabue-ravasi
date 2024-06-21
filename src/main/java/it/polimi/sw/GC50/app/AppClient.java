@@ -27,9 +27,7 @@ public class AppClient {
             view = new GuiView();
         }
 
-        new Client(view).run();
-//        System.err.println("Bye");
-        System.exit(0);
+        System.exit(new Client(view).run());
     }
 
     private static int readBinaryChoice() {
@@ -43,7 +41,7 @@ public class AppClient {
             scanner.nextLine();
         }
         while (read != 1 && read != 2) {
-            System.out.println(TuiView.redTxt + "Invalid input. Please enter 1 or 2." + TuiView.baseTxt);
+            System.out.println(TuiView.redTxt + "Error: Invalid input, please enter 1 or 2." + TuiView.baseTxt);
             try {
                 read = scanner.nextInt();
             } catch (InputMismatchException e) {
