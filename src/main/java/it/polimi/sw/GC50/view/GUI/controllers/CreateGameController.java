@@ -73,7 +73,7 @@ public class CreateGameController {
                 submittedNumPlayers = 4;
             }
         } else {
-            // tell user he must choose num players
+            // se non sceglie nulla di default il gioco viene comunque creato con due giocatori V
         }
         String submittedGameName = gameName.getText();
         int submittedEndPoints = Integer.parseInt(finalScore.getText());
@@ -81,6 +81,7 @@ public class CreateGameController {
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
+
         createGameButton.setVisible(false);
         waitingPlayersBuffer.setVisible(true);
     }
