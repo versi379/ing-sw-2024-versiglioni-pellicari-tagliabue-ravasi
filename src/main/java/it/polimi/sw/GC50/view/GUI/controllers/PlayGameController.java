@@ -72,10 +72,6 @@ public class PlayGameController {
         activateButton(placeCardButton);
     }
 
-    // NB tutto quello che metto dentro questo metodo viene eseguito dopo che l'utente di fatto
-    // termina il proprio turno, visto che pesca una carta (dopo averne piazzata una)
-    // quindi tutti i trigger collegati a NOTIFY NECT TURN vanno messi qui
-    // e.g. label che cambiano
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
@@ -93,13 +89,8 @@ public class PlayGameController {
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
-        // in futuro possiamo mettere pulsanti sopra le 6 carte per ottenere la scelta
         String placedCardInfo = placeCardTextField.getText();
         guiView.read = placedCardInfo;
-        if (guiView.serverError) {
-            return;
-        }
-        guiView.serverError = false;
         // attendo che player area sia updated per ristamparla
         while(!guiView.playerAreaUpdated) {
             System.out.println("aspetta ");
@@ -107,7 +98,7 @@ public class PlayGameController {
         System.out.println("qui sotto richiamo la player area (aggiornata) per stamparla");
         updatePlayerArea();
         scoresLabel.setText(guiView.scoresText);
-        deactivateButton(placeCardButton);
+//        deactivateButton(placeCardButton);
         activateButton(drawCardButton);
     }
 
