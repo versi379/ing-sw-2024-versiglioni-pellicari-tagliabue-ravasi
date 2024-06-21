@@ -654,8 +654,10 @@ public class Client {
             case NOTIFY_NEXT_TURN -> {
                 gameView.setPlayingPhase(PlayingPhase.PLACING);
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
-                ((GuiView) view).playerAreaUpdated = false;
-                ((GuiView) view).playerHandUpdated = false;
+                if (view.getClass().getSimpleName().equals("GuiView")) {
+                    ((GuiView) view).playerAreaUpdated = false;
+                    ((GuiView) view).playerHandUpdated = false;
+                }
             }
 
             case NOTIFY_GAME_ENDED -> {
@@ -683,7 +685,9 @@ public class Client {
                 if (gameView.getNickname().equals(errorMex.getNickname())) {
                     view.showError(errorMex.getContent());
                 }
-                ((GuiView) view).serverError = true;
+                if (view.getClass().getSimpleName().equals("GuiView")) {
+                    ((GuiView) view).serverError = true;
+                }
             }
         }
     }

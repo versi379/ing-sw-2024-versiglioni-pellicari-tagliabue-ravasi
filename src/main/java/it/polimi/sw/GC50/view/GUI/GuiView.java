@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// class it.polimi.sw.GC50.view.TUI.TuiView cannot be cast to class it.polimi.sw.GC50.view.GUI.GuiView
-// (it.polimi.sw.GC50.view.TUI.TuiView and it.polimi.sw.GC50.view.GUI.GuiView are in module it.polimi.sw.GC50 of loader 'app')
-
 public class GuiView extends Application implements View {
 
     private Stage primaryStage;
