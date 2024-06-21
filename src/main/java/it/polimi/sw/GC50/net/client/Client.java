@@ -63,6 +63,8 @@ public class Client {
             view.showError(e.getMessage());
             exit = 1;
         }
+
+        view.showEndSession();
         return exit;
     }
 
@@ -81,6 +83,7 @@ public class Client {
                 case 1 -> {
                     serverInterface = new ClientSCK(this, serverIp, AppClient.serverSckPort);
                 }
+
                 case 2 -> {
                     try {
                         serverInterface = new ClientRmi(this, serverIp, AppClient.serverRmiPort);
@@ -88,8 +91,8 @@ public class Client {
                         serverInterface = null;
                     }
                 }
+
                 case 3 -> {
-                    view.showEndSession();
                     return false;
                 }
             }
@@ -140,7 +143,6 @@ public class Client {
 
                 case 3 -> {
                     resetPlayer();
-                    view.showEndSession();
                     return;
                 }
             }
@@ -260,33 +262,42 @@ public class Client {
             case CHOOSE_OBJECTIVE -> {
                 selectSecretObjective(Integer.parseInt(args[0]));
             }
+
             case CHOOSE_STARTER_FACE -> {
                 selectStarterFace(Integer.parseInt(args[0]));
             }
+
             case SHOW_OBJECTIVES -> {
                 view.showObjectives();
             }
+
             case PLACE_CARD -> {
                 placeCard(new PlaceCardRequest(Integer.parseInt(args[0]),
                         Integer.parseInt(args[1]),
                         Integer.parseInt(args[2]),
                         Integer.parseInt(args[3])));
             }
+
             case DRAW_CARD -> {
                 drawCard(Integer.parseInt(args[0]));
             }
+
             case CHAT -> {
                 sendChatMessage(args[0]);
             }
+
             case CHAT_PRIVATE -> {
                 sendPrivateChatMessage(args[0], args[1]);
             }
+
             case LEAVE -> {
                 leaveGame();
             }
+
             case HELP -> {
                 view.showHelp();
             }
+
             case NOT_A_COMMAND -> {
                 view.showError(args[0]);
             }
@@ -669,9 +680,6 @@ public class Client {
                     view.showError(errorMex.getContent());
                 }
                 ((GuiView) view).playerAreaUpdated = true;
-            }
-
-            default -> {
             }
         }
     }
