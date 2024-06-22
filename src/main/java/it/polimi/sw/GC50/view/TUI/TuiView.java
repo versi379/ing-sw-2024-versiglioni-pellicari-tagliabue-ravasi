@@ -99,6 +99,11 @@ public class TuiView implements View {
         return readInt(0, 51);
     }
 
+    @Override
+    public String selectJoinGameName() {
+        return selectGameName();
+    }
+
     private String readString() {
         Scanner scanner = new Scanner(System.in);
 
@@ -315,9 +320,14 @@ public class TuiView implements View {
     }
 
     @Override
-    public void showEndSession() {
-        System.out.println();
-        System.out.println(goldTxt + "Session ended" + baseTxt);
+    public void showChatMessage(String sender, String content, String time) {
+        if (getGameView().getNickname().equals(sender)) {
+            System.out.print("Message sent: ");
+        } else {
+            System.out.print("Message received from player \"" + sender + "\": ");
+        }
+        System.out.println(content);
+        System.out.println("Sent at time " + time);
     }
 
     @Override
@@ -350,14 +360,9 @@ public class TuiView implements View {
     }
 
     @Override
-    public void showChatMessage(String sender, String content, String time) {
-        if (getGameView().getNickname().equals(sender)) {
-            System.out.print("Message sent: ");
-        } else {
-            System.out.print("Message received from player \"" + sender + "\": ");
-        }
-        System.out.println(content);
-        System.out.println("Sent at time " + time);
+    public void showEndSession() {
+        System.out.println();
+        System.out.println(goldTxt + "Session ended" + baseTxt);
     }
 
     @Override

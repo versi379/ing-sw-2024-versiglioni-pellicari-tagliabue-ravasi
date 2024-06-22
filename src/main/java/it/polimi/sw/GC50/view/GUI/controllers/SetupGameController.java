@@ -62,28 +62,27 @@ public class SetupGameController {
 
     @FXML
     private void handleStarterFrontButton(ActionEvent event) {
-        guiView.read = "-cs 1";
+        guiView.setRead("-cs 1");
         starterBackButton.setDisable(true);
         imageViewStarterBack.setOpacity(0.3);
     }
 
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
-        guiView.read = "-cs 2";
+        guiView.setRead("-cs 2");
         starterFrontButton.setDisable(true);
         imageViewStarterFront.setOpacity(0.3);
     }
 
     @FXML
     private void handleChooseObjective1Button(ActionEvent event) {
-        guiView.read = "-co 1";
+        guiView.setRead("-co 1");
         chooseObjective2Button.setDisable(true);
     }
 
     @FXML
     private void handleChooseObjective2Button(ActionEvent event) {
-        guiView.read = "-co 2";
+        guiView.setRead("-co 2");
         chooseObjective1Button.setDisable(true);
     }
-
 }

@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,10 +60,12 @@ public class GuiView extends Application implements View {
 
     public String scoresText;
 
+    private boolean newCommand;
+
     private Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
-    public String read = ""; // commands sent via GUI components
+    private String read; // commands sent via GUI components
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -126,35 +129,66 @@ public class GuiView extends Application implements View {
         this.client = client;
     }
 
-    // ---------------------------------  GAME SETUP  ---------------------------------
+    @Override
+    public void showConnected() {
+    }
+
+    // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public String selectServerIp() {
+        waitForButtonPress();
+        return submittedIp;
+    }
 
     @Override
+    public int selectConnectionType() {
+        while (getNetController() == null) {
+            System.out.print("");
+        }
+        while (!getNetController().isNetSet()) {
+            System.out.print("");
+        }
+        return getNetController().getNetSelected();
+    }
+
+    // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
     public String selectName() {
-        while(userController == null) {
+        while (userController == null) {
             System.err.println("> Attendo caricamento user login page.");
         }
         waitForButtonPress();
+
         return submittedPlayerNickname;
     }
 
     @Override
     public int selectJoinOrCreate() {
-        while(menuController == null) {
+        Platform.runLater(() -> {
+            Stage stage = getPrimaryStage();
+            FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+            Parent menuRoot = null;
+            try {
+                menuRoot = menuLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Scene gameScene = new Scene(menuRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            stage.setScene(gameScene);
+        });
+
+        while (menuController == null) {
             System.err.println("> Attendo caricamento menu page.");
         }
         waitForButtonPress();
         return submittedGameChoice;
     }
 
-    public String selectedJoinGame() {
-        waitForButtonPress();
-        return submittedJoinGameName;
-    }
-
     // map of game names with associated list of players
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
-        while(joinGameController == null) {
+        while (joinGameController == null) {
             System.err.println("> Attendo caricamento join game page.");
             try {
                 Thread.sleep(100);
@@ -176,18 +210,15 @@ public class GuiView extends Application implements View {
                 menuController.gameItems2.add(gameItem.toString());
             }
         }
-
-    }
-
-    public void waitGameParams() {
-        while(createGameController == null) {
-            System.err.println("> Attendo caricamento create game page.");
-        }
-        waitForButtonPress();
     }
 
     @Override
     public String selectGameName() {
+        while (createGameController == null) {
+            System.err.println("> Attendo caricamento create game page.");
+        }
+        waitForButtonPress();
+
         return submittedGameName;
     }
 
@@ -202,28 +233,48 @@ public class GuiView extends Application implements View {
     }
 
     @Override
-    public void showWaitPlayers() {
-
+    public String selectJoinGameName() {
+        waitForButtonPress();
+        return submittedJoinGameName;
     }
 
-    @Override
-    public void showConnected() {
-
-    }
-
+    // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     private GameView getGameView() {
         return client.getGameView();
     }
 
-    // ---------------------------------  GAME INIT PHASE  ---------------------------------
+    @Override
+    public void showPlayerJoined(String nickname) {
+    }
 
     @Override
-    public void showSetup() {
+    public void showPlayerLeft(String nickname) {
+    }
 
-        this.showObjectives();
+    @Override
+    public void showWaitPlayers() {
+    }
+
+    // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void showSetup() {
+        Platform.runLater(() -> {
+            Stage stage = getPrimaryStage();
+            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
+            Parent gameRoot = null;
+            try {
+                gameRoot = gameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Scene gameScene = new Scene(gameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            stage.setScene(gameScene);
+        });
+
+        showObjectives();
         showSecretObjectiveSelection();
         showStarterCardSelection();
-
     }
 
     @Override
@@ -250,16 +301,32 @@ public class GuiView extends Application implements View {
         starterCardCode = starterCard.getFront().getCode();
     }
 
-    // ---------------------------------  GAME START (P-D) PHASE  ---------------------------------
+    @Override
+    public void showPlayerReady(String nickname) {
+    }
 
+    // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showStart() {
-
+        showHand();
+        showCardsArea(getGameView().getCurrentPlayer());
+        Platform.runLater(() -> {
+            Stage stage = getPrimaryStage();
+            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
+            Parent gameRoot = null;
+            try {
+                gameRoot = gameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Scene gameScene = new Scene(gameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            stage.setScene(gameScene);
+        });
     }
 
     @Override
     public void showCurrentPlayer() {
-
     }
 
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
@@ -286,12 +353,10 @@ public class GuiView extends Application implements View {
     public void showHand() {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
-
     }
 
     @Override
     public void showDecks() {
-
     }
 
     @Override
@@ -310,41 +375,48 @@ public class GuiView extends Application implements View {
         }
     }
 
-    // ---------------------------------  CHAT  ---------------------------------
+    // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void showEnd() {
+    }
 
+    // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showChatMessage(String sender, String content, String time) {
     }
 
-    // ---------------------------------  COMMANDS  ---------------------------------
+    // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void showHelp() {
+    }
 
+    @Override
+    public void showError(String content) {
+        System.err.println("> Error: " + content);
+    }
+
+    @Override
+    public void showEndSession() {
+    }
+
+    // COMMANDS ////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void listen() {
         Pair<Command, String[]> command = readCommand();
+        System.out.println("ADD COMMAND: " + command.getKey());
         client.addCommand(command.getKey(), command.getValue());
     }
 
-
-    @Override
-    public String selectServerIp() {
-        waitForButtonPress();
-        return submittedIp;
-    }
-
-    @Override
-    public int selectConnectionType() {
-        while (getNetController() == null) {
-            System.out.print("");
-        }
-        while (!getNetController().isNetSet()) {
-            System.out.print("");
-        }
-        return getNetController().getNetSelected();
-    }
-
-
     // commands must be read via GUI rather than terminal
     public Pair<Command, String[]> readCommand() {
+        while (!newCommand) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        newCommand = false;
 
         switch (getFirstWord(read)) {
             case "-choose_objective", "-co" -> {
@@ -458,41 +530,6 @@ public class GuiView extends Application implements View {
         }
     }
 
-    @Override
-    public void showEnd() {
-
-    }
-
-    @Override
-    public void showPlayerJoined(String nickname) {
-
-    }
-
-    @Override
-    public void showPlayerLeft(String nickname) {
-
-    }
-
-    @Override
-    public void showEndSession() {
-
-    }
-
-    @Override
-    public void showHelp() {
-
-    }
-
-    @Override
-    public void showError(String content) {
-
-    }
-
-    @Override
-    public void showPlayerReady(String nickname) {
-
-    }
-
     public NetController getNetController() {
         return netController;
     }
@@ -570,8 +607,8 @@ public class GuiView extends Application implements View {
         this.submittedIp = submittedIp;
     }
 
-    public Client getClientRmi() {
-        return client;
+    public void setRead(String read) {
+        this.read = read;
+        newCommand = true;
     }
-
 }

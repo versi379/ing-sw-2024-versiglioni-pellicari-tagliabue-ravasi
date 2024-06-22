@@ -4,24 +4,16 @@ import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
-import it.polimi.sw.GC50.net.messages.*;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
+import it.polimi.sw.GC50.net.ServerInterface;
+import it.polimi.sw.GC50.net.messages.*;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
-import it.polimi.sw.GC50.net.ServerInterface;
-import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +54,6 @@ public class Client {
         } catch (GameException e) {
             view.showError(e.getMessage());
             exit = 1;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
 
         view.showEndSession();
@@ -116,7 +106,7 @@ public class Client {
      *
      * @throws GameException if there is an error
      */
-    private void lobby() throws GameException, IOException {
+    private void lobby() throws GameException {
 
         while (!setPlayer(view.selectName())) {
             view.showError("Player nickname not available");
@@ -125,9 +115,6 @@ public class Client {
         while (true) {
             switch (view.selectJoinOrCreate()) {
                 case 1 -> {
-                    if (view.getClass().getSimpleName().equals("GuiView")) {
-                        ((GuiView) view).waitGameParams();
-                    }
                     gameView.setInGame(createGame(view.selectGameName(), view.selectNumberOfPlayers(), view.selectEndScore()));
                 }
 
@@ -135,11 +122,7 @@ public class Client {
                     Map<String, List<String>> freeGames = getFreeGames();
                     view.showFreeGames(freeGames);
                     if (!freeGames.isEmpty()) {
-                        if (view.getClass().getSimpleName().equals("GuiView")) {
-                            gameView.setInGame(joinGame(((GuiView) view).selectedJoinGame()));
-                        } else {
-                            gameView.setInGame(joinGame(view.selectGameName()));
-                        }
+                        gameView.setInGame(joinGame(view.selectJoinGameName()));
                     }
                 }
 
@@ -164,29 +147,12 @@ public class Client {
      * @return a boolean true if player is set correctly
      * @throws GameException if there is an error
      */
-    public boolean setPlayer(String nickname) throws GameException, IOException {
+    public boolean setPlayer(String nickname) throws GameException {
         nickname = serverInterface.setPlayer(nickname);
         if (nickname != null) {
             gameView = new GameView(nickname);
-            System.out.println("nome settato !");
-            if (view.getClass().getSimpleName().equals("GuiView")) {
-                Platform.runLater(() -> {
-                    Stage stage = ((GuiView) view).getPrimaryStage();
-                    FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-                    Parent menuRoot = null;
-                    try {
-                        menuRoot = menuLoader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Scene gameScene = new Scene(menuRoot);
-                    gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-                    stage.setScene(gameScene);
-                });
-            }
             return true;
         }
-        System.out.println("nome non settato !");
         return false;
     }
 
@@ -209,12 +175,7 @@ public class Client {
      * @throws GameException if there is an error
      */
     private boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
-        if (serverInterface.createGame(gameId, numPlayers, endScore)) {
-            System.out.println("game creato !");
-            return true;
-        }
-        System.out.println("game non creato !");
-        return false;
+        return serverInterface.createGame(gameId, numPlayers, endScore);
     }
 
     /**
@@ -225,11 +186,7 @@ public class Client {
      * @throws GameException if there is an error
      */
     private boolean joinGame(String gameId) throws GameException {
-        if (serverInterface.joinGame(gameId)) {
-            System.out.println("unito al game !");
-            return true;
-        }
-        return false;
+        return serverInterface.joinGame(gameId);
     }
 
     /**
@@ -340,12 +297,7 @@ public class Client {
      * @throws GameException if there is an error
      */
     private void waitingPhase() throws GameException {
-
-//        System.err.println("> waiting phase entered");
-
-        if (!view.getClass().getSimpleName().equals("GuiView")) {
-            view.showWaitPlayers();
-        }
+        view.showWaitPlayers();
 
         while ((gameView.getGameStatus().equals(GameStatus.WAITING) || !gameView.allJoined())
                 && gameView.isInGame()) {
@@ -357,24 +309,6 @@ public class Client {
         }
 
         if (gameView.isInGame()) {
-
-            if (view.getClass().getSimpleName().equals("GuiView")) {
-                Platform.runLater(() -> {
-                    Stage stage = ((GuiView) view).getPrimaryStage();
-                    FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
-                    Parent gameRoot = null;
-                    try {
-                        gameRoot = gameLoader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Scene gameScene = new Scene(gameRoot);
-                    gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-                    stage.setScene(gameScene);
-                });
-            }
-
-//            System.err.println("> setup completed -> min num of players reached!");
             setupPhase();
         }
     }
@@ -387,9 +321,6 @@ public class Client {
      * @throws GameException if player name is not valid
      */
     private void setupPhase() throws GameException {
-
-//        System.err.println("> setup phase entered");
-
         view.showSetup();
 
         while ((gameView.getGameStatus().equals(GameStatus.SETUP) || !gameView.allReady())
@@ -402,9 +333,6 @@ public class Client {
         }
 
         if (gameView.isInGame()) {
-
-//            System.err.println("> setup finished");
-
             playingPhase();
         }
     }
@@ -438,27 +366,6 @@ public class Client {
      */
     private void playingPhase() throws GameException {
         view.showStart();
-
-        if (view.getClass().getSimpleName().equals("GuiView")) {
-            if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
-//                view.showHand();
-            }
-            view.showHand();
-            view.showCardsArea(getGameView().getCurrentPlayer());
-            Platform.runLater(() -> {
-                Stage stage = ((GuiView) view).getPrimaryStage();
-                FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
-                Parent gameRoot = null;
-                try {
-                    gameRoot = gameLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Scene gameScene = new Scene(gameRoot);
-                gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-                stage.setScene(gameScene);
-            });
-        }
 
         while (gameView.getGameStatus().equals(GameStatus.PLAYING) && gameView.isInGame()) {
             playTurn();
@@ -661,9 +568,6 @@ public class Client {
 
                 view.showCardsArea(player);
                 view.showScores();
-                if (view.getClass().getSimpleName().equals("GuiView")) {
-                    ((GuiView) view).serverError = false;
-                }
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -678,18 +582,11 @@ public class Client {
                     view.showHand();
                 }
                 view.showDecks();
-                if (view.getClass().getSimpleName().equals("GuiView")) {
-                    ((GuiView) view).serverError = false;
-                }
             }
 
             case NOTIFY_NEXT_TURN -> {
                 gameView.setPlayingPhase(PlayingPhase.PLACING);
                 gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
-                if (view.getClass().getSimpleName().equals("GuiView")) {
-                    ((GuiView) view).playerAreaUpdated = false;
-                    ((GuiView) view).playerHandUpdated = false;
-                }
             }
 
             case NOTIFY_GAME_ENDED -> {
@@ -716,9 +613,6 @@ public class Client {
                 ErrorMex errorMex = (ErrorMex) message;
                 if (gameView.getNickname().equals(errorMex.getNickname())) {
                     view.showError(errorMex.getContent());
-                }
-                if (view.getClass().getSimpleName().equals("GuiView")) {
-                    ((GuiView) view).serverError = true;
                 }
             }
         }

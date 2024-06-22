@@ -76,9 +76,9 @@ public class PlayGameController {
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
-        guiView.read = drawnCardIndex;
-        System.out.println("PlayerHand Updated: "+guiView.playerHandUpdated);
-        System.out.println(("ServerError: "+guiView.serverError));
+        guiView.setRead(drawnCardIndex);
+        System.out.println("PlayerHand Updated: " + guiView.playerHandUpdated);
+        System.out.println(("ServerError: " + guiView.serverError));
         while (!guiView.playerHandUpdated && !guiView.serverError) {
             System.out.println("Updating player hand...");
         }
@@ -95,11 +95,16 @@ public class PlayGameController {
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         String placedCardInfo = placeCardTextField.getText();
-        guiView.read = placedCardInfo;
-        System.out.println("PlayerArea Updated: "+guiView.playerAreaUpdated);
-        System.out.println(("ServerError: "+guiView.serverError));
-        while(!guiView.playerAreaUpdated && !guiView.serverError) {
-            System.out.println("Updating player area...");
+        guiView.setRead(placedCardInfo);
+        System.out.println("PlayerArea Updated: " + guiView.playerAreaUpdated);
+        System.out.println(("ServerError: " + guiView.serverError));
+
+        while (!guiView.playerAreaUpdated && !guiView.serverError) {
+            try {
+                System.out.println("Updating player area...");
+                wait();
+            } catch (InterruptedException ignored) {
+            }
         }
         if (guiView.serverError) {
             guiView.serverError = false;
@@ -110,7 +115,6 @@ public class PlayGameController {
         }
         guiView.playerAreaUpdated = false;
     }
-
 
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
         String cardCode = card.getFront().getCode();
@@ -156,11 +160,10 @@ public class PlayGameController {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
                 int actualX = coordinates / cardsMatrix.length();
                 int actualY = coordinates % cardsMatrix.length();
-                ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY),0,0);
+                ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY), 0, 0);
 
                 int offsetX = actualX - minX;
                 int offsetY = 800 - (actualY - minY);
-
 
 
                 grid.add(cardImageView, offsetX, offsetY);
@@ -195,10 +198,10 @@ public class PlayGameController {
         for (int i = 0; i < 6; i++) {
             int row = i / 3; // 0 or 1
             int col = i % 3; // 0, 1, or 2
-            if(i < 3) { // print front
-                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i),0,0), col, row);
+            if (i < 3) { // print front
+                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i), 0, 0), col, row);
             } else { // print back
-                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3),0,0), col, row);
+                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3), 0, 0), col, row);
 
             }
         }
@@ -222,5 +225,4 @@ public class PlayGameController {
         button.setDisable(true);
         button.setOpacity(0.3);
     }
-
 }

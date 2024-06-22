@@ -23,7 +23,7 @@ public class UserController {
     private GuiView guiView;
 
     @FXML
-    public void initialize() throws Exception {
+    public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
@@ -37,11 +37,10 @@ public class UserController {
 //    }
 
     @FXML
-    public void handleMenuButton(ActionEvent event) throws Exception {
+    public void handleMenuButton(ActionEvent event) {
         String submittedPlayerName = playerNickname.getText();
         guiView.setSubmittedPlayerNickname(submittedPlayerName);
         guiView.resumeExecution();
         System.out.println("Riprendo client Thread");
     }
-
 }

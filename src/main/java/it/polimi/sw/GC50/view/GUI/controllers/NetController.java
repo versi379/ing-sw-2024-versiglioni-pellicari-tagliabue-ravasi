@@ -98,5 +98,4 @@ public class NetController {
     public int getNetSelected() {
         return netSelected;
     }
-
 }

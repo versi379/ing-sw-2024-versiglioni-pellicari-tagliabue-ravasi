@@ -18,6 +18,7 @@ public interface View extends Serializable {
     String selectGameName();
     int selectNumberOfPlayers();
     int selectEndScore();
+    String selectJoinGameName();
 
     // SHOW /////////////////////////////////////////////////////////
     void showConnected();
