@@ -17,6 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+/**
+ * Controller for Play game FXML scene.
+ */
 public class PlayGameController {
 
     private GuiView guiView;
@@ -47,6 +50,9 @@ public class PlayGameController {
 
     public GridPane playerAreaGrid;
 
+    /**
+     * method that initialize play game controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -65,6 +71,10 @@ public class PlayGameController {
         deactivateButton(drawCardButton);
     }
 
+    /**
+     * method that handle show board button
+     * @param event instance of action event
+     */
     @FXML
     void handleShowBoardButton(ActionEvent event) {
         updatePlayerArea();
@@ -73,6 +83,10 @@ public class PlayGameController {
         activateButton(placeCardButton);
     }
 
+    /**
+     * method that handle draw card button
+     * @param event instance of action event
+     */
     @FXML
     void handleDrawCardButton(ActionEvent event) {
         String drawnCardIndex = drawCardTextField.getText();
@@ -92,6 +106,10 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
     }
 
+    /**
+     * method that handle place card button
+     * @param event instance of action event
+     */
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
         String placedCardInfo = placeCardTextField.getText();
@@ -116,14 +134,32 @@ public class PlayGameController {
         guiView.playerAreaUpdated = false;
     }
 
+    /**
+     * method that prints physical card in front
+     * @param card      instance of physical card
+     * @param layoutX   of the card
+     * @param layoutY   of the card
+     * @return          printed playable card
+     */
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
         return printPlayableCard(card.getFront(), layoutX, layoutY);
     }
-
+    /**
+     * method that prints physical card in back
+     * @param card      instance of physical card
+     * @param layoutX   of the card
+     * @param layoutY   of the card
+     * @return          printed playable card
+     */
     public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
         return printPlayableCard(card.getBack(), layoutX, layoutY);
     }
 
+    /**
+     * prints player area
+     * @param playerArea     instance of player data view
+     * @return  printed player arena
+     */
     public GridPane printPlayerArea(PlayerDataView playerArea) {
         GridPane grid = new GridPane();
         grid.setLayoutX(300);
@@ -157,6 +193,13 @@ public class PlayGameController {
         return grid;
     }
 
+    /**
+     * method used to print playable card
+     * @param card      an instance of playable card
+     * @param layoutX   of the card
+     * @param layoutY   of the card
+     * @return          an image of playable card
+     */
     public ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
@@ -170,6 +213,9 @@ public class PlayGameController {
         return cardImageView;
     }
 
+    /**
+     * method used to print player hand
+     */
     public void printPlayerHand() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
@@ -189,6 +235,9 @@ public class PlayGameController {
         pane.getChildren().add(gridPane);
     }
 
+    /**
+     * method used to update player area
+     */
     public void updatePlayerArea() {
         pane.getChildren().remove(playerAreaGrid);
         playerAreaGrid = printPlayerArea(guiView.playerArea);
@@ -197,11 +246,18 @@ public class PlayGameController {
         scoresLabel.setText(guiView.scoresText);
     }
 
+    /**
+     * method used to activate a button
+     * @param button    a specific button
+     */
     private void activateButton(Button button) {
         button.setDisable(false);
         button.setOpacity(1);
     }
-
+    /**
+     * method used to deactivate a button
+     * @param button    a specific button
+     */
     private void deactivateButton(Button button) {
         button.setDisable(true);
         button.setOpacity(0.3);

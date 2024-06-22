@@ -10,12 +10,19 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+/**
+ * Controller for Rules FXML scene.
+ */
 public class RulesController {
 
     @FXML
     private Button backToMenuButton;
 
+    /**
+     * method used to handle back to menu button
+     * @param event         an instance of action event
+     * @throws IOException  if an error occurs
+     */
     @FXML
     void handleBackToMenuButton(ActionEvent event) throws IOException {
         Stage stage = (Stage) backToMenuButton.getScene().getWindow();

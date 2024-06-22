@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Controller for Create game FXML scene.
+ */
 public class CreateGameController {
     private GuiView guiView;
 
@@ -31,6 +34,9 @@ public class CreateGameController {
     @FXML
     private ProgressIndicator waitingPlayersBuffer;
 
+    /**
+     * method that initialize the game controller
+     */
     @FXML
     public void initialize() {
         numPlayersGroup = new ToggleGroup();
@@ -52,6 +58,10 @@ public class CreateGameController {
         finalScore.setTextFormatter(textFormatter);
     }
 
+    /**
+     * method that create game button
+     * @param event     type of event
+     */
     @FXML
     public void handleCreateGameButton(ActionEvent event) {
         RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
@@ -70,6 +80,9 @@ public class CreateGameController {
         guiView.resumeExecution();
     }
 
+    /**
+     * method that shows waiting buffer
+     */
     public void showWaitingBuffer() {
         createGameButton.setVisible(false);
         waitingPlayersBuffer.setVisible(true);

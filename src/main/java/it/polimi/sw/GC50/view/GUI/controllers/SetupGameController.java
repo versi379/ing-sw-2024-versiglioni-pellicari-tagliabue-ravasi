@@ -43,6 +43,9 @@ public class SetupGameController {
     @FXML
     private Button chooseObjective2Button;
 
+    /**
+     * method used to initialize setup game controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -60,13 +63,20 @@ public class SetupGameController {
     // add  COMMAND listeners
     // associate GUI action to command code VVV
 
+    /**
+     * method used to handle starter front button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleStarterFrontButton(ActionEvent event) {
         guiView.setRead("-cs 1");
         starterBackButton.setDisable(true);
         imageViewStarterBack.setOpacity(0.3);
     }
-
+    /**
+     * method used to handle starter back button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
         guiView.setRead("-cs 2");
@@ -74,12 +84,19 @@ public class SetupGameController {
         imageViewStarterFront.setOpacity(0.3);
     }
 
+    /**
+     * method used to handle choose objective 1 button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleChooseObjective1Button(ActionEvent event) {
         guiView.setRead("-co 1");
         chooseObjective2Button.setDisable(true);
     }
-
+    /**
+     * method used to handle choose objective 1 button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleChooseObjective2Button(ActionEvent event) {
         guiView.setRead("-co 2");

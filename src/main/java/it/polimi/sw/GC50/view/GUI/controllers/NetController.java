@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for Net FXML scene.
+ */
 public class NetController {
 
     private GuiView guiView;
@@ -32,6 +35,10 @@ public class NetController {
     @FXML
     private TextField serverIpTextField;
 
+    /**
+     * method that initialize net controller
+     * @throws Exception    if there is some error
+     */
     @FXML
     public void initialize() throws Exception {
         guiView = (GuiView) AppClient.getView();
@@ -71,11 +78,18 @@ public class NetController {
         });
     }
 
+    /**
+     * method that sets an IP address
+     */
     private void setIP() {
         guiView.setSubmittedIp(serverIpTextField.getText());
         guiView.resumeExecution();
     }
 
+    /**
+     * method that shows user view
+     * @throws IOException  if an error occurs
+     */
     public void showUserView() throws IOException {
         Stage stage = (Stage) socketButton.getScene().getWindow();
         FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
@@ -85,18 +99,29 @@ public class NetController {
         stage.setScene(userScene);
     }
 
+    /**
+     * @return socket button
+     */
     public Button getSocketButton() {
         return socketButton;
     }
-
+    /**
+     * @return RMI button
+     */
     public Button getRmiButton() {
         return rmiButton;
     }
 
+    /**
+     * @return netSet
+     */
     public boolean isNetSet() {
         return netSet;
     }
 
+    /**
+     * @return an int that specify the net selected
+     */
     public int getNetSelected() {
         return netSelected;
     }

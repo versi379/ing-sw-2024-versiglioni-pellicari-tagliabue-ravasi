@@ -11,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+/**
+ * Controller for User FXML scene.
+ */
 public class UserController {
 
     @FXML
@@ -22,6 +24,9 @@ public class UserController {
 
     private GuiView guiView;
 
+    /**
+     * method used to initialize user controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -36,6 +41,10 @@ public class UserController {
 //        stage.setScene(menuScene);
 //    }
 
+    /**
+     * method used to handle menu button
+     * @param event instance of action event
+     */
     @FXML
     public void handleMenuButton(ActionEvent event) {
         String submittedPlayerName = playerNickname.getText();
