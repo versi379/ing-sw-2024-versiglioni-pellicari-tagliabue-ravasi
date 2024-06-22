@@ -11,8 +11,14 @@ import it.polimi.sw.GC50.view.PlayerDataView;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * class used to print TUI model
+ */
 public abstract class TuiModelPrinter {
-
+    /**
+     * method used to print starter card
+     * @param starterCard   instance of starter card
+     */
     public static void printStarterCard(PhysicalCard starterCard) {
         String[][] starterMatrix = new String[3 * 2 + 1][7 + 1];
 
@@ -41,6 +47,10 @@ public abstract class TuiModelPrinter {
         printMatrix(starterMatrix);
     }
 
+    /**
+     * method that prints a hand
+     * @param hand  list of hand
+     */
     public static void printHand(List<PhysicalCard> hand) {
         String[][] handMatrix = new String[4 * hand.size() + 1][7 * 2 + 1];
 
@@ -74,6 +84,10 @@ public abstract class TuiModelPrinter {
         printMatrix(handMatrix);
     }
 
+    /**
+     * method used to print player area
+     * @param cardsMatrix   a matrix of card
+     */
     public static void printPlayerArea(CardsMatrix cardsMatrix) {
         String[][] boardMatrix;
 
@@ -119,12 +133,20 @@ public abstract class TuiModelPrinter {
         printMatrix(boardMatrix);
     }
 
+    /**
+     * method that prints scores playing
+     * @param scores     a map of scores
+     */
     public static void printScoresPlaying(Map<String, Integer> scores) {
        for (String nickname : scores.keySet()) {
             System.out.println("Player \"" + nickname + "\" -> " + scores.get(nickname));
        }
     }
 
+    /**
+     * method that prints end scores
+     * @param scores    a map of scores
+     */
     public static void printScoresEnd(Map<String, Pair<Integer, Integer>> scores) {
         for (String nickname : scores.keySet()) {
             System.out.println("Player \"" + nickname + "\" -> total: " + scores.get(nickname).getKey() +
@@ -132,6 +154,10 @@ public abstract class TuiModelPrinter {
         }
     }
 
+    /**
+     * method used to print decks
+     * @param decks a deck of playable card
+     */
     public static void printDecks(PlayableCard[] decks) {
         String[][] decksMatrix = new String[4 * 3 + 1][7 * 2 + 2];
 
@@ -174,6 +200,10 @@ public abstract class TuiModelPrinter {
         printMatrix(decksMatrix);
     }
 
+    /**
+     * Given a matrix of string prints a matrix
+     * @param stringMatrix matrix of string
+     */
     private static void printMatrix(String[][] stringMatrix) {
         for (int i = stringMatrix[0].length - 1; i >= 0; i--) {
             for (int j = 0; j < stringMatrix.length; j++) {
