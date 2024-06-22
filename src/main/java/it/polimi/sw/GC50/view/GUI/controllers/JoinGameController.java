@@ -20,7 +20,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public class JoinGameController {
-
+    private GuiView guiView;
     @FXML
     private Pane joinGamePane;
 
@@ -30,8 +30,6 @@ public class JoinGameController {
     @FXML
     private Button enterGameButton;
 
-    private GuiView guiView;
-
     private String submittedJoinGameName;
 
     public boolean waitingPlayers = true;
@@ -40,7 +38,7 @@ public class JoinGameController {
     private ProgressIndicator waitingPlayersBuffer;
 
     @FXML
-    public void initialize() throws InterruptedException {
+    public void initialize() {
         guiView = (GuiView) AppClient.getView();
         freeGames.setItems(guiView.getMenuController().gameItems2);
         freeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -51,9 +49,8 @@ public class JoinGameController {
     }
 
     @FXML
-    public void handleEnterGameButton(ActionEvent event) throws Exception {
+    public void handleEnterGameButton(ActionEvent event) {
         guiView.setSubmittedJoinGameName(submittedJoinGameName);
         guiView.resumeExecution();
     }
-
 }

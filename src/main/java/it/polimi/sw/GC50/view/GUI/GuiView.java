@@ -24,11 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GuiView extends Application implements View {
-
-    private Stage primaryStage;
-
-    // RIF client
     private Client client;
+    private Stage primaryStage;
 
     private String submittedIp;
     private String submittedPlayerNickname;
@@ -41,31 +38,29 @@ public class GuiView extends Application implements View {
     // GUI Controllers
     private NetController netController;
     private UserController userController;
+    private CreateGameController createGameController;
+    private JoinGameController joinGameController;
     private MenuController menuController;
     private SetupGameController setupGameController;
     private PlayGameController playGameController;
-    private CreateGameController createGameController;
-    private JoinGameController joinGameController;
 
     public String setupCommonObjectives;
     public String setupSecretObjectives;
-    public String starterCardCode;
+    public String starterCardFrontCode;
+    public String starterCardBackCode;
 
     public List<PhysicalCard> playerHand = new ArrayList<>();
     public PlayerDataView playerArea;
     public Boolean playerAreaUpdated = false;
     public Boolean playerHandUpdated = false;
-
     public Boolean serverError = false;
-
     public String scoresText;
 
-    private boolean newCommand;
-
-    private Object lock = new Object(); // Object for synchronization
+    private final Object lock = new Object(); // Object for synchronization
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
     private String read; // commands sent via GUI components
+    private boolean newCommand;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -108,20 +103,16 @@ public class GuiView extends Application implements View {
     }
 
     public GuiView() {
-        try {
-            // Ensure JavaFX is initialized
-            Platform.startup(() -> {
-                try {
-                    // Launch the JavaFX Application
-                    Stage stage = new Stage();
-                    start(stage);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Ensure JavaFX is initialized
+        Platform.startup(() -> {
+            try {
+                // Launch the JavaFX Application
+                Stage stage = new Stage();
+                start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -245,6 +236,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showPlayerJoined(String nickname) {
+        createGameController.showWaitingBuffer();
     }
 
     @Override
@@ -298,7 +290,8 @@ public class GuiView extends Application implements View {
 
     private void showStarterCardSelection() {
         PhysicalCard starterCard = getGameView().getStarterCard();
-        starterCardCode = starterCard.getFront().getCode();
+        starterCardFrontCode = starterCard.getFront().getCode();
+        starterCardBackCode = starterCard.getBack().getCode();
     }
 
     @Override

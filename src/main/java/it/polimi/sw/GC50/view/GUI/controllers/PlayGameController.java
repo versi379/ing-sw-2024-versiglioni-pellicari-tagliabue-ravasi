@@ -117,29 +117,11 @@ public class PlayGameController {
     }
 
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
-        String cardCode = card.getFront().getCode();
-        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
-        ImageView cardImageView = new ImageView(cardImage);
-        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
-        cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(80);
-        cardImageView.setFitHeight(40);
-        cardImageView.setLayoutX(layoutX);
-        cardImageView.setLayoutY(layoutY);
-        return cardImageView;
+        return printPlayableCard(card.getFront(), layoutX, layoutY);
     }
 
     public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
-        String cardCode = card.getBack().getCode();
-        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/backs/" + cardCode + ".jpg")));
-        ImageView cardImageView = new ImageView(cardImage);
-        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
-        cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(80);
-        cardImageView.setFitHeight(40);
-        cardImageView.setLayoutX(layoutX);
-        cardImageView.setLayoutY(layoutY);
-        return cardImageView;
+        return printPlayableCard(card.getBack(), layoutX, layoutY);
     }
 
     public GridPane printPlayerArea(PlayerDataView playerArea) {
@@ -165,7 +147,6 @@ public class PlayGameController {
                 int offsetX = actualX - minX;
                 int offsetY = 800 - (actualY - minY);
 
-
                 grid.add(cardImageView, offsetX, offsetY);
             }
         } else {
@@ -178,7 +159,7 @@ public class PlayGameController {
 
     public ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
         String cardCode = card.getCode();
-        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + cardCode + ".jpg")));
+        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);

@@ -96,7 +96,7 @@ public class TuiView implements View {
     @Override
     public int selectEndScore() {
         System.out.println(blueTxt + "Insert the score needed for triggering the game's ending:" + baseTxt);
-        return readInt(0, 51);
+        return readInt(0, 100);
     }
 
     @Override

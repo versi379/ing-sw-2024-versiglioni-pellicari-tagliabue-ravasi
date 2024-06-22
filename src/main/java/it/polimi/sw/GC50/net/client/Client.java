@@ -494,7 +494,7 @@ public class Client {
     public void update(Notify notify, Message message) {
         new Thread(() -> {
             synchronized (this) {
-                switchRequest(notify, message);
+                switchNotify(notify, message);
                 notifyAll();
             }
         }).start();
@@ -506,7 +506,7 @@ public class Client {
      * @param notify  of switch
      * @param message of switch
      */
-    private void switchRequest(Notify notify, Message message) {
+    private void switchNotify(Notify notify, Message message) {
 //       System.err.println("> Update from server: " + notify);
         switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {

@@ -15,11 +15,13 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import javax.rmi.ssl.SslRMIClientSocketFactory;
+import java.io.IOException;
 
 /**
  * Controller for Menu FXML scene.
  */
 public class MenuController {
+    private GuiView guiView;
 
     @FXML
     private Button createNewGameButton;
@@ -35,17 +37,15 @@ public class MenuController {
 
     private int gameChoice;
 
-    private GuiView guiView;
-
 
     public ObservableList<String> gameItems2 = FXCollections.observableArrayList();
 
     @FXML
-    public void initialize() throws Exception {
+    public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
-    public void showCreateGameView() throws Exception {
+    public void showCreateGameView() throws IOException {
         Stage stage = (Stage) createNewGameButton.getScene().getWindow();
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
         Parent createGameRoot = createGameLoader.load();
@@ -54,7 +54,7 @@ public class MenuController {
         stage.setScene(createGameScene);
     }
 
-    public void showJoinGameView() throws Exception {
+    public void showJoinGameView() throws IOException {
         Stage stage = (Stage) joinGameButton.getScene().getWindow();
         FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
         Parent joinGameRoot = joinGameLoader.load();
@@ -63,7 +63,7 @@ public class MenuController {
         stage.setScene(joinGameScene);
     }
 
-    public void showRulesView() throws Exception {
+    public void showRulesView() throws IOException {
         Stage stage = (Stage) rulesButton.getScene().getWindow();
         FXMLLoader rulesLoader = new FXMLLoader(getClass().getResource(ScenePath.RULES.getPath()));
         Parent rulesRoot = rulesLoader.load();
@@ -73,7 +73,7 @@ public class MenuController {
     }
 
     @FXML
-    public void handleCreateNewGameButton(ActionEvent event) throws Exception {
+    public void handleCreateNewGameButton(ActionEvent event) throws IOException {
         gameChoice = 1;
         showCreateGameView();
         guiView.setSubmittedGameChoice(gameChoice);
@@ -81,7 +81,7 @@ public class MenuController {
     }
 
     @FXML
-    public void handleJoinGameButton(ActionEvent event) throws Exception {
+    public void handleJoinGameButton(ActionEvent event) throws IOException {
         gameChoice = 2;
         guiView.setSubmittedGameChoice(gameChoice);
         guiView.resumeExecution();
@@ -89,9 +89,8 @@ public class MenuController {
     }
 
     @FXML
-    public void handleRulesButton(ActionEvent event) throws Exception {
+    public void handleRulesButton(ActionEvent event) throws IOException {
         showRulesView();
-
     }
 
     @FXML
@@ -112,5 +111,4 @@ public class MenuController {
     public int getGameChoice() {
         return gameChoice;
     }
-
 }

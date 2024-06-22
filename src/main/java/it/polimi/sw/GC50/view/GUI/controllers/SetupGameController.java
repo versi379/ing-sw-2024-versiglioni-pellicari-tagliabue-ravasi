@@ -49,10 +49,10 @@ public class SetupGameController {
         commonObjectivesLabel.setText(guiView.setupCommonObjectives);
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
-        Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/fronts/" + guiView.starterCardCode + ".jpg")));
+        Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.starterCardFrontCode + ".jpg")));
         imageViewStarterFront.setImage(starterCardFront);
         imageViewStarterFront.setViewport(viewport);
-        Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/backs/" + guiView.starterCardCode + ".jpg")));
+        Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.starterCardBackCode + ".jpg")));
         imageViewStarterBack.setImage(starterCardBack);
         imageViewStarterBack.setViewport(viewport);
     }

@@ -105,7 +105,7 @@ public class GameControllerTest {
     void testChooseStarterFaceNotStarting() throws RemoteException {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 2, 20, "Player");
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
 
         assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
     }
@@ -123,7 +123,7 @@ public class GameControllerTest {
     void testChooseStarterFace() throws RemoteException {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
 
         assertEquals(Notify.NOTIFY_GAME_SETUP, client.getNotify());
     }
@@ -162,14 +162,14 @@ public class GameControllerTest {
         GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
         controller.addPlayer(client2, "Player2");
         controller.selectSecretObjective(client1, 0);
-        controller.selectStarterFace(client1, 0);
+        controller.selectStarterFace(client1, 1);
 
         assertEquals(Notify.NOTIFY_PLAYER_READY, client1.getNotify());
         assertEquals("Player1", ((PlayerReadyMex) client1.getMessage()).getNickname());
 
 
         controller.selectSecretObjective(client2, 0);
-        controller.selectStarterFace(client2, 0);
+        controller.selectStarterFace(client2, 1);
 
         assertEquals(Notify.NOTIFY_GAME_STARTED, client1.getNotify());
         assertEquals("Player1", ((PlayerMex) client1.getMessage()).getNickname());
@@ -191,9 +191,9 @@ public class GameControllerTest {
         GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
         controller.addPlayer(client2, "Player2");
         controller.selectSecretObjective(client1, 0);
-        controller.selectStarterFace(client1, 0);
+        controller.selectStarterFace(client1, 1);
         controller.selectSecretObjective(client2, 0);
-        controller.selectStarterFace(client2, 0);
+        controller.selectStarterFace(client2, 1);
         controller.placeCard(client2, new PlaceCardRequest(0, 0, 41, 41));
 
         assertEquals(Notify.NOTIFY_ERROR, client2.getNotify());
@@ -204,7 +204,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 41));
         controller.placeCard(client, new PlaceCardRequest(0, 0, 42, 42));
 
@@ -216,7 +216,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(10, 0, 41, 41));
 
         assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
@@ -227,7 +227,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 10, 41, 41));
 
         assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
@@ -238,7 +238,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 0, 100, 100));
 
         assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
@@ -249,7 +249,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 41));
 
         assertEquals(Notify.NOTIFY_CARD_PLACED, client.getNotify());
@@ -272,9 +272,9 @@ public class GameControllerTest {
         GameController controller = new GameController(client1, "Game", 2, 20, "Player1");
         controller.addPlayer(client2, "Player2");
         controller.selectSecretObjective(client1, 0);
-        controller.selectStarterFace(client1, 0);
+        controller.selectStarterFace(client1, 1);
         controller.selectSecretObjective(client2, 0);
-        controller.selectStarterFace(client2, 0);
+        controller.selectStarterFace(client2, 1);
         controller.drawCard(client2, 0);
 
         assertEquals(Notify.NOTIFY_ERROR, client2.getNotify());
@@ -285,7 +285,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.drawCard(client, 0);
 
         assertEquals(Notify.NOTIFY_ERROR, client.getNotify());
@@ -296,7 +296,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 39));
         controller.drawCard(client, 10);
 
@@ -318,7 +318,7 @@ public class GameControllerTest {
         MockClient client = new MockClient();
         GameController controller = new GameController(client, "Game", 1, 20, "Player");
         controller.selectSecretObjective(client, 0);
-        controller.selectStarterFace(client, 0);
+        controller.selectStarterFace(client, 1);
         controller.placeCard(client, new PlaceCardRequest(0, 0, 41, 39));
         controller.drawCard(client, 0);
 

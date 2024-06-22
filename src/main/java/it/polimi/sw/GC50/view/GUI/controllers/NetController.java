@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class NetController {
 
     private GuiView guiView;
@@ -74,7 +76,7 @@ public class NetController {
         guiView.resumeExecution();
     }
 
-    public void showUserView() throws Exception{
+    public void showUserView() throws IOException {
         Stage stage = (Stage) socketButton.getScene().getWindow();
         FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
         Parent userRoot = userLoader.load();

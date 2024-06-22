@@ -2,25 +2,19 @@ package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.util.function.UnaryOperator;
 
 public class CreateGameController {
-
-    @FXML
-    private TextField finalScore;
+    private GuiView guiView;
 
     @FXML
     private TextField gameName;
 
+    private ToggleGroup numPlayersGroup;
     @FXML
     private RadioButton twoPlayersButton;
     @FXML
@@ -29,11 +23,10 @@ public class CreateGameController {
     private RadioButton fourPlayersButton;
 
     @FXML
+    private TextField finalScore;
+
+    @FXML
     private Button createGameButton;
-
-    private ToggleGroup numPlayersGroup;
-
-    private GuiView guiView;
 
     @FXML
     private ProgressIndicator waitingPlayersBuffer;
@@ -49,30 +42,26 @@ public class CreateGameController {
         // Create a TextFormatter that allows only integer input
         UnaryOperator<TextFormatter.Change> integerFilter = change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("-?([1-9][0-9]*)?")) { // Allows negative numbers and integers, disallow zero at start
+            if (newText.matches("-?([0-9]+)?")) { // Allows negative numbers and integers
                 return change;
             }
             return null;
         };
+
         TextFormatter<String> textFormatter = new TextFormatter<>(integerFilter);
         finalScore.setTextFormatter(textFormatter);
     }
 
     @FXML
-    public void handleCreateGameButton(ActionEvent event) throws Exception {
+    public void handleCreateGameButton(ActionEvent event) {
         RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
         int submittedNumPlayers = 2;
-        if (selectedRadioButton != null) {
-            if (selectedRadioButton == twoPlayersButton) {
-                submittedNumPlayers = 2;
-            } else if (selectedRadioButton == threePlayersButton) {
-                submittedNumPlayers = 3;
-            } else {
-                submittedNumPlayers = 4;
-            }
-        } else {
-            // se non sceglie nulla di default il gioco viene comunque creato con due giocatori V
+        if (selectedRadioButton == threePlayersButton) {
+            submittedNumPlayers = 3;
+        } else if (selectedRadioButton == fourPlayersButton) {
+            submittedNumPlayers = 4;
         }
+
         String submittedGameName = gameName.getText();
         int submittedEndPoints = Integer.parseInt(finalScore.getText());
         guiView.setSubmittedGameName(submittedGameName);
@@ -85,6 +74,4 @@ public class CreateGameController {
         createGameButton.setVisible(false);
         waitingPlayersBuffer.setVisible(true);
     }
-
 }
-
