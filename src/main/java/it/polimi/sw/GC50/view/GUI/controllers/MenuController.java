@@ -45,6 +45,37 @@ public class MenuController {
         guiView = (GuiView) AppClient.getView();
     }
 
+    @FXML
+    public void handleCreateNewGameButton(ActionEvent event) {
+        gameChoice = 1;
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    public void handleJoinGameButton(ActionEvent event) {
+        gameChoice = 2;
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    public void handleRulesButton(ActionEvent event) {
+        //showRulesView();
+    }
+
+    @FXML
+    public void handleQuitButton(ActionEvent event) {
+        gameChoice = 3;
+        guiView.setSubmittedGameChoice(gameChoice);
+        guiView.resumeExecution();
+    }
+
+    public int getGameChoice() {
+        return gameChoice;
+    }
+
+     /*
     public void showCreateGameView() throws IOException {
         Stage stage = (Stage) createNewGameButton.getScene().getWindow();
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
@@ -72,43 +103,11 @@ public class MenuController {
         stage.setScene(rulesScene);
     }
 
-    @FXML
-    public void handleCreateNewGameButton(ActionEvent event) throws IOException {
-        gameChoice = 1;
-        showCreateGameView();
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-    }
-
-    @FXML
-    public void handleJoinGameButton(ActionEvent event) throws IOException {
-        gameChoice = 2;
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-        showJoinGameView();
-    }
-
-    @FXML
-    public void handleRulesButton(ActionEvent event) throws IOException {
-        showRulesView();
-    }
-
-    @FXML
-    public void handleQuitButton(ActionEvent event) {
-        gameChoice = 3;
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-        closeApp();
-    }
-
     public void closeApp() {
         Stage stage;
         stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
         stage.setOnCloseRequest(e -> System.exit(0));
     }
-
-    public int getGameChoice() {
-        return gameChoice;
-    }
+     */
 }

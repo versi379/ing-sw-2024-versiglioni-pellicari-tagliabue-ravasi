@@ -33,11 +33,12 @@ public class CreateGameController {
 
     @FXML
     public void initialize() {
+        guiView = (GuiView) AppClient.getView();
+
         numPlayersGroup = new ToggleGroup();
         twoPlayersButton.setToggleGroup(numPlayersGroup);
         threePlayersButton.setToggleGroup(numPlayersGroup);
         fourPlayersButton.setToggleGroup(numPlayersGroup);
-        guiView = (GuiView) AppClient.getView();
 
         // Create a TextFormatter that allows only integer input
         UnaryOperator<TextFormatter.Change> integerFilter = change -> {
@@ -47,13 +48,12 @@ public class CreateGameController {
             }
             return null;
         };
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(integerFilter);
-        finalScore.setTextFormatter(textFormatter);
+        finalScore.setTextFormatter(new TextFormatter<>(integerFilter));
     }
 
     @FXML
     public void handleCreateGameButton(ActionEvent event) {
+        String submittedGameName = gameName.getText();
         RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
         int submittedNumPlayers = 2;
         if (selectedRadioButton == threePlayersButton) {
@@ -61,9 +61,8 @@ public class CreateGameController {
         } else if (selectedRadioButton == fourPlayersButton) {
             submittedNumPlayers = 4;
         }
+        int submittedEndPoints = Math.min(Integer.parseInt(finalScore.getText()), 50);
 
-        String submittedGameName = gameName.getText();
-        int submittedEndPoints = Integer.parseInt(finalScore.getText());
         guiView.setSubmittedGameName(submittedGameName);
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);

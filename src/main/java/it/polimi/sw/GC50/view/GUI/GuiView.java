@@ -60,39 +60,20 @@ public class GuiView extends Application implements View {
     private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
 
     private String read; // commands sent via GUI components
-    private boolean newCommand;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         this.primaryStage = stage;
 
         FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
-        Parent netRoot = netLoader.load();
+        Parent netRoot = null;
+
+        try {
+            netRoot = netLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         netController = netLoader.getController();
-
-        FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
-        Parent userRoot = userLoader.load();
-        userController = userLoader.getController();
-
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-        Parent menuRoot = menuLoader.load();
-        menuController = menuLoader.getController();
-
-//         FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
-//         Parent setupGameRoot = setupGameLoader.load();
-//         setupGameController = setupGameLoader.getController();
-
-        FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
-        Parent createGameRoot = createGameLoader.load();
-        createGameController = createGameLoader.getController();
-
-        FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
-        Parent joinGameRoot = joinGameLoader.load();
-        joinGameController = joinGameLoader.getController();
-
-//        FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
-//        Parent playGameRoot = playGameLoader.load();
-//        playGameController = playGameLoader.getController();
 
         Scene scene = new Scene(netRoot);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
@@ -105,13 +86,9 @@ public class GuiView extends Application implements View {
     public GuiView() {
         // Ensure JavaFX is initialized
         Platform.startup(() -> {
-            try {
-                // Launch the JavaFX Application
-                Stage stage = new Stage();
-                start(stage);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            // Launch the JavaFX Application
+            Stage stage = new Stage();
+            start(stage);
         });
     }
 
@@ -133,11 +110,7 @@ public class GuiView extends Application implements View {
 
     @Override
     public int selectConnectionType() {
-        while (getNetController() == null) {
-            System.out.print("");
-        }
-        while (!getNetController().isNetSet()) {
-            System.out.print("");
+        while (getNetController() == null || !getNetController().isNetSet()) {
         }
         return getNetController().getNetSelected();
     }
@@ -145,33 +118,46 @@ public class GuiView extends Application implements View {
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String selectName() {
-        while (userController == null) {
-            System.err.println("> Attendo caricamento user login page.");
-        }
-        waitForButtonPress();
 
+        Platform.runLater(() -> {
+            FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
+            Parent userRoot = null;
+
+            try {
+                userRoot = userLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            userController = userLoader.getController();
+
+            Scene gameScene = new Scene(userRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
+
+        waitForButtonPress();
         return submittedPlayerNickname;
     }
 
     @Override
     public int selectJoinOrCreate() {
+
         Platform.runLater(() -> {
-            Stage stage = getPrimaryStage();
             FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
             Parent menuRoot = null;
+
             try {
                 menuRoot = menuLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            menuController = menuLoader.getController();
+
             Scene gameScene = new Scene(menuRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-            stage.setScene(gameScene);
+            getPrimaryStage().setScene(gameScene);
         });
 
-        while (menuController == null) {
-            System.err.println("> Attendo caricamento menu page.");
-        }
         waitForButtonPress();
         return submittedGameChoice;
     }
@@ -179,15 +165,22 @@ public class GuiView extends Application implements View {
     // map of game names with associated list of players
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
-        while (joinGameController == null) {
-            System.err.println("> Attendo caricamento join game page.");
+
+        Platform.runLater(() -> {
+            FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
+            Parent joinGameRoot = null;
+
             try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                return;
+                joinGameRoot = joinGameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }
+            joinGameController = joinGameLoader.getController();
+
+            Scene gameScene = new Scene(joinGameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
 
         if (!freeGames.isEmpty()) {
             for (String game : freeGames.keySet()) {
@@ -205,11 +198,24 @@ public class GuiView extends Application implements View {
 
     @Override
     public String selectGameName() {
-        while (createGameController == null) {
-            System.err.println("> Attendo caricamento create game page.");
-        }
-        waitForButtonPress();
 
+        Platform.runLater(() -> {
+            FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
+            Parent createGameRoot = null;
+
+            try {
+                createGameRoot = createGameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            createGameController = createGameLoader.getController();
+
+            Scene gameScene = new Scene(createGameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
+
+        waitForButtonPress();
         return submittedGameName;
     }
 
@@ -236,7 +242,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showPlayerJoined(String nickname) {
-        createGameController.showWaitingBuffer();
     }
 
     @Override
@@ -245,23 +250,29 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showWaitPlayers() {
+        if (createGameController != null) {
+            createGameController.showWaitingBuffer();
+        }
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showSetup() {
+
         Platform.runLater(() -> {
-            Stage stage = getPrimaryStage();
-            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
-            Parent gameRoot = null;
+            FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
+            Parent setupGameRoot = null;
+
             try {
-                gameRoot = gameLoader.load();
+                setupGameRoot = setupGameLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Scene gameScene = new Scene(gameRoot);
+            setupGameController = setupGameLoader.getController();
+
+            Scene gameScene = new Scene(setupGameRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-            stage.setScene(gameScene);
+            getPrimaryStage().setScene(gameScene);
         });
 
         showObjectives();
@@ -301,33 +312,36 @@ public class GuiView extends Application implements View {
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showStart() {
-        showHand();
-        showCardsArea(getGameView().getCurrentPlayer());
+
         Platform.runLater(() -> {
-            Stage stage = getPrimaryStage();
-            FXMLLoader gameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
-            Parent gameRoot = null;
+            FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
+            Parent playGameRoot = null;
+
             try {
-                gameRoot = gameLoader.load();
+                playGameRoot = playGameLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Scene gameScene = new Scene(gameRoot);
+            playGameController = playGameLoader.getController();
+
+            Scene gameScene = new Scene(playGameRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-            stage.setScene(gameScene);
+            getPrimaryStage().setScene(gameScene);
         });
+
+        showCardsArea(getGameView().getCurrentPlayer());
+        showHand();
     }
 
     @Override
     public void showCurrentPlayer() {
+        playGameController.updateCurrentPlayer();
     }
 
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
         System.err.println("> PLACING PHASE");
-        showCardsArea(getGameView().getNickname());
-        showHand();
     }
 
     @Override
@@ -340,16 +354,21 @@ public class GuiView extends Application implements View {
         playerArea = getGameView().getPlayerArea(nickname);
         playerAreaUpdated = true;
         System.err.println("> player area updated del giocatore: " + nickname);
+
+        //playGameController.updateBoard();
     }
 
     @Override
     public void showHand() {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
+
+        //playGameController.updateHand();
     }
 
     @Override
     public void showDecks() {
+        playGameController.updateDecks();
     }
 
     @Override
@@ -360,6 +379,8 @@ public class GuiView extends Application implements View {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
         }
         printScores(scores);
+
+        playGameController.updateScores();
     }
 
     private void printScores(Map<String, Integer> scores) {
@@ -395,6 +416,7 @@ public class GuiView extends Application implements View {
     // COMMANDS ////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void listen() {
+        waitForButtonPress();
         Pair<Command, String[]> command = readCommand();
         System.out.println("ADD COMMAND: " + command.getKey());
         client.addCommand(command.getKey(), command.getValue());
@@ -402,14 +424,6 @@ public class GuiView extends Application implements View {
 
     // commands must be read via GUI rather than terminal
     public Pair<Command, String[]> readCommand() {
-        while (!newCommand) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        newCommand = false;
 
         switch (getFirstWord(read)) {
             case "-choose_objective", "-co" -> {
@@ -602,6 +616,10 @@ public class GuiView extends Application implements View {
 
     public void setRead(String read) {
         this.read = read;
-        newCommand = true;
+        resumeExecution();
+    }
+
+    public String getCurrentPlayer() {
+        return getGameView().getCurrentPlayer();
     }
 }

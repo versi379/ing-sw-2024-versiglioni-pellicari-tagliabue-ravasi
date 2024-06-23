@@ -16,12 +16,11 @@ public enum ScenePath {
 
     private final String path;
 
-    ScenePath(final String path) {
+    ScenePath(String path) {
         this.path = path;
     }
 
     public String getPath() {
         return path;
     }
-
 }

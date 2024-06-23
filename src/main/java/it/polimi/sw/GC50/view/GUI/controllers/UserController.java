@@ -27,15 +27,6 @@ public class UserController {
         guiView = (GuiView) AppClient.getView();
     }
 
-//    public void showMenuView() throws Exception{
-//        Stage stage = (Stage) menuButton.getScene().getWindow();
-//        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-//        Parent menuRoot = menuLoader.load();
-//        Scene menuScene = new Scene(menuRoot);
-//        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-//        stage.setScene(menuScene);
-//    }
-
     @FXML
     public void handleMenuButton(ActionEvent event) {
         String submittedPlayerName = playerNickname.getText();
@@ -43,4 +34,16 @@ public class UserController {
         guiView.resumeExecution();
         System.out.println("Riprendo client Thread");
     }
+
+    /*
+    public void showMenuView() throws Exception{
+        Stage stage = (Stage) menuButton.getScene().getWindow();
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent menuRoot = menuLoader.load();
+        Scene menuScene = new Scene(menuRoot);
+        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(menuScene);
+    }
+
+     */
 }

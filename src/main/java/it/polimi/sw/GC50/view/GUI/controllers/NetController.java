@@ -33,47 +33,51 @@ public class NetController {
     private TextField serverIpTextField;
 
     @FXML
-    public void initialize() throws Exception {
+    public void initialize() {
         guiView = (GuiView) AppClient.getView();
+
         netSet = false;
-        netSelected = 1;
+        netSelected = 3;
         socketButton.setOnAction(event -> {
             netSet = true;
-            setIP();
+            setIP(serverIpTextField.getText());
             netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
         rmiButton.setOnAction(event -> {
             netSet = true;
-            setIP();
+            setIP(serverIpTextField.getText());
             netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
         quitButton.setOnAction(event -> {
             netSet = true;
+            setIP("");
             netSelected = 3;
             System.out.println("Scelta QUIT");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 
-    private void setIP() {
+    private void setIP(String serverIp) {
         guiView.setSubmittedIp(serverIpTextField.getText());
         guiView.resumeExecution();
+    }
+
+    public boolean isNetSet() {
+        return netSet;
+    }
+
+    public int getNetSelected() {
+        return netSelected;
+    }
+
+     /*
+     public Button getSocketButton() {
+        return socketButton;
+    }
+
+    public Button getRmiButton() {
+        return rmiButton;
     }
 
     public void showUserView() throws IOException {
@@ -85,19 +89,5 @@ public class NetController {
         stage.setScene(userScene);
     }
 
-    public Button getSocketButton() {
-        return socketButton;
-    }
-
-    public Button getRmiButton() {
-        return rmiButton;
-    }
-
-    public boolean isNetSet() {
-        return netSet;
-    }
-
-    public int getNetSelected() {
-        return netSelected;
-    }
+     */
 }

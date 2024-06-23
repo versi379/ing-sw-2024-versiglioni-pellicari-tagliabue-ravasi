@@ -40,6 +40,7 @@ public class JoinGameController {
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
+
         freeGames.setItems(guiView.getMenuController().gameItems2);
         freeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String selectedListViewItem = newValue;

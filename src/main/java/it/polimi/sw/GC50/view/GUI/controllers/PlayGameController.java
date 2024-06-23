@@ -51,6 +51,7 @@ public class PlayGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
+        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         printPlayerHand();
 
         playerAreaGrid = printPlayerArea(guiView.playerArea);
@@ -205,5 +206,21 @@ public class PlayGameController {
     private void deactivateButton(Button button) {
         button.setDisable(true);
         button.setOpacity(0.3);
+    }
+
+    public void updateCurrentPlayer() {
+        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
+    }
+
+    public void updateBoard() {
+    }
+
+    public void updateScores() {
+    }
+
+    public void updateDecks() {
+    }
+
+    public void updateHand() {
     }
 }
