@@ -378,9 +378,11 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showDecks() {
-        Platform.runLater(() -> {
-            playGameController.updateDecks();
-        });
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateDecks();
+            });
+        }
     }
 
     @Override
@@ -392,9 +394,11 @@ public class GuiView extends Application implements View {
         }
         printScores(scores);
 
-        Platform.runLater(() -> {
-            playGameController.updateScores();
-        });
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateScores();
+            });
+        }
     }
 
     private void printScores(Map<String, Integer> scores) {
