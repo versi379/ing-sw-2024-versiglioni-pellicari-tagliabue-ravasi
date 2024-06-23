@@ -71,6 +71,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleStarterFrontButton(ActionEvent event) {
+        starterBackButton.setOpacity(1);
+        starterFrontButton.setOpacity(0.3);
         guiView.setRead("-cs 1");
     }
     /**
@@ -79,6 +81,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
+        starterFrontButton.setOpacity(1);
+        starterBackButton.setOpacity(0.3);
         guiView.setRead("-cs 2");
     }
 
@@ -88,6 +92,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleChooseObjective1Button(ActionEvent event) {
+        chooseObjective2Button.setOpacity(1);
+        chooseObjective1Button.setOpacity(0.3);
         guiView.setRead("-co 1");
     }
     /**
@@ -96,6 +102,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleChooseObjective2Button(ActionEvent event) {
+        chooseObjective1Button.setOpacity(1);
+        chooseObjective2Button.setOpacity(0.3);
         guiView.setRead("-co 2");
     }
 }
