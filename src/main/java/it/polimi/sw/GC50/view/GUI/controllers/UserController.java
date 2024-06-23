@@ -11,10 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-/**
- * Controller for User FXML scene.
- */
+
 public class UserController {
+    private GuiView guiView;
 
     @FXML
     private TextField playerNickname;
@@ -22,34 +21,28 @@ public class UserController {
     @FXML
     private Button menuButton;
 
-    private GuiView guiView;
-
-    /**
-     * method used to initialize user controller
-     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
-//    public void showMenuView() throws Exception{
-//        Stage stage = (Stage) menuButton.getScene().getWindow();
-//        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
-//        Parent menuRoot = menuLoader.load();
-//        Scene menuScene = new Scene(menuRoot);
-//        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-//        stage.setScene(menuScene);
-//    }
-
-    /**
-     * method used to handle menu button
-     * @param event instance of action event
-     */
     @FXML
-    public void handleMenuButton(ActionEvent event) {
-        String submittedPlayerName = playerNickname.getText();
-        guiView.setSubmittedPlayerNickname(submittedPlayerName);
+    private void handleMenuButton(ActionEvent event) {
+        String submittedPlayerNickname = playerNickname.getText();
+
+        guiView.setSubmittedPlayerNickname(submittedPlayerNickname);
         guiView.resumeExecution();
-        System.out.println("Riprendo client Thread");
     }
+
+    /*
+    public void showMenuView() throws Exception{
+        Stage stage = (Stage) menuButton.getScene().getWindow();
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
+        Parent menuRoot = menuLoader.load();
+        Scene menuScene = new Scene(menuRoot);
+        menuScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+        stage.setScene(menuScene);
+    }
+
+     */
 }

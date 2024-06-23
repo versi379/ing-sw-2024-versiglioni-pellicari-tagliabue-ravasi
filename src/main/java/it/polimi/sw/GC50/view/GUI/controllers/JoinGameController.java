@@ -18,11 +18,10 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.List;
-/**
- * Controller for Join game FXML scene.
- */
+
 public class JoinGameController {
     private GuiView guiView;
+
     @FXML
     private Pane joinGamePane;
 
@@ -32,21 +31,16 @@ public class JoinGameController {
     @FXML
     private Button enterGameButton;
 
-    private String submittedJoinGameName;
-
-    public boolean waitingPlayers = true;
-
     @FXML
     private ProgressIndicator waitingPlayersBuffer;
 
-    /**
-     * method that initialize join game controller
-     */
+    private String submittedJoinGameName;
+
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
-        freeGames.setItems(guiView.getMenuController().gameItems2);
+        freeGames.setItems(FXCollections.observableArrayList((guiView.getFreeGames())));
         freeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             String selectedListViewItem = newValue;
             String[] parts = selectedListViewItem.split("\nPLAYERS: ");
@@ -54,12 +48,8 @@ public class JoinGameController {
         });
     }
 
-    /**
-     * method that manage enter game button
-     * @param event     type of event
-     */
     @FXML
-    public void handleEnterGameButton(ActionEvent event) {
+    private void handleEnterGameButton(ActionEvent event) {
         guiView.setSubmittedJoinGameName(submittedJoinGameName);
         guiView.resumeExecution();
     }

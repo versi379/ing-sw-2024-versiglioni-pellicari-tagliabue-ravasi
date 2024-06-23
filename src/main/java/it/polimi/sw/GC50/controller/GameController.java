@@ -127,8 +127,8 @@ public class GameController extends UnicastRemoteObject implements GameControlle
                 if (face >= 0 && face < 2) {
                     PlayableCard card = (face == 0) ? playerHand.get(index).getFront() : playerHand.get(index).getBack();
                     if (card.isPlaceable(game.getPlayerData(player), x, y)) {
-                        game.placeCard(player, card, x, y);
                         game.removeCard(player, index);
+                        game.placeCard(player, card, x, y);
                     } else {
                         game.error(player, "Card not placeable");
                     }

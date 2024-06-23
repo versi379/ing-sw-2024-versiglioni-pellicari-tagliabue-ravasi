@@ -18,10 +18,13 @@ public class CreateGameController {
     private TextField gameName;
 
     private ToggleGroup numPlayersGroup;
+
     @FXML
     private RadioButton twoPlayersButton;
+
     @FXML
     private RadioButton threePlayersButton;
+
     @FXML
     private RadioButton fourPlayersButton;
 
@@ -62,7 +65,7 @@ public class CreateGameController {
      * @param event     type of event
      */
     @FXML
-    public void handleCreateGameButton(ActionEvent event) {
+    private void handleCreateGameButton(ActionEvent event) {
         String submittedGameName = gameName.getText();
         RadioButton selectedRadioButton = (RadioButton) numPlayersGroup.getSelectedToggle();
         int submittedNumPlayers = 2;

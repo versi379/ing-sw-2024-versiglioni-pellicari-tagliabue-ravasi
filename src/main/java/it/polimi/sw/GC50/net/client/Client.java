@@ -11,6 +11,7 @@ import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
+import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 
@@ -568,6 +569,9 @@ public class Client {
 
                 view.showCardsArea(player);
                 view.showScores();
+                if (gameView.getNickname().equals(boardUpdateMex.getNickname())) {
+                    view.showHand();
+                }
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -578,10 +582,10 @@ public class Client {
                     gameView.setHand((decksUpdateMex.getHand()));
                 }
 
+                view.showDecks();
                 if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
                     view.showHand();
                 }
-                view.showDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {
@@ -624,4 +628,61 @@ public class Client {
     public GameView getGameView() {
         return gameView;
     }
+
+    /*
+            case NOTIFY_CARD_PLACED -> {
+        BoardUpdateMex boardUpdateMex = (BoardUpdateMex) message;
+        String player = boardUpdateMex.getNickname();
+        gameView.setPlayingPhase(PlayingPhase.DRAWING);
+
+        gameView.setPlayerArea(player, boardUpdateMex.getCardsMatrix(),
+                boardUpdateMex.getTotalScore(), 0, true);
+        if (gameView.getNickname().equals(boardUpdateMex.getNickname())) {
+            gameView.setHand((boardUpdateMex.getHand()));
+        }
+
+        view.showCardsArea(player);
+        view.showScores();
+        if (view.getClass().getSimpleName().equals("GuiView")) {
+            ((GuiView) view).serverError = false;
+        }
+    }
+
+            case NOTIFY_CARD_DRAWN -> {
+        DecksUpdateMex decksUpdateMex = (DecksUpdateMex) message;
+        gameView.setTurnEnded(true);
+        gameView.setDecks(decksUpdateMex.getDecks());
+        if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
+            gameView.setHand((decksUpdateMex.getHand()));
+        }
+
+        if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
+            view.showHand();
+        }
+        view.showDecks();
+        if (view.getClass().getSimpleName().equals("GuiView")) {
+            ((GuiView) view).serverError = false;
+        }
+    }
+
+            case NOTIFY_NEXT_TURN -> {
+        gameView.setPlayingPhase(PlayingPhase.PLACING);
+        gameView.setCurrentPlayer(((PlayerMex) message).getNickname());
+        if (view.getClass().getSimpleName().equals("GuiView")) {
+            ((GuiView) view).playerAreaUpdated = false;
+            ((GuiView) view).playerHandUpdated = false;
+        }
+    }
+
+            case NOTIFY_ERROR -> {
+        ErrorMex errorMex = (ErrorMex) message;
+        if (gameView.getNickname().equals(errorMex.getNickname())) {
+            view.showError(errorMex.getContent());
+        }
+        if (view.getClass().getSimpleName().equals("GuiView")) {
+            ((GuiView) view).serverError = true;
+        }
+    }
+
+     */
 }

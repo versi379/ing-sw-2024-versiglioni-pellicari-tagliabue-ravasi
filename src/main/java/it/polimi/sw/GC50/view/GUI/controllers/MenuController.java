@@ -35,23 +35,35 @@ public class MenuController {
     @FXML
     private Button quitButton;
 
-    private int gameChoice;
-
-
-    public ObservableList<String> gameItems2 = FXCollections.observableArrayList();
-
-    /**
-     * method that initialize menu controller
-     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
-    /**
-     * method that shows create game view
-     * @throws IOException when an input/output error occurs
-     */
+    @FXML
+    private void handleCreateNewGameButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(1);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    private void handleJoinGameButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(2);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    private void handleQuitButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(3);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    private void handleRulesButton(ActionEvent event) {
+        //showRulesView();
+    }
+
+     /*
     public void showCreateGameView() throws IOException {
         Stage stage = (Stage) createNewGameButton.getScene().getWindow();
         FXMLLoader createGameLoader = new FXMLLoader(getClass().getResource(ScenePath.CREATEGAME.getPath()));
@@ -61,10 +73,6 @@ public class MenuController {
         stage.setScene(createGameScene);
     }
 
-    /**
-     * method that shows join game view
-     * @throws IOException when an input/output error occurs
-     */
     public void showJoinGameView() throws IOException {
         Stage stage = (Stage) joinGameButton.getScene().getWindow();
         FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
@@ -74,10 +82,6 @@ public class MenuController {
         stage.setScene(joinGameScene);
     }
 
-    /**
-     * method that shows rules view
-     * @throws IOException when an input/output error occurs
-     */
     public void showRulesView() throws IOException {
         Stage stage = (Stage) rulesButton.getScene().getWindow();
         FXMLLoader rulesLoader = new FXMLLoader(getClass().getResource(ScenePath.RULES.getPath()));
@@ -87,67 +91,11 @@ public class MenuController {
         stage.setScene(rulesScene);
     }
 
-    /**
-     * method that create new game button
-     * @param event             instance of action event
-     * @throws IOException      when an input/output error occurs
-     */
-    @FXML
-    public void handleCreateNewGameButton(ActionEvent event) throws IOException {
-        gameChoice = 1;
-        showCreateGameView();
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-    }
-
-    /**
-     * method that handle join game button
-     * @param event         instance of action event
-     * @throws IOException  when an input/output error occurs
-     */
-    @FXML
-    public void handleJoinGameButton(ActionEvent event) throws IOException {
-        gameChoice = 2;
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-        showJoinGameView();
-    }
-
-    /**
-     * method that handle rules button
-     * @param event         instance of action event
-     * @throws IOException  when an input/output error occurs
-     */
-    @FXML
-    public void handleRulesButton(ActionEvent event) throws IOException {
-        showRulesView();
-    }
-    /**
-     * method that handle quit button
-     * @param event         instance of action event
-     */
-    @FXML
-    public void handleQuitButton(ActionEvent event) {
-        gameChoice = 3;
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-        closeApp();
-    }
-
-    /**
-     * method that close the application
-     */
     public void closeApp() {
         Stage stage;
         stage = (Stage) quitButton.getScene().getWindow();
         stage.close();
         stage.setOnCloseRequest(e -> System.exit(0));
     }
-
-    /**
-     * @return game choice (GUI/TUI)
      */
-    public int getGameChoice() {
-        return gameChoice;
-    }
 }

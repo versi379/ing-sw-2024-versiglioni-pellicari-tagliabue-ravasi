@@ -24,7 +24,7 @@ public class RulesController {
      * @throws IOException  if an error occurs
      */
     @FXML
-    void handleBackToMenuButton(ActionEvent event) throws IOException {
+    private void handleBackToMenuButton(ActionEvent event) throws IOException {
         Stage stage = (Stage) backToMenuButton.getScene().getWindow();
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(ScenePath.MENU.getPath()));
         Parent menuRoot = menuLoader.load();

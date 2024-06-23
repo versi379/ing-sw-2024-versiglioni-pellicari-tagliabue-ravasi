@@ -13,12 +13,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * Controller for Net FXML scene.
- */
 public class NetController {
 
     private GuiView guiView;
+
+    @FXML
+    private TextField serverIpTextField;
 
     @FXML
     private Button socketButton;
@@ -30,66 +30,59 @@ public class NetController {
     private Button quitButton;
 
     private boolean netSet;
+
     private int netSelected;
 
     @FXML
-    private TextField serverIpTextField;
-
-    /**
-     * method that initialize net controller
-     * @throws Exception    if there is some error
-     */
-    @FXML
-    public void initialize() throws Exception {
+    public void initialize() {
         guiView = (GuiView) AppClient.getView();
+
         netSet = false;
-        netSelected = 1;
+        netSelected = 3;
         socketButton.setOnAction(event -> {
             netSet = true;
-            setIP();
+            setIP(serverIpTextField.getText());
             netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
         rmiButton.setOnAction(event -> {
             netSet = true;
-            setIP();
+            setIP(serverIpTextField.getText());
             netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
         quitButton.setOnAction(event -> {
             netSet = true;
+            setIP("");
             netSelected = 3;
             System.out.println("Scelta QUIT");
-            try {
-                showUserView();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 
-    /**
-     * method that sets an IP address
-     */
-    private void setIP() {
-        guiView.setSubmittedIp(serverIpTextField.getText());
+    private void setIP(String serverIp) {
+        String submittedIp = serverIpTextField.getText();
+
+        guiView.setSubmittedIp(submittedIp);
         guiView.resumeExecution();
     }
 
-    /**
-     * method that shows user view
-     * @throws IOException  if an error occurs
-     */
+    public boolean isNetSet() {
+        return netSet;
+    }
+
+    public int getNetSelected() {
+        return netSelected;
+    }
+
+     /*
+     public Button getSocketButton() {
+        return socketButton;
+    }
+
+    public Button getRmiButton() {
+        return rmiButton;
+    }
+
     public void showUserView() throws IOException {
         Stage stage = (Stage) socketButton.getScene().getWindow();
         FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));
@@ -99,30 +92,5 @@ public class NetController {
         stage.setScene(userScene);
     }
 
-    /**
-     * @return socket button
      */
-    public Button getSocketButton() {
-        return socketButton;
-    }
-    /**
-     * @return RMI button
-     */
-    public Button getRmiButton() {
-        return rmiButton;
-    }
-
-    /**
-     * @return netSet
-     */
-    public boolean isNetSet() {
-        return netSet;
-    }
-
-    /**
-     * @return an int that specify the net selected
-     */
-    public int getNetSelected() {
-        return netSelected;
-    }
 }
