@@ -6,6 +6,7 @@ import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.PlayerDataView;
+import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -17,12 +18,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.List;
+
 public class PlayGameController {
 
     private GuiView guiView;
 
     @FXML
-    public AnchorPane pane;
+    private AnchorPane pane;
 
     @FXML
     private Button drawCardButton;
@@ -42,7 +45,9 @@ public class PlayGameController {
     @FXML
     private Label turnLabel;
 
-    public GridPane playerAreaGrid;
+    private GridPane playerAreaGrid;
+
+    private GridPane handGrid;
 
     @FXML
     public void initialize() {
@@ -51,10 +56,7 @@ public class PlayGameController {
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         updateBoard();
         updateHand();
-        scoresLabel.setText(guiView.scoresText);
-
-        guiView.playerAreaUpdated = false;
-        guiView.playerHandUpdated = false;
+        scoresLabel.setText(guiView.getScoresText());
 
         /*
         activateButton(placeCardButton);
@@ -64,8 +66,10 @@ public class PlayGameController {
     }
 
     @FXML
-    void handlePlaceCardButton(ActionEvent event) {
-        guiView.setRead("-p " + placeCardTextField.getText());
+    private void handlePlaceCardButton(ActionEvent event) {
+        String submittedPlaceCard = placeCardTextField.getText();
+
+        guiView.setRead("-p " + submittedPlaceCard);
 
         /*
         System.out.println("PlayerArea Updated: " + guiView.playerAreaUpdated);
@@ -91,8 +95,10 @@ public class PlayGameController {
     }
 
     @FXML
-    void handleDrawCardButton(ActionEvent event) {
-        guiView.setRead("-d " + drawCardTextField.getText());
+    private void handleDrawCardButton(ActionEvent event) {
+        String submittedDrawCard = drawCardTextField.getText();
+
+        guiView.setRead("-d " + submittedDrawCard);
 
         /*
         System.out.println("PlayerHand Updated: " + guiView.playerHandUpdated);
@@ -112,20 +118,21 @@ public class PlayGameController {
          */
     }
 
-    public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
-        return printPlayableCard(card.getFront(), layoutX, layoutY);
+    public void updateCurrentPlayer() {
+        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
     }
 
-    public ImageView printPhysicalCardBack(PhysicalCard card, int layoutX, int layoutY) {
-        return printPlayableCard(card.getBack(), layoutX, layoutY);
+    public void updateBoard() {
+        pane.getChildren().remove(playerAreaGrid);
+        playerAreaGrid = printPlayerArea(guiView.getPlayerArea().getCardsMatrix());
+        pane.getChildren().add(playerAreaGrid);
     }
 
-    public GridPane printPlayerArea(PlayerDataView playerArea) {
-        GridPane grid = new GridPane();
-        grid.setLayoutX(300);
-        grid.setLayoutY(300);
+    private GridPane printPlayerArea(CardsMatrix cardsMatrix) {
+        GridPane gridPane = new GridPane();
+        gridPane.setLayoutX(300);
+        gridPane.setLayoutY(300);
 
-        CardsMatrix cardsMatrix = playerArea.getCardsMatrix();
         int minX = cardsMatrix.getMinX();
         int maxX = cardsMatrix.getMaxX();
         int minY = cardsMatrix.getMinY();
@@ -143,17 +150,17 @@ public class PlayGameController {
                 int offsetX = actualX - minX;
                 int offsetY = 800 - (actualY - minY);
 
-                grid.add(cardImageView, offsetX, offsetY);
+                gridPane.add(cardImageView, offsetX, offsetY);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
-            grid.add(noCardsLabel, 0, 0);
+            gridPane.add(noCardsLabel, 0, 0);
         }
 
-        return grid;
+        return gridPane;
     }
 
-    public ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
+    private ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
@@ -166,6 +173,39 @@ public class PlayGameController {
         return cardImageView;
     }
 
+    public void updateScores() {
+        scoresLabel.setText(guiView.getScoresText());
+    }
+
+    public void updateHand() {
+        pane.getChildren().remove(handGrid);
+        handGrid = printHand(guiView.getPlayerHand());
+        pane.getChildren().add(handGrid);
+    }
+
+    private GridPane printHand(List<PhysicalCard> hand) {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setLayoutX(200);
+        gridPane.setLayoutY(600);
+
+        for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
+
+            gridPane.add(printPlayableCard(guiView.getPlayerHand().get(cardsCounter).getFront(), 0, 0),
+                    cardsCounter, 0);
+            gridPane.add(printPlayableCard(guiView.getPlayerHand().get(cardsCounter).getBack(), 0, 0),
+                    cardsCounter, 1);
+        }
+        return gridPane;
+    }
+
+    public void updateDecks() {
+    }
+
+    public void updateChat() {
+    }
+
     private void activateButton(Button button) {
         button.setDisable(false);
         button.setOpacity(1);
@@ -174,41 +214,5 @@ public class PlayGameController {
     private void deactivateButton(Button button) {
         button.setDisable(true);
         button.setOpacity(0.3);
-    }
-
-    public void updateCurrentPlayer() {
-        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
-    }
-
-    public void updateBoard() {
-        pane.getChildren().remove(playerAreaGrid);
-        playerAreaGrid = printPlayerArea(guiView.playerArea);
-        pane.getChildren().add(playerAreaGrid);
-    }
-
-    public void updateScores() {
-        scoresLabel.setText(guiView.scoresText);
-    }
-
-    public void updateDecks() {
-    }
-
-    public void updateHand() {
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(20);
-        gridPane.setLayoutX(200);
-        gridPane.setLayoutY(600);
-        for (int i = 0; i < 6; i++) {
-            int row = i / 3; // 0 or 1
-            int col = i % 3; // 0, 1, or 2
-            if (i < 3) { // print front
-                gridPane.add(printPhysicalCardFront(guiView.playerHand.get(i), 0, 0), col, row);
-            } else { // print back
-                gridPane.add(printPhysicalCardBack(guiView.playerHand.get(i - 3), 0, 0), col, row);
-
-            }
-        }
-        pane.getChildren().add(gridPane);
     }
 }

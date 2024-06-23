@@ -35,44 +35,32 @@ public class MenuController {
     @FXML
     private Button quitButton;
 
-    private int gameChoice;
-
-
-    public ObservableList<String> gameItems2 = FXCollections.observableArrayList();
-
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
     @FXML
-    public void handleCreateNewGameButton(ActionEvent event) {
-        gameChoice = 1;
-        guiView.setSubmittedGameChoice(gameChoice);
+    private void handleCreateNewGameButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(1);
         guiView.resumeExecution();
     }
 
     @FXML
-    public void handleJoinGameButton(ActionEvent event) {
-        gameChoice = 2;
-        guiView.setSubmittedGameChoice(gameChoice);
+    private void handleJoinGameButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(2);
         guiView.resumeExecution();
     }
 
     @FXML
-    public void handleRulesButton(ActionEvent event) {
+    private void handleQuitButton(ActionEvent event) {
+        guiView.setSubmittedGameChoice(3);
+        guiView.resumeExecution();
+    }
+
+    @FXML
+    private void handleRulesButton(ActionEvent event) {
         //showRulesView();
-    }
-
-    @FXML
-    public void handleQuitButton(ActionEvent event) {
-        gameChoice = 3;
-        guiView.setSubmittedGameChoice(gameChoice);
-        guiView.resumeExecution();
-    }
-
-    public int getGameChoice() {
-        return gameChoice;
     }
 
      /*

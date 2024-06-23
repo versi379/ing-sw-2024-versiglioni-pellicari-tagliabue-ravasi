@@ -371,7 +371,7 @@ public class TuiView implements View {
         client.addCommand(command.getKey(), command.getValue());
     }
 
-    public Pair<Command, String[]> readCommand() {
+    private Pair<Command, String[]> readCommand() {
         Scanner scanner = new Scanner(System.in);
         String read = scanner.nextLine();
         switch (getFirstWord(read)) {

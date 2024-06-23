@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class UserController {
+    private GuiView guiView;
 
     @FXML
     private TextField playerNickname;
@@ -20,19 +21,17 @@ public class UserController {
     @FXML
     private Button menuButton;
 
-    private GuiView guiView;
-
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
     @FXML
-    public void handleMenuButton(ActionEvent event) {
-        String submittedPlayerName = playerNickname.getText();
-        guiView.setSubmittedPlayerNickname(submittedPlayerName);
+    private void handleMenuButton(ActionEvent event) {
+        String submittedPlayerNickname = playerNickname.getText();
+
+        guiView.setSubmittedPlayerNickname(submittedPlayerNickname);
         guiView.resumeExecution();
-        System.out.println("Riprendo client Thread");
     }
 
     /*

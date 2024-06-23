@@ -24,6 +24,7 @@ public class GuiView extends Application implements View {
     private Client client;
     private Stage primaryStage;
 
+    private List<String> freeGames;
     private String submittedIp;
     private String submittedPlayerNickname;
     private int submittedGameChoice;
@@ -41,21 +42,8 @@ public class GuiView extends Application implements View {
     private SetupGameController setupGameController;
     private PlayGameController playGameController;
 
-    public String setupCommonObjectives;
-    public String setupSecretObjectives;
-    public String starterCardFrontCode;
-    public String starterCardBackCode;
-
-    public List<PhysicalCard> playerHand = new ArrayList<>();
-    public PlayerDataView playerArea;
-    public Boolean playerAreaUpdated = false;
-    public Boolean playerHandUpdated = false;
-    public Boolean serverError = false;
-    public String scoresText;
-
     private final Object lock = new Object(); // Object for synchronization
-    private volatile boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
-
+    private boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
     private String read; // commands sent via GUI components
 
     @Override
@@ -179,6 +167,7 @@ public class GuiView extends Application implements View {
             getPrimaryStage().setScene(gameScene);
         });
 
+        this.freeGames = new ArrayList<>();
         if (!freeGames.isEmpty()) {
             for (String game : freeGames.keySet()) {
                 StringBuilder gameItem = new StringBuilder(game + "\nPLAYERS: ");
@@ -188,7 +177,7 @@ public class GuiView extends Application implements View {
                 if (gameItem.length() > 0) {
                     gameItem.setLength(gameItem.length() - 2);
                 }
-                menuController.gameItems2.add(gameItem.toString());
+                this.freeGames.add(gameItem.toString());
             }
         }
     }
@@ -233,10 +222,6 @@ public class GuiView extends Application implements View {
     }
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private GameView getGameView() {
-        return client.getGameView();
-    }
-
     @Override
     public void showPlayerJoined(String nickname) {
     }
@@ -255,9 +240,6 @@ public class GuiView extends Application implements View {
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showSetup() {
-        showObjectives();
-        showSecretObjectiveSelection();
-        showStarterCardSelection();
 
         Platform.runLater(() -> {
             FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
@@ -278,27 +260,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showObjectives() {
-        List<ObjectiveCard> commonObjectives = getGameView().getCommonObjectives();
-        StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
-        for (ObjectiveCard commonObjective : commonObjectives) {
-            commonObjectiveStringBuilder.append(commonObjective.toStringTUI()).append("\n");
-        }
-        setupCommonObjectives = commonObjectiveStringBuilder.toString();
-    }
-
-    private void showSecretObjectiveSelection() {
-        List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesSelection();
-        StringBuilder secretObjectiveStringBuilder = new StringBuilder("Secret Objective Cards");
-        for (int i = 0; i < objectiveCards.size(); i++) {
-            secretObjectiveStringBuilder.append((i + 1) + ") " + objectiveCards.get(i).toStringTUI());
-        }
-        setupSecretObjectives = secretObjectiveStringBuilder.toString();
-    }
-
-    private void showStarterCardSelection() {
-        PhysicalCard starterCard = getGameView().getStarterCard();
-        starterCardFrontCode = starterCard.getFront().getCode();
-        starterCardBackCode = starterCard.getBack().getCode();
     }
 
     @Override
@@ -308,8 +269,6 @@ public class GuiView extends Application implements View {
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showStart() {
-        showCardsArea(getGameView().getCurrentPlayer());
-        showHand();
 
         Platform.runLater(() -> {
             FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
@@ -321,7 +280,6 @@ public class GuiView extends Application implements View {
                 throw new RuntimeException(e);
             }
             playGameController = playGameLoader.getController();
-            System.out.println(playGameController);
 
             Scene gameScene = new Scene(playGameRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
@@ -339,23 +297,19 @@ public class GuiView extends Application implements View {
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
-        System.err.println("> PLACING PHASE");
+        System.out.println("> placing phase");
         showCardsArea(getGameView().getCurrentPlayer());
         showHand();
     }
 
     @Override
     public void showDrawingPhase() {
-        System.err.println("> DRAWING PHASE");
+        System.out.println("> drawing phase");
         showDecks();
     }
 
     @Override
     public void showCardsArea(String nickname) {
-        playerArea = getGameView().getPlayerArea(nickname);
-        playerAreaUpdated = true;
-        System.err.println("> player area updated del giocatore: " + nickname);
-
         if (playGameController != null) {
             Platform.runLater(() -> {
                 playGameController.updateBoard();
@@ -365,10 +319,6 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showHand() {
-        playerHand = getGameView().getHand();
-        playerHandUpdated = true;
-        System.err.println("> mano aggiornata");
-
         if (playGameController != null) {
             Platform.runLater(() -> {
                 playGameController.updateHand();
@@ -387,23 +337,10 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showScores() {
-        scoresText = "";
-        Map<String, Integer> scores = new HashMap<>();
-        for (String nickname : getGameView().getPlayerList()) {
-            scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
-        }
-        printScores(scores);
-
         if (playGameController != null) {
             Platform.runLater(() -> {
                 playGameController.updateScores();
             });
-        }
-    }
-
-    private void printScores(Map<String, Integer> scores) {
-        for (String nickname : scores.keySet()) {
-            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
         }
     }
 
@@ -415,6 +352,13 @@ public class GuiView extends Application implements View {
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showChatMessage(String sender, String content, String time) {
+        // update chat...
+
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateChat();
+            });
+        }
     }
 
     // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,13 +385,11 @@ public class GuiView extends Application implements View {
     }
 
     // commands must be read via GUI rather than terminal
-    public Pair<Command, String[]> readCommand() {
+    private Pair<Command, String[]> readCommand() {
 
         switch (getFirstWord(read)) {
-            case "-choose_objective", "-co" -> {
-                System.err.println("> Choose objective triggered");
+            case "-co" -> {
                 String arg = removeFirstWord(read);
-                read = "";
                 try {
                     return new Pair<>(Command.CHOOSE_OBJECTIVE,
                             new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
@@ -456,10 +398,8 @@ public class GuiView extends Application implements View {
                 }
             }
 
-            case "-choose_starter_face", "-cs" -> {
-                System.err.println("> Choose starter face triggered");
+            case "-cs" -> {
                 String arg = removeFirstWord(read);
-                read = "";
                 try {
                     return new Pair<>(Command.CHOOSE_STARTER_FACE,
                             new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
@@ -468,8 +408,16 @@ public class GuiView extends Application implements View {
                 }
             }
 
-            case "-place_card", "-p" -> {
-                System.err.println("> Place card triggered");
+            case "-o" -> {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
+                    return new Pair<>(Command.SHOW_OBJECTIVES, null);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-p" -> {
                 String[] args = new String[4];
                 read = removeFirstWord(read);
                 for (int i = 0; i < args.length; i++) {
@@ -481,17 +429,14 @@ public class GuiView extends Application implements View {
                     }
                 }
                 if (read.isEmpty()) {
-//                    playerArea = getGameView().getPlayerArea(getGameView().getNickname());
                     return new Pair<>(Command.PLACE_CARD, args);
                 } else {
                     return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
 
-            case "-draw_card", "-d" -> {
-                System.err.println("> Draw card triggered");
+            case "-d" -> {
                 String arg = removeFirstWord(read);
-                read = "";
                 try {
                     return new Pair<>(Command.DRAW_CARD,
                             new String[]{String.valueOf(Integer.parseInt(arg) - 1)});
@@ -500,14 +445,16 @@ public class GuiView extends Application implements View {
                 }
             }
 
-            case "-chat", "-c" -> {
-                System.err.println("> Chat triggered");
+            case "-c" -> {
                 String arg = removeFirstWord(read);
-                return new Pair<>(Command.CHAT, new String[]{arg});
+                if (!arg.isEmpty()) {
+                    return new Pair<>(Command.CHAT, new String[]{arg});
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
             }
 
-            case "-chat_private", "-cp" -> {
-                System.err.println("> Chat private triggered");
+            case "-cp" -> {
                 String[] args = new String[2];
                 read = removeFirstWord(read);
                 if (read.isEmpty()) {
@@ -515,15 +462,28 @@ public class GuiView extends Application implements View {
                 }
                 args[0] = getFirstWord(read);
                 args[1] = removeFirstWord(read);
-                return new Pair<>(Command.CHAT_PRIVATE, args);
+                if (!args[1].isEmpty()) {
+                    return new Pair<>(Command.CHAT_PRIVATE, args);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
             }
 
-            case "-help", "-h" -> {
+            case "-l" -> {
+                String arg = removeFirstWord(read);
+                if (arg.isEmpty()) {
+                    return new Pair<>(Command.LEAVE, null);
+                } else {
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
+                }
+            }
+
+            case "-h" -> {
                 String arg = removeFirstWord(read);
                 if (arg.isEmpty()) {
                     return new Pair<>(Command.HELP, null);
                 } else {
-                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument count"});
+                    return new Pair<>(Command.NOT_A_COMMAND, new String[]{"Invalid argument format"});
                 }
             }
         }
@@ -579,11 +539,11 @@ public class GuiView extends Application implements View {
         return joinGameController;
     }
 
-
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    // BUTTONS /////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void waitForButtonPress() {
         synchronized (lock) {
             waitingForButton = true; // Set flag to indicate waiting for button press
@@ -637,7 +597,62 @@ public class GuiView extends Application implements View {
         resumeExecution();
     }
 
+    // PARAMS //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private GameView getGameView() {
+        return client.getGameView();
+    }
+
+    public List<String> getFreeGames() {
+        return new ArrayList<>(freeGames);
+    }
+
+    // DA CAMBIARE PER MOSTRARE LE .JPG!!
+    public String getSetupCommonObjectives() {
+        StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
+        for (ObjectiveCard commonObjective : getGameView().getCommonObjectives()) {
+            commonObjectiveStringBuilder.append(commonObjective.toStringTUI()).append("\n");
+        }
+        return commonObjectiveStringBuilder.toString();
+    }
+
+    public String getSetupSecretObjectives() {
+        StringBuilder secretObjectiveStringBuilder = new StringBuilder("Secret Objective Cards");
+        for (int i = 0; i < getGameView().getSecreteObjectivesSelection().size(); i++) {
+            secretObjectiveStringBuilder.append((i + 1) + ") " + getGameView().getSecreteObjectivesSelection().get(i).toStringTUI());
+        }
+        return secretObjectiveStringBuilder.toString();
+    }
+
+    public String getStarterCardFrontCode() {
+        return getGameView().getStarterCard().getFront().getCode();
+    }
+
+    public String getStarterCardBackCode() {
+        return getGameView().getStarterCard().getBack().getCode();
+    }
+
+    public List<PhysicalCard> getPlayerHand() {
+        return getGameView().getHand();
+    }
+
     public String getCurrentPlayer() {
         return getGameView().getCurrentPlayer();
+    }
+
+    public PlayerDataView getPlayerArea() {
+        return getGameView().getPlayerArea(getCurrentPlayer());
+    }
+
+    public String getScoresText() {
+        Map<String, Integer> scores = new HashMap<>();
+        for (String nickname : getGameView().getPlayerList()) {
+            scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
+        }
+
+        String scoresText = "";
+        for (String nickname : scores.keySet()) {
+            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
+        }
+        return scoresText;
     }
 }

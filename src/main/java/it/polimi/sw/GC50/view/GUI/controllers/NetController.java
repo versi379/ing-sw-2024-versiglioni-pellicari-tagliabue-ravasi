@@ -18,6 +18,9 @@ public class NetController {
     private GuiView guiView;
 
     @FXML
+    private TextField serverIpTextField;
+
+    @FXML
     private Button socketButton;
 
     @FXML
@@ -27,10 +30,8 @@ public class NetController {
     private Button quitButton;
 
     private boolean netSet;
-    private int netSelected;
 
-    @FXML
-    private TextField serverIpTextField;
+    private int netSelected;
 
     @FXML
     public void initialize() {
@@ -59,7 +60,9 @@ public class NetController {
     }
 
     private void setIP(String serverIp) {
-        guiView.setSubmittedIp(serverIpTextField.getText());
+        String submittedIp = serverIpTextField.getText();
+
+        guiView.setSubmittedIp(submittedIp);
         guiView.resumeExecution();
     }
 

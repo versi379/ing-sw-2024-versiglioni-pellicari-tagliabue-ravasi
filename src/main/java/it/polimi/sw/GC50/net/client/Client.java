@@ -569,6 +569,9 @@ public class Client {
 
                 view.showCardsArea(player);
                 view.showScores();
+                if (gameView.getNickname().equals(boardUpdateMex.getNickname())) {
+                    view.showHand();
+                }
             }
 
             case NOTIFY_CARD_DRAWN -> {
@@ -579,10 +582,10 @@ public class Client {
                     gameView.setHand((decksUpdateMex.getHand()));
                 }
 
+                view.showDecks();
                 if (gameView.getNickname().equals(decksUpdateMex.getNickname())) {
                     view.showHand();
                 }
-                view.showDecks();
             }
 
             case NOTIFY_NEXT_TURN -> {

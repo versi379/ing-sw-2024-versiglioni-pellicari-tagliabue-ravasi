@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.view.GUI;
+package trash;
 
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.PlayerDataView;
