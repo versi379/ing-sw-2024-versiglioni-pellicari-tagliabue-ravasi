@@ -113,6 +113,7 @@ public class GuiView extends Application implements View {
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
             getPrimaryStage().setScene(gameScene);
         });
+
         waitForButtonPress();
         return getNetController().getNetSelected();
     }
@@ -585,6 +586,10 @@ public class GuiView extends Application implements View {
         }
     }
 
+    public void setSubmittedIp(String submittedIp) {
+        this.submittedIp = submittedIp;
+    }
+
     public void setSubmittedPlayerNickname(String submittedPlayerNickname) {
         this.submittedPlayerNickname = submittedPlayerNickname;
     }
@@ -607,14 +612,6 @@ public class GuiView extends Application implements View {
 
     public void setSubmittedJoinGameName(String submittedJoinGameName) {
         this.submittedJoinGameName = submittedJoinGameName;
-    }
-
-    public void setSubmittedIp(String submittedIp) {
-        this.submittedIp = submittedIp;
-    }
-
-    public String getSubmittedIp() {
-        return submittedIp;
     }
 
     public void setRead(String read) {

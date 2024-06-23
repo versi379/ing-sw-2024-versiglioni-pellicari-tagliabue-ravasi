@@ -2,16 +2,8 @@ package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class NetController {
 
@@ -26,47 +18,28 @@ public class NetController {
     @FXML
     private Button quitButton;
 
-    private boolean netSet;
-
     private int netSelected;
-
-    private String serverIP;
 
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
-        netSet = false;
         netSelected = 3;
         socketButton.setOnAction(event -> {
-            netSet = true;
-            setIP(guiView.getSubmittedIp());
-            netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
+            netSelected = 1;
+            guiView.resumeExecution();
         });
         rmiButton.setOnAction(event -> {
-            netSet = true;
-            setIP(guiView.getSubmittedIp());
-            netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
+            netSelected = 2;
+            guiView.resumeExecution();
         });
         quitButton.setOnAction(event -> {
-            netSet = true;
-            setIP("");
-            netSelected = 3;
             System.out.println("Scelta QUIT");
+            netSelected = 3;
+            guiView.resumeExecution();
         });
-    }
-
-    private void setIP(String serverIp) {
-        String submittedIp = guiView.getSubmittedIp();
-
-        guiView.setSubmittedIp(submittedIp);
-        guiView.resumeExecution();
-    }
-
-    public boolean isNetSet() {
-        return netSet;
     }
 
     public int getNetSelected() {

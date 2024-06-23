@@ -27,5 +27,4 @@ public class EnterIPController {
         guiView.setSubmittedIp(ipTextField.getText());
         guiView.resumeExecution();
     }
-
 }
