@@ -8,6 +8,9 @@ import javafx.scene.control.*;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Controller for Create game FXML scene.
+ */
 public class CreateGameController {
     private GuiView guiView;
 
@@ -31,6 +34,9 @@ public class CreateGameController {
     @FXML
     private ProgressIndicator waitingPlayersBuffer;
 
+    /**
+     * method that initialize the game controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -51,6 +57,10 @@ public class CreateGameController {
         finalScore.setTextFormatter(new TextFormatter<>(integerFilter));
     }
 
+    /**
+     * method that create game button
+     * @param event     type of event
+     */
     @FXML
     public void handleCreateGameButton(ActionEvent event) {
         String submittedGameName = gameName.getText();
@@ -69,6 +79,9 @@ public class CreateGameController {
         guiView.resumeExecution();
     }
 
+    /**
+     * method that shows waiting buffer
+     */
     public void showWaitingBuffer() {
         createGameButton.setVisible(false);
         waitingPlayersBuffer.setVisible(true);

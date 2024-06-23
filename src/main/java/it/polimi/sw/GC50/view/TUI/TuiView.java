@@ -18,25 +18,36 @@ public class TuiView implements View {
     public static String blueTxt = "\u001B[34m";
     public static String yellowTxt = "\u001B[33m";
     public static String goldTxt = "\u001B[93m";
-
+    /**
+     * Given a client sets a new client
+     * @param client client given
+     */
     @Override
     public void setClient(Client client) {
         this.client = client;
     }
 
+    /**
+     * show connected
+     */
     @Override
     public void showConnected() {
         System.out.println("Connected to server");
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @return IP submitted
+     */
     @Override
     public String selectServerIp() {
         System.out.println(blueTxt + "Insert the server's Ip address:" + baseTxt);
 
         return readString();
     }
-
+    /**
+     * @return type of connection selected
+     */
     @Override
     public int selectConnectionType() {
         System.out.println(blueTxt + "Select the desired connection technology:" + baseTxt);
@@ -48,13 +59,19 @@ public class TuiView implements View {
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @return selected name
+     */
     @Override
     public String selectName() {
         System.out.println(blueTxt + "Insert your player's nickname:" + baseTxt);
 
         return readString();
     }
-
+    /**
+     *
+     * @return join or create a new game
+     */
     @Override
     public int selectJoinOrCreate() {
         System.out.println(blueTxt + "Do you want to create a new game or join an existing one?" + baseTxt);
@@ -64,7 +81,10 @@ public class TuiView implements View {
 
         return readInt(1, 3);
     }
-
+    /**
+     * shows free games
+     * @param freeGames a map of free games
+     */
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
         if (freeGames.isEmpty()) {
@@ -81,29 +101,41 @@ public class TuiView implements View {
         }
     }
 
+    /**
+     * @return game names
+     */
     @Override
     public String selectGameName() {
         System.out.println(blueTxt + "Insert the game's name:" + baseTxt);
         return readString();
     }
-
+    /**
+     * @return selected number of players
+     */
     @Override
     public int selectNumberOfPlayers() {
         System.out.println(blueTxt + "Insert the number of players:" + baseTxt);
         return readInt(2, 3);
     }
-
+    /**
+     * @return selected end score
+     */
     @Override
     public int selectEndScore() {
         System.out.println(blueTxt + "Insert the score needed for triggering the game's ending:" + baseTxt);
         return readInt(0, 100);
     }
-
+    /**
+     * @return selected join game name
+     */
     @Override
     public String selectJoinGameName() {
         return selectGameName();
     }
 
+    /**
+     * @return a string
+     */
     private String readString() {
         Scanner scanner = new Scanner(System.in);
 
@@ -125,6 +157,12 @@ public class TuiView implements View {
         return read;
     }
 
+    /**
+     * method used to read an integer
+     * @param min   minimum value
+     * @param range range of values
+     * @return      read
+     */
     private int readInt(int min, int range) {
         Scanner scanner = new Scanner(System.in);
 
@@ -147,10 +185,15 @@ public class TuiView implements View {
     }
 
     // GAME ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @return type of game wiew
+     */
     private GameView getGameView() {
         return client.getGameView();
     }
-
+    /**
+     * shows player that have joined a game
+     */
     @Override
     public void showPlayerJoined(String nickname) {
         if (getGameView().getNickname().equals(nickname)) {
@@ -159,19 +202,27 @@ public class TuiView implements View {
             System.out.println("Player \"" + nickname + "\" joined the game");
         }
     }
-
+    /**
+     * Given a nickname show the players who left the game
+     * @param nickname  player's nickname
+     */
     @Override
     public void showPlayerLeft(String nickname) {
         System.out.println("Player \"" + nickname + "\" left the game");
     }
 
+    /**
+     * shows waiting players
+     */
     @Override
     public void showWaitPlayers() {
         System.out.println();
         System.out.println(goldTxt + "Waiting for other players to join the game..." + baseTxt);
         showHelp();
     }
-
+    /**
+     * method that shows setup
+     */
     @Override
     public void showSetup() {
         System.out.println();
@@ -183,7 +234,9 @@ public class TuiView implements View {
 
         System.out.println(blueTxt + "Select the secret objective card and starter card face you want to play with:" + baseTxt);
     }
-
+    /**
+     * method that shows objectives
+     */
     @Override
     public void showObjectives() {
         if (!getGameView().getGameStatus().equals(GameStatus.WAITING)) {
@@ -204,7 +257,9 @@ public class TuiView implements View {
             System.out.println(redTxt + "Objectives haven't been chosen yet!" + baseTxt);
         }
     }
-
+    /**
+     * method that shows secret objectives selected
+     */
     private void showSecretObjectiveSelection() {
         System.out.println(yellowTxt + "Secret objective cards selection:" + baseTxt);
         List<ObjectiveCard> objectiveCards = getGameView().getSecreteObjectivesSelection();
@@ -213,24 +268,34 @@ public class TuiView implements View {
             System.out.println();
         }
     }
-
+    /**
+     * method that shows starter card selection
+     */
     private void showStarterCardSelection() {
         System.out.println(yellowTxt + "Starter card:" + baseTxt);
         TuiModelPrinter.printStarterCard(getGameView().getStarterCard());
         System.out.println();
     }
-
+    /**
+     * method that players that are ready
+     * @param nickname player's nickname
+     */
     @Override
     public void showPlayerReady(String nickname) {
         System.out.println("Player \"" + nickname + "\" ready!");
     }
 
+    /**
+     * show start of the game
+     */
     @Override
     public void showStart() {
         System.out.println();
         System.out.println(goldTxt + "Game started!" + baseTxt);
     }
-
+    /**
+     * shows the current player
+     */
     @Override
     public void showCurrentPlayer() {
         if (getGameView().getNickname().equals(getGameView().getCurrentPlayer())) {
@@ -239,7 +304,9 @@ public class TuiView implements View {
             System.out.println(goldTxt + "Player \"" + getGameView().getCurrentPlayer() + "\" turn:" + baseTxt);
         }
     }
-
+    /**
+     * method that is called only when a player has to place a card (in his/her turn)
+     */
     @Override
     public void showPlacingPhase() {
         System.out.println(goldTxt + "Placing phase" + baseTxt);
@@ -247,14 +314,18 @@ public class TuiView implements View {
         showHand();
         System.out.println(blueTxt + "Place a card:" + baseTxt);
     }
-
+    /**
+     * method that shows drawing phase
+     */
     @Override
     public void showDrawingPhase() {
         System.out.println(goldTxt + "Drawing phase" + baseTxt);
         showDecks();
         System.out.println(blueTxt + "Draw a card:" + baseTxt);
     }
-
+    /**
+     * method that shows card area
+     */
     @Override
     public void showCardsArea(String nickname) {
         if (getGameView().getNickname().equals(nickname)) {
@@ -265,21 +336,27 @@ public class TuiView implements View {
         TuiModelPrinter.printPlayerArea(getGameView().getPlayerArea(nickname).getCardsMatrix());
         System.out.println();
     }
-
+    /**
+     * method that shows hand
+     */
     @Override
     public void showHand() {
         System.out.println(yellowTxt + "Your hand:" + baseTxt);
         TuiModelPrinter.printHand(getGameView().getHand());
         System.out.println();
     }
-
+    /**
+     * method that shows decks
+     */
     @Override
     public void showDecks() {
         System.out.println(yellowTxt + "Cards in the center of the table:" + baseTxt);
         TuiModelPrinter.printDecks(getGameView().getDecks());
         System.out.println();
     }
-
+    /**
+     * method that shows scores
+     */
     @Override
     public void showScores() {
         System.out.println(yellowTxt + "Scores:" + baseTxt);
@@ -301,7 +378,9 @@ public class TuiView implements View {
         }
         System.out.println();
     }
-
+    /**
+     * method that shows end of the game
+     */
     @Override
     public void showEnd() {
         System.out.println();
@@ -318,7 +397,12 @@ public class TuiView implements View {
         }
         showScores();
     }
-
+    /**
+     * method that shows a chat message
+     * @param sender        of the message
+     * @param content       of the message
+     * @param time          when message is sent
+     */
     @Override
     public void showChatMessage(String sender, String content, String time) {
         if (getGameView().getNickname().equals(sender)) {
@@ -329,7 +413,9 @@ public class TuiView implements View {
         System.out.println(content);
         System.out.println("Sent at time " + time);
     }
-
+    /**
+     * method that shows help
+     */
     @Override
     public void showHelp() {
         System.out.println(yellowTxt + "Commands:" + baseTxt);
@@ -353,24 +439,34 @@ public class TuiView implements View {
         System.out.println("Card bonus types: blank, resource, covered corners (C)");
         System.out.println();
     }
-
+    /**
+     * method that shows errors
+     */
     @Override
     public void showError(String content) {
         System.out.println(redTxt + "Error: " + content + baseTxt);
     }
-
+    /**
+     * method that shows that session is ended
+     */
     @Override
     public void showEndSession() {
         System.out.println();
         System.out.println(goldTxt + "Session ended" + baseTxt);
     }
 
+    /**
+     * waits for a command
+     */
     @Override
     public void listen() {
         Pair<Command, String[]> command = readCommand();
         client.addCommand(command.getKey(), command.getValue());
     }
 
+    /**
+     * @return a pair command/string
+     */
     public Pair<Command, String[]> readCommand() {
         Scanner scanner = new Scanner(System.in);
         String read = scanner.nextLine();
@@ -502,6 +598,10 @@ public class TuiView implements View {
         }
     }
 
+    /**
+     * @param read given a read
+     * @return words
+     */
     private static List<String> getWords(String read) {
         List<String> words = new ArrayList<>();
 
