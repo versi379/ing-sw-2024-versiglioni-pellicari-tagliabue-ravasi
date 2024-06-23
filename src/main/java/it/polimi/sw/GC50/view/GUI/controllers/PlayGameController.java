@@ -25,9 +25,6 @@ public class PlayGameController {
     public AnchorPane pane;
 
     @FXML
-    private Button showBoardButton;
-
-    @FXML
     private Button drawCardButton;
 
     @FXML
@@ -52,50 +49,25 @@ public class PlayGameController {
         guiView = (GuiView) AppClient.getView();
 
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
-        printPlayerHand();
-        playerAreaGrid = printPlayerArea(guiView.playerArea);
-        pane.getChildren().add(playerAreaGrid);
+        updateBoard();
+        updateHand();
+        scoresLabel.setText(guiView.scoresText);
 
         guiView.playerAreaUpdated = false;
         guiView.playerHandUpdated = false;
 
-        scoresLabel.setText(guiView.scoresText);
-
-        deactivateButton(placeCardButton);
-        deactivateButton(drawCardButton);
-    }
-
-    @FXML
-    void handleShowBoardButton(ActionEvent event) {
-        updatePlayerArea();
-        guiView.playerHandUpdated = false;
-        deactivateButton(showBoardButton);
+        /*
         activateButton(placeCardButton);
-    }
+        activateButton(drawCardButton);
 
-    @FXML
-    void handleDrawCardButton(ActionEvent event) {
-        String drawnCardIndex = drawCardTextField.getText();
-        guiView.setRead(drawnCardIndex);
-        System.out.println("PlayerHand Updated: " + guiView.playerHandUpdated);
-        System.out.println(("ServerError: " + guiView.serverError));
-        while (!guiView.playerHandUpdated && !guiView.serverError) {
-            System.out.println("Updating player hand...");
-        }
-        if (guiView.serverError) {
-            guiView.serverError = false;
-        } else {
-            printPlayerHand();
-            deactivateButton(drawCardButton);
-            activateButton(showBoardButton);
-        }
-        guiView.playerHandUpdated = false;
+         */
     }
 
     @FXML
     void handlePlaceCardButton(ActionEvent event) {
-        String placedCardInfo = placeCardTextField.getText();
-        guiView.setRead(placedCardInfo);
+        guiView.setRead("-p " + placeCardTextField.getText());
+
+        /*
         System.out.println("PlayerArea Updated: " + guiView.playerAreaUpdated);
         System.out.println(("ServerError: " + guiView.serverError));
 
@@ -114,6 +86,30 @@ public class PlayGameController {
             activateButton(drawCardButton);
         }
         guiView.playerAreaUpdated = false;
+
+         */
+    }
+
+    @FXML
+    void handleDrawCardButton(ActionEvent event) {
+        guiView.setRead("-d " + drawCardTextField.getText());
+
+        /*
+        System.out.println("PlayerHand Updated: " + guiView.playerHandUpdated);
+        System.out.println(("ServerError: " + guiView.serverError));
+        while (!guiView.playerHandUpdated && !guiView.serverError) {
+            System.out.println("Updating player hand...");
+        }
+        if (guiView.serverError) {
+            guiView.serverError = false;
+        } else {
+            printPlayerHand();
+            deactivateButton(drawCardButton);
+            activateButton(showBoardButton);
+        }
+        guiView.playerHandUpdated = false;
+
+         */
     }
 
     public ImageView printPhysicalCardFront(PhysicalCard card, int layoutX, int layoutY) {
@@ -170,7 +166,34 @@ public class PlayGameController {
         return cardImageView;
     }
 
-    public void printPlayerHand() {
+    private void activateButton(Button button) {
+        button.setDisable(false);
+        button.setOpacity(1);
+    }
+
+    private void deactivateButton(Button button) {
+        button.setDisable(true);
+        button.setOpacity(0.3);
+    }
+
+    public void updateCurrentPlayer() {
+        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
+    }
+
+    public void updateBoard() {
+        pane.getChildren().remove(playerAreaGrid);
+        playerAreaGrid = printPlayerArea(guiView.playerArea);
+        pane.getChildren().add(playerAreaGrid);
+    }
+
+    public void updateScores() {
+        scoresLabel.setText(guiView.scoresText);
+    }
+
+    public void updateDecks() {
+    }
+
+    public void updateHand() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
@@ -187,39 +210,5 @@ public class PlayGameController {
             }
         }
         pane.getChildren().add(gridPane);
-    }
-
-    public void updatePlayerArea() {
-        pane.getChildren().remove(playerAreaGrid);
-        playerAreaGrid = printPlayerArea(guiView.playerArea);
-        pane.getChildren().add(playerAreaGrid);
-        guiView.playerAreaUpdated = false;
-        scoresLabel.setText(guiView.scoresText);
-    }
-
-    private void activateButton(Button button) {
-        button.setDisable(false);
-        button.setOpacity(1);
-    }
-
-    private void deactivateButton(Button button) {
-        button.setDisable(true);
-        button.setOpacity(0.3);
-    }
-
-    public void updateCurrentPlayer() {
-        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
-    }
-
-    public void updateBoard() {
-    }
-
-    public void updateScores() {
-    }
-
-    public void updateDecks() {
-    }
-
-    public void updateHand() {
     }
 }

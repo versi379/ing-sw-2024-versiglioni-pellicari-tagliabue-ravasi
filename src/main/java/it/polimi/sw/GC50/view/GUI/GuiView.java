@@ -18,10 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GuiView extends Application implements View {
     private Client client;
@@ -258,6 +255,9 @@ public class GuiView extends Application implements View {
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showSetup() {
+        showObjectives();
+        showSecretObjectiveSelection();
+        showStarterCardSelection();
 
         Platform.runLater(() -> {
             FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.SETUPGAME.getPath()));
@@ -274,10 +274,6 @@ public class GuiView extends Application implements View {
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
             getPrimaryStage().setScene(gameScene);
         });
-
-        showObjectives();
-        showSecretObjectiveSelection();
-        showStarterCardSelection();
     }
 
     @Override
@@ -312,6 +308,8 @@ public class GuiView extends Application implements View {
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showStart() {
+        showCardsArea(getGameView().getCurrentPlayer());
+        showHand();
 
         Platform.runLater(() -> {
             FXMLLoader playGameLoader = new FXMLLoader(getClass().getResource(ScenePath.PLAYGAME.getPath()));
@@ -323,30 +321,33 @@ public class GuiView extends Application implements View {
                 throw new RuntimeException(e);
             }
             playGameController = playGameLoader.getController();
+            System.out.println(playGameController);
 
             Scene gameScene = new Scene(playGameRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
             getPrimaryStage().setScene(gameScene);
         });
-
-        showCardsArea(getGameView().getCurrentPlayer());
-        showHand();
     }
 
     @Override
     public void showCurrentPlayer() {
-        playGameController.updateCurrentPlayer();
+        Platform.runLater(() -> {
+            playGameController.updateCurrentPlayer();
+        });
     }
 
     // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
         System.err.println("> PLACING PHASE");
+        showCardsArea(getGameView().getCurrentPlayer());
+        showHand();
     }
 
     @Override
     public void showDrawingPhase() {
         System.err.println("> DRAWING PHASE");
+        showDecks();
     }
 
     @Override
@@ -355,20 +356,31 @@ public class GuiView extends Application implements View {
         playerAreaUpdated = true;
         System.err.println("> player area updated del giocatore: " + nickname);
 
-        playGameController.updateBoard();
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateBoard();
+            });
+        }
     }
 
     @Override
     public void showHand() {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
+        System.err.println("> mano aggiornata");
 
-        playGameController.updateHand();
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateHand();
+            });
+        }
     }
 
     @Override
     public void showDecks() {
-        playGameController.updateDecks();
+        Platform.runLater(() -> {
+            playGameController.updateDecks();
+        });
     }
 
     @Override
@@ -380,7 +392,9 @@ public class GuiView extends Application implements View {
         }
         printScores(scores);
 
-        playGameController.updateScores();
+        Platform.runLater(() -> {
+            playGameController.updateScores();
+        });
     }
 
     private void printScores(Map<String, Integer> scores) {
@@ -418,7 +432,7 @@ public class GuiView extends Application implements View {
     public void listen() {
         waitForButtonPress();
         Pair<Command, String[]> command = readCommand();
-        System.out.println("ADD COMMAND: " + command.getKey());
+        System.out.println("Add command: " + command.getKey() + ", " + Arrays.toString(command.getValue()));
         client.addCommand(command.getKey(), command.getValue());
     }
 

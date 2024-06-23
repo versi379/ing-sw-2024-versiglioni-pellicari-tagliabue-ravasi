@@ -46,6 +46,7 @@ public class SetupGameController {
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
+
         commonObjectivesLabel.setText(guiView.setupCommonObjectives);
         secretObjectivesLabel.setText(guiView.setupSecretObjectives);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
