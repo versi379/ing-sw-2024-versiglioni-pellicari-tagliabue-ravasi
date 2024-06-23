@@ -34,6 +34,7 @@ public class GuiView extends Application implements View {
     private String submittedJoinGameName;
 
     // GUI Controllers
+    private EnterIPController enterIPController;
     private NetController netController;
     private UserController userController;
     private CreateGameController createGameController;
@@ -50,17 +51,17 @@ public class GuiView extends Application implements View {
     public void start(Stage stage) {
         this.primaryStage = stage;
 
-        FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
-        Parent netRoot = null;
+        FXMLLoader enterIPLoader = new FXMLLoader(getClass().getResource(ScenePath.ENTERIP.getPath()));
+        Parent enterIPRoot = null;
 
         try {
-            netRoot = netLoader.load();
+            enterIPRoot = enterIPLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        netController = netLoader.getController();
+        enterIPController = enterIPLoader.getController();
 
-        Scene scene = new Scene(netRoot);
+        Scene scene = new Scene(enterIPRoot);
         scene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
@@ -89,14 +90,30 @@ public class GuiView extends Application implements View {
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String selectServerIp() {
+
         waitForButtonPress();
         return submittedIp;
     }
 
     @Override
     public int selectConnectionType() {
-        while (getNetController() == null || !getNetController().isNetSet()) {
-        }
+
+        Platform.runLater(() -> {
+            FXMLLoader netLoader = new FXMLLoader(getClass().getResource(ScenePath.NET.getPath()));
+            Parent netRoot = null;
+
+            try {
+                netRoot = netLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            netController = netLoader.getController();
+
+            Scene gameScene = new Scene(netRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
+        waitForButtonPress();
         return getNetController().getNetSelected();
     }
 
@@ -515,6 +532,10 @@ public class GuiView extends Application implements View {
         }
     }
 
+    public EnterIPController getEnterIPController() {
+        return enterIPController;
+    }
+
     public NetController getNetController() {
         return netController;
     }
@@ -590,6 +611,10 @@ public class GuiView extends Application implements View {
 
     public void setSubmittedIp(String submittedIp) {
         this.submittedIp = submittedIp;
+    }
+
+    public String getSubmittedIp() {
+        return submittedIp;
     }
 
     public void setRead(String read) {

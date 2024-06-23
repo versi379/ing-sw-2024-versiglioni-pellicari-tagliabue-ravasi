@@ -18,9 +18,6 @@ public class NetController {
     private GuiView guiView;
 
     @FXML
-    private TextField serverIpTextField;
-
-    @FXML
     private Button socketButton;
 
     @FXML
@@ -33,6 +30,8 @@ public class NetController {
 
     private int netSelected;
 
+    private String serverIP;
+
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -41,13 +40,13 @@ public class NetController {
         netSelected = 3;
         socketButton.setOnAction(event -> {
             netSet = true;
-            setIP(serverIpTextField.getText());
+            setIP(guiView.getSubmittedIp());
             netSelected = 1;
             System.out.println("Scelta Socket, carico login view...");
         });
         rmiButton.setOnAction(event -> {
             netSet = true;
-            setIP(serverIpTextField.getText());
+            setIP(guiView.getSubmittedIp());
             netSelected = 2;
             System.out.println("Scelta RMI, carico login view...");
         });
@@ -60,7 +59,7 @@ public class NetController {
     }
 
     private void setIP(String serverIp) {
-        String submittedIp = serverIpTextField.getText();
+        String submittedIp = guiView.getSubmittedIp();
 
         guiView.setSubmittedIp(submittedIp);
         guiView.resumeExecution();
@@ -74,7 +73,7 @@ public class NetController {
         return netSelected;
     }
 
-     /*
+    /*
      public Button getSocketButton() {
         return socketButton;
     }
