@@ -53,7 +53,6 @@ public class PlayGameController {
 
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         printPlayerHand();
-
         playerAreaGrid = printPlayerArea(guiView.playerArea);
         pane.getChildren().add(playerAreaGrid);
 

@@ -355,7 +355,7 @@ public class GuiView extends Application implements View {
         playerAreaUpdated = true;
         System.err.println("> player area updated del giocatore: " + nickname);
 
-        //playGameController.updateBoard();
+        playGameController.updateBoard();
     }
 
     @Override
@@ -363,7 +363,7 @@ public class GuiView extends Application implements View {
         playerHand = getGameView().getHand();
         playerHandUpdated = true;
 
-        //playGameController.updateHand();
+        playGameController.updateHand();
     }
 
     @Override
