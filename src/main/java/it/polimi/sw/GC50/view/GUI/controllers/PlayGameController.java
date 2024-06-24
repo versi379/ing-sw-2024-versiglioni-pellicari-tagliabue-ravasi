@@ -51,6 +51,8 @@ public class PlayGameController {
 
     private GridPane handGrid;
 
+    private GridPane deckGrid;
+
     @FXML
     private ListView<String> chatListView;
 
@@ -181,10 +183,32 @@ public class PlayGameController {
     }
 
     public void updateDecks() {
+        pane.getChildren().remove(deckGrid);
+        deckGrid = printDecks(guiView.getDecks());
+        pane.getChildren().add(deckGrid);
+    }
+
+    private GridPane printDecks(PlayableCard[] deck) {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setLayoutX(400);
+        gridPane.setLayoutY(50);
+
+        for (int cardsCounter = 0; cardsCounter < deck.length; cardsCounter++) {
+
+            if (cardsCounter < 3) {
+                gridPane.add(printPlayableCard(guiView.getDecks()[cardsCounter], 0, 0),
+                        cardsCounter, 0);
+            } else {
+                gridPane.add(printPlayableCard(guiView.getDecks()[cardsCounter], 0, 0),
+                        cardsCounter - 3, 1);
+            }
+        }
+        return gridPane;
     }
 
     public void updateChat() {
-
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 

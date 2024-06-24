@@ -1,6 +1,7 @@
 package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.cards.PhysicalCard;
+import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 import it.polimi.sw.GC50.net.client.Client;
 import it.polimi.sw.GC50.view.Command;
@@ -709,6 +710,10 @@ public class GuiView extends Application implements View {
         return getGameView().getHand();
     }
 
+    public PlayableCard[] getDecks() {
+        return getGameView().getDecks();
+    }
+
     public String getCurrentPlayer() {
         return getGameView().getCurrentPlayer();
     }
@@ -725,7 +730,7 @@ public class GuiView extends Application implements View {
 
         String scoresText = "";
         for (String nickname : scores.keySet()) {
-            scoresText = (nickname + ": " + scores.get(nickname) + "\n");
+            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
         }
         return scoresText;
     }
