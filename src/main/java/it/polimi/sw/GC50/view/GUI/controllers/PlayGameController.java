@@ -47,6 +47,9 @@ public class PlayGameController {
     @FXML
     private Label turnLabel;
 
+    @FXML
+    private Label phaseLabel;
+
     private GridPane playerAreaGrid;
 
     private GridPane handGrid;
@@ -67,6 +70,9 @@ public class PlayGameController {
         guiView = (GuiView) AppClient.getView();
 
         printObjectives();
+        if (guiView.getGameView().getNickname().equals(guiView.getCurrentPlayer())) {
+            phaseLabel.setText("PLACING PHASE");
+        }
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         updateBoard();
         updateHand();
@@ -104,7 +110,18 @@ public class PlayGameController {
     }
 
     public void updateCurrentPlayer() {
+        if (!guiView.getGameView().getNickname().equals(guiView.getCurrentPlayer())) {
+            phaseLabel.setText("");
+        }
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
+    }
+
+    public void updatePlacingPhase() {
+        phaseLabel.setText("PLACING PHASE");
+    }
+
+    public void updateDrawingPhase() {
+        phaseLabel.setText("DRAWING PHASE");
     }
 
     public void updateBoard() {

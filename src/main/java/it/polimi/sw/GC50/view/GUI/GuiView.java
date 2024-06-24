@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -333,14 +334,22 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showPlacingPhase() {
-        System.out.println("> placing phase");
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updatePlacingPhase();
+            });
+        }
         showCardsArea(getGameView().getCurrentPlayer());
         showHand();
     }
 
     @Override
     public void showDrawingPhase() {
-        System.out.println("> drawing phase");
+        if (playGameController != null) {
+            Platform.runLater(() -> {
+                playGameController.updateDrawingPhase();
+            });
+        }
         showDecks();
     }
 
@@ -440,7 +449,14 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showError(String content) {
-        System.err.println("> Error: " + content);
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("An error occurred");
+            alert.setContentText(content);
+            alert.showAndWait();
+            System.err.println("> Error: " + content);
+        });
     }
 
     @Override
@@ -674,7 +690,7 @@ public class GuiView extends Application implements View {
     }
 
     // PARAMS //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private GameView getGameView() {
+    public GameView getGameView() {
         return client.getGameView();
     }
 
