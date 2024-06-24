@@ -5,6 +5,7 @@
 Codex Naturalis Board Game is the final project for the **Software Engineering** course of the **Computer Science Engineering** degree at Politecnico di Milano (A.Y. 2023/2024).
 
 ## Project Specifications
+
 This project consists of a Java version of the board game [Codex Naturalis](https://www.craniocreations.it/prodotto/codex-naturalis), by *Cranio Creations*.
 
 The final version includes:
@@ -28,7 +29,7 @@ The final version includes:
 | Multiple Games |✅|
 | Disconnection Resilience |⛔|
 
-[✅]() Implemented &nbsp;&nbsp;&nbsp;&nbsp; [⛔]() Not Implemented
+[✅]() Implemented &nbsp;&nbsp;&nbsp;&nbsp;[⛔]() Not Implemented
 
 ## Usage
 **Execute Game (Windows, MacOS, Linux)**
