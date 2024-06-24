@@ -61,7 +61,6 @@
 
 .list-view .list-cell {
     -fx-background-color: transparent; /* Transparent background */
-    -fx-text-fill: grey; /* Text color */
     -fx-font-family: "Futura"; /* Font family */
     -fx-font-size: 15px; /* Font size */
 }

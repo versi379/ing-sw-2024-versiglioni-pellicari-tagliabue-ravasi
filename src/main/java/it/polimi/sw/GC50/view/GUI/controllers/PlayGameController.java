@@ -71,6 +71,8 @@ public class PlayGameController {
         updateBoard();
         updateHand();
         scoresLabel.setText(guiView.getScoresText());
+
+        updateChat();
     }
 
     @FXML

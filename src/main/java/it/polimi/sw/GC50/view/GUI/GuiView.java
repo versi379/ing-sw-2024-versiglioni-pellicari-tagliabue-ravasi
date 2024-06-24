@@ -164,6 +164,7 @@ public class GuiView extends Application implements View {
             Scene gameScene = new Scene(menuRoot);
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
             getPrimaryStage().setScene(gameScene);
+            getPrimaryStage().setTitle("Codex Naturalis: Client " + getGameView().getNickname());
         });
 
         waitForButtonPress();
@@ -330,7 +331,6 @@ public class GuiView extends Application implements View {
         });
     }
 
-    // questo metodo viene chiamato per il solo giocatore che deve piazzare una carta (cioè è il suo turno)
     @Override
     public void showPlacingPhase() {
         System.out.println("> placing phase");
@@ -757,9 +757,9 @@ public class GuiView extends Application implements View {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
         }
 
-        String scoresText = "";
+        String scoresText = "SCORES: \n";
         for (String nickname : scores.keySet()) {
-            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
+            scoresText = scoresText += ("Player \"" + nickname + "\": " + scores.get(nickname) + " ");
         }
         return scoresText;
     }

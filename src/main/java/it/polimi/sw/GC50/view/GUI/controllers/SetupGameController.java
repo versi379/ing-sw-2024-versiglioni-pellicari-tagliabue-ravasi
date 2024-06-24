@@ -83,6 +83,8 @@ public class SetupGameController {
 
         Image commonObjective1 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(0) + ".jpg")));
         Image commonObjective2 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(1) + ".jpg")));
+
+        updateChat();
     }
 
     /**
@@ -91,8 +93,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleStarterFrontButton(ActionEvent event) {
-        starterBackButton.setOpacity(1);
-        starterFrontButton.setOpacity(0.3);
+        imageViewStarterBack.setOpacity(1);
+        imageViewStarterFront.setOpacity(0.3);
         guiView.setRead("-cs 1");
         guiView.setSubmittedSetupStarter(1);
     }
@@ -102,8 +104,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleStarterBackButton(ActionEvent event) {
-        starterFrontButton.setOpacity(1);
-        starterBackButton.setOpacity(0.3);
+        imageViewStarterFront.setOpacity(1);
+        imageViewStarterBack.setOpacity(0.3);
         guiView.setRead("-cs 2");
         guiView.setSubmittedSetupStarter(2);
     }
@@ -114,8 +116,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleChooseObjective1Button(ActionEvent event) {
-        chooseObjective2Button.setOpacity(1);
-        chooseObjective1Button.setOpacity(0.3);
+        imageViewObjective2.setOpacity(1);
+        imageViewObjective1.setOpacity(0.3);
         guiView.setRead("-co 1");
         guiView.setSubmittedSetupObjective(1);
     }
@@ -125,8 +127,8 @@ public class SetupGameController {
      */
     @FXML
     private void handleChooseObjective2Button(ActionEvent event) {
-        chooseObjective1Button.setOpacity(1);
-        chooseObjective2Button.setOpacity(0.3);
+        imageViewObjective1.setOpacity(1);
+        imageViewObjective2.setOpacity(0.3);
         guiView.setRead("-co 2");
         guiView.setSubmittedSetupObjective(2);
     }
