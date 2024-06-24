@@ -387,11 +387,6 @@ public class GuiView extends Application implements View {
                 playGameController.updateScores();
             });
         }
-        if (endGameController != null) {
-            Platform.runLater(() -> {
-                endGameController.printScores();
-            });
-        }
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -413,8 +408,6 @@ public class GuiView extends Application implements View {
             gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
             getPrimaryStage().setScene(gameScene);
         });
-
-        showScores();
     }
 
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -42,9 +42,7 @@ public class EndGameController {
         }
 
         resultsLabel.setText("GAME ENDED\n" + results);
-    }
 
-    public void printScores() {
         scoresLabel.setText(guiView.getScoresText());
     }
 
