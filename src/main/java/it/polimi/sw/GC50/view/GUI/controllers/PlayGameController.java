@@ -66,6 +66,7 @@ public class PlayGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
+        printStarterObjective();
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         updateBoard();
         updateHand();
@@ -169,7 +170,7 @@ public class PlayGameController {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
-        gridPane.setLayoutX(200);
+        gridPane.setLayoutX(400);
         gridPane.setLayoutY(600);
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
@@ -206,6 +207,31 @@ public class PlayGameController {
             }
         }
         return gridPane;
+    }
+
+    private void printStarterObjective() {
+        if (guiView.getSubmittedSetupStarter() == 1) {
+            printStarter(guiView.getStarterCardFrontCode(), 50, 300);
+        } else {
+            printStarter(guiView.getStarterCardBackCode(), 50, 300);
+        }
+        if (guiView.getSubmittedSetupObjective() == 1) {
+            printStarter(guiView.getSecretObjectiveCode(0), 50, 350);
+        } else {
+            printStarter(guiView.getSecretObjectiveCode(1), 50, 350);
+        }
+    }
+
+    private void printStarter(String cardCode, int layoutX, int layoutY) {
+        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
+        ImageView cardImageView = new ImageView(cardImage);
+        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
+        cardImageView.setViewport(viewport);
+        cardImageView.setFitWidth(90);
+        cardImageView.setFitHeight(50);
+        cardImageView.setLayoutX(layoutX);
+        cardImageView.setLayoutY(layoutY);
+        pane.getChildren().add(cardImageView);
     }
 
     public void updateChat() {

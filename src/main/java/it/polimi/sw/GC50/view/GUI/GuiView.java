@@ -33,6 +33,8 @@ public class GuiView extends Application implements View {
     private int submittedNumPlayers;
     private int submittedEndPoints;
     private String submittedJoinGameName;
+    private int submittedSetupStarter;
+    private int submittedSetupObjective;
     private List<String> chatMessages = new ArrayList<>();
 
     // GUI Controllers
@@ -688,6 +690,22 @@ public class GuiView extends Application implements View {
             secretObjectiveStringBuilder.append((i + 1) + ") " + getGameView().getSecreteObjectivesSelection().get(i).toStringTUI());
         }
         return secretObjectiveStringBuilder.toString();
+    }
+
+    public void setSubmittedSetupStarter(int submittedSetupStarter) {
+        this.submittedSetupStarter = submittedSetupStarter;
+    }
+
+    public int getSubmittedSetupStarter() {
+        return submittedSetupStarter;
+    }
+
+    public void setSubmittedSetupObjective(int submittedSetupObjective) {
+        this.submittedSetupObjective = submittedSetupObjective;
+    }
+
+    public int getSubmittedSetupObjective() {
+        return submittedSetupObjective;
     }
 
     public String getCommonObjectiveCode(int index) {

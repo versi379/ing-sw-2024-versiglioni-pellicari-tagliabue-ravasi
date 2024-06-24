@@ -85,6 +85,7 @@ public class SetupGameController {
         starterBackButton.setOpacity(1);
         starterFrontButton.setOpacity(0.3);
         guiView.setRead("-cs 1");
+        guiView.setSubmittedSetupStarter(1);
     }
     /**
      * method used to handle starter back button
@@ -95,6 +96,7 @@ public class SetupGameController {
         starterFrontButton.setOpacity(1);
         starterBackButton.setOpacity(0.3);
         guiView.setRead("-cs 2");
+        guiView.setSubmittedSetupStarter(2);
     }
 
     /**
@@ -106,6 +108,7 @@ public class SetupGameController {
         chooseObjective2Button.setOpacity(1);
         chooseObjective1Button.setOpacity(0.3);
         guiView.setRead("-co 1");
+        guiView.setSubmittedSetupObjective(1);
     }
     /**
      * method used to handle choose objective 1 button
@@ -116,6 +119,7 @@ public class SetupGameController {
         chooseObjective1Button.setOpacity(1);
         chooseObjective2Button.setOpacity(0.3);
         guiView.setRead("-co 2");
+        guiView.setSubmittedSetupObjective(2);
     }
 
     @FXML
