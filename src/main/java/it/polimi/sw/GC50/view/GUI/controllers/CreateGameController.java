@@ -59,7 +59,7 @@ public class CreateGameController {
         } else if (selectedRadioButton == fourPlayersButton) {
             submittedNumPlayers = 4;
         }
-        int submittedEndPoints =(int) finalScore.getValue();
+        int submittedEndPoints = (int) finalScore.getValue();
 
         guiView.setSubmittedGameName(submittedGameName);
         guiView.setSubmittedNumPlayers(submittedNumPlayers);

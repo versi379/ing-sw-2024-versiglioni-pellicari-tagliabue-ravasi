@@ -3,8 +3,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.EndGameController">
     <children>
+        <Label fx:id="resultsLabel" alignment="CENTER" layoutX="946.0" layoutY="94.0" prefHeight="125" prefWidth="500" text="Final Results" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="50">
+            <font>
+                <Font name="Futura Medium" size="15.0" />
+            </font></Label>
+        <Label fx:id="scoresLabel" alignment="CENTER" layoutX="946.0" layoutY="94.0" prefHeight="125" prefWidth="500" text="Final Scores" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="250">
+            <font>
+                <Font name="Futura Medium" size="15.0" />
+            </font></Label>
         <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="436.0" />
     </children>
 </AnchorPane>
