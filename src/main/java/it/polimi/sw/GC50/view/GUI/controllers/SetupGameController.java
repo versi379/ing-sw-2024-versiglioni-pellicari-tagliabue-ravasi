@@ -131,6 +131,15 @@ public class SetupGameController {
         guiView.setSubmittedSetupObjective(2);
     }
 
+    @FXML
+    private void handleSendMessageButton(ActionEvent event) {
+        String submittedSendMessage = chatPromptTextField.getText();
+
+        guiView.setRead("-c " + submittedSendMessage);
+
+        chatPromptTextField.setText("");
+    }
+
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }

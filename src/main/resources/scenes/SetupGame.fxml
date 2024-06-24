@@ -14,6 +14,9 @@
       <ImageView fx:id="imageViewObjective1" fitHeight="188.0" fitWidth="200.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="282.0" AnchorPane.rightAnchor="442.0" />
       <Button fx:id="chooseObjective2Button" layoutX="800.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleChooseObjective2Button" prefHeight="50.0" prefWidth="50.0" styleClass="orange-button" text="2" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="125.0" />
       <ImageView fx:id="imageViewObjective2" fitHeight="170.0" fitWidth="262.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.rightAnchor="188.0" />
+      <ListView fx:id="chatListView" layoutX="738.0" layoutY="174.0" prefHeight="306.0" prefWidth="252.0" style="-fx-background-color: #dfd7b0;" AnchorPane.bottomAnchor="325.0" AnchorPane.rightAnchor="45.0" />
+      <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" styleClass="orange-button" text="Send" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="45.0" />
       <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="135.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="751.0" />
    </children>
 </AnchorPane>
