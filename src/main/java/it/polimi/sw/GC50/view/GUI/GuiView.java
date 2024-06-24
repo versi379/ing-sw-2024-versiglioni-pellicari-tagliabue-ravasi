@@ -126,7 +126,7 @@ public class GuiView extends Application implements View {
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public String selectName() {
+    public String selectNickname() {
 
         Platform.runLater(() -> {
             FXMLLoader userLoader = new FXMLLoader(getClass().getResource(ScenePath.USER.getPath()));

@@ -12,7 +12,7 @@ public interface View {
     // SELECT ///////////////////////////////////////////////////////
     String selectServerIp();
     int selectConnectionType();
-    String selectName();
+    String selectNickname();
     int selectJoinOrCreate();
     String selectGameName();
     int selectNumberOfPlayers();

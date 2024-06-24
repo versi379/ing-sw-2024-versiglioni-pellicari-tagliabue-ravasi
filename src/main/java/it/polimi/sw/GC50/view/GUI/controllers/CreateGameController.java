@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.util.function.UnaryOperator;
-
 /**
  * Controller for Create game FXML scene.
  */
@@ -29,7 +27,7 @@ public class CreateGameController {
     private RadioButton fourPlayersButton;
 
     @FXML
-    private TextField finalScore;
+    private Slider finalScore;
 
     @FXML
     private Button createGameButton;
@@ -45,16 +43,6 @@ public class CreateGameController {
         twoPlayersButton.setToggleGroup(numPlayersGroup);
         threePlayersButton.setToggleGroup(numPlayersGroup);
         fourPlayersButton.setToggleGroup(numPlayersGroup);
-
-        // Create a TextFormatter that allows only integer input
-        UnaryOperator<TextFormatter.Change> integerFilter = change -> {
-            String newText = change.getControlNewText();
-            if (newText.matches("([0-9]+)?")) {
-                return change;
-            }
-            return null;
-        };
-        finalScore.setTextFormatter(new TextFormatter<>(integerFilter));
     }
 
     /**
@@ -71,7 +59,7 @@ public class CreateGameController {
         } else if (selectedRadioButton == fourPlayersButton) {
             submittedNumPlayers = 4;
         }
-        int submittedEndPoints = Math.min(Integer.parseInt(finalScore.getText()), 50);
+        int submittedEndPoints =(int) finalScore.getValue();
 
         guiView.setSubmittedGameName(submittedGameName);
         guiView.setSubmittedNumPlayers(submittedNumPlayers);

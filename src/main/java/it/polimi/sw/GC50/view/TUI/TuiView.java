@@ -49,7 +49,7 @@ public class TuiView implements View {
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public String selectName() {
+    public String selectNickname() {
         System.out.println(blueTxt + "Insert your player's nickname:" + baseTxt);
 
         return readString();
@@ -96,7 +96,7 @@ public class TuiView implements View {
     @Override
     public int selectEndScore() {
         System.out.println(blueTxt + "Insert the score needed for triggering the game's ending:" + baseTxt);
-        return readInt(0, 100);
+        return readInt(0, 41);
     }
 
     @Override
