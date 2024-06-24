@@ -32,6 +32,7 @@ public class GuiView extends Application implements View {
     private int submittedNumPlayers;
     private int submittedEndPoints;
     private String submittedJoinGameName;
+    private List<String> chatMessages = new ArrayList<>();
 
     // GUI Controllers
     private EnterIPController enterIPController;
@@ -365,12 +366,22 @@ public class GuiView extends Application implements View {
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showEnd() {
+
     }
 
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void showChatMessage(String sender, String content, String time) {
-        // update chat...
+
+        StringBuilder messageItem = new StringBuilder();
+        if (getGameView().getNickname().equals(sender)) {
+            messageItem.append("You: ");
+        } else {
+            messageItem.append(sender).append(": ");
+        }
+        messageItem.append(content).append(" (").append(time).append(")");
+        this.chatMessages.add(messageItem.toString());
+
 
         if (playGameController != null) {
             Platform.runLater(() -> {
@@ -628,6 +639,10 @@ public class GuiView extends Application implements View {
         return new ArrayList<>(freeGames);
     }
 
+    public List<String> getChatMessages() {
+        return chatMessages;
+    }
+
     // DA CAMBIARE PER MOSTRARE LE .JPG!!
     public String getSetupCommonObjectives() {
         StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
@@ -673,8 +688,9 @@ public class GuiView extends Application implements View {
 
         String scoresText = "";
         for (String nickname : scores.keySet()) {
-            scoresText = scoresText += (nickname + ": " + scores.get(nickname) + "\n");
+            scoresText = (nickname + ": " + scores.get(nickname) + "\n");
         }
         return scoresText;
     }
+
 }

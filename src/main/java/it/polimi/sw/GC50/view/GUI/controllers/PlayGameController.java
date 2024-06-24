@@ -7,6 +7,7 @@ import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.PlayerDataView;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -51,7 +52,10 @@ public class PlayGameController {
     private GridPane handGrid;
 
     @FXML
-    private ListView chatListView;
+    private ListView<String> chatListView;
+
+    @FXML
+    private TextField chatPromptTextField;
 
     @FXML
     public void initialize() {
@@ -120,6 +124,15 @@ public class PlayGameController {
         guiView.playerHandUpdated = false;
 
          */
+    }
+
+    @FXML
+    private void handleSendMessageButton(ActionEvent event) {
+        String submittedSendMessage = chatPromptTextField.getText();
+
+        guiView.setRead("-c " + submittedSendMessage);
+
+        chatPromptTextField.setText("");
     }
 
     public void updateCurrentPlayer() {
@@ -208,7 +221,7 @@ public class PlayGameController {
     }
 
     public void updateChat() {
-
+        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 
     private void activateButton(Button button) {
