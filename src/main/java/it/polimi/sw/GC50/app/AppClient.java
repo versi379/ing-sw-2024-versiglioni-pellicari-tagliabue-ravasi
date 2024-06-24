@@ -8,7 +8,6 @@ import it.polimi.sw.GC50.view.View;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public class AppClient {
     private static View view;
     public static final String serverSckPort = "2012";
