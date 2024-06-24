@@ -1,6 +1,6 @@
 # Codex Naturalis Board Game
 
-<img src="https://www.craniocreations.it/storage/media/products/19/41/Codex_scatola+ombra.png" width=134px height=134px align="right" />
+<img src="https://www.craniocreations.it/storage/media/products/19/41/Codex_scatola+ombra.png" width=170px height=170px align="right" />
 
 Codex Naturalis Board Game is the final project for the **Software Engineering** course of the **Computer Science Engineering** degree at Politecnico di Milano (A.Y. 2023/2024).
 
@@ -23,12 +23,10 @@ The final version includes:
 | RMI |✅|
 | CLI |✅|
 | GUI |✅|
-| Chat|✅|
+| Chat |✅|
 | Persistence |✅|
 | Multiple Games |✅|
 | Disconnection Resilience |⛔|
-
-[✅]() Implemented &nbsp;&nbsp;&nbsp;&nbsp;[⛔]() Not Implemented
 
 ## Usage
 **Execute Game (Windows, MacOS, Linux)**
