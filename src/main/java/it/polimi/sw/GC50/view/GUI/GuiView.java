@@ -686,23 +686,6 @@ public class GuiView extends Application implements View {
         return chatMessages;
     }
 
-    // DA CAMBIARE PER MOSTRARE LE .JPG!!
-    public String getSetupCommonObjectives() {
-        StringBuilder commonObjectiveStringBuilder = new StringBuilder("Common Objective Cards");
-        for (ObjectiveCard commonObjective : getGameView().getCommonObjectives()) {
-            commonObjectiveStringBuilder.append(commonObjective.toStringTUI()).append("\n");
-        }
-        return commonObjectiveStringBuilder.toString();
-    }
-
-    public String getSetupSecretObjectives() {
-        StringBuilder secretObjectiveStringBuilder = new StringBuilder("Secret Objective Cards");
-        for (int i = 0; i < getGameView().getSecreteObjectivesSelection().size(); i++) {
-            secretObjectiveStringBuilder.append((i + 1) + ") " + getGameView().getSecreteObjectivesSelection().get(i).toStringTUI());
-        }
-        return secretObjectiveStringBuilder.toString();
-    }
-
     public void setSubmittedSetupStarter(int submittedSetupStarter) {
         this.submittedSetupStarter = submittedSetupStarter;
     }

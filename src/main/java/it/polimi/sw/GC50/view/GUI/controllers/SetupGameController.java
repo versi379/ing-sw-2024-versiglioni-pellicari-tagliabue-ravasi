@@ -87,6 +87,7 @@ public class SetupGameController {
 
     /**
      * method used to handle starter front button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -96,8 +97,10 @@ public class SetupGameController {
         guiView.setRead("-cs 1");
         guiView.setSubmittedSetupStarter(1);
     }
+
     /**
      * method used to handle starter back button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -110,6 +113,7 @@ public class SetupGameController {
 
     /**
      * method used to handle choose objective 1 button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -119,8 +123,10 @@ public class SetupGameController {
         guiView.setRead("-co 1");
         guiView.setSubmittedSetupObjective(1);
     }
+
     /**
      * method used to handle choose objective 1 button
+     *
      * @param event an instance of action event
      */
     @FXML
