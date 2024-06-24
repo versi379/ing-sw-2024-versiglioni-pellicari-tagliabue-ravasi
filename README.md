@@ -1,6 +1,6 @@
 # Codex Naturalis Board Game
 
-<img src="https://www.craniocreations.it/storage/media/products/19/41/Codex_scatola+ombra.png" width=170px height=170px align="right" />
+<img src="https://www.craniocreations.it/storage/media/products/19/41/Codex_scatola+ombra.png" width=170px height=170px align="center" />
 
 Codex Naturalis Board Game is the final project for the **Software Engineering** course of the **Computer Science Engineering** degree at Politecnico di Milano (A.Y. 2023/2024).
 
