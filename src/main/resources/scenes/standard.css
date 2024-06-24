@@ -10,12 +10,10 @@
         #d86e3a,
         radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
-}
-.orange-button:text {
+
     -fx-font-family: "Futura";
     -fx-font-weight: bold;
-    -fx-font-size: 1.3em;
-    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+    -fx-font-size: 1em;
 }
 .orange-button:hover {
     -fx-background-color: 
@@ -29,7 +27,15 @@
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
-/*LABELS */
+/* SLIDERS */
+
+.slider {
+    -fx-tick-label-font-family: "Futura";
+    -fx-tick-label-font-weight: bold;
+    -fx-tick-label-font-size: 1em;
+}
+
+/* LABELS */
 
 .label {
     -fx-background-color: #93835b;

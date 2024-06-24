@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
    <children>
-      <TextField fx:id="gameName" alignment="CENTER" layoutX="204.0" layoutY="107.0" promptText="Game Name" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="175.0" />
-      <TextField fx:id="finalScore" alignment="CENTER" layoutX="220.0" layoutY="272.0" promptText="Final Score" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="325.0" />
-      <RadioButton fx:id="twoPlayersButton" layoutX="80.0" layoutY="200.0" mnemonicParsing="false" styleClass="orange-button" text="2" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="250.0" />
-      <RadioButton fx:id="threePlayersButton" layoutX="253.0" layoutY="200.0" mnemonicParsing="false" styleClass="orange-button" text="3" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="250.0" />
-      <RadioButton fx:id="fourPlayersButton" layoutX="391.0" layoutY="209.0" mnemonicParsing="false" styleClass="orange-button" text="4" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="250.0" />
-      <Button fx:id="createGameButton" layoutX="275.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleCreateGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Create Game" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0" />
+      <TextField fx:id="gameName" alignment="CENTER" layoutX="225.0" layoutY="175.0" promptText="Game Name" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="175.0" />
+      <RadioButton fx:id="twoPlayersButton" layoutX="225.0" layoutY="250.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="28.0" styleClass="orange-button" text="2" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="250.0" />
+      <RadioButton fx:id="threePlayersButton" layoutX="336.0" layoutY="250.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="28.0" styleClass="orange-button" text="3" AnchorPane.leftAnchor="336.0" AnchorPane.rightAnchor="336.0" AnchorPane.topAnchor="250.0" />
+      <RadioButton fx:id="fourPlayersButton" layoutX="447.0" layoutY="250.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="28.0" styleClass="orange-button" text="4" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="250.0" />
+      <Slider fx:id="finalScore" blockIncrement="5.0" layoutX="189.0" layoutY="324.0" majorTickUnit="5.0" max="40.0" minorTickCount="0" prefHeight="50.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="20.0" />
+      <Button fx:id="createGameButton" layoutX="275.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleCreateGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Create Game" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0" />
    </children>
 </AnchorPane>

@@ -65,10 +65,12 @@ public class Lobby {
      * the return value is the GameController created by the client
      * if is it null the GameController is not created
      * this method is called when a client wants to create a GameController
-     * @
      */
     public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, int endScore) {
-        if (isPlayerPresent(client) && !isGamePresent(gameId)) {
+        if (isPlayerPresent(client)) {
+            if (gameId == null || gameId.isEmpty() || isGamePresent(gameId)) {
+                return null;
+            }
             try {
                 GameController newGameController = new GameController(client, gameId, numOfPlayer, endScore, clients.get(client));
                 freeGameControllers.add(newGameController);
@@ -86,7 +88,6 @@ public class Lobby {
      * @return GameController
      * the return value is the GameController
      * this method is called when a client wants to join a GameController
-     * @
      */
     public synchronized GameController joinGame(ClientInterface client, String gameId) {
         if (isPlayerPresent(client)) {

@@ -108,7 +108,7 @@ public class Client {
      */
     private void lobby() throws GameException {
 
-        while (!setPlayer(view.selectName())) {
+        while (!setPlayer(view.selectNickname())) {
             view.showError("Player nickname not available");
         }
 
