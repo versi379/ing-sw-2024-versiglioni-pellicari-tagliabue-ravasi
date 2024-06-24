@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
    <children>
       <TextField fx:id="gameName" alignment="CENTER" layoutX="204.0" layoutY="107.0" promptText="Game Name" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="175.0" />
       <TextField fx:id="finalScore" alignment="CENTER" layoutX="220.0" layoutY="272.0" promptText="Final Score" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="325.0" />

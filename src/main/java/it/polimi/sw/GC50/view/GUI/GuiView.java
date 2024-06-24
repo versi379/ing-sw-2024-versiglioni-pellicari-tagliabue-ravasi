@@ -414,6 +414,17 @@ public class GuiView extends Application implements View {
         messageItem.append(content).append(" (").append(time).append(")");
         this.chatMessages.add(messageItem.toString());
 
+        if (waitGameController != null) {
+            Platform.runLater(() -> {
+                waitGameController.updateChat();
+            });
+        }
+
+        if (setupGameController != null) {
+            Platform.runLater(() -> {
+                setupGameController.updateChat();
+            });
+        }
 
         if (playGameController != null) {
             Platform.runLater(() -> {

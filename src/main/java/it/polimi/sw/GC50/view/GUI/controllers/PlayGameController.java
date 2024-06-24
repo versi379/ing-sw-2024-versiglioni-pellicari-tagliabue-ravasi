@@ -66,7 +66,7 @@ public class PlayGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
-        printStarterObjective();
+        printObjectives();
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         updateBoard();
         updateHand();
@@ -171,7 +171,7 @@ public class PlayGameController {
         gridPane.setHgap(20);
         gridPane.setVgap(20);
         gridPane.setLayoutX(400);
-        gridPane.setLayoutY(600);
+        gridPane.setLayoutY(650);
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
 
@@ -209,17 +209,14 @@ public class PlayGameController {
         return gridPane;
     }
 
-    private void printStarterObjective() {
-        if (guiView.getSubmittedSetupStarter() == 1) {
-            printStarter(guiView.getStarterCardFrontCode(), 50, 300);
-        } else {
-            printStarter(guiView.getStarterCardBackCode(), 50, 300);
-        }
+    private void printObjectives() {
         if (guiView.getSubmittedSetupObjective() == 1) {
-            printStarter(guiView.getSecretObjectiveCode(0), 50, 350);
+            printStarter(guiView.getSecretObjectiveCode(0), 50, 300);
         } else {
-            printStarter(guiView.getSecretObjectiveCode(1), 50, 350);
+            printStarter(guiView.getSecretObjectiveCode(1), 50, 300);
         }
+        printStarter(guiView.getCommonObjectiveCode(0), 50, 360);
+        printStarter(guiView.getCommonObjectiveCode(1), 50, 420);
     }
 
     private void printStarter(String cardCode, int layoutX, int layoutY) {

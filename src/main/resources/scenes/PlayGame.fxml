@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
+<AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
    <children>
       <TextField fx:id="placeCardTextField" layoutX="805.0" layoutY="445.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="65.0" />
       <Button fx:id="placeCardButton" layoutX="795.0" layoutY="597.0" mnemonicParsing="false" onAction="#handlePlaceCardButton" styleClass="orange-button" text="Place Card" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="125.0" />

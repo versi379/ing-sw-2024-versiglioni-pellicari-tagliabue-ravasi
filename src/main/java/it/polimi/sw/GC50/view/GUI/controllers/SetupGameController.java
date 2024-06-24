@@ -2,11 +2,14 @@ package it.polimi.sw.GC50.view.GUI.controllers;
 
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -49,6 +52,12 @@ public class SetupGameController {
     private Button leaveGameButton;
 
     private GridPane commonObjectivesGrid;
+
+    @FXML
+    private ListView<String> chatListView;
+
+    @FXML
+    private TextField chatPromptTextField;
 
     /**
      * method used to initialize setup game controller
@@ -120,6 +129,10 @@ public class SetupGameController {
         chooseObjective2Button.setOpacity(0.3);
         guiView.setRead("-co 2");
         guiView.setSubmittedSetupObjective(2);
+    }
+
+    public void updateChat() {
+        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 
     @FXML

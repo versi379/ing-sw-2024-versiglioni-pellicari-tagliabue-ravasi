@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #dfd7b0 #dfd7b0 #dfd7b0 #dfd7b0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.SetupGameController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.SetupGameController">
    <children>
       <Button fx:id="starterFrontButton" layoutX="201.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleStarterFrontButton" prefHeight="30.0" prefWidth="100.0" styleClass="orange-button" text="Front" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="200.0" />
       <ImageView fx:id="imageViewStarterFront" fitHeight="200.0" fitWidth="300.0" layoutX="96.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" />
@@ -14,7 +14,6 @@
       <ImageView fx:id="imageViewObjective1" fitHeight="188.0" fitWidth="200.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="282.0" AnchorPane.rightAnchor="442.0" />
       <Button fx:id="chooseObjective2Button" layoutX="800.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleChooseObjective2Button" prefHeight="50.0" prefWidth="50.0" styleClass="orange-button" text="2" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="125.0" />
       <ImageView fx:id="imageViewObjective2" fitHeight="170.0" fitWidth="262.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.rightAnchor="188.0" />
-      <ImageView fx:id="imageViewCommonObjectives" fitHeight="315.0" fitWidth="174.0" layoutX="550.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="168.0" AnchorPane.rightAnchor="705.0" />
       <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="135.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="751.0" />
    </children>
 </AnchorPane>
