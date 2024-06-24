@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.model.lobby;
 
-import it.polimi.sw.GC50.model.game.PlayerStatus;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

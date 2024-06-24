@@ -14,9 +14,9 @@ public class PhysicalCard implements Serializable {
     /**
      * constructs a new Physical Card instance without identifier code
      *
-     * @param cardType   specify type of card
-     * @param front      specify front of card
-     * @param back       specify back of card
+     * @param cardType specify type of card
+     * @param front    specify front of card
+     * @param back     specify back of card
      */
     public PhysicalCard(CardType cardType, PlayableCard front, PlayableCard back) {
         this.cardType = cardType;
@@ -26,6 +26,7 @@ public class PhysicalCard implements Serializable {
 
     /**
      * Returns the type of the card
+     *
      * @return cardType
      */
     public CardType getCardType() {
@@ -34,6 +35,7 @@ public class PhysicalCard implements Serializable {
 
     /**
      * Returns front face of the card
+     *
      * @return front face
      */
     public PlayableCard getFront() {
@@ -42,6 +44,7 @@ public class PhysicalCard implements Serializable {
 
     /**
      * Returns back face of the card
+     *
      * @return back face
      */
     public PlayableCard getBack() {

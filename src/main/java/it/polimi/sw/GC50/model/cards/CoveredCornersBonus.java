@@ -10,7 +10,7 @@ import java.util.Objects;
  * Represents the bonus utilized for cards whose score depends
  * on the amount of covered corners at the moment of placement
  */
-public class CoveredCornersBonus implements Bonus , Serializable {
+public class CoveredCornersBonus implements Bonus, Serializable {
 
     /**
      * Constructs a new CoveredCornersBonus instance
@@ -21,10 +21,10 @@ public class CoveredCornersBonus implements Bonus , Serializable {
     /**
      * Computes the bonus multiplier by which the card score is calculated when placed
      *
-     * @param card          PlayableCard associated with this bonus
-     * @param playerData    PlayerData in which card will be placed at coordinates (x, y)
-     * @param x             X coordinate of playerData
-     * @param y             Y coordinate of playerData
+     * @param card       PlayableCard associated with this bonus
+     * @param playerData PlayerData in which card will be placed at coordinates (x, y)
+     * @param x          X coordinate of playerData
+     * @param y          Y coordinate of playerData
      * @return the amount of corners covered by the card when placing it
      */
     @Override

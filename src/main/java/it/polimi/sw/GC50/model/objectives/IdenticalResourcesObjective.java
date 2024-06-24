@@ -6,14 +6,15 @@ import it.polimi.sw.GC50.model.game.PlayerData;
 import java.io.Serializable;
 
 
-public class IdenticalResourcesObjective implements Objective , Serializable {
+public class IdenticalResourcesObjective implements Objective, Serializable {
     private final Resource targetResource;
     private final int count;
 
     /**
      * Constructs an instance of IdenticalResourcesObjective
-     * @param targetResource    resource that we need
-     * @param count             number of resource requested
+     *
+     * @param targetResource resource that we need
+     * @param count          number of resource requested
      */
     public IdenticalResourcesObjective(Resource targetResource, int count) {
         this.targetResource = targetResource;
@@ -35,7 +36,7 @@ public class IdenticalResourcesObjective implements Objective , Serializable {
     }
 
     /**
-     * @param playerData    player data selected
+     * @param playerData player data selected
      * @return number of target resource required / number of resource that we have
      */
     @Override

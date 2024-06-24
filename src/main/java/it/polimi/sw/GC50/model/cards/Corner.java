@@ -18,8 +18,9 @@ public class Corner implements Serializable {
 
     /**
      * constructs a new Corner instance
-     * @param status    identify the status of the corner
-     * @param resource  identify resource of the corner
+     *
+     * @param status   identify the status of the corner
+     * @param resource identify resource of the corner
      */
     public Corner(CornerStatus status, Resource resource) {
         this.status = status;
@@ -28,6 +29,7 @@ public class Corner implements Serializable {
 
     /**
      * Verify if the corner is visible or empty
+     *
      * @return a boolean that identify the status
      */
     public boolean isVisible() {
@@ -37,6 +39,7 @@ public class Corner implements Serializable {
 
     /**
      * Verify if the corner is full
+     *
      * @return a boolean
      */
     public boolean isFull() {
@@ -45,6 +48,7 @@ public class Corner implements Serializable {
 
     /**
      * Returns corner's resource if the corner is full
+     *
      * @return resource or null
      */
     public Resource getResource() {
@@ -53,7 +57,8 @@ public class Corner implements Serializable {
 
     /**
      * Returns corner status
-     * @return  status
+     *
+     * @return status
      */
     public CornerStatus getStatus() {
         return status;

@@ -14,7 +14,7 @@ import java.util.Optional;
  * whose condition consists of the number of cards of certain colors
  * arranged in a specific L-like pattern
  */
-public class CaveObjective implements Objective , Serializable {
+public class CaveObjective implements Objective, Serializable {
     /**
      * Represents the color of the two vertical cards
      */
@@ -32,9 +32,10 @@ public class CaveObjective implements Objective , Serializable {
 
     /**
      * Constructs an instance of CaveObjective
-     * @param targetColor1  Represents the color of the two vertical cards
-     * @param targetColor2  Represents the color of the remaining card
-     * @param orientation   Represents the orientation of the pattern required
+     *
+     * @param targetColor1 Represents the color of the two vertical cards
+     * @param targetColor2 Represents the color of the remaining card
+     * @param orientation  Represents the orientation of the pattern required
      */
     public CaveObjective(Color targetColor1, Color targetColor2, CaveOrientation orientation) {
         this.targetColor1 = targetColor1;
@@ -67,7 +68,8 @@ public class CaveObjective implements Objective , Serializable {
      * To check L-shaped patterns, cards can't be repeated
      * when a pattern is found (going in the best order) set to NULL cards that compose it and continue
      * this method works on a copy on Card Matrix not on the original one
-     * @param playerData        player selected
+     *
+     * @param playerData player selected
      * @return result
      */
     @Override
@@ -106,8 +108,9 @@ public class CaveObjective implements Objective , Serializable {
      * if CaveOrientation is UPRIGHTJ ->  Flips matrix over its primary diagonal
      * if CaveOrientation is INVERTEDL ->  Flips matrix over its secondary diagonal
      * if CaveOrientation is INVERTEDJ ->  Flips matrix over its primary diagonal then over its secondary diagonal
-     * @param matrix    card matrix
-     * @return          flipped matrix
+     *
+     * @param matrix card matrix
+     * @return flipped matrix
      */
     public CardsMatrix adjustOrientation(CardsMatrix matrix) {
         switch (orientation) {

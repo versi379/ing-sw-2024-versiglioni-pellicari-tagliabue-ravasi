@@ -14,14 +14,15 @@ import java.util.Optional;
  * whose condition consists of the number of cards of a certain color
  * arranged in a specific diagonal pattern
  */
-public class MonolithObjective implements Objective , Serializable {
+public class MonolithObjective implements Objective, Serializable {
     private final Color targetColor;
     private final MonolithOrientation orientation;
 
     /**
      * Constructs an instance of MonolithObjective
-     * @param targetColor       color selected
-     * @param orientation       orientation selected
+     *
+     * @param targetColor color selected
+     * @param orientation orientation selected
      */
     public MonolithObjective(Color targetColor, MonolithOrientation orientation) {
         this.targetColor = targetColor;
@@ -46,8 +47,9 @@ public class MonolithObjective implements Objective , Serializable {
      * To check diagonal patterns, cards can't be repeated
      * when a pattern is found (going in the best order) set to NULL cards that compose it and continue
      * this method works on a copy on Card Matrix not on the original one
-     * @param playerData    player's information
-     * @return  result
+     *
+     * @param playerData player's information
+     * @return result
      */
     @Override
     public int checkCondition(PlayerData playerData) {
@@ -80,8 +82,9 @@ public class MonolithObjective implements Objective , Serializable {
 
     /**
      * rotate the matrix 45°
+     *
      * @param matrix card matrix
-     * @return       flipped matrix
+     * @return flipped matrix
      */
     private CardsMatrix adjustOrientation(CardsMatrix matrix) {
         if (orientation == MonolithOrientation.LEFTDIAGONAL) {

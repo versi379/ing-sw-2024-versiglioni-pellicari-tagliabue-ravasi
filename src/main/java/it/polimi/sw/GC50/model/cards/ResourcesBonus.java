@@ -18,7 +18,7 @@ public class ResourcesBonus implements Bonus, Serializable {
     /**
      * Constructs a new ResourceBonus instance given the target resource
      *
-     * @param targetResource        target resource of this bonus computation
+     * @param targetResource target resource of this bonus computation
      */
     public ResourcesBonus(Resource targetResource) {
         this.targetResource = targetResource;
@@ -36,10 +36,10 @@ public class ResourcesBonus implements Bonus, Serializable {
     /**
      * Computes the bonus multiplier by which the card score is calculated when placed
      *
-     * @param card          PlayableCard associated with this bonus
-     * @param playerData    PlayerData in which card will be placed at coordinates (x, y)
-     * @param x             X coordinate of playerData
-     * @param y             Y coordinate of playerData
+     * @param card       PlayableCard associated with this bonus
+     * @param playerData PlayerData in which card will be placed at coordinates (x, y)
+     * @param x          X coordinate of playerData
+     * @param y          Y coordinate of playerData
      * @return the amount of target resource present in playerData after placing the card
      */
     @Override

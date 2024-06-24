@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public enum Resource implements Serializable {
     PLANT, ANIMAL, FUNGI, INSECT, QUILL, SCROLL, INK;
+
     /**
      * Returns the String representing this color's code in the TUI graphics
      *
