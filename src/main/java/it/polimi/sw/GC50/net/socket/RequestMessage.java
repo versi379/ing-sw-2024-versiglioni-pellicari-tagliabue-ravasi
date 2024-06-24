@@ -8,8 +8,9 @@ public class RequestMessage implements Serializable {
 
     /**
      * Constructs an instance of RequestMessage
-     * @param request    of the message
-     * @param content    of the message
+     *
+     * @param request of the message
+     * @param content of the message
      */
     public RequestMessage(Request request, Object content) {
         this.request = request;

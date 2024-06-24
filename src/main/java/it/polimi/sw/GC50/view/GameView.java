@@ -29,6 +29,7 @@ public class GameView {
 
     /**
      * Construct an instance of game view
+     *
      * @param nickname player's nickname
      */
     public GameView(String nickname) {
@@ -87,7 +88,9 @@ public class GameView {
         return inGame;
     }
 
-    /** Sets
+    /**
+     * Sets
+     *
      * @param playersLeft number of player that have left the game
      */
     public void setPlayersLeft(int playersLeft) {
@@ -109,7 +112,6 @@ public class GameView {
     }
 
     /**
-     *
      * @param gameStatus sets game status
      */
     public void setGameStatus(GameStatus gameStatus) {
@@ -124,7 +126,7 @@ public class GameView {
     }
 
     /**
-     * @param playingPhase  sets playing phase
+     * @param playingPhase sets playing phase
      */
     public void setPlayingPhase(PlayingPhase playingPhase) {
         this.playingPhase = playingPhase;
@@ -145,7 +147,6 @@ public class GameView {
     }
 
     /**
-     *
      * @return turn ended
      */
     public boolean isTurnEnded() {
@@ -154,6 +155,7 @@ public class GameView {
 
     /**
      * sets a player as current player
+     *
      * @param currentPlayer set
      */
     public void setCurrentPlayer(String currentPlayer) {
@@ -169,6 +171,7 @@ public class GameView {
 
     /**
      * Given a objective set as commonObjectives
+     *
      * @param commonObjectives selected
      */
     public void setCommonObjectives(List<ObjectiveCard> commonObjectives) {
@@ -176,7 +179,6 @@ public class GameView {
     }
 
     /**
-     *
      * @return a list of commonObjectives
      */
     public List<ObjectiveCard> getCommonObjectives() {
@@ -199,6 +201,7 @@ public class GameView {
 
     /**
      * sets a winner list
+     *
      * @param winnerList set
      */
     public void setWinnerList(List<String> winnerList) {
@@ -206,7 +209,6 @@ public class GameView {
     }
 
     /**
-     *
      * @return a winner list
      */
     public List<String> getWinnerList() {
@@ -215,6 +217,7 @@ public class GameView {
 
     /**
      * given a player set his/her nickname
+     *
      * @param nickname of the player
      */
     public void setNickname(String nickname) {
@@ -230,6 +233,7 @@ public class GameView {
 
     /**
      * given a hand selected as player hand
+     *
      * @param hand given
      */
     public void setHand(List<PhysicalCard> hand) {
@@ -237,7 +241,6 @@ public class GameView {
     }
 
     /**
-     *
      * @return a list of physical card that represents the hand
      */
     public List<PhysicalCard> getHand() {
@@ -245,8 +248,7 @@ public class GameView {
     }
 
     /**
-     *
-     * @param secretObjective  Given a objective set a secret objective
+     * @param secretObjective Given a objective set a secret objective
      */
     public void setSecretObjective(ObjectiveCard secretObjective) {
         this.secretObjective = secretObjective;
@@ -276,6 +278,7 @@ public class GameView {
 
     /**
      * Given a starter card select them as starter card
+     *
      * @param starterCard selected
      */
     public void setStarterCard(PhysicalCard starterCard) {
@@ -291,11 +294,12 @@ public class GameView {
 
     /**
      * Set player area
-     * @param nickname  player's nickname
-     * @param cardsMatrix   a copy of card matrix
-     * @param totalScore    player's total score
-     * @param objectivesScore   player's objective score
-     * @param ready             player's status
+     *
+     * @param nickname        player's nickname
+     * @param cardsMatrix     a copy of card matrix
+     * @param totalScore      player's total score
+     * @param objectivesScore player's objective score
+     * @param ready           player's status
      */
     public void setPlayerArea(String nickname, CardsMatrix cardsMatrix, int totalScore, int objectivesScore, boolean ready) {
         playerAreas.put(nickname, new PlayerDataView(cardsMatrix, totalScore, objectivesScore, ready));
@@ -303,7 +307,8 @@ public class GameView {
 
     /**
      * Given a player's nickname remove he/she from player area
-     * @param nickname  player's nickname
+     *
+     * @param nickname player's nickname
      */
     public void removePlayerArea(String nickname) {
         playerAreas.remove(nickname);
@@ -311,7 +316,7 @@ public class GameView {
 
     /**
      * @param nickname player's nickname
-     * @return  player's area
+     * @return player's area
      */
     public PlayerDataView getPlayerArea(String nickname) {
         return playerAreas.get(nickname);

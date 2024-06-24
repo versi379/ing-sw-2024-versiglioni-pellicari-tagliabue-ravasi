@@ -11,8 +11,9 @@ public class NotifyMessage implements Serializable {
 
     /**
      * Constructs an instance of NotifyMessage
-     * @param notify    notify of the message
-     * @param content   content of the message
+     *
+     * @param notify  notify of the message
+     * @param content content of the message
      */
     public NotifyMessage(Notify notify, Message content) {
         this.notify = notify;

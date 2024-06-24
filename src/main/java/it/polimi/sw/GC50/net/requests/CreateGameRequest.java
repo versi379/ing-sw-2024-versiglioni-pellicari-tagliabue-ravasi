@@ -8,10 +8,11 @@ public class CreateGameRequest implements Serializable {
     private final int endScore;
 
     /**
-     *Constructs an instance of CreateGameRequest
-     * @param gameId        Id of the game
-     * @param numPlayers    number of players in the game
-     * @param endScore      Final score
+     * Constructs an instance of CreateGameRequest
+     *
+     * @param gameId     Id of the game
+     * @param numPlayers number of players in the game
+     * @param endScore   Final score
      */
     public CreateGameRequest(String gameId, int numPlayers, int endScore) {
         this.gameId = gameId;
@@ -27,7 +28,6 @@ public class CreateGameRequest implements Serializable {
     }
 
     /**
-     *
      * @return number of players
      */
     public int getNumPlayers() {
@@ -35,7 +35,6 @@ public class CreateGameRequest implements Serializable {
     }
 
     /**
-     *
      * @return final score
      */
     public int getEndScore() {

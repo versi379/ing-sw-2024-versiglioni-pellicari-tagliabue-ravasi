@@ -27,10 +27,8 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
 
     /**
      * method that starts RMI server
-     *
-     * @throws RemoteException if there is an error in binding to RMI registry
      */
-    public void run() throws RemoteException {
+    public void run() {
         try {
             LocateRegistry.createRegistry(this.port).rebind("server", this);
             System.out.println("Server RMI ready");
@@ -104,8 +102,8 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     }
 
     /**
-     * @return  a map of free games
-     * @throws RemoteException  if there is an error in binding to RMI registry
+     * @return a map of free games
+     * @throws RemoteException if there is an error in binding to RMI registry
      */
     @Override
     public Map<String, List<String>> getFreeGames() throws RemoteException {

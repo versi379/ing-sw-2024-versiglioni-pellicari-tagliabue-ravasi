@@ -2,8 +2,6 @@ package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 
-import java.io.Serializable;
-
 public class PlayerDataView {
     private final CardsMatrix cardsMatrix;
     private final int totalScore;
@@ -12,10 +10,11 @@ public class PlayerDataView {
 
     /**
      * constructs an instance of player data view
-     * @param cardsMatrix   matrix of card
-     * @param totalScore    total score of a player
-     * @param objectivesScore   total objectives score
-     * @param ready             player status
+     *
+     * @param cardsMatrix     matrix of card
+     * @param totalScore      total score of a player
+     * @param objectivesScore total objectives score
+     * @param ready           player status
      */
     public PlayerDataView(CardsMatrix cardsMatrix, int totalScore, int objectivesScore, boolean ready) {
         this.cardsMatrix = cardsMatrix;
@@ -25,7 +24,6 @@ public class PlayerDataView {
     }
 
     /**
-     *
      * @return card matrix
      */
     public CardsMatrix getCardsMatrix() {
@@ -33,7 +31,6 @@ public class PlayerDataView {
     }
 
     /**
-     *
      * @return total score
      */
     public int getTotalScore() {
@@ -41,7 +38,6 @@ public class PlayerDataView {
     }
 
     /**
-     *
      * @return objective score
      */
     public int getObjectivesScore() {
@@ -49,7 +45,6 @@ public class PlayerDataView {
     }
 
     /**
-     *
      * @return true if the player is ready
      */
     public boolean isReady() {

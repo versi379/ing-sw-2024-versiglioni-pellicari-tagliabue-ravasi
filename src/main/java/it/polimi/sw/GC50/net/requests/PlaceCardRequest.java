@@ -1,4 +1,5 @@
 package it.polimi.sw.GC50.net.requests;
+
 import java.io.Serializable;
 
 public class PlaceCardRequest implements Serializable {
@@ -9,10 +10,11 @@ public class PlaceCardRequest implements Serializable {
 
     /**
      * Constructs an instance of PlaceCardRequest
-     * @param index         index of the card
-     * @param face          face of the card(front or back)
-     * @param x             X coordinates in the matrix
-     * @param y             Y coordinates in the matrix
+     *
+     * @param index index of the card
+     * @param face  face of the card(front or back)
+     * @param x     X coordinates in the matrix
+     * @param y     Y coordinates in the matrix
      */
     public PlaceCardRequest(int index, int face, int x, int y) {
         this.index = index;
@@ -36,14 +38,13 @@ public class PlaceCardRequest implements Serializable {
     }
 
     /**
-     *
      * @return X coordinates in the matrix
      */
     public int getX() {
         return x;
     }
+
     /**
-     *
      * @return Y coordinates in the matrix
      */
     public int getY() {

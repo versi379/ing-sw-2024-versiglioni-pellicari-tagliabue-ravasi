@@ -2,11 +2,10 @@ package it.polimi.sw.GC50.view;
 
 import it.polimi.sw.GC50.net.client.Client;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public interface View extends Serializable {
+public interface View {
     void setClient(Client client);
     void listen();
 

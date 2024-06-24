@@ -11,7 +11,6 @@ import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 import it.polimi.sw.GC50.net.socket.ClientSCK;
 import it.polimi.sw.GC50.view.Command;
-import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;
 
@@ -508,7 +507,7 @@ public class Client {
      * @param message of switch
      */
     private void switchNotify(Notify notify, Message message) {
-//       System.err.println("> Update from server: " + notify);
+//       System.out.println("> Update from server: " + notify);
         switch (notify) {
             case NOTIFY_PLAYER_JOINED_GAME -> {
                 PlayerJoinedMex playerJoinedMex = (PlayerJoinedMex) message;

@@ -11,8 +11,9 @@ public class ErrorMex implements Message {
 
     /**
      * Constructs an instance of ErrorMex
-     * @param player    who gets an error messages
-     * @param content   of the message
+     *
+     * @param player  who gets an error messages
+     * @param content of the message
      */
     public ErrorMex(Player player, String content) {
         nickname = player.getNickname();

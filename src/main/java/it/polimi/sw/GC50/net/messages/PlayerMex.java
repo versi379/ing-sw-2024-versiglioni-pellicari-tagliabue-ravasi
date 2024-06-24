@@ -7,6 +7,7 @@ public class PlayerMex implements Message {
 
     /**
      * Constructs an instance of PlayerMex
+     *
      * @param player player's nickname
      */
     public PlayerMex(Player player) {
