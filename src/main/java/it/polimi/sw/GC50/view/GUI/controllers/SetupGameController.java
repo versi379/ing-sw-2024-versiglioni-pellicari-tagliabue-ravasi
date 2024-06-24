@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 /**
  * Controller for Game FXML scene.
@@ -19,12 +20,6 @@ public class SetupGameController {
 
     @FXML
     private AnchorPane pane;
-
-    @FXML
-    private Label commonObjectivesLabel;
-
-    @FXML
-    private Label secretObjectivesLabel;
 
     @FXML
     private Button starterFrontButton;
@@ -42,7 +37,18 @@ public class SetupGameController {
     private Button chooseObjective1Button;
 
     @FXML
+    private ImageView imageViewObjective1;
+
+    @FXML
     private Button chooseObjective2Button;
+
+    @FXML
+    private ImageView imageViewObjective2;
+
+    @FXML
+    private Button leaveGameButton;
+
+    private GridPane commonObjectivesGrid;
 
     /**
      * method used to initialize setup game controller
@@ -51,8 +57,6 @@ public class SetupGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
-        commonObjectivesLabel.setText(guiView.getSetupCommonObjectives());
-        secretObjectivesLabel.setText(guiView.getSetupSecretObjectives());
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getStarterCardFrontCode() + ".jpg")));
         imageViewStarterFront.setImage(starterCardFront);
@@ -60,10 +64,17 @@ public class SetupGameController {
         Image starterCardBack = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getStarterCardBackCode() + ".jpg")));
         imageViewStarterBack.setImage(starterCardBack);
         imageViewStarterBack.setViewport(viewport);
-    }
 
-    // add  COMMAND listeners
-    // associate GUI action to command code VVV
+        Image secretObjective1 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getSecretObjectiveCode(0) + ".jpg")));
+        imageViewObjective1.setImage(secretObjective1);
+        imageViewObjective1.setViewport(viewport);
+        Image secretObjective2 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getSecretObjectiveCode(1) + ".jpg")));
+        imageViewObjective2.setImage(secretObjective2);
+        imageViewObjective2.setViewport(viewport);
+
+        Image commonObjective1 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(0) + ".jpg")));
+        Image commonObjective2 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(1) + ".jpg")));
+    }
 
     /**
      * method used to handle starter front button
@@ -105,5 +116,10 @@ public class SetupGameController {
         chooseObjective1Button.setOpacity(1);
         chooseObjective2Button.setOpacity(0.3);
         guiView.setRead("-co 2");
+    }
+
+    @FXML
+    private void handleLeaveGameButton(ActionEvent event) {
+        guiView.setRead("-l");
     }
 }

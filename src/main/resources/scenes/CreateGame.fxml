@@ -14,6 +14,5 @@
       <RadioButton fx:id="threePlayersButton" layoutX="253.0" layoutY="200.0" mnemonicParsing="false" styleClass="orange-button" text="3" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="250.0" />
       <RadioButton fx:id="fourPlayersButton" layoutX="391.0" layoutY="209.0" mnemonicParsing="false" styleClass="orange-button" text="4" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="250.0" />
       <Button fx:id="createGameButton" layoutX="275.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleCreateGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Create Game" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0" />
-      <ProgressIndicator fx:id="waitingPlayersBuffer" layoutX="634.0" layoutY="424.0" visible="false" />
    </children>
 </AnchorPane>

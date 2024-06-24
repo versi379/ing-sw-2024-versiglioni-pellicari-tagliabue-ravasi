@@ -41,9 +41,10 @@ public class GuiView extends Application implements View {
     private CreateGameController createGameController;
     private JoinGameController joinGameController;
     private MenuController menuController;
+    private WaitGameController waitGameController;
     private SetupGameController setupGameController;
     private PlayGameController playGameController;
-
+    private EndGameController endGameController;
     private final Object lock = new Object(); // Object for synchronization
     private boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
     private String read; // commands sent via GUI components
@@ -251,9 +252,22 @@ public class GuiView extends Application implements View {
 
     @Override
     public void showWaitPlayers() {
-        if (createGameController != null) {
-            createGameController.showWaitingBuffer();
-        }
+
+        Platform.runLater(() -> {
+            FXMLLoader setupGameLoader = new FXMLLoader(getClass().getResource(ScenePath.WAITGAME.getPath()));
+            Parent waitGameRoot = null;
+
+            try {
+                waitGameRoot = setupGameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            waitGameController = setupGameLoader.getController();
+
+            Scene gameScene = new Scene(waitGameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,6 +381,21 @@ public class GuiView extends Application implements View {
     @Override
     public void showEnd() {
 
+        Platform.runLater(() -> {
+            FXMLLoader endGameLoader = new FXMLLoader(getClass().getResource(ScenePath.ENDGAME.getPath()));
+            Parent waitGameRoot = null;
+
+            try {
+                waitGameRoot = endGameLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            endGameController = endGameLoader.getController();
+
+            Scene gameScene = new Scene(waitGameRoot);
+            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+            getPrimaryStage().setScene(gameScene);
+        });
     }
 
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -660,6 +689,14 @@ public class GuiView extends Application implements View {
         return secretObjectiveStringBuilder.toString();
     }
 
+    public String getCommonObjectiveCode(int index) {
+        return getGameView().getCommonObjectives().get(index).getCode();
+    }
+
+    public String getSecretObjectiveCode(int index) {
+        return getGameView().getSecreteObjectivesSelection().get(index).getCode();
+    }
+
     public String getStarterCardFrontCode() {
         return getGameView().getStarterCard().getFront().getCode();
     }
@@ -692,5 +729,4 @@ public class GuiView extends Application implements View {
         }
         return scoresText;
     }
-
 }

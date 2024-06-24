@@ -34,9 +34,6 @@ public class CreateGameController {
     @FXML
     private Button createGameButton;
 
-    @FXML
-    private ProgressIndicator waitingPlayersBuffer;
-
     /**
      * method that initialize the game controller
      */
@@ -52,7 +49,7 @@ public class CreateGameController {
         // Create a TextFormatter that allows only integer input
         UnaryOperator<TextFormatter.Change> integerFilter = change -> {
             String newText = change.getControlNewText();
-            if (newText.matches("([0-9]+)?")) { // Allows negative numbers and integers
+            if (newText.matches("([0-9]+)?")) {
                 return change;
             }
             return null;
@@ -80,13 +77,5 @@ public class CreateGameController {
         guiView.setSubmittedNumPlayers(submittedNumPlayers);
         guiView.setSubmittedEndPoints(submittedEndPoints);
         guiView.resumeExecution();
-    }
-
-    /**
-     * method that shows waiting buffer
-     */
-    public void showWaitingBuffer() {
-        createGameButton.setVisible(false);
-        waitingPlayersBuffer.setVisible(true);
     }
 }

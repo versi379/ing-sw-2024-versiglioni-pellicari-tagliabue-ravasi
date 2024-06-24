@@ -12,8 +12,10 @@ public enum ScenePath {
     CREATEGAME("/scenes/CreateGame.fxml"),
     JOINGAME("/scenes/JoinGame.fxml"),
     RULES("/scenes/Rules.fxml"),
+    WAITGAME("/scenes/WaitGame.fxml"),
     SETUPGAME("/scenes/SetupGame.fxml"),
-    PLAYGAME("/scenes/PlayGame.fxml");
+    PLAYGAME("/scenes/PlayGame.fxml"),
+    ENDGAME("/scenes/EndGame.fxml");
 
     private final String path;
 

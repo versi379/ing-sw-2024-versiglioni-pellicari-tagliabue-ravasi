@@ -58,6 +58,9 @@ public class PlayGameController {
     private TextField chatPromptTextField;
 
     @FXML
+    private Button leaveGameButton;
+
+    @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
@@ -65,12 +68,6 @@ public class PlayGameController {
         updateBoard();
         updateHand();
         scoresLabel.setText(guiView.getScoresText());
-
-        /*
-        activateButton(placeCardButton);
-        activateButton(drawCardButton);
-
-         */
     }
 
     @FXML
@@ -78,28 +75,6 @@ public class PlayGameController {
         String submittedPlaceCard = placeCardTextField.getText();
 
         guiView.setRead("-p " + submittedPlaceCard);
-
-        /*
-        System.out.println("PlayerArea Updated: " + guiView.playerAreaUpdated);
-        System.out.println(("ServerError: " + guiView.serverError));
-
-        while (!guiView.playerAreaUpdated && !guiView.serverError) {
-            try {
-                System.out.println("Updating player area...");
-                wait();
-            } catch (InterruptedException ignored) {
-            }
-        }
-        if (guiView.serverError) {
-            guiView.serverError = false;
-        } else {
-            updatePlayerArea();
-            deactivateButton(placeCardButton);
-            activateButton(drawCardButton);
-        }
-        guiView.playerAreaUpdated = false;
-
-         */
     }
 
     @FXML
@@ -107,23 +82,11 @@ public class PlayGameController {
         String submittedDrawCard = drawCardTextField.getText();
 
         guiView.setRead("-d " + submittedDrawCard);
+    }
 
-        /*
-        System.out.println("PlayerHand Updated: " + guiView.playerHandUpdated);
-        System.out.println(("ServerError: " + guiView.serverError));
-        while (!guiView.playerHandUpdated && !guiView.serverError) {
-            System.out.println("Updating player hand...");
-        }
-        if (guiView.serverError) {
-            guiView.serverError = false;
-        } else {
-            printPlayerHand();
-            deactivateButton(drawCardButton);
-            activateButton(showBoardButton);
-        }
-        guiView.playerHandUpdated = false;
-
-         */
+    @FXML
+    private void handleLeaveGameButton(ActionEvent event) {
+        guiView.setRead("-l");
     }
 
     @FXML
@@ -221,6 +184,7 @@ public class PlayGameController {
     }
 
     public void updateChat() {
+
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 
