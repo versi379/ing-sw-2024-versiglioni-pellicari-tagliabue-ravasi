@@ -1,11 +1,9 @@
 package it.polimi.sw.GC50.model.lobby;
 
-import it.polimi.sw.GC50.model.game.PlayerStatus;
-
 import java.util.Objects;
 
 /**
- contains player data like nickname and status
+ * contains player data like nickname and status
  */
 public class Player {
 
@@ -21,7 +19,8 @@ public class Player {
 
     /**
      * Constructs an instance of player with nickname
-     * @param nickname  player's nickname
+     *
+     * @param nickname player's nickname
      */
     public Player(String nickname) {
         this.nickname = nickname;
@@ -37,6 +36,7 @@ public class Player {
 
     /**
      * set player status
+     *
      * @param status of the player
      */
     public void setStatus(PlayerStatus status) {
@@ -44,7 +44,6 @@ public class Player {
     }
 
     /**
-
      * @return player status
      */
     public PlayerStatus getStatus() {
@@ -53,6 +52,7 @@ public class Player {
 
     /**
      * compare nicknames between players
+     *
      * @param obj object
      * @return a boolean
      */

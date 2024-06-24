@@ -48,9 +48,6 @@ public class ClientHandler implements Runnable, ClientInterface {
     /**
      * Method that waits for a message from the client socket
      * after it receives the message it calls the switchMex method
-     *
-     * @throws IOException            if an error occurs
-     * @throws ClassNotFoundException if a class cannot be found
      */
     @Override
     public void run() {
@@ -75,34 +72,44 @@ public class ClientHandler implements Runnable, ClientInterface {
             case SET_PLAYER -> {
                 setPlayer((String) message.getContent());
             }
+
             case RESET_PLAYER -> {
                 resetPlayer();
             }
+
             case CREATE_GAME -> {
                 CreateGameRequest game = (CreateGameRequest) message.getContent();
                 createGame(game.getGameId(), game.getNumPlayers(), game.getEndScore());
             }
+
             case JOIN_GAME -> {
                 joinGame((String) message.getContent());
             }
+
             case LIST_FREE_GAMES -> {
                 getFreeGames();
             }
+
             case CHOOSE_OBJECTIVE -> {
                 selectSecretObjective((int) message.getContent());
             }
+
             case CHOOSE_STARTER_FACE -> {
                 selectStarterFace((int) message.getContent());
             }
+
             case PLACE_CARD -> {
                 placeCard((PlaceCardRequest) message.getContent());
             }
+
             case DRAW_CARD -> {
                 drawCard((int) message.getContent());
             }
+
             case CHAT -> {
                 sendChatMessage((ChatMessageRequest) message.getContent());
             }
+
             case LEAVE -> {
                 leaveGame();
             }
@@ -305,8 +312,7 @@ public class ClientHandler implements Runnable, ClientInterface {
                 output.flush();
                 output.reset();
             }
-        } catch (IOException e) {
-            System.out.println("Connection error");
+        } catch (IOException ignored) {
         }
     }
 }

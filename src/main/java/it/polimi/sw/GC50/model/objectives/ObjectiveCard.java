@@ -13,9 +13,10 @@ public class ObjectiveCard implements Serializable {
 
     /**
      * Constructs an instance of Objective Card
-     * @param code                   specify the associated .jpg
-     * @param pointsPerCompletion    points necessaries for complete the objective
-     * @param objective              objective to reach
+     *
+     * @param code                specify the associated .jpg
+     * @param pointsPerCompletion points necessaries for complete the objective
+     * @param objective           objective to reach
      */
     public ObjectiveCard(String code, int pointsPerCompletion, Objective objective) {
         this.code = code;
@@ -43,8 +44,9 @@ public class ObjectiveCard implements Serializable {
 
     /**
      * Returns if objective is reached
-     * @param playerData    player's information
-     * @return  if objective is reached
+     *
+     * @param playerData player's information
+     * @return if objective is reached
      */
     public int checkObjective(PlayerData playerData) {
         return getPointsPerCompletion() * getObjective().checkCondition(playerData);

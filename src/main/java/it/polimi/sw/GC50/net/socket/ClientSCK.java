@@ -32,13 +32,12 @@ public class ClientSCK implements ServerInterface {
 
     /////////////////////////////////////////////////////////////////
     private String nickname;
-    private Map<String, List<String>> freeGames;
     private String gameId;
+    private Map<String, List<String>> freeGames;
 
     /////////////////////////////////////////////////////////////////
-    private final Object[] lock;
-    private final Queue<NotifyMessage> queue;
-    private final boolean[] condition;
+    private final Object lobbyLock = new Object(); // Object for synchronization
+    private boolean lobbyWaiting;
 
     /**
      * constructor of the class
@@ -55,13 +54,6 @@ public class ClientSCK implements ServerInterface {
         gameId = null;
         nickname = null;
         freeGames = new HashMap<>();
-        queue = new LinkedList<>();
-        condition = new boolean[6];
-        lock = new Object[6];
-        for (int i = 0; i < 6; i++) {
-            condition[i] = true;
-            lock[i] = new Object();
-        }
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +114,7 @@ public class ClientSCK implements ServerInterface {
     @Override
     public String setPlayer(String nickname) throws GameException {
         setMessageOut(new RequestMessage(Request.SET_PLAYER, nickname));
-        waitSetupPhase();
+        lobbyWait();
         return this.nickname;
     }
 
@@ -148,7 +140,7 @@ public class ClientSCK implements ServerInterface {
     @Override
     public boolean createGame(String gameId, int numPlayers, int endScore) throws GameException {
         setMessageOut(new RequestMessage(Request.CREATE_GAME, new CreateGameRequest(gameId, numPlayers, endScore)));
-        waitSetupPhase();
+        lobbyWait();
         return this.gameId != null;
     }
 
@@ -164,7 +156,7 @@ public class ClientSCK implements ServerInterface {
     @Override
     public boolean joinGame(String gameId) throws GameException {
         setMessageOut(new RequestMessage(Request.JOIN_GAME, gameId));
-        waitSetupPhase();
+        lobbyWait();
         return this.gameId != null;
     }
 
@@ -178,7 +170,7 @@ public class ClientSCK implements ServerInterface {
     @Override
     public Map<String, List<String>> getFreeGames() throws GameException {
         setMessageOut(new RequestMessage(Request.LIST_FREE_GAMES, null));
-        waitSetupPhase();
+        lobbyWait();
         return freeGames;
     }
 
@@ -259,15 +251,15 @@ public class ClientSCK implements ServerInterface {
         switch (message.getNotify()) {
             case NOTIFY_NAME_SET -> {
                 nickname = ((StringMex) message.getContent()).getString();
-                notifySetupPhase();
+                lobbyNotify();
             }
             case NOTIFY_GAME_CREATED, NOTIFY_GAME_JOINED -> {
                 gameId = ((StringMex) message.getContent()).getString();
-                notifySetupPhase();
+                lobbyNotify();
             }
             case NOTIFY_FREE_GAMES -> {
                 freeGames = ((FreeGamesMex) message.getContent()).getFreeGames();
-                notifySetupPhase();
+                lobbyNotify();
             }
             default -> {
                 client.update(message.getNotify(), message.getContent());
@@ -276,102 +268,28 @@ public class ClientSCK implements ServerInterface {
     }
 
     /**
-     * method that wait for notify from the unlock method
-     *
-     * @param index is the index of the condition
+     * method that wait for notify from the method lobbyNotify
      */
-    private void lock(int index) {
-        if (index > condition.length) {
-            return;
-        }
-        synchronized (lock[index]) {
-            while (condition[index]) {
+    private void lobbyWait() {
+        lobbyWaiting = true;
+
+        synchronized (lobbyLock) {
+            while (lobbyWaiting) {
                 try {
-                    lock[index].wait();
-                } catch (InterruptedException e) {
-                    System.out.println("error");
+                    lobbyLock.wait();
+                } catch (InterruptedException ignored) {
                 }
             }
         }
-        condition[index] = true;
     }
 
     /**
-     * method that notify the unlock method
-     *
-     * @param index is the index of the condition
+     * method that notify the method lobbyWait
      */
-    private void unlock(int index) {
-        if (index > condition.length) {
-            return;
-        }
-        synchronized (lock[index]) {
-            condition[index] = false;
-            lock[index].notifyAll();
+    private void lobbyNotify() {
+        synchronized (lobbyLock) {
+            lobbyWaiting = false;
+            lobbyLock.notifyAll();
         }
     }
-
-    /**
-     * method that notify the method wait
-     */
-    private void notifyMessageFromServer() {
-        unlock(0);
-    }
-
-    /**
-     * method that wait for notify from the method notifyMessageFromServer
-     */
-    private void waitMessageFromServer() {
-        lock(0);
-    }
-
-    /**
-     * method that notify the method waitSetupPhase
-     */
-    private void notifySetupPhase() {
-        unlock(1);
-    }
-
-    /**
-     * method that wait for notify from the method notifySetupPhase
-     */
-    private void waitSetupPhase() {
-        lock(1);
-    }
-
-
-
-            /*
-            executorService.execute(() -> {
-                while (!executorService.isShutdown()) {
-                    try {
-                        Object object = input.readObject();
-                        NotifyMessage message = (NotifyMessage) object;
-                        queue.add(message);
-                        notifyMessageFromServer();
-
-                    } catch (IOException | ClassNotFoundException e) {
-                        throw new GameException("Connection error", e.getCause());
-                    }
-                }
-            });
-
-            new Thread(() -> {
-                while (true) {
-                    try {
-                        Object object = input.readObject();
-                        NotifyMessage message = (NotifyMessage) object;
-                        queue.add(message);
-                        notifyMessageFromServer();
-                    } catch (IOException | ClassNotFoundException ignored) {
-                    }
-                    waitMessageFromServer();
-                    while (!queue.isEmpty()) {
-                        switchMex(queue.poll());
-                    }
-                }
-            }).start();
-
-             */
-
 }

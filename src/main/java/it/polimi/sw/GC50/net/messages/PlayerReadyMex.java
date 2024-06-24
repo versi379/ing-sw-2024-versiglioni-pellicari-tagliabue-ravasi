@@ -16,8 +16,9 @@ public class PlayerReadyMex implements Message {
 
     /**
      * Constructs an instance of PlayerReadyMex
-     * @param game game where the message is sent
-     * @param player  player's nickname
+     *
+     * @param game   game where the message is sent
+     * @param player player's nickname
      */
     public PlayerReadyMex(Game game, Player player) {
         nickname = player.getNickname();
@@ -27,7 +28,6 @@ public class PlayerReadyMex implements Message {
     }
 
     /**
-     *
      * @return player's nickname
      */
     public String getNickname() {
@@ -35,7 +35,6 @@ public class PlayerReadyMex implements Message {
     }
 
     /**
-     *
      * @return player's secret objective
      */
     public ObjectiveCard getSecretObjective() {
@@ -43,7 +42,6 @@ public class PlayerReadyMex implements Message {
     }
 
     /**
-     *
      * @return a copy of card matrix
      */
     public CardsMatrix getCardsMatrix() {
@@ -51,7 +49,6 @@ public class PlayerReadyMex implements Message {
     }
 
     /**
-     *
      * @return player's total score
      */
     public int getTotalScore() {

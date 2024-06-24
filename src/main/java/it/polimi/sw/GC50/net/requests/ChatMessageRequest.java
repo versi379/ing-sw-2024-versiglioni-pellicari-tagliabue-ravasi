@@ -8,8 +8,9 @@ public class ChatMessageRequest implements Serializable {
 
     /**
      * Constructs an instance of ChatMessageRequest with
-     * @param receiver  nickname of receiver
-     * @param content   content of the message
+     *
+     * @param receiver nickname of receiver
+     * @param content  content of the message
      */
     public ChatMessageRequest(String receiver, String content) {
         this.receiver = receiver;
@@ -18,6 +19,7 @@ public class ChatMessageRequest implements Serializable {
 
     /**
      * Constructs an instance of ChatMessageRequest with
+     *
      * @param content content of the message
      */
     public ChatMessageRequest(String content) {

@@ -12,11 +12,13 @@ public class FreeGamesMex implements Message {
 
     /**
      * Constructs an instance of FreeMex class
+     *
      * @param freeGames a list of free games
      */
     public FreeGamesMex(Map<String, List<String>> freeGames) {
         this.freeGames = new HashMap<>(freeGames);
     }
+
     /**
      * Returns a hashmap of free games
      */

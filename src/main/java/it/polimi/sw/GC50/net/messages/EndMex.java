@@ -18,7 +18,8 @@ public class EndMex implements Message {
 
     /**
      * Constructs an instance of EndMex
-     * @param game  where message is sent
+     *
+     * @param game where message is sent
      */
     public EndMex(Game game) {
         winnerList = game.getWinnerList().stream().map(Player::getNickname).toList();
@@ -39,6 +40,7 @@ public class EndMex implements Message {
 
     /**
      * Given a nickname of a player returns his total score
+     *
      * @param nickname player's nickname
      * @return player's total score
      */
@@ -48,6 +50,7 @@ public class EndMex implements Message {
 
     /**
      * Given a nickname of a player returns his objective score
+     *
      * @param nickname player's nickname
      * @return player's objective score
      */

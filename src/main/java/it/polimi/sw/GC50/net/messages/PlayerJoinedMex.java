@@ -12,8 +12,9 @@ public class PlayerJoinedMex implements Message {
 
     /**
      * Constructs an instance of PlayerJoinedMex
-     * @param game      where player joins
-     * @param player    nickname of the player
+     *
+     * @param game   where player joins
+     * @param player nickname of the player
      */
     public PlayerJoinedMex(Game game, Player player) {
         playersLeft = game.getNumPlayers() - game.getPlayerList().size();
@@ -21,7 +22,7 @@ public class PlayerJoinedMex implements Message {
     }
 
     /**
-     * @return  player's nickname
+     * @return player's nickname
      */
     public String getNickname() {
         return nickname;

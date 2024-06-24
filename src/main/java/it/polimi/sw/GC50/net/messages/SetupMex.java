@@ -23,6 +23,7 @@ public class SetupMex implements Message {
 
     /**
      * Construct an instance of SetupMex
+     *
      * @param game we referred
      */
     public SetupMex(Game game) {
@@ -54,6 +55,7 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her hand
+     *
      * @param nickname player's nickname
      * @return
      */
@@ -64,6 +66,7 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her backs hand
+     *
      * @param nickname player's nickname
      * @return player's backs hand
      */
@@ -73,6 +76,7 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns a map of his/her secret objectives
+     *
      * @param nickname player's nickname
      * @return player's  secret objectives
      */
@@ -82,6 +86,7 @@ public class SetupMex implements Message {
 
     /**
      * Given a player returns his/her starter card
+     *
      * @param nickname player's nickname
      * @return player's  starter card
      */
