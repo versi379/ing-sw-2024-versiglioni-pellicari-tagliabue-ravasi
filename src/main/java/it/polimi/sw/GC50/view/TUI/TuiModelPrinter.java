@@ -3,10 +3,7 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.cards.PhysicalCard;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 import javafx.util.Pair;
-import trash.PrintBoardTUI2;
-import it.polimi.sw.GC50.view.PlayerDataView;
 
 import java.util.List;
 import java.util.Map;
@@ -103,12 +100,12 @@ public abstract class TuiModelPrinter {
 
             int counter = minX;
             for (int i = 0; i < targetAreaWidth; i++) {
-                boardMatrix[i * 2 + 2][0] = PrintBoardTUI2.centerString(7, Integer.toString(counter + 1));
+                boardMatrix[i * 2 + 2][0] = centerString(7, Integer.toString(counter + 1));
                 counter++;
             }
             counter = minY;
             for (int i = 0; i < targetAreaHeight; i++) {
-                boardMatrix[0][i * 4 + 4] = PrintBoardTUI2.centerString(7, Integer.toString(counter + 1));
+                boardMatrix[0][i * 4 + 4] = centerString(7, Integer.toString(counter + 1));
                 counter++;
             }
 
@@ -215,5 +212,10 @@ public abstract class TuiModelPrinter {
             }
             System.out.println();
         }
+    }
+
+    private static String centerString (int width, String s) {
+        return String.format("%-" + width  + "s",
+                String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 }
