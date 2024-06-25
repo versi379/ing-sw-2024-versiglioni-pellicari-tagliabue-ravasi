@@ -7,13 +7,10 @@ import it.polimi.sw.GC50.model.game.Game;
 import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.model.objectives.*;
 import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
-import trash.PrintBoardTUI2;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 
 public class PrintTUITest {
 

@@ -30,6 +30,7 @@ public class LobbyTest {
         assertNull(lobby.addPlayer(client1, ""));
         assertEquals("Player1", lobby.addPlayer(client1, "Player1"));
 
+
         assertNull(lobby.addPlayer(client2, "Player1"));
         assertEquals("Player2", lobby.addPlayer(client2, "Player2"));
     }
@@ -48,15 +49,24 @@ public class LobbyTest {
     @Test
     void testCreateGame() {
         Lobby lobby = new Lobby();
-        MockClient client = new MockClient();
+        MockClient client1 = new MockClient();
+        MockClient client2 = new MockClient();
 
-        assertNull(lobby.createGame(client, "Game", 2, 20));
+
+        assertNull(lobby.createGame(client1, "Game", 2, 20));
         assertEquals(new HashMap<>(), lobby.getFreeGames());
 
 
-        lobby.addPlayer(client, "Player");
-        lobby.createGame(client, "Game", 2, 20);
-        assertEquals(List.of("Player"), lobby.getFreeGames().values().stream().toList().getFirst());
+        lobby.addPlayer(client1, "Player1");
+        assertNull(lobby.createGame(client1, null, 2, 20));
+        assertNull(lobby.createGame(client1, "", 2, 20));
+        lobby.createGame(client1, "Game", 2, 20);
+        assertEquals(List.of("Player1"), lobby.getFreeGames().values().stream().toList().getFirst());
+
+
+        lobby.addPlayer(client2, "Player2");
+        assertNull(lobby.createGame(client2, "Game", 2, 20));
+        assertEquals(1, lobby.getFreeGames().size());
     }
 
     @Test

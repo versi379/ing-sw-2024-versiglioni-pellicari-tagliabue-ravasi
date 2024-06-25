@@ -270,7 +270,7 @@ public class Game extends GameObservable {
             Gson gson = gsonBuilder.create();
 
             FileReader reader = new FileReader
-                    ("src/main/resources/it/polimi/sw/GC50/cardJson/physicalCards.json");
+                    ("src/main/resources/cardsJson/physicalCards.json");
             Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
             }.getType();
 
@@ -287,7 +287,7 @@ public class Game extends GameObservable {
             }
             //objective deck
             reader = new FileReader
-                    ("src/main/resources/it/polimi/sw/GC50/cardJson/objectiveCards.json");
+                    ("src/main/resources/cardsJson/objectiveCards.json");
             Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
             }.getType();
             List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
