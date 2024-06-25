@@ -7,6 +7,9 @@ import it.polimi.sw.GC50.model.cards.*;
 
 import java.io.IOException;
 
+/**
+ * used to adapt bonus card to json file
+ */
 public class BonusAdapter extends TypeAdapter<Bonus> {
 
     @Override

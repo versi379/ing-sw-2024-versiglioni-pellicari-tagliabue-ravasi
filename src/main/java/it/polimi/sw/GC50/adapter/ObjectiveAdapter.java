@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * used to adapt objective to json file
+ */
 public class ObjectiveAdapter extends TypeAdapter<Objective> {
 
     @Override
