@@ -4,7 +4,9 @@ import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
+/**
+ * Controller for Net FXML scene.
+ */
 public class NetController {
 
     private GuiView guiView;
@@ -20,6 +22,9 @@ public class NetController {
 
     private int netSelected;
 
+    /**
+     * method used to initialize net controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -42,6 +47,9 @@ public class NetController {
         });
     }
 
+    /**
+     * @return net selected
+     */
     public int getNetSelected() {
         return netSelected;
     }

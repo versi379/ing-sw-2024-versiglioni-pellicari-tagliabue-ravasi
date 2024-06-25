@@ -19,10 +19,17 @@ public enum ScenePath {
 
     private final String path;
 
+    /**
+     * constructs an instance of scene path
+     * @param path file path
+     */
     ScenePath(String path) {
         this.path = path;
     }
 
+    /**
+     * @return file path
+     */
     public String getPath() {
         return path;
     }

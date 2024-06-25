@@ -1,5 +1,6 @@
 package it.polimi.sw.GC50.view.GUI.controllers;
 
+
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.GUI.scenes.ScenePath;
@@ -12,6 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller for User FXML scene.
+ */
 public class UserController {
     private GuiView guiView;
 
@@ -21,11 +25,18 @@ public class UserController {
     @FXML
     private Button menuButton;
 
+    /**
+     * method used to initialize user controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
+    /**
+     * method that handle menu button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleMenuButton(ActionEvent event) {
         String submittedPlayerNickname = playerNickname.getText();
