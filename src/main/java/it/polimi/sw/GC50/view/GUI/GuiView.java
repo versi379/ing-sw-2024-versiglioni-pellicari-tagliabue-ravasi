@@ -21,6 +21,9 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * class that manages GUI view
+ */
 public class GuiView extends Application implements View {
     private Client client;
     private Stage primaryStage;
@@ -52,6 +55,10 @@ public class GuiView extends Application implements View {
     private boolean waitingForButton = false; // Flag to indicate if client thread is waiting for button press
     private String read; // commands sent via GUI components
 
+    /**
+     * method that starts GUI
+     * @param stage a given stage
+     */
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
@@ -74,6 +81,9 @@ public class GuiView extends Application implements View {
         stage.show();
     }
 
+    /**
+     * constructs an instance of GUI view
+     */
     public GuiView() {
         // Ensure JavaFX is initialized
         Platform.startup(() -> {
@@ -83,16 +93,27 @@ public class GuiView extends Application implements View {
         });
     }
 
+    /**
+     * Given a specific client sets as client
+     * @param client specific client
+     */
     @Override
     public void setClient(Client client) {
         this.client = client;
     }
 
+    /**
+     * method that shows connected
+     */
     @Override
     public void showConnected() {
     }
 
     // CONNECTION //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return a selected server IP
+     */
     @Override
     public String selectServerIp() {
 
@@ -100,6 +121,9 @@ public class GuiView extends Application implements View {
         return submittedIp;
     }
 
+    /**
+     * @return selects a connection type
+     */
     @Override
     public int selectConnectionType() {
 
@@ -136,6 +160,10 @@ public class GuiView extends Application implements View {
     }
 
     // LOBBY ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return selects a player's nickname
+     */
     @Override
     public String selectNickname() {
 
@@ -171,6 +199,9 @@ public class GuiView extends Application implements View {
         return submittedPlayerNickname;
     }
 
+    /**
+     * @return choose between join or create view
+     */
     @Override
     public int selectJoinOrCreate() {
 
@@ -207,6 +238,10 @@ public class GuiView extends Application implements View {
         return submittedGameChoice;
     }
 
+    /**
+     * method that shows free games
+     * @param freeGames a map of free games
+     */
     // map of game names with associated list of players
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
@@ -250,6 +285,9 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * @return a string with the name of the game
+     */
     @Override
     public String selectGameName() {
 
@@ -285,16 +323,25 @@ public class GuiView extends Application implements View {
         return submittedGameName;
     }
 
+    /**
+     * @return number of the players in a game
+     */
     @Override
     public int selectNumberOfPlayers() {
         return submittedNumPlayers;
     }
 
+    /**
+     * @return end score
+     */
     @Override
     public int selectEndScore() {
         return submittedEndPoints;
     }
 
+    /**
+     * @return join name game
+     */
     @Override
     public String selectJoinGameName() {
         waitForButtonPress();
@@ -302,14 +349,24 @@ public class GuiView extends Application implements View {
     }
 
     // WAITING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Shows players that have joined a game
+     * @param nickname player's nickname
+     */
     @Override
     public void showPlayerJoined(String nickname) {
     }
-
+    /**
+     * Shows players that have left a game
+     * @param nickname player's nickname
+     */
     @Override
     public void showPlayerLeft(String nickname) {
     }
-
+    /**
+     * Shows players waiting players
+     */
     @Override
     public void showWaitPlayers() {
 
@@ -343,6 +400,10 @@ public class GuiView extends Application implements View {
     }
 
     // SETUP ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that shows game setup
+     */
     @Override
     public void showSetup() {
 
@@ -375,15 +436,24 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * method that shows objectives
+     */
     @Override
     public void showObjectives() {
     }
-
+    /**
+     * method that shows players that are in a ready status
+     */
     @Override
     public void showPlayerReady(String nickname) {
     }
 
     // PLAYING /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that shows game start
+     */
     @Override
     public void showStart() {
 
@@ -416,13 +486,18 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * method that shows the current player
+     */
     @Override
     public void showCurrentPlayer() {
         Platform.runLater(() -> {
             playGameController.updateCurrentPlayer();
         });
     }
-
+    /**
+     * method that shows placing phase
+     */
     @Override
     public void showPlacingPhase() {
         Platform.runLater(() -> {
@@ -431,7 +506,9 @@ public class GuiView extends Application implements View {
         showCardsArea(getGameView().getCurrentPlayer());
         showHand();
     }
-
+    /**
+     * method that shows drawing phase
+     */
     @Override
     public void showDrawingPhase() {
         Platform.runLater(() -> {
@@ -439,28 +516,36 @@ public class GuiView extends Application implements View {
         });
         showDecks();
     }
-
+    /**
+     * method that shows cards area
+     */
     @Override
     public void showCardsArea(String nickname) {
         Platform.runLater(() -> {
             playGameController.updateBoard();
         });
     }
-
+    /**
+     * method that shows player's hand
+     */
     @Override
     public void showHand() {
         Platform.runLater(() -> {
             playGameController.updateHand();
         });
     }
-
+    /**
+     * method that shows decks
+     */
     @Override
     public void showDecks() {
         Platform.runLater(() -> {
             playGameController.updateDecks();
         });
     }
-
+    /**
+     * method that shows scores
+     */
     @Override
     public void showScores() {
         Platform.runLater(() -> {
@@ -469,6 +554,9 @@ public class GuiView extends Application implements View {
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * method that shows end of the game
+     */
     @Override
     public void showEnd() {
 
@@ -502,6 +590,9 @@ public class GuiView extends Application implements View {
     }
 
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * method that shows chat message
+     */
     @Override
     public void showChatMessage(String sender, String content, String time) {
 
@@ -540,10 +631,16 @@ public class GuiView extends Application implements View {
     }
 
     // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * method that shows help commands
+     */
     @Override
     public void showHelp() {
     }
-
+    /**
+     * method that shows error
+     * @param content type of error
+     */
     @Override
     public void showError(String content) {
         Platform.runLater(() -> {
@@ -554,12 +651,17 @@ public class GuiView extends Application implements View {
             alert.showAndWait();
         });
     }
-
+    /**
+     * method that shows end session
+     */
     @Override
     public void showEndSession() {
     }
 
     // COMMANDS ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * method that waits for commands
+     */
     @Override
     public void listen() {
         waitForButtonPress();
@@ -568,6 +670,10 @@ public class GuiView extends Application implements View {
         client.addCommand(command.getKey(), command.getValue());
     }
 
+    /**
+     * method that reads a command
+     * @return a pair command/string
+     */
     // commands must be read via GUI rather than terminal
     private Pair<Command, String[]> readCommand() {
 
@@ -699,39 +805,60 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * @return IP controller
+     */
     public EnterIPController getEnterIPController() {
         return enterIPController;
     }
-
+    /**
+     * @return net controller
+     */
     public NetController getNetController() {
         return netController;
     }
-
+    /**
+     * @return user controller
+     */
     public UserController getUserController() {
         return userController;
     }
-
+    /**
+     * @return setup game controller
+     */
     public SetupGameController getGameController() {
         return setupGameController;
     }
-
+    /**
+     * @return menu controller
+     */
     public MenuController getMenuController() {
         return menuController;
     }
-
+    /**
+     * @return create game controller
+     */
     public CreateGameController getCreateGameController() {
         return createGameController;
     }
-
+    /**
+     * @return join game controller
+     */
     public JoinGameController getJoinGameController() {
         return joinGameController;
     }
-
+    /**
+     * @return primary stage
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
     // BUTTONS /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * method that waits for button press
+     */
     public void waitForButtonPress() {
         synchronized (lock) {
             waitingForButton = true; // Set flag to indicate waiting for button press
@@ -745,6 +872,9 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * method that resumes game execution
+     */
     public void resumeExecution() {
         synchronized (lock) {
             waitingForButton = false; // Reset the flag
@@ -752,100 +882,170 @@ public class GuiView extends Application implements View {
         }
     }
 
+    /**
+     * method that sets a submitted ip
+     * @param submittedIp a specific IP
+     */
     public void setSubmittedIp(String submittedIp) {
         this.submittedIp = submittedIp;
     }
-
+    /**
+     * method that sets a submitted player nickname
+     * @param submittedPlayerNickname a specific player nickname
+     */
     public void setSubmittedPlayerNickname(String submittedPlayerNickname) {
         this.submittedPlayerNickname = submittedPlayerNickname;
     }
 
+    /**
+     * method that sets a submitted gaming choice
+     * @param submittedGameChoice a specific game choice
+     */
     public void setSubmittedGameChoice(int submittedGameChoice) {
         this.submittedGameChoice = submittedGameChoice;
     }
-
+    /**
+     * method that sets a submitted game name
+     * @param submittedGameName a specific game name
+     */
     public void setSubmittedGameName(String submittedGameName) {
         this.submittedGameName = submittedGameName;
     }
-
+    /**
+     * method that sets a submitted number of players
+     * @param submittedNumPlayers a specific number of players
+     */
     public void setSubmittedNumPlayers(int submittedNumPlayers) {
         this.submittedNumPlayers = submittedNumPlayers;
     }
-
+    /**
+     * method that sets a submitted end points
+     * @param submittedEndPoints a specific end points
+     */
     public void setSubmittedEndPoints(int submittedEndPoints) {
         this.submittedEndPoints = submittedEndPoints;
     }
-
+    /**
+     * method that sets a submitted join game name
+     * @param submittedJoinGameName a specific join game name
+     */
     public void setSubmittedJoinGameName(String submittedJoinGameName) {
         this.submittedJoinGameName = submittedJoinGameName;
     }
 
+    /**
+     * method that sets a read
+     * @param read given read
+     */
     public void setRead(String read) {
         this.read = read;
         resumeExecution();
     }
 
     // PARAMS //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @return game view
+     */
     public GameView getGameView() {
         return client.getGameView();
     }
-
+    /**
+     * @return free games
+     */
     public List<String> getFreeGames() {
         return new ArrayList<>(freeGames);
     }
-
+    /**
+     * @return chat message
+     */
     public List<String> getChatMessages() {
         return chatMessages;
     }
 
+    /**
+     * Given a setup starter sets as setSubmittedSetupStarter
+     * @param submittedSetupStarter a specific submittedSetupStarter
+     */
     public void setSubmittedSetupStarter(int submittedSetupStarter) {
         this.submittedSetupStarter = submittedSetupStarter;
     }
-
+    /**
+     * @return submitted setup starter
+     */
     public int getSubmittedSetupStarter() {
         return submittedSetupStarter;
     }
 
+    /**
+     * Given a specific setup objective sets as submittedSetupObjective
+     * @param submittedSetupObjective specific setup objective
+     */
     public void setSubmittedSetupObjective(int submittedSetupObjective) {
         this.submittedSetupObjective = submittedSetupObjective;
     }
-
+    /**
+     * @return submitted setup objective
+     */
     public int getSubmittedSetupObjective() {
         return submittedSetupObjective;
     }
-
+    /**
+     * @return common objective
+     */
     public String getCommonObjectiveCode(int index) {
         return getGameView().getCommonObjectives().get(index).getCode();
     }
-
+    /**
+     * @return secret objective
+     */
     public String getSecretObjectiveCode(int index) {
         return getGameView().getSecreteObjectivesSelection().get(index).getCode();
     }
-
+    /**
+     * @return front of starter card
+     */
     public String getStarterCardFrontCode() {
         return getGameView().getStarterCard().getFront().getCode();
     }
 
+    /**
+     * @return back of starter card
+     */
     public String getStarterCardBackCode() {
         return getGameView().getStarterCard().getBack().getCode();
     }
 
+    /**
+     * @return player's hand
+     */
     public List<PhysicalCard> getPlayerHand() {
         return getGameView().getHand();
     }
 
+    /**
+     * @return decks
+     */
     public PlayableCard[] getDecks() {
         return getGameView().getDecks();
     }
 
+    /**
+     * @return who is the current player
+     */
     public String getCurrentPlayer() {
         return getGameView().getCurrentPlayer();
     }
-
+    /**
+     * @return player area
+     */
     public PlayerDataView getPlayerArea() {
         return getGameView().getPlayerArea(getCurrentPlayer());
     }
 
+    /**
+     * @return playing scores
+     */
     public String getScoresPlaying() {
         Map<String, Integer> scores = new HashMap<>();
         for (String nickname : getGameView().getPlayerList()) {
@@ -859,6 +1059,9 @@ public class GuiView extends Application implements View {
         return scoresText;
     }
 
+    /**
+     * @return end scores
+     */
     public String getScoresEnd() {
         Map<String, Pair<Integer, Integer>> scores = new HashMap<>();
         for (String nickname : getGameView().getPlayerList()) {
