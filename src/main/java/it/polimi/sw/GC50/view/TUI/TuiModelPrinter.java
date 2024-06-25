@@ -214,6 +214,12 @@ public abstract class TuiModelPrinter {
         }
     }
 
+    /**
+     * method used to center string
+     * @param width of the string
+     * @param s string
+     * @return  center string
+     */
     private static String centerString (int width, String s) {
         return String.format("%-" + width  + "s",
                 String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));

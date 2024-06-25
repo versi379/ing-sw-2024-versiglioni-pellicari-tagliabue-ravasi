@@ -9,6 +9,9 @@ import it.polimi.sw.GC50.model.cards.PlayableCard;
 
 import java.io.IOException;
 
+/**
+ * used to adapt physical card to json file
+ */
 public class PhysicalCardAdapter extends TypeAdapter<PhysicalCard> {
 
     @Override

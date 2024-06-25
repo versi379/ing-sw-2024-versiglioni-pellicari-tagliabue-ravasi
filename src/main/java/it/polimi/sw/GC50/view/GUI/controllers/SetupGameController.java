@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 /**
- * Controller for Game FXML scene.
+ * Controller for Setup  Game FXML scene.
  */
 public class SetupGameController {
     private GuiView guiView;
@@ -139,6 +139,10 @@ public class SetupGameController {
         guiView.setSubmittedSetupObjective(2);
     }
 
+    /**
+     * method used to handle send message button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
@@ -148,10 +152,17 @@ public class SetupGameController {
         chatPromptTextField.setText("");
     }
 
+    /**
+     * method used to update chat
+     */
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 
+    /**
+     * method used to handle leave game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleLeaveGameButton(ActionEvent event) {
         guiView.setRead("-l");

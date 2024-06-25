@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.List;
-
+/**
+ * Controller for Join  Game FXML scene.
+ */
 public class JoinGameController {
     private GuiView guiView;
 
@@ -36,6 +38,9 @@ public class JoinGameController {
 
     private String submittedJoinGameName;
 
+    /**
+     * method used to initialize join game controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -47,6 +52,10 @@ public class JoinGameController {
         });
     }
 
+    /**
+     * method used to handle enter game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleEnterGameButton(ActionEvent event) {
         guiView.setSubmittedJoinGameName(submittedJoinGameName);

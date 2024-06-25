@@ -19,7 +19,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
-
+/**
+ * Controller for Play Game FXML scene.
+ */
 public class PlayGameController {
 
     private GuiView guiView;
@@ -66,6 +68,9 @@ public class PlayGameController {
     @FXML
     private Button leaveGameButton;
 
+    /**
+     * method used to initialize play game controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
@@ -79,6 +84,10 @@ public class PlayGameController {
         updateChat();
     }
 
+    /**
+     * method used to handle place card button
+     * @param event an instance of action event
+     */
     @FXML
     private void handlePlaceCardButton(ActionEvent event) {
         String submittedPlaceCard = placeCardTextField.getText();
@@ -86,7 +95,10 @@ public class PlayGameController {
 
         guiView.setRead("-p " + submittedPlaceCard);
     }
-
+    /**
+     * method used to handle drew card button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleDrawCardButton(ActionEvent event) {
         String submittedDrawCard = drawCardTextField.getText();
@@ -94,12 +106,18 @@ public class PlayGameController {
 
         guiView.setRead("-d " + submittedDrawCard);
     }
-
+    /**
+     * method used to handle leave game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleLeaveGameButton(ActionEvent event) {
         guiView.setRead("-l");
     }
-
+    /**
+     * method used to handle send message button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
@@ -107,26 +125,40 @@ public class PlayGameController {
 
         guiView.setRead("-c " + submittedSendMessage);
     }
-
+    /**
+     * method used to update current player
+     */
     public void updateCurrentPlayer() {
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         phaseLabel.setText("");
     }
-
+    /**
+     * method used to update placing phase
+     */
     public void updatePlacingPhase() {
         phaseLabel.setText("Placing phase");
     }
-
+    /**
+     * method used to update drawing phase
+     */
     public void updateDrawingPhase() {
         phaseLabel.setText("Drawing phase");
     }
 
+    /**
+     * method used to update board
+     */
     public void updateBoard() {
         pane.getChildren().remove(playerAreaGrid);
         playerAreaGrid = printPlayerArea(guiView.getPlayerArea().getCardsMatrix());
         pane.getChildren().add(playerAreaGrid);
     }
 
+    /**
+     * method used to print player area
+     * @param cardsMatrix a copy of card matrix
+     * @return player area
+     */
     private GridPane printPlayerArea(CardsMatrix cardsMatrix) {
         GridPane gridPane = new GridPane();
         gridPane.setLayoutX(300);
@@ -159,6 +191,13 @@ public class PlayGameController {
         return gridPane;
     }
 
+    /**
+     * method used to print playable card
+     * @param card      printed card
+     * @param layoutX   X layout of the card
+     * @param layoutY   Y layout of the card
+     * @return an image of card
+     */
     private ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
         String cardCode = card.getCode();
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
@@ -172,16 +211,27 @@ public class PlayGameController {
         return cardImageView;
     }
 
+    /**
+     * method used to update scores
+     */
     public void updateScores() {
         scoresLabel.setText(guiView.getScoresPlaying());
     }
 
+    /**
+     * method used to update hand
+     */
     public void updateHand() {
         pane.getChildren().remove(handGrid);
         handGrid = printHand(guiView.getPlayerHand());
         pane.getChildren().add(handGrid);
     }
 
+    /**
+     * method used to print hand
+     * @param hand  list of physical card
+     * @return  printed hand
+     */
     private GridPane printHand(List<PhysicalCard> hand) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
@@ -199,12 +249,20 @@ public class PlayGameController {
         return gridPane;
     }
 
+    /**
+     * method used to update decks
+     */
     public void updateDecks() {
         pane.getChildren().remove(deckGrid);
         deckGrid = printDecks(guiView.getDecks());
         pane.getChildren().add(deckGrid);
     }
 
+    /**
+     * method used to print decks
+     * @param deck  that have to be printed
+     * @return  deck image
+     */
     private GridPane printDecks(PlayableCard[] deck) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
@@ -225,6 +283,9 @@ public class PlayGameController {
         return gridPane;
     }
 
+    /**
+     * method used to print objectives
+     */
     private void printObjectives() {
         if (guiView.getSubmittedSetupObjective() == 1) {
             printStarter(guiView.getSecretObjectiveCode(0), 50, 300);
@@ -235,6 +296,12 @@ public class PlayGameController {
         printStarter(guiView.getCommonObjectiveCode(1), 50, 420);
     }
 
+    /**
+     * method used to print starter card
+     * @param cardCode  code of the card
+     * @param layoutX   X layout of the card
+     * @param layoutY   Y layout of the card
+     */
     private void printStarter(String cardCode, int layoutX, int layoutY) {
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
@@ -247,6 +314,9 @@ public class PlayGameController {
         pane.getChildren().add(cardImageView);
     }
 
+    /**
+     * method used to update chat
+     */
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }

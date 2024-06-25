@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * used to adapt playable card to json file
+ */
 public class PlayableCardAdapter extends TypeAdapter<PlayableCard> {
 
     @Override

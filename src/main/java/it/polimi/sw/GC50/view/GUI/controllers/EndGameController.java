@@ -58,6 +58,10 @@ public class EndGameController {
         scoresLabel.setText(guiView.getScoresEnd());
     }
 
+    /**
+     * method used to handle send message button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
@@ -65,12 +69,18 @@ public class EndGameController {
 
         guiView.setRead("-c " + submittedSendMessage);
     }
-
+    /**
+     * method used to handle leave game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleLeaveGameButton(ActionEvent event) {
         guiView.setRead("-l");
     }
 
+    /**
+     * method used to update chat
+     */
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }

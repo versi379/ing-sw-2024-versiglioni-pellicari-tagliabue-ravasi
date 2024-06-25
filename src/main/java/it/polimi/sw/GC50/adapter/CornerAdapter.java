@@ -9,6 +9,9 @@ import it.polimi.sw.GC50.model.cards.Resource;
 
 import java.io.IOException;
 
+/**
+ * used to adapt corner adapter to json file
+ */
 public class CornerAdapter extends TypeAdapter<Corner> {
 
     @Override

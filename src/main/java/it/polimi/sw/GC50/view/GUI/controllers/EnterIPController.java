@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for Enter IP FXML scene.
+ */
 public class EnterIPController {
 
     private GuiView guiView;
@@ -17,11 +20,18 @@ public class EnterIPController {
     @FXML
     private Button ipSubmitButton;
 
+    /**
+     * method used to initialize controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
+    /**
+     * method used to handle IP submit button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleIPSubmitButton(ActionEvent event) {
         guiView.setSubmittedIp(ipTextField.getText());

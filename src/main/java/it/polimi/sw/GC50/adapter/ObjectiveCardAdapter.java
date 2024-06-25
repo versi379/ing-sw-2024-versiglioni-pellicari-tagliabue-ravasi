@@ -8,6 +8,9 @@ import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 
 import java.io.IOException;
 
+/**
+ * used to adapt objective card to json file
+ */
 public class ObjectiveCardAdapter extends TypeAdapter<ObjectiveCard> {
 
     @Override

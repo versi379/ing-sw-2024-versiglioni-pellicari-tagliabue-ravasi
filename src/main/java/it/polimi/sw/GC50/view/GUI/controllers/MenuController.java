@@ -35,29 +35,45 @@ public class MenuController {
     @FXML
     private Button quitButton;
 
+    /**
+     * method used to initialize menu controller
+     */
     @FXML
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
     }
 
+    /**
+     * method used to handle create new game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleCreateNewGameButton(ActionEvent event) {
         guiView.setSubmittedGameChoice(1);
         guiView.resumeExecution();
     }
-
+    /**
+     * method used to handle join game button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleJoinGameButton(ActionEvent event) {
         guiView.setSubmittedGameChoice(2);
         guiView.resumeExecution();
     }
-
+    /**
+     * method used to handle quit button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleQuitButton(ActionEvent event) {
         guiView.setSubmittedGameChoice(3);
         guiView.resumeExecution();
     }
-
+    /**
+     * method used to handle rules button
+     * @param event an instance of action event
+     */
     @FXML
     private void handleRulesButton(ActionEvent event) {
         //showRulesView();
