@@ -2,7 +2,7 @@ package it.polimi.sw.GC50.controller;
 
 import it.polimi.sw.GC50.net.messages.*;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
-import it.polimi.sw.GC50.net.client.MockClient;
+import it.polimi.sw.GC50.net.MockClient;
 import it.polimi.sw.GC50.net.messages.Notify;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 import org.junit.jupiter.api.Test;

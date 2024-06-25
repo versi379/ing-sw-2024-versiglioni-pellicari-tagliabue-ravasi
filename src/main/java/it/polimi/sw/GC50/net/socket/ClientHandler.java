@@ -2,7 +2,7 @@ package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
 import it.polimi.sw.GC50.model.lobby.Lobby;
-import it.polimi.sw.GC50.net.client.ClientInterface;
+import it.polimi.sw.GC50.net.ClientInterface;
 import it.polimi.sw.GC50.net.messages.FreeGamesMex;
 import it.polimi.sw.GC50.net.messages.Notify;
 import it.polimi.sw.GC50.net.messages.StringMex;

@@ -5,8 +5,8 @@ import it.polimi.sw.GC50.net.messages.StringMex;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.CreateGameRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
-import it.polimi.sw.GC50.net.client.Client;
-import it.polimi.sw.GC50.net.client.GameException;
+import it.polimi.sw.GC50.net.Client;
+import it.polimi.sw.GC50.net.GameException;
 import it.polimi.sw.GC50.net.ServerInterface;
 
 import java.io.IOException;

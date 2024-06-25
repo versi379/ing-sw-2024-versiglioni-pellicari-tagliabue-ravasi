@@ -1,4 +1,4 @@
-package it.polimi.sw.GC50.net.client;
+package it.polimi.sw.GC50.net;
 
 import it.polimi.sw.GC50.net.messages.Message;
 import it.polimi.sw.GC50.net.messages.Notify;

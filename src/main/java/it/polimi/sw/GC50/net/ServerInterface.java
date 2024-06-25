@@ -1,6 +1,5 @@
 package it.polimi.sw.GC50.net;
 
-import it.polimi.sw.GC50.net.client.GameException;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;
 

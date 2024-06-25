@@ -75,8 +75,7 @@ public class PlayGameController {
         updateBoard();
         updateHand();
         updateDecks();
-        scoresLabel.setText(guiView.getScoresPlaying());
-
+        updateScores();
         updateChat();
     }
 

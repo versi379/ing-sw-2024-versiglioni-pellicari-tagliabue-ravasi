@@ -3,7 +3,7 @@ package it.polimi.sw.GC50.view.TUI;
 import it.polimi.sw.GC50.model.cards.Resource;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
-import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.net.Client;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GameView;
 import it.polimi.sw.GC50.view.View;

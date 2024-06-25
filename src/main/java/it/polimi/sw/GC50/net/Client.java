@@ -1,11 +1,10 @@
-package it.polimi.sw.GC50.net.client;
+package it.polimi.sw.GC50.net;
 
 import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.model.game.GameStatus;
 import it.polimi.sw.GC50.model.game.PlayingPhase;
 import it.polimi.sw.GC50.net.RMI.ClientRmi;
-import it.polimi.sw.GC50.net.ServerInterface;
 import it.polimi.sw.GC50.net.messages.*;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;

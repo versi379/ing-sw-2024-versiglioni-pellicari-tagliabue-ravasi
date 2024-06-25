@@ -42,9 +42,8 @@ public class JoinGameController {
 
         freeGames.setItems(FXCollections.observableArrayList((guiView.getFreeGames())));
         freeGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedListViewItem = newValue;
-            String[] parts = selectedListViewItem.split("\nPLAYERS: ");
-            submittedJoinGameName = parts[0];
+            String[] parts = newValue.split("\"");
+            submittedJoinGameName = parts[1];
         });
     }
 

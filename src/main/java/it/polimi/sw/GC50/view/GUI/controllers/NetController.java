@@ -26,17 +26,14 @@ public class NetController {
 
         netSelected = 3;
         socketButton.setOnAction(event -> {
-            System.out.println("Scelta Socket, carico login view...");
             netSelected = 1;
             guiView.resumeExecution();
         });
         rmiButton.setOnAction(event -> {
-            System.out.println("Scelta RMI, carico login view...");
             netSelected = 2;
             guiView.resumeExecution();
         });
         quitButton.setOnAction(event -> {
-            System.out.println("Scelta QUIT");
             netSelected = 3;
             guiView.resumeExecution();
         });

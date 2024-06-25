@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.app;
 
-import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.net.Client;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import it.polimi.sw.GC50.view.TUI.TuiView;
 import it.polimi.sw.GC50.view.View;

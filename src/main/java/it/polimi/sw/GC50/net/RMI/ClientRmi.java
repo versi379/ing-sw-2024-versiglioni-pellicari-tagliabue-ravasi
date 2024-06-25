@@ -1,9 +1,9 @@
 package it.polimi.sw.GC50.net.RMI;
 
 import it.polimi.sw.GC50.controller.GameControllerRemote;
-import it.polimi.sw.GC50.net.client.Client;
-import it.polimi.sw.GC50.net.client.ClientInterface;
-import it.polimi.sw.GC50.net.client.GameException;
+import it.polimi.sw.GC50.net.Client;
+import it.polimi.sw.GC50.net.ClientInterface;
+import it.polimi.sw.GC50.net.GameException;
 import it.polimi.sw.GC50.net.messages.*;
 import it.polimi.sw.GC50.net.requests.ChatMessageRequest;
 import it.polimi.sw.GC50.net.requests.PlaceCardRequest;

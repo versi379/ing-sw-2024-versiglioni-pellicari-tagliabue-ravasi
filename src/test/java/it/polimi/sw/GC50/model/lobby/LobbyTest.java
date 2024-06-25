@@ -1,10 +1,8 @@
 package it.polimi.sw.GC50.model.lobby;
 
-import it.polimi.sw.GC50.net.client.MockClient;
+import it.polimi.sw.GC50.net.MockClient;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package it.polimi.sw.GC50.view;
 
-import it.polimi.sw.GC50.net.client.Client;
+import it.polimi.sw.GC50.net.Client;
 
 import java.util.List;
 import java.util.Map;
