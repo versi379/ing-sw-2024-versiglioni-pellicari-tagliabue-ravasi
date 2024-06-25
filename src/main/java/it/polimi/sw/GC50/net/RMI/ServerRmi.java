@@ -54,7 +54,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     /**
      * method that sets a new player
      *
-     * @param clientInterface
+     * @param clientInterface interface that represents client
      * @param nickname        of the player
      * @return lobby with the new player
      * @throws RemoteException if there is an error in binding to RMI registry
@@ -67,7 +67,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     /**
      * method that resets a new player
      *
-     * @param clientInterface
+     * @param clientInterface   interface that represents client
      * @throws RemoteException if there is an error in binding to RMI registry
      */
     @Override
@@ -78,7 +78,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     /**
      * method that creates a new game
      *
-     * @param clientInterface
+     * @param clientInterface   interface that represents client
      * @param gameId          id of the game
      * @param numOfPlayers    number of players
      * @param endScore        final score
@@ -91,7 +91,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     }
 
     /**
-     * @param clientInterface
+     * @param clientInterface   interface that represents client
      * @param gameId          id of the game
      * @return lobby with the game that we have joint
      * @throws RemoteException if there is an error in binding to RMI registry

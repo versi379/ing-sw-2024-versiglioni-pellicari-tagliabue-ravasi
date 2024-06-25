@@ -162,7 +162,7 @@ public class ClientSCK implements ServerInterface {
 
     /**
      * method that sends a message to the server get the list of free games
-     * it waits for the notify from the server and returns the list of free games
+     * it waits for notify from the server and returns the list of free games
      *
      * @return a map
      * @throws GameException if an error occurs

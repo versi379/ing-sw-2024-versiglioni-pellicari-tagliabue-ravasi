@@ -26,7 +26,7 @@ public class Lobby {
     /**
      * Adds a player to the game
      *
-     * @param clientInterface
+     * @param clientInterface   interface that represents client
      * @param nickname        player's nickname
      * @return nickname of the player added
      */
@@ -41,7 +41,7 @@ public class Lobby {
     /**
      * Removes a player from the game
      *
-     * @param clientInterface
+     * @param clientInterface   interface that represents client
      */
     public synchronized void removePlayer(ClientInterface clientInterface) {
         clients.remove(clientInterface);

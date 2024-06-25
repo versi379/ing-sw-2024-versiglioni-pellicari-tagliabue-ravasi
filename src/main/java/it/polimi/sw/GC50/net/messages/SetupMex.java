@@ -57,7 +57,7 @@ public class SetupMex implements Message {
      * Given a player returns his/her hand
      *
      * @param nickname player's nickname
-     * @return
+     * @return player's hand
      */
 
     public List<PhysicalCard> getHand(String nickname) {
