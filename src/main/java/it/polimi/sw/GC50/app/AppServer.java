@@ -7,7 +7,7 @@ import it.polimi.sw.GC50.net.socket.ServerSCK;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class AppServer {
+public abstract class AppServer {
     public static final int sckPort = 2012;
     public static final int rmiPort = 1099;
     public static String baseTxt = "\u001B[0m";
