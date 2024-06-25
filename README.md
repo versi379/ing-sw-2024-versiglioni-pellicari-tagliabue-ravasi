@@ -16,17 +16,17 @@ The final version includes:
 
 ## Implemented Functionalities
 | Functionality | Status |
-|:-----------------------|:------------------------------------:|
-| Basic Rules |✅|
-| Complete Rules |✅|
-| Socket |✅|
-| RMI |✅|
-| CLI |✅|
-| GUI |✅|
-| Chat |✅|
-| Persistence |✅|
-| Multiple Games |✅|
-| Disconnection Resilience |⛔|
+|:-----------------------|:------:|
+| Basic Rules |   ✅    |
+| Complete Rules |   ✅    |
+| Socket |   ✅    |
+| RMI |   ✅    |
+| CLI |   ✅    |
+| GUI |   ✅    |
+| Chat |   ✅    |
+| Persistence |    ⛔    |
+| Multiple Games |   ✅    |
+| Disconnection Resilience |   ⛔    |
 
 ## Usage
 **Execute Game (Windows, MacOS, Linux)**

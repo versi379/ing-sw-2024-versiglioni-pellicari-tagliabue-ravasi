@@ -63,6 +63,9 @@ public class PlayGameController {
     private TextField chatPromptTextField;
 
     @FXML
+    private Button sendMessageButton;
+
+    @FXML
     private Button leaveGameButton;
 
     @FXML
@@ -70,12 +73,10 @@ public class PlayGameController {
         guiView = (GuiView) AppClient.getView();
 
         printObjectives();
-        if (guiView.getGameView().getNickname().equals(guiView.getCurrentPlayer())) {
-            phaseLabel.setText("PLACING PHASE");
-        }
-        turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
+        updateCurrentPlayer();
         updateBoard();
         updateHand();
+        updateDecks();
         scoresLabel.setText(guiView.getScoresText());
 
         updateChat();
@@ -84,6 +85,7 @@ public class PlayGameController {
     @FXML
     private void handlePlaceCardButton(ActionEvent event) {
         String submittedPlaceCard = placeCardTextField.getText();
+        placeCardTextField.setText("");
 
         guiView.setRead("-p " + submittedPlaceCard);
     }
@@ -91,6 +93,7 @@ public class PlayGameController {
     @FXML
     private void handleDrawCardButton(ActionEvent event) {
         String submittedDrawCard = drawCardTextField.getText();
+        drawCardTextField.setText("");
 
         guiView.setRead("-d " + submittedDrawCard);
     }
@@ -103,25 +106,22 @@ public class PlayGameController {
     @FXML
     private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
+        chatPromptTextField.setText("");
 
         guiView.setRead("-c " + submittedSendMessage);
-
-        chatPromptTextField.setText("");
     }
 
     public void updateCurrentPlayer() {
-        if (!guiView.getGameView().getNickname().equals(guiView.getCurrentPlayer())) {
-            phaseLabel.setText("");
-        }
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
+        phaseLabel.setText("");
     }
 
     public void updatePlacingPhase() {
-        phaseLabel.setText("PLACING PHASE");
+        phaseLabel.setText("Placing phase");
     }
 
     public void updateDrawingPhase() {
-        phaseLabel.setText("DRAWING PHASE");
+        phaseLabel.setText("Drawing phase");
     }
 
     public void updateBoard() {

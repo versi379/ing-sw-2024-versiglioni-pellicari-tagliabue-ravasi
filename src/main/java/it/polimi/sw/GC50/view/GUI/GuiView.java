@@ -175,25 +175,25 @@ public class GuiView extends Application implements View {
     // map of game names with associated list of players
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
-
-        Platform.runLater(() -> {
-            FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
-            Parent joinGameRoot = null;
-
-            try {
-                joinGameRoot = joinGameLoader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            joinGameController = joinGameLoader.getController();
-
-            Scene gameScene = new Scene(joinGameRoot);
-            gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
-            getPrimaryStage().setScene(gameScene);
-        });
-
-        this.freeGames = new ArrayList<>();
         if (!freeGames.isEmpty()) {
+
+            Platform.runLater(() -> {
+                FXMLLoader joinGameLoader = new FXMLLoader(getClass().getResource(ScenePath.JOINGAME.getPath()));
+                Parent joinGameRoot = null;
+
+                try {
+                    joinGameRoot = joinGameLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                joinGameController = joinGameLoader.getController();
+
+                Scene gameScene = new Scene(joinGameRoot);
+                gameScene.getStylesheets().addAll(getClass().getResource("/scenes/standard.css").toExternalForm());
+                getPrimaryStage().setScene(gameScene);
+            });
+
+            this.freeGames = new ArrayList<>();
             for (String game : freeGames.keySet()) {
                 StringBuilder gameItem = new StringBuilder(game + "\nPLAYERS: ");
                 for (String nickname : freeGames.get(game)) {
@@ -455,13 +455,11 @@ public class GuiView extends Application implements View {
             alert.setHeaderText("An error occurred");
             alert.setContentText(content);
             alert.showAndWait();
-            System.err.println("> Error: " + content);
         });
     }
 
     @Override
     public void showEndSession() {
-
     }
 
     // COMMANDS ////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class AppServer {
     public static final int sckPort = 2012;
     public static final int rmiPort = 1099;
+    public static String baseTxt = "\u001B[0m";
+    public static String blueTxt = "\u001B[34m";
 
     public static void main(String[] args) throws IOException {
         Lobby lobby = new Lobby();
@@ -24,6 +26,7 @@ public class AppServer {
         Scanner scanner = new Scanner(System.in);
         String read;
         do {
+            System.out.println(blueTxt + "Type \"exit\" to end current session" + baseTxt);
             read = scanner.nextLine();
         } while (!read.equals("exit"));
         System.exit(0);

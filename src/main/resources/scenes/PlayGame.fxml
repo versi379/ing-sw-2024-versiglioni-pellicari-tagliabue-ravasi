@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1100.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
+<AnchorPane fx:id="pane" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
    <children>
       <TextField fx:id="placeCardTextField" layoutX="805.0" layoutY="445.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="65.0" />
       <Button fx:id="placeCardButton" layoutX="795.0" layoutY="597.0" mnemonicParsing="false" onAction="#handlePlaceCardButton" styleClass="orange-button" text="Place Card" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="125.0" />
@@ -17,7 +14,7 @@
          <font>
             <Font name="Futura Medium" size="15.0" />
          </font></Label>
-      <Label fx:id="turnLabel" alignment="CENTER" layoutX="169.0" layoutY="55.0" prefHeight="50.0" prefWidth="250.0" text="Turn" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
+      <Label fx:id="turnLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="50.0" prefWidth="250.0" text="Turn" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font name="Futura Medium" size="15.0" />
          </font></Label>
@@ -25,7 +22,7 @@
       <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="150.0" />
       <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Send" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="50.0" />
       <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="120.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" />
-      <Label fx:id="phaseLabel" alignment="CENTER" layoutX="60.0" layoutY="35.0" prefHeight="50.0" prefWidth="250.0" text="Phase" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="25.0">
+      <Label fx:id="phaseLabel" alignment="CENTER" layoutX="50.0" layoutY="75.0" prefHeight="50.0" prefWidth="250.0" text="Phase" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
          <font>
             <Font name="Futura Medium" size="15.0" />
          </font>
