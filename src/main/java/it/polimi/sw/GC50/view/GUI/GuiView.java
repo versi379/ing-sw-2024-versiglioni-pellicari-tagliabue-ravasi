@@ -2,7 +2,6 @@ package it.polimi.sw.GC50.view.GUI;
 
 import it.polimi.sw.GC50.model.cards.PhysicalCard;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
-import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 import it.polimi.sw.GC50.net.client.Client;
 import it.polimi.sw.GC50.view.Command;
 import it.polimi.sw.GC50.view.GUI.controllers.*;
@@ -440,6 +439,12 @@ public class GuiView extends Application implements View {
                 playGameController.updateChat();
             });
         }
+
+        if (endGameController != null) {
+            Platform.runLater(() -> {
+                endGameController.updateChat();
+            });
+        }
     }
 
     // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -749,7 +754,7 @@ public class GuiView extends Application implements View {
         return getGameView().getPlayerArea(getCurrentPlayer());
     }
 
-    public String getScoresText() {
+    public String getScoresPlaying() {
         Map<String, Integer> scores = new HashMap<>();
         for (String nickname : getGameView().getPlayerList()) {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
@@ -757,7 +762,22 @@ public class GuiView extends Application implements View {
 
         String scoresText = "SCORES: \n";
         for (String nickname : scores.keySet()) {
-            scoresText = scoresText += ("Player \"" + nickname + "\": " + scores.get(nickname) + " ");
+            scoresText += ("Player \"" + nickname + "\" -> " + scores.get(nickname) + "\n");
+        }
+        return scoresText;
+    }
+
+    public String getScoresEnd() {
+        Map<String, Pair<Integer, Integer>> scores = new HashMap<>();
+        for (String nickname : getGameView().getPlayerList()) {
+            scores.put(nickname, new Pair(getGameView().getPlayerArea(nickname).getTotalScore(),
+                    getGameView().getPlayerArea(nickname).getObjectivesScore()));
+        }
+
+        String scoresText = "SCORES: \n";
+        for (String nickname : scores.keySet()) {
+            scoresText += ("Player \"" + nickname + "\" -> total: " + scores.get(nickname).getKey() +
+                    ", objectives: " + scores.get(nickname).getValue() + "\n");
         }
         return scoresText;
     }

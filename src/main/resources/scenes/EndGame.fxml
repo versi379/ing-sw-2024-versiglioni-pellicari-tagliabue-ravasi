@@ -2,18 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.EndGameController">
+<AnchorPane prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.EndGameController">
     <children>
-        <Label fx:id="resultsLabel" alignment="CENTER" layoutX="946.0" layoutY="94.0" prefHeight="125" prefWidth="500" text="Final Results" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="50">
+        <Label fx:id="resultsLabel" alignment="CENTER" layoutX="25.0" layoutY="112.0" prefHeight="125" prefWidth="330.0" text="Final Results" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="112.0">
             <font>
                 <Font name="Futura Medium" size="15.0" />
             </font></Label>
-        <Label fx:id="scoresLabel" alignment="CENTER" layoutX="946.0" layoutY="94.0" prefHeight="125" prefWidth="500" text="Final Scores" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="250">
+        <Label fx:id="scoresLabel" alignment="CENTER" layoutX="25.0" layoutY="249.0" prefHeight="125" prefWidth="330.0" text="Final Scores" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="249.0">
             <font>
                 <Font name="Futura Medium" size="15.0" />
             </font></Label>
-        <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="436.0" />
+        <ListView fx:id="chatListView" layoutX="450.0" layoutY="14.0" prefHeight="350.0" prefWidth="250.0" style="-fx-background-color: #9f936a;" AnchorPane.bottomAnchor="311.0" AnchorPane.rightAnchor="50.0" />
+        <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="150.0" />
+        <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Send" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="50.0" />
+        <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="59.0" prefWidth="150.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="602.0" />
     </children>
 </AnchorPane>

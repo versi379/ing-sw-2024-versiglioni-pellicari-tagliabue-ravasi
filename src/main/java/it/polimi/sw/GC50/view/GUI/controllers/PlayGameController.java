@@ -5,8 +5,6 @@ import it.polimi.sw.GC50.model.cards.PhysicalCard;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
-import it.polimi.sw.GC50.view.PlayerDataView;
-import it.polimi.sw.GC50.view.TUI.TuiModelPrinter;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,7 +75,7 @@ public class PlayGameController {
         updateBoard();
         updateHand();
         updateDecks();
-        scoresLabel.setText(guiView.getScoresText());
+        scoresLabel.setText(guiView.getScoresPlaying());
 
         updateChat();
     }
@@ -176,7 +174,7 @@ public class PlayGameController {
     }
 
     public void updateScores() {
-        scoresLabel.setText(guiView.getScoresText());
+        scoresLabel.setText(guiView.getScoresPlaying());
     }
 
     public void updateHand() {
@@ -252,15 +250,5 @@ public class PlayGameController {
 
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
-    }
-
-    private void activateButton(Button button) {
-        button.setDisable(false);
-        button.setOpacity(1);
-    }
-
-    private void deactivateButton(Button button) {
-        button.setDisable(true);
-        button.setOpacity(0.3);
     }
 }

@@ -4,28 +4,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="pane" prefHeight="700.0" prefWidth="1100.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
+<AnchorPane fx:id="pane" prefHeight="675.0" prefWidth="1100.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
    <children>
       <TextField fx:id="placeCardTextField" layoutX="805.0" layoutY="445.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.rightAnchor="65.0" />
       <Button fx:id="placeCardButton" layoutX="795.0" layoutY="597.0" mnemonicParsing="false" onAction="#handlePlaceCardButton" styleClass="orange-button" text="Place Card" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="125.0" />
       <TextField fx:id="drawCardTextField" layoutX="829.0" layoutY="608.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="65.0" />
       <Button fx:id="drawCardButton" layoutX="794.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleDrawCardButton" styleClass="orange-button" text="Draw Card" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="125.0" />
-      <Label fx:id="scoresLabel" alignment="CENTER" layoutX="946.0" layoutY="94.0" prefHeight="75.0" prefWidth="250.0" text="Scores" wrapText="true" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0">
-         <font>
-            <Font name="Futura Medium" size="15.0" />
-         </font></Label>
       <Label fx:id="turnLabel" alignment="CENTER" layoutX="50.0" layoutY="25.0" prefHeight="50.0" prefWidth="250.0" text="Turn" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font name="Futura Medium" size="15.0" />
          </font></Label>
-      <ListView fx:id="chatListView" layoutX="738.0" layoutY="174.0" prefHeight="350.0" prefWidth="250.0" style="-fx-background-color: #9f936a;" AnchorPane.bottomAnchor="325.0" AnchorPane.rightAnchor="50.0" />
-      <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="150.0" />
-      <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Send" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="50.0" />
-      <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="120.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" />
       <Label fx:id="phaseLabel" alignment="CENTER" layoutX="50.0" layoutY="75.0" prefHeight="50.0" prefWidth="250.0" text="Phase" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="75.0">
          <font>
             <Font name="Futura Medium" size="15.0" />
-         </font>
-      </Label>
+         </font></Label>
+      <Label fx:id="scoresLabel" alignment="CENTER" layoutX="50.0" layoutY="137.0" prefHeight="125.0" prefWidth="250.0" text="Scores" wrapText="true" AnchorPane.rightAnchor="800.0" AnchorPane.topAnchor="137.0">
+         <font>
+            <Font name="Futura Medium" size="15.0" />
+         </font></Label>
+      <ListView fx:id="chatListView" layoutX="800.0" layoutY="25.0" prefHeight="350.0" prefWidth="250.0" style="-fx-background-color: #9f936a;" AnchorPane.bottomAnchor="325.0" AnchorPane.rightAnchor="50.0" />
+      <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="150.0" />
+      <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Send" AnchorPane.bottomAnchor="275.0" AnchorPane.rightAnchor="50.0" />
+      <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="120.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" />
    </children>
 </AnchorPane>
