@@ -365,7 +365,7 @@ public class GuiView extends Application implements View {
     public void showPlayerLeft(String nickname) {
     }
     /**
-     * Shows players waiting players
+     * Shows waiting players
      */
     @Override
     public void showWaitPlayers() {
