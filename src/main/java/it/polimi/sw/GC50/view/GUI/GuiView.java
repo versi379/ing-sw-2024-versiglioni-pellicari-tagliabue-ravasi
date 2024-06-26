@@ -36,9 +36,7 @@ public class GuiView extends Application implements View {
     private int submittedNumPlayers;
     private int submittedEndPoints;
     private String submittedJoinGameName;
-    private int submittedSetupStarter;
-    private int submittedSetupObjective;
-    private List<String> chatMessages = new ArrayList<>();
+    private final List<String> chatMessages = new ArrayList<>();
 
     // GUI Controllers
     private EnterIPController enterIPController;
@@ -963,36 +961,6 @@ public class GuiView extends Application implements View {
         return chatMessages;
     }
 
-    /**
-     * Given a setup starter sets as setSubmittedSetupStarter
-     * @param submittedSetupStarter a specific submittedSetupStarter
-     */
-    public void setSubmittedSetupStarter(int submittedSetupStarter) {
-        this.submittedSetupStarter = submittedSetupStarter;
-    }
-    /**
-     * @return submitted setup starter
-     */
-    public int getSubmittedSetupStarter() {
-        return submittedSetupStarter;
-    }
-
-    /**
-     * Given a specific setup objective sets as submittedSetupObjective
-     * @param submittedSetupObjective specific setup objective
-     */
-    public void setSubmittedSetupObjective(int submittedSetupObjective) {
-        this.submittedSetupObjective = submittedSetupObjective;
-    }
-    /**
-     * @return submitted setup objective
-     */
-    public int getSubmittedSetupObjective() {
-        return submittedSetupObjective;
-    }
-    /**
-     * @return common objective
-     */
     public String getCommonObjectiveCode(int index) {
         return getGameView().getCommonObjectives().get(index).getCode();
     }
@@ -1002,6 +970,11 @@ public class GuiView extends Application implements View {
     public String getSecretObjectiveCode(int index) {
         return getGameView().getSecreteObjectivesSelection().get(index).getCode();
     }
+
+    public String getSecretObjectiveCode() {
+        return getGameView().getSecretObjective().getCode();
+    }
+
     /**
      * @return front of starter card
      */

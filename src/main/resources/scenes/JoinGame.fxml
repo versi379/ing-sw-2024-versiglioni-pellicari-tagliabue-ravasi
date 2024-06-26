@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.JoinGameController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.JoinGameController">
    <children>
       <Button fx:id="enterGameButton" layoutX="275.0" layoutY="429.0" mnemonicParsing="false" onAction="#handleEnterGameButton" prefHeight="50.0" prefWidth="150.0" styleClass="orange-button" text="Join Game" AnchorPane.bottomAnchor="25.0" />
       <ListView fx:id="freeGames" layoutX="100.0" layoutY="100.0" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #9f936a;" AnchorPane.topAnchor="100.0" />

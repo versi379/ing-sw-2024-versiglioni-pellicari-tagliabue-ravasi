@@ -9,16 +9,15 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 import java.util.List;
+
 /**
  * Controller for Play Game FXML scene.
  */
@@ -49,6 +48,12 @@ public class PlayGameController {
 
     @FXML
     private Label phaseLabel;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private Pane cardsArea;
 
     private GridPane playerAreaGrid;
 
@@ -86,6 +91,7 @@ public class PlayGameController {
 
     /**
      * method used to handle place card button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -95,8 +101,10 @@ public class PlayGameController {
 
         guiView.setRead("-p " + submittedPlaceCard);
     }
+
     /**
      * method used to handle drew card button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -106,16 +114,20 @@ public class PlayGameController {
 
         guiView.setRead("-d " + submittedDrawCard);
     }
+
     /**
      * method used to handle leave game button
+     *
      * @param event an instance of action event
      */
     @FXML
     private void handleLeaveGameButton(ActionEvent event) {
         guiView.setRead("-l");
     }
+
     /**
      * method used to handle send message button
+     *
      * @param event an instance of action event
      */
     @FXML
@@ -125,6 +137,7 @@ public class PlayGameController {
 
         guiView.setRead("-c " + submittedSendMessage);
     }
+
     /**
      * method used to update current player
      */
@@ -132,12 +145,14 @@ public class PlayGameController {
         turnLabel.setText("Player \"" + guiView.getCurrentPlayer() + "\" turn");
         phaseLabel.setText("");
     }
+
     /**
      * method used to update placing phase
      */
     public void updatePlacingPhase() {
         phaseLabel.setText("Placing phase");
     }
+
     /**
      * method used to update drawing phase
      */
@@ -149,20 +164,11 @@ public class PlayGameController {
      * method used to update board
      */
     public void updateBoard() {
-        pane.getChildren().remove(playerAreaGrid);
-        playerAreaGrid = printPlayerArea(guiView.getPlayerArea().getCardsMatrix());
-        pane.getChildren().add(playerAreaGrid);
+        scrollPane.setContent(printPlayerArea1(guiView.getPlayerArea().getCardsMatrix()));
     }
 
-    /**
-     * method used to print player area
-     * @param cardsMatrix a copy of card matrix
-     * @return player area
-     */
-    private GridPane printPlayerArea(CardsMatrix cardsMatrix) {
-        GridPane gridPane = new GridPane();
-        gridPane.setLayoutX(300);
-        gridPane.setLayoutY(300);
+    private Pane printPlayerArea1(CardsMatrix cardsMatrix) {
+        Pane pane = new Pane();
 
         int minX = cardsMatrix.getMinX();
         int maxX = cardsMatrix.getMaxX();
@@ -176,39 +182,19 @@ public class PlayGameController {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
                 int actualX = coordinates / cardsMatrix.length();
                 int actualY = coordinates % cardsMatrix.length();
-                ImageView cardImageView = printPlayableCard(cardsMatrix.get(actualX, actualY), 0, 0);
+                int offsetX = (actualX - minX) * 75;
+                int offsetY = (maxY - (actualY - minY)) * 35;
 
-                int offsetX = actualX - minX;
-                int offsetY = 800 - (actualY - minY);
+                ImageView cardImageView = printCard(cardsMatrix.get(actualX, actualY).getCode(), 1, offsetX, offsetY);
 
-                gridPane.add(cardImageView, offsetX, offsetY);
+                pane.getChildren().add(cardImageView);
             }
         } else {
             Label noCardsLabel = new Label("No cards placed");
-            gridPane.add(noCardsLabel, 0, 0);
+            pane.getChildren().add(noCardsLabel);
         }
 
-        return gridPane;
-    }
-
-    /**
-     * method used to print playable card
-     * @param card      printed card
-     * @param layoutX   X layout of the card
-     * @param layoutY   Y layout of the card
-     * @return an image of card
-     */
-    private ImageView printPlayableCard(PlayableCard card, int layoutX, int layoutY) {
-        String cardCode = card.getCode();
-        Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
-        ImageView cardImageView = new ImageView(cardImage);
-        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
-        cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(80);
-        cardImageView.setFitHeight(40);
-        cardImageView.setLayoutX(layoutX);
-        cardImageView.setLayoutY(layoutY);
-        return cardImageView;
+        return pane;
     }
 
     /**
@@ -229,21 +215,22 @@ public class PlayGameController {
 
     /**
      * method used to print hand
-     * @param hand  list of physical card
-     * @return  printed hand
+     *
+     * @param hand list of physical card
+     * @return printed hand
      */
     private GridPane printHand(List<PhysicalCard> hand) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
-        gridPane.setLayoutX(400);
-        gridPane.setLayoutY(650);
+        gridPane.setLayoutX(450);
+        gridPane.setLayoutY(440);
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
 
-            gridPane.add(printPlayableCard(guiView.getPlayerHand().get(cardsCounter).getFront(), 0, 0),
+            gridPane.add(printCard(guiView.getPlayerHand().get(cardsCounter).getFront().getCode(), 1, 0, 0),
                     cardsCounter, 0);
-            gridPane.add(printPlayableCard(guiView.getPlayerHand().get(cardsCounter).getBack(), 0, 0),
+            gridPane.add(printCard(guiView.getPlayerHand().get(cardsCounter).getBack().getCode(), 1, 0, 0),
                     cardsCounter, 1);
         }
         return gridPane;
@@ -260,24 +247,27 @@ public class PlayGameController {
 
     /**
      * method used to print decks
-     * @param deck  that have to be printed
-     * @return  deck image
+     *
+     * @param deck that have to be printed
+     * @return deck image
      */
     private GridPane printDecks(PlayableCard[] deck) {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
         gridPane.setVgap(20);
-        gridPane.setLayoutX(400);
+        gridPane.setLayoutX(450);
         gridPane.setLayoutY(50);
 
         for (int cardsCounter = 0; cardsCounter < deck.length; cardsCounter++) {
 
-            if (cardsCounter < 3) {
-                gridPane.add(printPlayableCard(guiView.getDecks()[cardsCounter], 0, 0),
-                        cardsCounter, 0);
-            } else {
-                gridPane.add(printPlayableCard(guiView.getDecks()[cardsCounter], 0, 0),
-                        cardsCounter - 3, 1);
+            if (guiView.getDecks()[cardsCounter] != null) {
+                if (cardsCounter < 3) {
+                    gridPane.add(printCard(guiView.getDecks()[cardsCounter].getCode(), 1, 0, 0),
+                            cardsCounter, 0);
+                } else {
+                    gridPane.add(printCard(guiView.getDecks()[cardsCounter].getCode(), 1, 0, 0),
+                            cardsCounter - 3, 1);
+                }
             }
         }
         return gridPane;
@@ -287,31 +277,30 @@ public class PlayGameController {
      * method used to print objectives
      */
     private void printObjectives() {
-        if (guiView.getSubmittedSetupObjective() == 1) {
-            printStarter(guiView.getSecretObjectiveCode(0), 50, 300);
-        } else {
-            printStarter(guiView.getSecretObjectiveCode(1), 50, 300);
-        }
-        printStarter(guiView.getCommonObjectiveCode(0), 50, 360);
-        printStarter(guiView.getCommonObjectiveCode(1), 50, 420);
+        pane.getChildren().add(printCard(guiView.getSecretObjectiveCode(), 1.25, 50, 275));
+        pane.getChildren().add(printCard(guiView.getCommonObjectiveCode(0), 1.25, 50, 350));
+        pane.getChildren().add(printCard(guiView.getCommonObjectiveCode(1), 1.25, 50, 425));
     }
 
     /**
-     * method used to print starter card
-     * @param cardCode  code of the card
-     * @param layoutX   X layout of the card
-     * @param layoutY   Y layout of the card
+     * method used to print card
+     *
+     * @param cardCode printed card's code
+     * @param size     card's size multiplier
+     * @param layoutX  X layout of the card
+     * @param layoutY  Y layout of the card
+     * @return an image of card
      */
-    private void printStarter(String cardCode, int layoutX, int layoutY) {
+    private ImageView printCard(String cardCode, double size, int layoutX, int layoutY) {
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
         Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
         cardImageView.setViewport(viewport);
-        cardImageView.setFitWidth(90);
-        cardImageView.setFitHeight(50);
+        cardImageView.setFitWidth(90 * size);
+        cardImageView.setFitHeight(60 * size);
         cardImageView.setLayoutX(layoutX);
         cardImageView.setLayoutY(layoutY);
-        pane.getChildren().add(cardImageView);
+        return cardImageView;
     }
 
     /**

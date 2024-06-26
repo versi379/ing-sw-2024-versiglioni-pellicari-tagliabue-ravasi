@@ -48,9 +48,6 @@ public class SetupGameController {
     @FXML
     private ImageView imageViewObjective2;
 
-    @FXML
-    private Button leaveGameButton;
-
     private GridPane commonObjectivesGrid;
 
     @FXML
@@ -58,6 +55,12 @@ public class SetupGameController {
 
     @FXML
     private TextField chatPromptTextField;
+
+    @FXML
+    private Button sendMessageButton;
+
+    @FXML
+    private Button leaveGameButton;
 
     /**
      * method used to initialize setup game controller
@@ -97,7 +100,6 @@ public class SetupGameController {
         imageViewStarterBack.setOpacity(1);
         imageViewStarterFront.setOpacity(0.3);
         guiView.setRead("-cs 1");
-        guiView.setSubmittedSetupStarter(1);
     }
 
     /**
@@ -110,7 +112,6 @@ public class SetupGameController {
         imageViewStarterFront.setOpacity(1);
         imageViewStarterBack.setOpacity(0.3);
         guiView.setRead("-cs 2");
-        guiView.setSubmittedSetupStarter(2);
     }
 
     /**
@@ -123,7 +124,6 @@ public class SetupGameController {
         imageViewObjective2.setOpacity(1);
         imageViewObjective1.setOpacity(0.3);
         guiView.setRead("-co 1");
-        guiView.setSubmittedSetupObjective(1);
     }
 
     /**
@@ -136,7 +136,6 @@ public class SetupGameController {
         imageViewObjective1.setOpacity(1);
         imageViewObjective2.setOpacity(0.3);
         guiView.setRead("-co 2");
-        guiView.setSubmittedSetupObjective(2);
     }
 
     /**
