@@ -33,9 +33,7 @@ public class GuiView extends Application implements View {
     private int submittedNumPlayers;
     private int submittedEndPoints;
     private String submittedJoinGameName;
-    private int submittedSetupStarter;
-    private int submittedSetupObjective;
-    private List<String> chatMessages = new ArrayList<>();
+    private final List<String> chatMessages = new ArrayList<>();
 
     // GUI Controllers
     private EnterIPController enterIPController;
@@ -798,28 +796,16 @@ public class GuiView extends Application implements View {
         return chatMessages;
     }
 
-    public void setSubmittedSetupStarter(int submittedSetupStarter) {
-        this.submittedSetupStarter = submittedSetupStarter;
-    }
-
-    public int getSubmittedSetupStarter() {
-        return submittedSetupStarter;
-    }
-
-    public void setSubmittedSetupObjective(int submittedSetupObjective) {
-        this.submittedSetupObjective = submittedSetupObjective;
-    }
-
-    public int getSubmittedSetupObjective() {
-        return submittedSetupObjective;
-    }
-
     public String getCommonObjectiveCode(int index) {
         return getGameView().getCommonObjectives().get(index).getCode();
     }
 
     public String getSecretObjectiveCode(int index) {
         return getGameView().getSecreteObjectivesSelection().get(index).getCode();
+    }
+
+    public String getSecretObjectiveCode() {
+        return getGameView().getSecretObjective().getCode();
     }
 
     public String getStarterCardFrontCode() {

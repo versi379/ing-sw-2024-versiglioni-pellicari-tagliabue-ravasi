@@ -134,7 +134,7 @@ public class Client {
                 listenCommands();
                 waitingPhase();
             } else {
-                view.showError("Game not available");
+                view.showError("Choice currently not available");
             }
         }
     }

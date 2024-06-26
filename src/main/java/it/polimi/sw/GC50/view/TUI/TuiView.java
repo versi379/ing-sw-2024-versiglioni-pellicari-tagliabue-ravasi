@@ -67,9 +67,7 @@ public class TuiView implements View {
 
     @Override
     public void showFreeGames(Map<String, List<String>> freeGames) {
-        if (freeGames.isEmpty()) {
-            System.out.println(redTxt + "No free games" + baseTxt);
-        } else {
+        if (!freeGames.isEmpty()) {
             System.out.println(yellowTxt + "Free games:" + baseTxt);
             for (String game : freeGames.keySet()) {
                 System.out.print("Game \"" + game + "\" -> current players:");

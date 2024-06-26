@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #9f936a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.CreateGameController">
    <children>
       <TextField fx:id="gameName" alignment="CENTER" layoutX="225.0" layoutY="175.0" promptText="Game Name" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="175.0" />
       <RadioButton fx:id="twoPlayersButton" layoutX="225.0" layoutY="250.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="28.0" selected="true" styleClass="orange-button" text="2" AnchorPane.leftAnchor="225.0" AnchorPane.topAnchor="250.0" />
