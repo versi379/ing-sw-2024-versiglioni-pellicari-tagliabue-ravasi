@@ -67,7 +67,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     /**
      * method that resets a new player
      *
-     * @param clientInterface   interface that represents client
+     * @param clientInterface interface that represents client
      * @throws RemoteException if there is an error in binding to RMI registry
      */
     @Override
@@ -78,7 +78,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
     /**
      * method that creates a new game
      *
-     * @param clientInterface   interface that represents client
+     * @param clientInterface interface that represents client
      * @param gameId          id of the game
      * @param numOfPlayers    number of players
      * @param endScore        final score
@@ -87,18 +87,49 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
      */
     @Override
     public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore) throws RemoteException {
-        return lobby.createGame(clientInterface, gameId, numOfPlayers, endScore);
+        GameControllerRemote controller = lobby.createGame(clientInterface, gameId, numOfPlayers, endScore);
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(180000);
+                    clientInterface.ping();
+                } catch (InterruptedException | RemoteException e) {
+                    try {
+                        controller.leaveGame(clientInterface);
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        }).start();
+        return controller;
+
     }
 
     /**
-     * @param clientInterface   interface that represents client
+     * @param clientInterface interface that represents client
      * @param gameId          id of the game
      * @return lobby with the game that we have joint
      * @throws RemoteException if there is an error in binding to RMI registry
      */
     @Override
     public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId) throws RemoteException {
-        return lobby.joinGame(clientInterface, gameId);
+        GameControllerRemote controller = lobby.joinGame(clientInterface, gameId);
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(180000);
+                    clientInterface.ping();
+                } catch (InterruptedException | RemoteException e) {
+                    try {
+                        controller.leaveGame(clientInterface);
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        }).start();
+        return controller;
     }
 
     /**

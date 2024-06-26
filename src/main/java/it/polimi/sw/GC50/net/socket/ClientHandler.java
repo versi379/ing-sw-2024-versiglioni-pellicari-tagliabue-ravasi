@@ -55,6 +55,15 @@ public class ClientHandler implements Runnable, ClientInterface {
             try {
                 switchMex((RequestMessage) input.readObject());
             } catch (IOException | ClassNotFoundException ignored) {
+                if(gameController != null) {
+                    try {
+                        gameController.leaveGame(this);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    lobby.removePlayer(this);
+                }
             }
         }
     }

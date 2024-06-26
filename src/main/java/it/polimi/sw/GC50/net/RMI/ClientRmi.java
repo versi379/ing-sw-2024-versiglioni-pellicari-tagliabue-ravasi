@@ -56,6 +56,7 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             return false;
         }
+
         return true;
     }
 
