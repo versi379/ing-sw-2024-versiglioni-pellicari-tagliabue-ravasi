@@ -118,7 +118,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmi
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(180000);
+                    Thread.sleep(30000);
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
