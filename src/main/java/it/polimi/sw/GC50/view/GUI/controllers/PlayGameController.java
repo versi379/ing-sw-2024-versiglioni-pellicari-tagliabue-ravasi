@@ -7,6 +7,8 @@ import it.polimi.sw.GC50.model.game.CardsMatrix;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
@@ -29,16 +31,16 @@ public class PlayGameController {
     private AnchorPane pane;
 
     @FXML
-    private Button drawCardButton;
-
-    @FXML
-    private TextField drawCardTextField;
-
-    @FXML
     private Button placeCardButton;
 
+    private String placeCardIndexes = "";
+
+    private String placeCardPosition = "";
+
     @FXML
-    private TextField placeCardTextField;
+    private Button drawCardButton;
+
+    private String drawCardPosition = "";
 
     @FXML
     private Label scoresLabel;
@@ -63,7 +65,7 @@ public class PlayGameController {
     private TextField chatPromptTextField;
 
     @FXML
-    private MenuButton sendMenuButton;
+    private Button sendMessageButton;
 
     @FXML
     private Button leaveGameButton;
@@ -81,7 +83,6 @@ public class PlayGameController {
         updateHand();
         updateDecks();
         updateScores();
-        initializeSendMessageButton();
         updateChat();
     }
 
@@ -92,10 +93,7 @@ public class PlayGameController {
      */
     @FXML
     private void handlePlaceCardButton(ActionEvent event) {
-        String submittedPlaceCard = placeCardTextField.getText();
-        placeCardTextField.setText("");
-
-        guiView.setRead("-p " + submittedPlaceCard);
+        guiView.setRead("-p " + placeCardIndexes + " " + placeCardPosition);
     }
 
     /**
@@ -105,10 +103,7 @@ public class PlayGameController {
      */
     @FXML
     private void handleDrawCardButton(ActionEvent event) {
-        String submittedDrawCard = drawCardTextField.getText();
-        drawCardTextField.setText("");
-
-        guiView.setRead("-d " + submittedDrawCard);
+        guiView.setRead("-d " + drawCardPosition);
     }
 
     /**
@@ -124,36 +119,14 @@ public class PlayGameController {
     /**
      * method used to handle send message button
      *
-     * @param playerName of receiver ()
+     * @param event an instance of action event
      */
-    private void handleSendMessageButton(String playerName) {
+    @FXML
+    private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
         chatPromptTextField.setText("");
-        if (playerName.isEmpty()) {
-            guiView.setRead("-c " + submittedSendMessage);
-        } else {
-            System.out.println(playerName);
-            guiView.setRead("-cp " + playerName + " " + submittedSendMessage);
-        }
-    }
 
-    /**
-     * method used to update chat
-     */
-    public void updateChat() {
-        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
-    }
-
-    public void initializeSendMessageButton() {
-        sendMenuButton.getItems().removeAll();
-        MenuItem broadcastSend = new MenuItem("All");
-        sendMenuButton.getItems().add(broadcastSend);
-        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
-        for (String gamePlayer : guiView.getGameView().getPlayerList()) {
-            MenuItem item = new MenuItem(gamePlayer);
-            sendMenuButton.getItems().add(item);
-            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
-        }
+        guiView.setRead("-c " + submittedSendMessage);
     }
 
     /**
@@ -200,13 +173,39 @@ public class PlayGameController {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
                 int actualX = coordinates / cardsMatrix.length();
                 int actualY = coordinates % cardsMatrix.length();
-                double offsetX = (actualX - minX) * 69 + scrollPane.getWidth() / 2 - 45;
-                double offsetY = (maxY - actualY) * 36 + scrollPane.getHeight() / 2 - 30;
+                double offsetX = (actualX - minX - (double) (maxX - minX) / 2) * 69 + scrollPane.getWidth() / 2 - 45;
+                double offsetY = (maxY - actualY - (double) (maxY - minY) / 2) * 36 + scrollPane.getHeight() / 2 - 30;
 
                 ImageView cardImageView = printCard(cardsMatrix.get(actualX, actualY).getCode(), 1, offsetX, offsetY);
 
                 pane.getChildren().add(cardImageView);
             }
+            for (int x = minX - 1; x <= maxX + 1; x++) {
+                for (int y = minY - 1; y <= maxY + 1; y++) {
+                    if ((x + y) % 2 == 0 && cardsMatrix.get(x, y) == null) {
+                        Button button = new Button();
+                        button.setLayoutX((x - minX - (double) (maxX - minX) / 2) * 69 + scrollPane.getWidth() / 2 - 30);
+                        button.setPrefWidth(60);
+                        button.setLayoutY((maxY - y - (double) (maxY - minY) / 2) * 36 + scrollPane.getHeight() / 2 - 20);
+                        button.setPrefHeight(40);
+                        button.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                placeCardPosition = (int) (
+                                        ((button.getLayoutX() - scrollPane.getWidth() / 2 + 30) / 69) +
+                                                minX + (double) (maxX - minX) / 2 + 1) +
+                                        " " +
+                                        (int) (
+                                                (-(button.getLayoutY() - scrollPane.getHeight() / 2 + 20) / 36) +
+                                                        maxY - (double) (maxX - minX) / 2 + 1);
+                                System.out.println(placeCardPosition);
+                            }
+                        });
+                        pane.getChildren().add(button);
+                    }
+                }
+            }
+
         } else {
             Label noCardsLabel = new Label("No cards placed");
             pane.getChildren().add(noCardsLabel);
@@ -250,6 +249,30 @@ public class PlayGameController {
                     cardsCounter, 0);
             gridPane.add(printCard(guiView.getPlayerHand().get(cardsCounter).getBack().getCode(), 1, 0, 0),
                     cardsCounter, 1);
+
+            Button buttonFront = new Button();
+            buttonFront.setPrefWidth(90);
+            buttonFront.setPrefHeight(60);
+            buttonFront.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    placeCardIndexes = (int) (buttonFront.getLayoutX() / 100 + 1) + " 1";
+                    System.out.println(placeCardIndexes);
+                }
+            });
+            gridPane.add(buttonFront, cardsCounter, 0);
+
+            Button buttonBack = new Button();
+            buttonBack.setPrefWidth(90);
+            buttonBack.setPrefHeight(60);
+            buttonBack.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    placeCardIndexes = (int) (buttonBack.getLayoutX() / 70 + 1) + " 2";
+                    System.out.println(placeCardIndexes);
+                }
+            });
+            gridPane.add(buttonBack, cardsCounter, 1);
         }
         return gridPane;
     }
@@ -282,9 +305,34 @@ public class PlayGameController {
                 if (cardsCounter < 3) {
                     gridPane.add(printCard(guiView.getDecks()[cardsCounter].getCode(), 1, 0, 0),
                             cardsCounter, 0);
+
+                    Button button = new Button();
+                    button.setPrefWidth(90);
+                    button.setPrefHeight(60);
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            drawCardPosition = String.valueOf((int) (button.getLayoutX() / 100 + 1));
+                            System.out.println(drawCardPosition);
+                        }
+                    });
+                    gridPane.add(button, cardsCounter, 0);
+
                 } else {
                     gridPane.add(printCard(guiView.getDecks()[cardsCounter].getCode(), 1, 0, 0),
                             cardsCounter - 3, 1);
+
+                    Button button = new Button();
+                    button.setPrefWidth(90);
+                    button.setPrefHeight(60);
+                    button.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent actionEvent) {
+                            drawCardPosition = String.valueOf((int) (button.getLayoutX() / 100 + 3 + 1));
+                            System.out.println(drawCardPosition);
+                        }
+                    });
+                    gridPane.add(button, cardsCounter - 3, 1);
                 }
             }
         }
@@ -321,5 +369,10 @@ public class PlayGameController {
         return cardImageView;
     }
 
-
+    /**
+     * method used to update chat
+     */
+    public void updateChat() {
+        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
+    }
 }
