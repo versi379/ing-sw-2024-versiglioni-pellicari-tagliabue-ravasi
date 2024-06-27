@@ -69,7 +69,7 @@ public class SetupGameController {
     public void initialize() {
         guiView = (GuiView) AppClient.getView();
 
-        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
+        Rectangle2D viewport = new Rectangle2D(70, 72, 885, 608);
         Image starterCardFront = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getStarterCardFrontCode() + ".jpg")));
         imageViewStarterFront.setImage(starterCardFront);
         imageViewStarterFront.setViewport(viewport);

@@ -55,6 +55,7 @@ public class GuiView extends Application implements View {
 
     /**
      * method that starts GUI
+     *
      * @param stage a given stage
      */
     @Override
@@ -93,6 +94,7 @@ public class GuiView extends Application implements View {
 
     /**
      * Given a specific client sets as client
+     *
      * @param client specific client
      */
     @Override
@@ -238,6 +240,7 @@ public class GuiView extends Application implements View {
 
     /**
      * method that shows free games
+     *
      * @param freeGames a map of free games
      */
     // map of game names with associated list of players
@@ -350,18 +353,22 @@ public class GuiView extends Application implements View {
 
     /**
      * Shows players that have joined a game
+     *
      * @param nickname player's nickname
      */
     @Override
     public void showPlayerJoined(String nickname) {
     }
+
     /**
      * Shows players that have left a game
+     *
      * @param nickname player's nickname
      */
     @Override
     public void showPlayerLeft(String nickname) {
     }
+
     /**
      * Shows waiting players
      */
@@ -440,6 +447,7 @@ public class GuiView extends Application implements View {
     @Override
     public void showObjectives() {
     }
+
     /**
      * method that shows players that are in a ready status
      */
@@ -493,6 +501,7 @@ public class GuiView extends Application implements View {
             playGameController.updateCurrentPlayer();
         });
     }
+
     /**
      * method that shows placing phase
      */
@@ -504,6 +513,7 @@ public class GuiView extends Application implements View {
         showCardsArea(getGameView().getCurrentPlayer());
         showHand();
     }
+
     /**
      * method that shows drawing phase
      */
@@ -514,6 +524,7 @@ public class GuiView extends Application implements View {
         });
         showDecks();
     }
+
     /**
      * method that shows cards area
      */
@@ -523,6 +534,7 @@ public class GuiView extends Application implements View {
             playGameController.updateBoard();
         });
     }
+
     /**
      * method that shows player's hand
      */
@@ -532,6 +544,7 @@ public class GuiView extends Application implements View {
             playGameController.updateHand();
         });
     }
+
     /**
      * method that shows decks
      */
@@ -541,6 +554,7 @@ public class GuiView extends Application implements View {
             playGameController.updateDecks();
         });
     }
+
     /**
      * method that shows scores
      */
@@ -552,6 +566,7 @@ public class GuiView extends Application implements View {
     }
 
     // END /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that shows end of the game
      */
@@ -588,6 +603,7 @@ public class GuiView extends Application implements View {
     }
 
     // CHAT ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that shows chat message
      */
@@ -629,14 +645,17 @@ public class GuiView extends Application implements View {
     }
 
     // OTHER ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that shows help commands
      */
     @Override
     public void showHelp() {
     }
+
     /**
      * method that shows error
+     *
      * @param content type of error
      */
     @Override
@@ -649,6 +668,7 @@ public class GuiView extends Application implements View {
             alert.showAndWait();
         });
     }
+
     /**
      * method that shows end session
      */
@@ -657,6 +677,7 @@ public class GuiView extends Application implements View {
     }
 
     // COMMANDS ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * method that waits for commands
      */
@@ -670,6 +691,7 @@ public class GuiView extends Application implements View {
 
     /**
      * method that reads a command
+     *
      * @return a pair command/string
      */
     // commands must be read via GUI rather than terminal
@@ -809,42 +831,49 @@ public class GuiView extends Application implements View {
     public EnterIPController getEnterIPController() {
         return enterIPController;
     }
+
     /**
      * @return net controller
      */
     public NetController getNetController() {
         return netController;
     }
+
     /**
      * @return user controller
      */
     public UserController getUserController() {
         return userController;
     }
+
     /**
      * @return setup game controller
      */
     public SetupGameController getGameController() {
         return setupGameController;
     }
+
     /**
      * @return menu controller
      */
     public MenuController getMenuController() {
         return menuController;
     }
+
     /**
      * @return create game controller
      */
     public CreateGameController getCreateGameController() {
         return createGameController;
     }
+
     /**
      * @return join game controller
      */
     public JoinGameController getJoinGameController() {
         return joinGameController;
     }
+
     /**
      * @return primary stage
      */
@@ -882,13 +911,16 @@ public class GuiView extends Application implements View {
 
     /**
      * method that sets a submitted ip
+     *
      * @param submittedIp a specific IP
      */
     public void setSubmittedIp(String submittedIp) {
         this.submittedIp = submittedIp;
     }
+
     /**
      * method that sets a submitted player nickname
+     *
      * @param submittedPlayerNickname a specific player nickname
      */
     public void setSubmittedPlayerNickname(String submittedPlayerNickname) {
@@ -897,34 +929,43 @@ public class GuiView extends Application implements View {
 
     /**
      * method that sets a submitted gaming choice
+     *
      * @param submittedGameChoice a specific game choice
      */
     public void setSubmittedGameChoice(int submittedGameChoice) {
         this.submittedGameChoice = submittedGameChoice;
     }
+
     /**
      * method that sets a submitted game name
+     *
      * @param submittedGameName a specific game name
      */
     public void setSubmittedGameName(String submittedGameName) {
         this.submittedGameName = submittedGameName;
     }
+
     /**
      * method that sets a submitted number of players
+     *
      * @param submittedNumPlayers a specific number of players
      */
     public void setSubmittedNumPlayers(int submittedNumPlayers) {
         this.submittedNumPlayers = submittedNumPlayers;
     }
+
     /**
      * method that sets a submitted end points
+     *
      * @param submittedEndPoints a specific end points
      */
     public void setSubmittedEndPoints(int submittedEndPoints) {
         this.submittedEndPoints = submittedEndPoints;
     }
+
     /**
      * method that sets a submitted join game name
+     *
      * @param submittedJoinGameName a specific join game name
      */
     public void setSubmittedJoinGameName(String submittedJoinGameName) {
@@ -933,6 +974,7 @@ public class GuiView extends Application implements View {
 
     /**
      * method that sets a read
+     *
      * @param read given read
      */
     public void setRead(String read) {
@@ -948,12 +990,14 @@ public class GuiView extends Application implements View {
     public GameView getGameView() {
         return client.getGameView();
     }
+
     /**
      * @return free games
      */
     public List<String> getFreeGames() {
         return new ArrayList<>(freeGames);
     }
+
     /**
      * @return chat message
      */
@@ -964,6 +1008,7 @@ public class GuiView extends Application implements View {
     public String getCommonObjectiveCode(int index) {
         return getGameView().getCommonObjectives().get(index).getCode();
     }
+
     /**
      * @return secret objective
      */
@@ -1009,6 +1054,7 @@ public class GuiView extends Application implements View {
     public String getCurrentPlayer() {
         return getGameView().getCurrentPlayer();
     }
+
     /**
      * @return player area
      */

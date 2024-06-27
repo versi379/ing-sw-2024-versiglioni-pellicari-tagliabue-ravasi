@@ -52,11 +52,6 @@ public class PlayGameController {
     @FXML
     private ScrollPane scrollPane;
 
-    @FXML
-    private Pane cardsArea;
-
-    private GridPane playerAreaGrid;
-
     private GridPane handGrid;
 
     private GridPane deckGrid;
@@ -164,10 +159,10 @@ public class PlayGameController {
      * method used to update board
      */
     public void updateBoard() {
-        scrollPane.setContent(printPlayerArea1(guiView.getPlayerArea().getCardsMatrix()));
+        scrollPane.setContent(printCardsArea(guiView.getPlayerArea().getCardsMatrix()));
     }
 
-    private Pane printPlayerArea1(CardsMatrix cardsMatrix) {
+    private Pane printCardsArea(CardsMatrix cardsMatrix) {
         Pane pane = new Pane();
 
         int minX = cardsMatrix.getMinX();
@@ -182,8 +177,8 @@ public class PlayGameController {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
                 int actualX = coordinates / cardsMatrix.length();
                 int actualY = coordinates % cardsMatrix.length();
-                int offsetX = (actualX - minX) * 75;
-                int offsetY = (maxY - (actualY - minY)) * 35;
+                double offsetX = (actualX - minX) * 69 + scrollPane.getWidth() / 2 - 45;
+                double offsetY = (maxY - actualY) * 36 + scrollPane.getHeight() / 2 - 30;
 
                 ImageView cardImageView = printCard(cardsMatrix.get(actualX, actualY).getCode(), 1, offsetX, offsetY);
 
@@ -221,10 +216,10 @@ public class PlayGameController {
      */
     private GridPane printHand(List<PhysicalCard> hand) {
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(20);
-        gridPane.setLayoutX(450);
-        gridPane.setLayoutY(440);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setLayoutX(590);
+        gridPane.setLayoutY(50);
 
         for (int cardsCounter = 0; cardsCounter < hand.size(); cardsCounter++) {
 
@@ -253,9 +248,9 @@ public class PlayGameController {
      */
     private GridPane printDecks(PlayableCard[] deck) {
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(20);
-        gridPane.setLayoutX(450);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setLayoutX(250);
         gridPane.setLayoutY(50);
 
         for (int cardsCounter = 0; cardsCounter < deck.length; cardsCounter++) {
@@ -291,10 +286,10 @@ public class PlayGameController {
      * @param layoutY  Y layout of the card
      * @return an image of card
      */
-    private ImageView printCard(String cardCode, double size, int layoutX, int layoutY) {
+    private ImageView printCard(String cardCode, double size, double layoutX, double layoutY) {
         Image cardImage = new Image(String.valueOf(getClass().getResource("/cards/" + cardCode + ".jpg")));
         ImageView cardImageView = new ImageView(cardImage);
-        Rectangle2D viewport = new Rectangle2D(100, 100, 850, 570);
+        Rectangle2D viewport = new Rectangle2D(70, 72, 885, 608);
         cardImageView.setViewport(viewport);
         cardImageView.setFitWidth(90 * size);
         cardImageView.setFitHeight(60 * size);

@@ -5,7 +5,7 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.EnterIPController">
     <children>
-        <TextField fx:id="ipTextField" alignment="CENTER" layoutX="250.0" layoutY="235.0" promptText="Server Ip" prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="150.0" />
-        <Button fx:id="ipSubmitButton" layoutX="130.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleIPSubmitButton" prefHeight="50.0" prefWidth="100.0" styleClass="orange-button" text="Enter IP" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
+        <TextField fx:id="ipTextField" alignment="CENTER" layoutX="250.0" layoutY="235.0" prefHeight="30.0" prefWidth="200.0" promptText="Server Ip" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="300.0" />
+        <Button fx:id="ipSubmitButton" layoutX="300.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleIPSubmitButton" prefHeight="50.0" prefWidth="100.0" styleClass="orange-button" text="Enter IP" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="375.0" />
     </children>
 </AnchorPane>

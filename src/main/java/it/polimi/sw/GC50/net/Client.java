@@ -529,6 +529,12 @@ public class Client {
             case NOTIFY_GAME_SETUP -> {
                 SetupMex setupMex = (SetupMex) message;
                 gameView.setGameStatus(GameStatus.SETUP);
+                for (String player : setupMex.getPlayerList()) {
+                    if (!gameView.getPlayerList().contains(player)) {
+                        gameView.setPlayerArea(player, new CardsMatrix(1),
+                                0, 0, false);
+                    }
+                }
                 gameView.setCommonObjectives(setupMex.getCommonObjectives());
                 gameView.setDecks(setupMex.getDecks());
                 gameView.setHand(setupMex.getHand(gameView.getNickname()));

@@ -15,6 +15,7 @@ import java.util.Map;
  * class that manages set up messages
  */
 public class SetupMex implements Message {
+    private final List<String> playerList;
     private final List<ObjectiveCard> commonObjectives;
     private final PlayableCard[] decks;
     private final Map<String, List<PhysicalCard>> handMap;
@@ -27,6 +28,7 @@ public class SetupMex implements Message {
      * @param game we referred
      */
     public SetupMex(Game game) {
+        playerList = game.getPlayerList().stream().map(Player::getNickname).toList();
         commonObjectives = game.getCommonObjectives();
         decks = game.getDecksTop();
         handMap = new HashMap<>();
@@ -37,6 +39,13 @@ public class SetupMex implements Message {
             secretObjectivesMap.put(player.getNickname(), game.getSecretObjectivesSelection(player));
             starterCardMap.put(player.getNickname(), game.getStarterCard(player));
         }
+    }
+
+    /**
+     * @return an array list of players
+     */
+    public List<String> getPlayerList() {
+        return  new ArrayList<>(playerList);
     }
 
     /**

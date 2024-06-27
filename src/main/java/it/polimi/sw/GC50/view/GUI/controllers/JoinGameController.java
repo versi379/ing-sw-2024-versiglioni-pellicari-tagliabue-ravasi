@@ -33,9 +33,6 @@ public class JoinGameController {
     @FXML
     private Button enterGameButton;
 
-    @FXML
-    private ProgressIndicator waitingPlayersBuffer;
-
     private String submittedJoinGameName;
 
     /**
