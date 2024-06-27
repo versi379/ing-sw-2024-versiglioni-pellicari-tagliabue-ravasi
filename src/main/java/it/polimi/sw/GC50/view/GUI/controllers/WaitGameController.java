@@ -5,10 +5,7 @@ import it.polimi.sw.GC50.view.GUI.GuiView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 /**
  * Controller for Wait Game FXML scene.
@@ -28,6 +25,9 @@ public class WaitGameController {
     @FXML
     private TextField chatPromptTextField;
 
+    @FXML
+    private MenuButton sendMenuButton;
+
     /**
      * method used to initialize wait game controller
      */
@@ -36,19 +36,25 @@ public class WaitGameController {
         guiView = (GuiView) AppClient.getView();
 
         waitingPlayersBuffer.setVisible(true);
+
+        initializeSendMessageButton();
+        updateChat();
     }
 
     /**
      * method used to handle send message button
-     * @param event     an instance of action event
+     *
+     * @param playerName of receiver ()
      */
-    @FXML
-    private void handleSendMessageButton(ActionEvent event) {
+    private void handleSendMessageButton(String playerName) {
         String submittedSendMessage = chatPromptTextField.getText();
-
-        guiView.setRead("-c " + submittedSendMessage);
-
         chatPromptTextField.setText("");
+        if (playerName.isEmpty()) {
+            guiView.setRead("-c " + submittedSendMessage);
+        } else {
+            System.out.println(playerName);
+            guiView.setRead("-cp " + playerName + " " + submittedSendMessage);
+        }
     }
 
     /**
@@ -56,6 +62,18 @@ public class WaitGameController {
      */
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
+    }
+
+    public void initializeSendMessageButton() {
+        sendMenuButton.getItems().removeAll();
+        MenuItem broadcastSend = new MenuItem("All");
+        sendMenuButton.getItems().add(broadcastSend);
+        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
+        for (String gamePlayer : guiView.getGameView().getPlayerList()) {
+            MenuItem item = new MenuItem(gamePlayer);
+            sendMenuButton.getItems().add(item);
+            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
+        }
     }
 
     /**

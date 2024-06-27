@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -57,7 +54,7 @@ public class SetupGameController {
     private TextField chatPromptTextField;
 
     @FXML
-    private Button sendMessageButton;
+    private MenuButton sendMenuButton;
 
     @FXML
     private Button leaveGameButton;
@@ -87,6 +84,7 @@ public class SetupGameController {
         Image commonObjective1 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(0) + ".jpg")));
         Image commonObjective2 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(1) + ".jpg")));
 
+        initializeSendMessageButton();
         updateChat();
     }
 
@@ -140,15 +138,18 @@ public class SetupGameController {
 
     /**
      * method used to handle send message button
-     * @param event an instance of action event
+     *
+     * @param playerName of receiver ()
      */
-    @FXML
-    private void handleSendMessageButton(ActionEvent event) {
+    private void handleSendMessageButton(String playerName) {
         String submittedSendMessage = chatPromptTextField.getText();
-
-        guiView.setRead("-c " + submittedSendMessage);
-
         chatPromptTextField.setText("");
+        if (playerName.isEmpty()) {
+            guiView.setRead("-c " + submittedSendMessage);
+        } else {
+            System.out.println(playerName);
+            guiView.setRead("-cp " + playerName + " " + submittedSendMessage);
+        }
     }
 
     /**
@@ -156,6 +157,18 @@ public class SetupGameController {
      */
     public void updateChat() {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
+    }
+
+    public void initializeSendMessageButton() {
+        sendMenuButton.getItems().removeAll();
+        MenuItem broadcastSend = new MenuItem("All");
+        sendMenuButton.getItems().add(broadcastSend);
+        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
+        for (String gamePlayer : guiView.getGameView().getPlayerList()) {
+            MenuItem item = new MenuItem(gamePlayer);
+            sendMenuButton.getItems().add(item);
+            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
+        }
     }
 
     /**

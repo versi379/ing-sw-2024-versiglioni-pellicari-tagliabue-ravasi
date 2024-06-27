@@ -105,7 +105,7 @@
 /* LABELS */
 
 .label {
-    -fx-background-color: #93835b;
+    -fx-background-color: #9f936a;
     -fx-background-radius: 10;
     -fx-font-family: "Futura";
     -fx-font-weight: bold;
@@ -149,4 +149,17 @@
 .list-view .list-cell:pressed {
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+
+.menu-button > .label {
+    -fx-background-color: transparent;
+}
+
+.menu-button > .menu-item  {
+    -fx-background-color: transparent;
+}
+
+.menu-button > .arrow {
+    -fx-background-color: transparent; /* Make the arrow background transparent */
+    -fx-shape: ""; /* Remove the arrow shape */
 }

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.PlayGameController">
    <children>
       <TextField fx:id="placeCardTextField" layoutX="700.0" layoutY="432.0" prefHeight="25.0" prefWidth="200.0" promptText="[card] [face] [x] [y]" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="450.0" />
       <Button fx:id="placeCardButton" layoutX="874.0" layoutY="431.0" mnemonicParsing="false" onAction="#handlePlaceCardButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Place" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="450.0" />
@@ -25,7 +30,8 @@
       <ScrollPane fx:id="scrollPane" layoutX="225.0" layoutY="200.0" prefHeight="375.0" prefWidth="525.0" styleClass="scroll-pane" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="200.0" />
       <ListView fx:id="chatListView" layoutX="738.0" layoutY="174.0" prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #9f936a;" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
       <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" promptText="[message]" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="350.0" />
-      <Button fx:id="sendMessageButton" layoutX="1028.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="25.0" prefWidth="75.0" styleClass="orange-button" text="Send" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="350.0" />
       <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="584.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="125.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" />
+      <MenuButton fx:id="sendMenuButton" minHeight="15.0" mnemonicParsing="false" prefWidth="90.0" styleClass="orange-button" text=">" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="350.0">
+      </MenuButton>
    </children>
 </AnchorPane>
