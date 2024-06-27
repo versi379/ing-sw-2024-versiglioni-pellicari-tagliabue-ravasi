@@ -97,8 +97,8 @@ public class GameControllerTest {
         controller.removePlayer(client1);
 
         assertEquals(List.of("Player2"), controller.getPlayerList());
-        assertEquals(Notify.NOTIFY_PLAYER_LEFT_GAME, client2.getNotify());
-        assertEquals("Player1", ((PlayerMex) client2.getMessage()).getNickname());
+        assertEquals(Notify.NOTIFY_NEXT_TURN, client2.getNotify());
+        assertEquals("Player2", ((PlayerMex) client2.getMessage()).getNickname());
     }
 
     @Test
@@ -373,8 +373,8 @@ public class GameControllerTest {
         controller.leaveGame(client1);
 
         assertEquals(List.of("Player2"), controller.getPlayerList());
-        assertEquals(Notify.NOTIFY_PLAYER_LEFT_GAME, client2.getNotify());
-        assertEquals("Player1", ((PlayerMex) client2.getMessage()).getNickname());
+        assertEquals(Notify.NOTIFY_NEXT_TURN, client2.getNotify());
+        assertEquals("Player2", ((PlayerMex) client2.getMessage()).getNickname());
     }
 
     @Test

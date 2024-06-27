@@ -12,32 +12,36 @@
     -fx-border-width: 3px;
     -fx-border-radius: 10;
 }
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+
 .scroll-pane > .corner {
     -fx-background-color: transparent;
 }
-.scroll-pane .scroll-bar:horizontal, .scroll-pane .scroll-bar:vertical{
-    -fx-background-color:transparent;
+
+.scroll-pane .scroll-bar:horizontal, .scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
 }
+
 .scroll-pane .scroll-bar:horizontal .thumb,
 .scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 0, 1);
 }
+
 .scroll-pane .scroll-bar:horizontal .thumb:hover,
 .scroll-pane .scroll-bar:vertical .thumb:hover {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
 }
+
 .scroll-pane .scroll-bar:horizontal .thumb:pressed,
 .scroll-pane .scroll-bar:vertical .thumb:pressed {
     -fx-background-insets: 1;
@@ -46,36 +50,43 @@
 /* BUTTONS */
 
 .button {
+    -fx-background-color: transparent;
+}
 
+.button:hover {
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
 }
 
 /* ORANGE BUTTONS */
 
 .orange-button {
     -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
     -fx-background-radius: 8;
-    -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-        #9d4024,
-        #d86e3a,
-        radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 0, 1);
 
     -fx-font-family: "Futura";
     -fx-font-weight: bold;
     -fx-font-size: 1em;
 }
+
 .orange-button:hover {
-    -fx-background-color: 
-        linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-        #9d4024,
-        #d86e3a,
-        radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
 }
+
 .orange-button:pressed {
     -fx-padding: 10 15 13 15;
-    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+    -fx-background-insets: 2 0 0 0, 2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
 /* SLIDERS */
@@ -83,24 +94,26 @@
 .slider {
     -fx-control-inner-background: #c9bca5;
 }
+
 .slider .thumb {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 4, 0, 0, 1);
 }
+
 .slider .thumb:hover {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
 }
+
 .slider .thumb:pressed {
     -fx-background-insets: 1;
 }
+
 .slider .axis {
     -fx-tick-label-font-family: "Futura";
     -fx-tick-label-font-weight: bold;
@@ -137,31 +150,33 @@
     -fx-border-width: 3px; /* Border width */
     -fx-border-radius: 10; /* Border radius */
 }
+
 .list-view .list-cell {
     -fx-background-color: transparent; /* Transparent background */
     -fx-font-family: "Futura"; /* Font family */
     -fx-font-weight: bold;
     -fx-font-size: 15px; /* Font size */
 }
+
 .list-view .list-cell:hover {
-    -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-            #9d4024,
-            #d86e3a,
-            radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
+    -fx-background-color: linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
+    #9d4024,
+    #d86e3a,
+    radial-gradient(center 50% 50%, radius 100%, #ea7f4b, #c54e2c);
     -fx-text-fill: white; /* Text color on hover */
     -fx-border-radius: 10; /* Border radius */
 }
+
 .list-view .list-cell:pressed {
     -fx-padding: 10 15 13 15;
-    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+    -fx-background-insets: 2 0 0 0, 2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
 .menu-button > .label {
     -fx-background-color: transparent;
 }
 
-.menu-button > .menu-item  {
+.menu-button > .menu-item {
     -fx-background-color: transparent;
 }
 

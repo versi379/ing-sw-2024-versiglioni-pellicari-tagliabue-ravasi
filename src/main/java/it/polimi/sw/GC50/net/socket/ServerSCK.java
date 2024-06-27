@@ -19,7 +19,6 @@ import java.util.List;
 public class ServerSCK extends UnicastRemoteObject implements Runnable {
     private final Lobby lobby;
     private final int port;
-    private final List<ClientHandler> clients;
 
     /**
      * constructor of the class
@@ -31,7 +30,6 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
     public ServerSCK(Lobby lobby, int port) throws IOException {
         this.lobby = lobby;
         this.port = port;
-        this.clients = new ArrayList<>();
     }
 
     /**
@@ -60,7 +58,6 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
                 Socket socketClient = serverSocket.accept();
                 socketClient.setSoTimeout(0);
                 ClientHandler clientHandler = new ClientHandler(socketClient, lobby);
-                clients.add(clientHandler);
                 new Thread(clientHandler).start();
                 System.out.println("Client connected");
             } catch (IOException ignored) {

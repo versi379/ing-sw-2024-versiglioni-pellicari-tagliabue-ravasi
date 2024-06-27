@@ -45,7 +45,11 @@ public class SetupGameController {
     @FXML
     private ImageView imageViewObjective2;
 
-    private GridPane commonObjectivesGrid;
+    @FXML
+    private ImageView imageViewCommonObjective1;
+
+    @FXML
+    private ImageView imageViewCommonObjective2;
 
     @FXML
     private ListView<String> chatListView;
@@ -82,7 +86,11 @@ public class SetupGameController {
         imageViewObjective2.setViewport(viewport);
 
         Image commonObjective1 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(0) + ".jpg")));
+        imageViewCommonObjective1.setImage(commonObjective1);
+        imageViewCommonObjective1.setViewport(viewport);
         Image commonObjective2 = new Image(String.valueOf(getClass().getResource("/cards/" + guiView.getCommonObjectiveCode(1) + ".jpg")));
+        imageViewCommonObjective2.setImage(commonObjective2);
+        imageViewCommonObjective2.setViewport(viewport);
 
         initializeSendMessageButton();
         updateChat();

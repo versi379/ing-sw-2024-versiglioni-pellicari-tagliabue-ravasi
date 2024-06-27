@@ -94,6 +94,8 @@ public class PlayGameController {
     @FXML
     private void handlePlaceCardButton(ActionEvent event) {
         guiView.setRead("-p " + placeCardIndexes + " " + placeCardPosition);
+        placeCardIndexes = "";
+        placeCardPosition = "";
     }
 
     /**
@@ -104,6 +106,7 @@ public class PlayGameController {
     @FXML
     private void handleDrawCardButton(ActionEvent event) {
         guiView.setRead("-d " + drawCardPosition);
+        drawCardPosition = "";
     }
 
     /**
@@ -169,12 +172,15 @@ public class PlayGameController {
         int targetAreaWidth = maxX - minX + 1;
         int targetAreaHeight = maxY - minY + 1;
 
+        pane.setLayoutX(targetAreaWidth * 69);
+        pane.setLayoutY(targetAreaHeight * 36);
+
         if (targetAreaWidth > 0 && targetAreaHeight > 0) {
             for (Integer coordinates : cardsMatrix.getOrderList()) {
                 int actualX = coordinates / cardsMatrix.length();
                 int actualY = coordinates % cardsMatrix.length();
-                double offsetX = (actualX - minX - (double) (maxX - minX) / 2) * 69 + scrollPane.getWidth() / 2 - 45;
-                double offsetY = (maxY - actualY - (double) (maxY - minY) / 2) * 36 + scrollPane.getHeight() / 2 - 30;
+                double offsetX = (actualX - minX - (double) (maxX - minX + 1) / 2) * 69 + 21 + scrollPane.getWidth() / 2 - 45;
+                double offsetY = (maxY - actualY - (double) (maxY - minY + 1) / 2) * 36 + 24 + scrollPane.getHeight() / 2 - 30;
 
                 ImageView cardImageView = printCard(cardsMatrix.get(actualX, actualY).getCode(), 1, offsetX, offsetY);
 
@@ -184,21 +190,20 @@ public class PlayGameController {
                 for (int y = minY - 1; y <= maxY + 1; y++) {
                     if ((x + y) % 2 == 0 && cardsMatrix.get(x, y) == null) {
                         Button button = new Button();
-                        button.setLayoutX((x - minX - (double) (maxX - minX) / 2) * 69 + scrollPane.getWidth() / 2 - 30);
+                        button.setLayoutX((x - minX - (double) (maxX - minX + 1) / 2) * 69 + 21 + scrollPane.getWidth() / 2 - 30);
                         button.setPrefWidth(60);
-                        button.setLayoutY((maxY - y - (double) (maxY - minY) / 2) * 36 + scrollPane.getHeight() / 2 - 20);
+                        button.setLayoutY((maxY - y - (double) (maxY - minY + 1) / 2) * 36 + 24 + scrollPane.getHeight() / 2 - 20);
                         button.setPrefHeight(40);
                         button.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                placeCardPosition = (int) (
-                                        ((button.getLayoutX() - scrollPane.getWidth() / 2 + 30) / 69) +
-                                                minX + (double) (maxX - minX) / 2 + 1) +
+                                placeCardPosition = (int)
+                                        (((button.getLayoutX() - scrollPane.getWidth() / 2 + 30 - 21) / 69) +
+                                                minX + (double) (maxX - minX + 1) / 2 + 1) +
                                         " " +
-                                        (int) (
-                                                (-(button.getLayoutY() - scrollPane.getHeight() / 2 + 20) / 36) +
-                                                        maxY - (double) (maxX - minX) / 2 + 1);
-                                System.out.println(placeCardPosition);
+                                        (int)
+                                                ((-(button.getLayoutY() - scrollPane.getHeight() / 2 + 20 - 24) / 36) +
+                                                        maxY - (double) (maxY - minY + 1) / 2 + 1);
                             }
                         });
                         pane.getChildren().add(button);
@@ -257,7 +262,6 @@ public class PlayGameController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     placeCardIndexes = (int) (buttonFront.getLayoutX() / 100 + 1) + " 1";
-                    System.out.println(placeCardIndexes);
                 }
             });
             gridPane.add(buttonFront, cardsCounter, 0);
@@ -269,7 +273,6 @@ public class PlayGameController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     placeCardIndexes = (int) (buttonBack.getLayoutX() / 70 + 1) + " 2";
-                    System.out.println(placeCardIndexes);
                 }
             });
             gridPane.add(buttonBack, cardsCounter, 1);
@@ -313,7 +316,6 @@ public class PlayGameController {
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             drawCardPosition = String.valueOf((int) (button.getLayoutX() / 100 + 1));
-                            System.out.println(drawCardPosition);
                         }
                     });
                     gridPane.add(button, cardsCounter, 0);
@@ -329,7 +331,6 @@ public class PlayGameController {
                         @Override
                         public void handle(ActionEvent actionEvent) {
                             drawCardPosition = String.valueOf((int) (button.getLayoutX() / 100 + 3 + 1));
-                            System.out.println(drawCardPosition);
                         }
                     });
                     gridPane.add(button, cardsCounter - 3, 1);
