@@ -32,6 +32,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     /////////////////////////////////////////////////////////////////
     private final Lobby lobby;
     private GameControllerRemote gameController;
+    private boolean alive;
 
     /**
      * method that creates a new client handler
@@ -40,9 +41,11 @@ public class ClientHandler implements Runnable, ClientInterface {
      * @param lobby        is the lobby of the server
      */
     public ClientHandler(Socket socketClient, Lobby lobby) throws IOException {
-        this.lobby = lobby;
         output = new ObjectOutputStream(socketClient.getOutputStream());
         input = new ObjectInputStream(socketClient.getInputStream());
+
+        this.lobby = lobby;
+        alive = true;
     }
 
     /**
@@ -51,17 +54,12 @@ public class ClientHandler implements Runnable, ClientInterface {
      */
     @Override
     public void run() {
-        while (true) {
+        while (alive) {
             try {
                 switchMex((RequestMessage) input.readObject());
             } catch (IOException | ClassNotFoundException e) {
-                lobby.removePlayer(this);
-                if (gameController != null) {
-                    try {
-                        gameController.leaveGame(this);
-                    } catch (RemoteException ignored) {
-                    }
-                }
+                alive = false;
+                resetPlayer();
             }
         }
     }
@@ -140,6 +138,9 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     private void resetPlayer() {
+        if (gameController != null) {
+            leaveGame();
+        }
         lobby.removePlayer(this);
     }
 
@@ -289,7 +290,7 @@ public class ClientHandler implements Runnable, ClientInterface {
     }
 
     @Override
-    public void ping() throws RemoteException {
+    public void ping() {
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////

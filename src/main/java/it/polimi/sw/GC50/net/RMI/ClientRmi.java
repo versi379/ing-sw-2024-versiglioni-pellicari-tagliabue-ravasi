@@ -85,6 +85,9 @@ public class ClientRmi extends UnicastRemoteObject implements ServerInterface, C
      */
     @Override
     public void resetPlayer() throws GameException {
+        if (gameController != null) {
+            leaveGame();
+        }
         try {
             serverRmi.resetPlayer(this);
         } catch (RemoteException e) {

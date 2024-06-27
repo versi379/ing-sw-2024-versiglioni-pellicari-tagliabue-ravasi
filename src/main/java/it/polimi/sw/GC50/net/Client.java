@@ -298,8 +298,8 @@ public class Client {
     private void waitingPhase() throws GameException {
         view.showWaitPlayers();
 
-        while ((gameView.getGameStatus().equals(GameStatus.WAITING) || !gameView.allJoined())
-                && gameView.isInGame()) {
+        while (gameView.isInGame() &&
+                (gameView.getGameStatus().equals(GameStatus.WAITING) || !gameView.allJoined())) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -322,8 +322,8 @@ public class Client {
     private void setupPhase() throws GameException {
         view.showSetup();
 
-        while ((gameView.getGameStatus().equals(GameStatus.SETUP) || !gameView.allReady())
-                && gameView.isInGame()) {
+        while (gameView.isInGame() &&
+                (gameView.getGameStatus().equals(GameStatus.SETUP) || !gameView.allReady())) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -366,7 +366,8 @@ public class Client {
     private void playingPhase() throws GameException {
         view.showStart();
 
-        while (gameView.getGameStatus().equals(GameStatus.PLAYING) && gameView.isInGame()) {
+        while (gameView.isInGame() &&
+                gameView.getGameStatus().equals(GameStatus.PLAYING)) {
             playTurn();
         }
 
@@ -383,12 +384,15 @@ public class Client {
     private void playTurn() throws GameException {
         gameView.setTurnEnded(false);
         view.showCurrentPlayer();
+        String player = gameView.getCurrentPlayer();
 
-        if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
+        if (gameView.getNickname().equals(player)) {
             view.showPlacingPhase();
         }
 
-        while (gameView.getPlayingPhase().equals(PlayingPhase.PLACING) && gameView.isInGame()) {
+        while (gameView.isInGame() &&
+                gameView.getCurrentPlayer().equals(player) &&
+                gameView.getPlayingPhase().equals(PlayingPhase.PLACING)) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -398,12 +402,13 @@ public class Client {
 
         if (gameView.isInGame()) {
 
-            if (gameView.getNickname().equals(gameView.getCurrentPlayer())) {
+            if (gameView.getNickname().equals(player)) {
                 view.showDrawingPhase();
             }
 
-            while ((gameView.getPlayingPhase().equals(PlayingPhase.DRAWING) || !gameView.isTurnEnded())
-                    && gameView.isInGame()) {
+            while (gameView.isInGame() &&
+                    gameView.getCurrentPlayer().equals(player) &&
+                    (gameView.getPlayingPhase().equals(PlayingPhase.DRAWING) || !gameView.isTurnEnded())) {
                 try {
                     wait();
                 } catch (InterruptedException e) {

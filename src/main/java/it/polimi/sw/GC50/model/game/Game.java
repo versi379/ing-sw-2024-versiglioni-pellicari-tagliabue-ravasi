@@ -183,11 +183,13 @@ public class Game extends GameObservable {
         if (playerList.contains(player)) {
             playerList.remove(player);
             playerAreas.remove(player);
-            if (currentIndex >= playerList.size()) {
-                currentIndex = 0;
-            }
             setChanged();
             notifyObservers(Notify.NOTIFY_PLAYER_LEFT_GAME, new PlayerMex(player));
+
+            if (!playerList.isEmpty()) {
+                currentIndex--;
+                nextPlayer();
+            }
         }
     }
 

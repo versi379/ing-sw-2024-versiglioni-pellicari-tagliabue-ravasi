@@ -50,7 +50,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(30000);
+                    Thread.sleep(10000);
                     client.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
@@ -105,7 +105,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(30000);
+                    Thread.sleep(10000);
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
@@ -130,7 +130,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(30000);
+                    Thread.sleep(10000);
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {

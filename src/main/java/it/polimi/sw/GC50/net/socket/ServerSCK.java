@@ -1,10 +1,12 @@
 package it.polimi.sw.GC50.net.socket;
 
 import it.polimi.sw.GC50.model.lobby.Lobby;
+import it.polimi.sw.GC50.net.ClientInterface;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
