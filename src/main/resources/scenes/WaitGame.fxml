@@ -11,7 +11,7 @@
 <AnchorPane prefHeight="500.0" prefWidth="700.0" styleClass="pane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.sw.GC50.view.GUI.controllers.WaitGameController">
     <children>
         <ProgressIndicator fx:id="waitingPlayersBuffer" layoutX="634.0" layoutY="424.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
-        <ListView fx:id="chatListView" layoutX="738.0" layoutY="174.0" prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #9f936a;" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
+        <ListView fx:id="chatListView" layoutX="738.0" layoutY="174.0" prefHeight="300.0" prefWidth="250.0" styleClass="scroll-pane" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0" />
         <TextField fx:id="chatPromptTextField" layoutX="815.0" layoutY="455.0" prefHeight="25.0" prefWidth="150.0" promptText="[message]" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="350.0" />
         <Button fx:id="leaveGameButton" layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleLeaveGameButton" prefHeight="50.0" prefWidth="125.0" styleClass="orange-button" text="Leave Game" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" />
       <MenuButton fx:id="sendMenuButton" minHeight="15.0" mnemonicParsing="false" prefWidth="90.0" styleClass="orange-button" text=">" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="350.0">

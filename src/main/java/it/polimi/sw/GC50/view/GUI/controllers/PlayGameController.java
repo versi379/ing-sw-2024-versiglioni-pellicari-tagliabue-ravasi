@@ -4,11 +4,9 @@ import it.polimi.sw.GC50.app.AppClient;
 import it.polimi.sw.GC50.model.cards.PhysicalCard;
 import it.polimi.sw.GC50.model.cards.PlayableCard;
 import it.polimi.sw.GC50.model.game.CardsMatrix;
-import it.polimi.sw.GC50.model.lobby.Player;
 import it.polimi.sw.GC50.view.GUI.GuiView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
@@ -65,7 +63,7 @@ public class PlayGameController {
     private TextField chatPromptTextField;
 
     @FXML
-    private MenuButton sendMenuButton;
+    private Button sendMessageButton;
 
     @FXML
     private Button leaveGameButton;
@@ -83,7 +81,6 @@ public class PlayGameController {
         updateHand();
         updateDecks();
         updateScores();
-        initializeSendMessageButton();
         updateChat();
     }
 
@@ -126,36 +123,14 @@ public class PlayGameController {
     /**
      * method used to handle send message button
      *
-     * @param playerName of receiver ()
+     * @param event an instance of action event
      */
-    private void handleSendMessageButton(String playerName) {
+    @FXML
+    private void handleSendMessageButton(ActionEvent event) {
         String submittedSendMessage = chatPromptTextField.getText();
         chatPromptTextField.setText("");
-        if (playerName.isEmpty()) {
-            guiView.setRead("-c " + submittedSendMessage);
-        } else {
-            System.out.println(playerName);
-            guiView.setRead("-cp " + playerName + " " + submittedSendMessage);
-        }
-    }
 
-    /**
-     * method used to update chat
-     */
-    public void updateChat() {
-        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
-    }
-
-    public void initializeSendMessageButton() {
-        sendMenuButton.getItems().removeAll();
-        MenuItem broadcastSend = new MenuItem("All");
-        sendMenuButton.getItems().add(broadcastSend);
-        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
-        for (String gamePlayer : guiView.getGameView().getPlayerList()) {
-            MenuItem item = new MenuItem(gamePlayer);
-            sendMenuButton.getItems().add(item);
-            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
-        }
+        guiView.setRead("-c " + submittedSendMessage);
     }
 
     /**
@@ -323,4 +298,10 @@ public class PlayGameController {
         return cardImageView;
     }
 
+    /**
+     * method used to update chat
+     */
+    public void updateChat() {
+        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
+    }
 }
