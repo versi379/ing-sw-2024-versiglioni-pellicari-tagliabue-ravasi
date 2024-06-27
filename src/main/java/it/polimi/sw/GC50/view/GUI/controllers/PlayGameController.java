@@ -63,7 +63,7 @@ public class PlayGameController {
     private TextField chatPromptTextField;
 
     @FXML
-    private Button sendMessageButton;
+    private MenuButton sendMenuButton;
 
     @FXML
     private Button leaveGameButton;
@@ -81,6 +81,7 @@ public class PlayGameController {
         updateHand();
         updateDecks();
         updateScores();
+        initializeSendMessageButton();
         updateChat();
     }
 
@@ -123,14 +124,36 @@ public class PlayGameController {
     /**
      * method used to handle send message button
      *
-     * @param event an instance of action event
+     * @param playerName of receiver ()
      */
-    @FXML
-    private void handleSendMessageButton(ActionEvent event) {
+    private void handleSendMessageButton(String playerName) {
         String submittedSendMessage = chatPromptTextField.getText();
         chatPromptTextField.setText("");
+        if (playerName.isEmpty()) {
+            guiView.setRead("-c " + submittedSendMessage);
+        } else {
+            System.out.println(playerName);
+            guiView.setRead("-cp " + playerName + " " + submittedSendMessage);
+        }
+    }
 
-        guiView.setRead("-c " + submittedSendMessage);
+    /**
+     * method used to update chat
+     */
+    public void updateChat() {
+        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
+    }
+
+    public void initializeSendMessageButton() {
+        sendMenuButton.getItems().removeAll();
+        MenuItem broadcastSend = new MenuItem("All");
+        sendMenuButton.getItems().add(broadcastSend);
+        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
+        for (String gamePlayer : guiView.getGameView().getPlayerList()) {
+            MenuItem item = new MenuItem(gamePlayer);
+            sendMenuButton.getItems().add(item);
+            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
+        }
     }
 
     /**
@@ -298,10 +321,5 @@ public class PlayGameController {
         return cardImageView;
     }
 
-    /**
-     * method used to update chat
-     */
-    public void updateChat() {
-        chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
-    }
+
 }
