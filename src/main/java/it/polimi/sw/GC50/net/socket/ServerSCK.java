@@ -49,6 +49,7 @@ public class ServerSCK extends UnicastRemoteObject implements Runnable {
             serverSocket = new ServerSocket(port);
             System.out.println("Server socket ready");
         } catch (IOException e) {
+            System.out.println("Error to start server socket ");
             return;
         }
 

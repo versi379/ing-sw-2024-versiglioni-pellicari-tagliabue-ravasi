@@ -10,7 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Map;
 
-public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
+public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmiRemote {
     private final Lobby lobby;
     private final int port;
 
@@ -91,7 +91,7 @@ public class ServerRmi extends UnicastRemoteObject implements ServerRmiRemote {
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(180000);
+                    Thread.sleep(30000);
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
