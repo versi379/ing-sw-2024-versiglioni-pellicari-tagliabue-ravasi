@@ -31,7 +31,8 @@ public class Lobby {
      * @return nickname of the player added
      */
     public synchronized String addPlayer(ClientInterface clientInterface, String nickname) {
-        if (nickname == null || nickname.isEmpty() || clients.containsValue(nickname)) {
+        if (nickname == null || nickname.isEmpty() ||
+                !nickname.equals(nickname.trim()) || clients.containsValue(nickname)) {
             return null;
         }
         clients.put(clientInterface, nickname);
@@ -68,7 +69,8 @@ public class Lobby {
      */
     public synchronized GameController createGame(ClientInterface client, String gameId, int numOfPlayer, int endScore) {
         if (isPlayerPresent(client)) {
-            if (gameId == null || gameId.isEmpty() || isGamePresent(gameId)) {
+            if (gameId == null || gameId.isEmpty() ||
+                    !gameId.equals(gameId.trim()) || isGamePresent(gameId)) {
                 return null;
             }
             try {

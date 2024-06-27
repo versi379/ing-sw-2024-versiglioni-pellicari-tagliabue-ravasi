@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="appServer">
-    <output-path>$PROJECT_DIR$/out/artifacts/appServer</output-path>
+    <output-path>$PROJECT_DIR$/deliverables/final/jar</output-path>
     <root id="archive" name="GianpaoloCugola50.jar">
       <element id="module-output" name="GianpaoloCugola50" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21/javafx-graphics-21.jar" path-in-jar="/" />
