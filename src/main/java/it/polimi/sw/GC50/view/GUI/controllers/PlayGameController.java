@@ -143,15 +143,22 @@ public class PlayGameController {
         chatListView.setItems(FXCollections.observableArrayList((guiView.getChatMessages())));
     }
 
+    /**
+     * method used to initialize send message button
+     */
     public void initializeSendMessageButton() {
         sendMenuButton.getItems().removeAll();
         MenuItem broadcastSend = new MenuItem("All");
         sendMenuButton.getItems().add(broadcastSend);
-        broadcastSend.setOnAction((ActionEvent event) -> {handleSendMessageButton("");});
+        broadcastSend.setOnAction((ActionEvent event) -> {
+            handleSendMessageButton("");
+        });
         for (String gamePlayer : guiView.getGameView().getPlayerList()) {
             MenuItem item = new MenuItem(gamePlayer);
             sendMenuButton.getItems().add(item);
-            item.setOnAction(event -> {handleSendMessageButton(item.getText());});
+            item.setOnAction(event -> {
+                handleSendMessageButton(item.getText());
+            });
         }
     }
 
@@ -184,6 +191,12 @@ public class PlayGameController {
         scrollPane.setContent(printCardsArea(guiView.getPlayerArea().getCardsMatrix()));
     }
 
+    /**
+     * method used to get cards area pane
+     *
+     * @param cardsMatrix cards area
+     * @return pane containing cards area
+     */
     private Pane printCardsArea(CardsMatrix cardsMatrix) {
         Pane pane = new Pane();
 

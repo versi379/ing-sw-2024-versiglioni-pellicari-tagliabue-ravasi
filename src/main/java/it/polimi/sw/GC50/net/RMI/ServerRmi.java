@@ -57,6 +57,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
                         resetPlayer(client);
                     } catch (RemoteException ignored) {
                     }
+                    break;
                 }
             }
         }).start();
@@ -109,9 +110,12 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
-                        controller.leaveGame(clientInterface);
+                        if (controller != null) {
+                            controller.leaveGame(clientInterface);
+                        }
                     } catch (RemoteException ignored) {
                     }
+                    break;
                 }
             }
         }).start();
@@ -134,9 +138,12 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
                     clientInterface.ping();
                 } catch (InterruptedException | RemoteException e) {
                     try {
-                        controller.leaveGame(clientInterface);
+                        if (controller != null) {
+                            controller.leaveGame(clientInterface);
+                        }
                     } catch (RemoteException ignored) {
                     }
+                    break;
                 }
             }
         }).start();
