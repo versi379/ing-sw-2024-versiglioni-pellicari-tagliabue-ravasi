@@ -54,15 +54,13 @@ public class ClientHandler implements Runnable, ClientInterface {
         while (true) {
             try {
                 switchMex((RequestMessage) input.readObject());
-            } catch (IOException | ClassNotFoundException ignored) {
-                if(gameController != null) {
+            } catch (IOException | ClassNotFoundException e) {
+                lobby.removePlayer(this);
+                if (gameController != null) {
                     try {
                         gameController.leaveGame(this);
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
+                    } catch (RemoteException ignored) {
                     }
-                }else{
-                    lobby.removePlayer(this);
                 }
             }
         }
@@ -292,7 +290,6 @@ public class ClientHandler implements Runnable, ClientInterface {
 
     @Override
     public void ping() throws RemoteException {
-
     }
 
     // OBSERVER ////////////////////////////////////////////////////////////////////////////////////////////////////////

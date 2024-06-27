@@ -10,7 +10,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 import java.util.Map;
 
-public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmiRemote {
+public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRmiRemote {
     private final Lobby lobby;
     private final int port;
 
@@ -28,6 +28,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmi
     /**
      * method that starts RMI server
      */
+    @Override
     public void run() {
         try {
             LocateRegistry.createRegistry(this.port).rebind("server", this);
@@ -46,6 +47,19 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmi
     @Override
     public void addClient(ClientInterface client) throws RemoteException {
         System.out.println("Client connected");
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(30000);
+                    client.ping();
+                } catch (InterruptedException | RemoteException e) {
+                    try {
+                        resetPlayer(client);
+                    } catch (RemoteException ignored) {
+                    }
+                }
+            }
+        }).start();
     }
 
 
@@ -96,14 +110,12 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmi
                 } catch (InterruptedException | RemoteException e) {
                     try {
                         controller.leaveGame(clientInterface);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    } catch (RemoteException ignored) {
                     }
                 }
             }
         }).start();
         return controller;
-
     }
 
     /**
@@ -123,8 +135,7 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable,ServerRmi
                 } catch (InterruptedException | RemoteException e) {
                     try {
                         controller.leaveGame(clientInterface);
-                    } catch (RemoteException ex) {
-                        throw new RuntimeException(ex);
+                    } catch (RemoteException ignored) {
                     }
                 }
             }
