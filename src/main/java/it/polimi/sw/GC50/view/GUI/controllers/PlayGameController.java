@@ -182,7 +182,7 @@ public class PlayGameController {
             }
             for (int x = minX - 1; x <= maxX + 1; x++) {
                 for (int y = minY - 1; y <= maxY + 1; y++) {
-                    if ((x + y) % 2 == 0) {
+                    if ((x + y) % 2 == 0 && cardsMatrix.get(x, y) == null) {
                         Button button = new Button();
                         button.setLayoutX((x - minX - (double) (maxX - minX) / 2) * 69 + scrollPane.getWidth() / 2 - 30);
                         button.setPrefWidth(60);
