@@ -12,6 +12,15 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21/javafx-controls-21-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21/javafx-base-21-win.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.10.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:21" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:21" />
     </root>
   </artifact>
 </component>

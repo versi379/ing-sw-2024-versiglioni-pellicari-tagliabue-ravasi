@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: it.polimi.sw.GC50.app.AppClient
+Main-Class: it.polimi.sw.GC50.app.AppServer
 
