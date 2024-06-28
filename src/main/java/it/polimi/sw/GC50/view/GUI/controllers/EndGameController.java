@@ -50,7 +50,7 @@ public class EndGameController {
             results.append("\n");
         }
 
-        resultsLabel.setText("GAME ENDED\n" + results);
+        resultsLabel.setText("Game ended!\n" + results);
 
         scoresLabel.setText(guiView.getScoresEnd());
 

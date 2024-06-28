@@ -11,15 +11,6 @@ public class PlayerTest {
         Player player = new Player("Player");
 
         assertEquals("Player", player.getNickname());
-        assertEquals(PlayerStatus.DISCONNECTED, player.getStatus());
-    }
-
-    @Test
-    void setStatus() {
-        Player player = new Player("Player");
-        player.setStatus(PlayerStatus.CONNECTED);
-
-        assertEquals(PlayerStatus.CONNECTED, player.getStatus());
     }
 
     @Test

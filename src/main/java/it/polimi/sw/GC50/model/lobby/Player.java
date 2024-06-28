@@ -13,18 +13,12 @@ public class Player {
     private final String nickname;
 
     /**
-     * Status of the connection to the server of the player
-     */
-    private PlayerStatus status;
-
-    /**
      * Constructs an instance of player with nickname
      *
      * @param nickname player's nickname
      */
     public Player(String nickname) {
         this.nickname = nickname;
-        status = PlayerStatus.DISCONNECTED;
     }
 
     /**
@@ -32,22 +26,6 @@ public class Player {
      */
     public String getNickname() {
         return nickname;
-    }
-
-    /**
-     * set player status
-     *
-     * @param status of the player
-     */
-    public void setStatus(PlayerStatus status) {
-        this.status = status;
-    }
-
-    /**
-     * @return player status
-     */
-    public PlayerStatus getStatus() {
-        return status;
     }
 
     /**

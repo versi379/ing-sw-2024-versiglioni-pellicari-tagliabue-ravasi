@@ -1071,7 +1071,7 @@ public class GuiView extends Application implements View {
             scores.put(nickname, getGameView().getPlayerArea(nickname).getTotalScore());
         }
 
-        String scoresText = "SCORES: \n";
+        String scoresText = "Scores: \n";
         for (String nickname : scores.keySet()) {
             scoresText += ("Player \"" + nickname + "\" -> " + scores.get(nickname) + "\n");
         }
@@ -1088,7 +1088,7 @@ public class GuiView extends Application implements View {
                     getGameView().getPlayerArea(nickname).getObjectivesScore()));
         }
 
-        String scoresText = "SCORES: \n";
+        String scoresText = "Scores: \n";
         for (String nickname : scores.keySet()) {
             scoresText += ("Player \"" + nickname + "\" -> total: " + scores.get(nickname).getKey() +
                     ", objectives: " + scores.get(nickname).getValue() + "\n");

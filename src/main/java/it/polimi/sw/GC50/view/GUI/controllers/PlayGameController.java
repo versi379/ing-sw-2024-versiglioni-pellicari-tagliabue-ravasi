@@ -79,7 +79,7 @@ public class PlayGameController {
 
         printObjectives();
         updateCurrentPlayer();
-        updateBoard();
+        //updateBoard();
         updateHand();
         updateDecks();
         updateScores();

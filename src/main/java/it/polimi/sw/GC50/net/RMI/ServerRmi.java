@@ -102,52 +102,18 @@ public class ServerRmi extends UnicastRemoteObject implements Runnable, ServerRm
      */
     @Override
     public GameControllerRemote createGame(ClientInterface clientInterface, String gameId, int numOfPlayers, int endScore) throws RemoteException {
-        GameControllerRemote controller = lobby.createGame(clientInterface, gameId, numOfPlayers, endScore);
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(10000);
-                    clientInterface.ping();
-                } catch (InterruptedException | RemoteException e) {
-                    try {
-                        if (controller != null) {
-                            controller.leaveGame(clientInterface);
-                        }
-                    } catch (RemoteException ignored) {
-                    }
-                    break;
-                }
-            }
-        }).start();
-        return controller;
+        return lobby.createGame(clientInterface, gameId, numOfPlayers, endScore);
     }
 
     /**
      * @param clientInterface interface that represents client
      * @param gameId          id of the game
-     * @return lobby with the game that we have joint
+     * @return lobby with the game that we have joined
      * @throws RemoteException if there is an error in binding to RMI registry
      */
     @Override
     public GameControllerRemote joinGame(ClientInterface clientInterface, String gameId) throws RemoteException {
-        GameControllerRemote controller = lobby.joinGame(clientInterface, gameId);
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(10000);
-                    clientInterface.ping();
-                } catch (InterruptedException | RemoteException e) {
-                    try {
-                        if (controller != null) {
-                            controller.leaveGame(clientInterface);
-                        }
-                    } catch (RemoteException ignored) {
-                    }
-                    break;
-                }
-            }
-        }).start();
-        return controller;
+        return lobby.joinGame(clientInterface, gameId);
     }
 
     /**

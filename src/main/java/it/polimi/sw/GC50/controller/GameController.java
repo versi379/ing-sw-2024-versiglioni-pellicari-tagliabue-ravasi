@@ -57,6 +57,19 @@ public class GameController extends UnicastRemoteObject implements GameControlle
             game.addObserver(clientInterface, player);
             game.addPlayer(player);
             playerMap.put(clientInterface, player);
+
+            new Thread(() -> {
+                while (playerMap.containsKey(clientInterface)) {
+                    try {
+                        Thread.sleep(10000);
+                        clientInterface.ping();
+                    } catch (RemoteException e) {
+                        removePlayer(clientInterface);
+                        break;
+                    } catch (InterruptedException ignored) {
+                    }
+                }
+            }).start();
             return true;
         }
         return false;
