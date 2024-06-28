@@ -37,7 +37,7 @@ git clone https://github.com/versi379/ing-sw-2024-versiglioni-pellicari-tagliabu
 ```
 Move into the newly generated folder
 ```bash
-cd /ing-sw-2024-versiglioni-pellicari-tagliabue-ravasi/deliverables/final/jar
+cd /ing-sw-2024-versiglioni-pellicari-tagliabue-ravasi
 ```
 Launch server instance
 ```bash
