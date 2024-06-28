@@ -41,11 +41,11 @@ cd /ing-sw-2024-versiglioni-pellicari-tagliabue-ravasi/deliverables/final/jar
 ```
 Launch server instance
 ```bash
-java -jar server.jar
+java -jar appServer.jar
 ```
 Launch client(s) instance(s)
 ```bash
-java -jar client.jar
+java -jar appClient.jar
 ```
 
 **Compile Game (IntelliJ IDEA)**
@@ -53,11 +53,10 @@ java -jar client.jar
 Compile through Maven.
 
 ## Testing
-| Package | Coverage |
-|:-----------------------|:------------------------------------:|
-| Model | x/x (x%)
-| Controller | x/x (x%)
-| other  | x/x (x%)
+| Package | Class Coverage | Method Coverage | Line Coverage
+|:-------------------|:-----------------------------:|:-----------------------------:|:-----------------------------:|
+| Model | 100% (33/33) | 100% (237/237) | 99% (874/880)
+| Controller | 100% (1/1) | 100% (21/21) | 93% (93/99)
 
 ## Software Used
 **IntelliJ IDEA Ultimate** - IDE
