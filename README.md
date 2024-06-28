@@ -12,7 +12,7 @@ The final version includes:
 * Final (code-generated) UML diagram;
 * Working game implementation (rules compliant);
 * Implementation source code;
-* Executable Server-Client jar (located in root dir)
+* Executable Server-Client jar (located in root dir);
 * Unit testing source code.
 
 ## Implemented Functionalities
