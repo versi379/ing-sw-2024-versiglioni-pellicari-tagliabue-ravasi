@@ -3,6 +3,7 @@ package it.polimi.sw.GC50.model.game;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import it.polimi.sw.GC50.adapter.*;
 import it.polimi.sw.GC50.model.GameObservable;
 import it.polimi.sw.GC50.model.cards.*;
@@ -12,8 +13,7 @@ import it.polimi.sw.GC50.model.objectives.Objective;
 import it.polimi.sw.GC50.model.objectives.ObjectiveCard;
 import it.polimi.sw.GC50.net.messages.*;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.util.*;
@@ -265,43 +265,37 @@ public class Game extends GameObservable {
      * Method used to read the file json with all the cards
      */
     private void initDecks() {
-        try {
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
-            gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
-            gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
-            gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
-            gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
-            gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
-            gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
-            Gson gson = gsonBuilder.create();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(ObjectiveCard.class, new ObjectiveCardAdapter());
+        gsonBuilder.registerTypeAdapter(Objective.class, new ObjectiveAdapter());
+        gsonBuilder.registerTypeAdapter(Bonus.class, new BonusAdapter());
+        gsonBuilder.registerTypeAdapter(Corner.class, new CornerAdapter());
+        gsonBuilder.registerTypeAdapter(PhysicalCard.class, new PhysicalCardAdapter());
+        gsonBuilder.registerTypeAdapter(PlayableCard.class, new PlayableCardAdapter());
+        gsonBuilder.registerTypeAdapter(GoldCard.class, new GoldCardAdapter());
+        Gson gson = gsonBuilder.create();
 
-            FileReader reader = new FileReader
-                    ("src/main/resources/cardsJson/physicalCards.json");
-            Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
-            }.getType();
+        JsonReader reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/cardsJson/physicalCards.json")));
+        Type physicalCardListType = new TypeToken<List<PhysicalCard>>() {
+        }.getType();
 
-            List<PhysicalCard> physicalCards = gson.fromJson(reader, physicalCardListType);
-            // now put the cards in the deck
-            for (PhysicalCard card : physicalCards) {
-                if (CardType.GOLD.equals(card.getCardType())) {
-                    goldDeck.add(card);
-                } else if (CardType.RESOURCE.equals(card.getCardType())) {
-                    resourceDeck.add(card);
-                } else if (CardType.STARTER.equals(card.getCardType())) {
-                    starterDeck.add(card);
-                }
+        List<PhysicalCard> physicalCards = gson.fromJson(reader, physicalCardListType);
+        // now put the cards in the deck
+        for (PhysicalCard card : physicalCards) {
+            if (CardType.GOLD.equals(card.getCardType())) {
+                goldDeck.add(card);
+            } else if (CardType.RESOURCE.equals(card.getCardType())) {
+                resourceDeck.add(card);
+            } else if (CardType.STARTER.equals(card.getCardType())) {
+                starterDeck.add(card);
             }
-            //objective deck
-            reader = new FileReader
-                    ("src/main/resources/cardsJson/objectiveCards.json");
-            Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
-            }.getType();
-            List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
-            objectiveDeck.addAll(objectiveCards);
-
-        } catch (IOException ignored) {
         }
+        //objective deck
+        reader = new JsonReader(new InputStreamReader(getClass().getResourceAsStream("/cardsJson/objectiveCards.json")));
+        Type objectiveCardType = new TypeToken<List<ObjectiveCard>>() {
+        }.getType();
+        List<ObjectiveCard> objectiveCards = gson.fromJson(reader, objectiveCardType);
+        objectiveDeck.addAll(objectiveCards);
 
         mixAllDecks(resourceDeck);
         mixAllDecks(starterDeck);
